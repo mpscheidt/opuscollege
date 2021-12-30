@@ -1,0 +1,6 @@
+version 4.2.1
+* fixed - bug in editing hostelBlock(wrong Form was removed from session)
+* fixed - #123 Html-encode all dynamic content to prevent cross site scripting (XSS) attacks
+* fixed - moved add button in hotelBlocks to correct position
+* fixed - #759 Hostel block code with more than 30 characters throws exception
+ 

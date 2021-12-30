@@ -1,0 +1,402 @@
+<?xml version="1.0" encoding="UTF-8"?><!--Converted at: Wed Feb 03 09:44:45 CET 2016-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.uci.opus.accommodation.persistence.HostelMapper">
+
+    <resultMap id="HostelResultMap" type="Hostel">
+        <result property="id" column="id"/>
+        <result property="code" column="code"/>
+        <result property="description" column="description"/>
+        <result property="numberOfFloors" column="numberOfFloors"/>
+        <result property="writeWhen" column="writeWhen" javaType="Date"/>
+        <result property="writeWho" column="writeWho"/>
+        <result property="active" column="active"/>
+        <result property="hostelTypeCode" column="hostelTypeCode"/>
+    </resultMap>
+    
+    <resultMap id="BlockResultMap" type="HostelBlock">
+        <result property="id" column="id"/>
+        <result property="code" column="code"/>
+        <result property="description" column="description"/>
+        <result property="numberOfFloors" column="numberOfFloors"/>
+        <result property="writeWhen" column="writeWhen" javaType="Date"/>
+        <result property="writeWho" column="writeWho"/>
+        <result property="active" column="active"/>
+        <association property="hostel" select="findHostel" column="hostelId"/>
+    </resultMap>
+    
+    <resultMap id="RoomResultMap" type="Room">
+        <result property="id" column="id"/>
+        <result property="code" column="code"/>
+        <result property="description" column="description"/>
+        <result property="floorNumber" column="floornumber"/>
+        <result property="roomTypeCode" column="roomTypeCode"/>
+        <result property="numberOfBedSpaces" column="numberofbedspaces"/>
+        <result property="writeWhen" column="writeWhen"/>
+        <result property="writeWho" column="writeWho"/>
+        <result property="active" column="active"/>
+        <result property="availableBedSpace" column="availablebedspace"/>
+        <association property="hostel" select="findHostel" column="hostelid"/>
+        <association property="block" select="findBlock" column="blockid"/>
+    </resultMap>
+    
+    <!-- Start of Hostel -->
+    <insert id="addHostel" parameterType="Hostel">
+        
+        INSERT INTO opuscollege.acc_hostel(
+        code,description,hosteltypecode,numberoffloors,active,writeWho
+        )VALUES(
+        #{code},#{description},#{hostelTypeCode},#{numberOfFloors},#{active},#{writeWho}
+        )
+        
+        <selectKey keyProperty="id" resultType="int">
+            SELECT CURRVAL('opuscollege.acc_hostelseq')
+        </selectKey>
+    </insert>
+    
+    <update id="updateHostel" parameterType="Hostel">
+        UPDATE opuscollege.acc_hostel SET
+        code=#{code},description=#{description},hosteltypecode=#{hostelTypeCode},numberoffloors=#{numberOfFloors},active=#{active}
+        ,writeWho=#{writeWho}
+        WHERE id=#{id}
+    </update>
+    
+    <select id="isHostelRepeated" parameterType="map" resultType="boolean">
+    
+    SELECT EXISTS (
+    	SELECT 1 FROM opuscollege.acc_hostel
+    
+     	WHERE id != #{id}
+     
+        <if test="code != null">
+            AND code=#{code}
+        </if>
+        <if test="description != null">
+            AND description=#{description}
+        </if>
+        <if test="active != null">
+            AND active=#{active}
+        </if>
+        <if test="numberOfFloors != null">
+            AND numberoffloors=#{numberOfFloors}
+        </if>
+        <if test="hostelTypeCode != null">
+            AND hostelTypeCode=#{hostelTypeCode}
+        </if>
+        )
+    </select>
+    
+    <insert id="updateHostelHistory" parameterType="map">
+    
+    	INSERT INTO audit.acc_hostel_hist(
+              operation
+            , id
+            , code
+            , description
+            , numberoffloors
+            , hosteltypecode
+            , writewho
+            , active
+            
+            ) VALUES (
+            
+              #{operation}
+            , #{Hostel.id}
+            , #{Hostel.code}
+            , #{Hostel.description}
+            , #{Hostel.numberOfFloors}
+            , #{Hostel.hostelTypeCode}
+            , #{Hostel.writeWho}
+            , #{Hostel.active}
+            
+            )
+    
+	</insert>
+    
+    <delete id="deleteHostel" parameterType="int">
+        DELETE FROM opuscollege.acc_hostel WHERE id=#{id}
+    </delete>
+    
+    <select id="findHostel" parameterType="int" resultMap="HostelResultMap">
+        SELECT * FROM opuscollege.acc_hostel WHERE id=#{id}
+    </select>
+    <select id="findAllHostels" resultMap="HostelResultMap">
+        SELECT * FROM opuscollege.acc_hostel WHERE active='Y'
+        ORDER BY code
+    </select>
+    
+    <select id="findHostelsByParams" parameterType="map" resultMap="HostelResultMap">
+        SELECT * FROM opuscollege.acc_hostel WHERE 1=1
+        <if test='id != null and id != "0"'>
+            AND id=#{id}
+        </if>
+        <if test="code != null">
+            AND code=#{code}
+        </if>
+        <if test="description != null">
+            AND description=#{description}
+        </if>
+        <if test="active != null">
+            AND active=#{active}
+        </if>
+        <if test="numberOfFloors != null">
+            AND numberoffloors=#{numberOfFloors}
+        </if>
+        <if test='hostelTypeCode != null and hostelTypeCode != "0"'>
+            AND hostelTypeCode=#{hostelTypeCode}
+        </if>
+        ORDER BY code
+    </select>
+    <!-- End of Hostel -->
+    
+    <!-- Start of Block -->
+    <insert id="addBlock" parameterType="HostelBlock">
+        INSERT INTO opuscollege.acc_block(
+        code,description,hostelid,numberoffloors,active
+        )VALUES(
+        #{code},#{description},#{hostel.id},#{numberOfFloors},#{active}
+        )
+        <selectKey keyProperty="id" resultType="int">
+            SELECT CURRVAL('opuscollege.acc_blockseq')
+        </selectKey>
+    </insert>
+    
+    <update id="updateBlock" parameterType="HostelBlock">
+        UPDATE opuscollege.acc_block SET
+        code=#{code},description=#{description},hostelid=#{hostel.id},numberoffloors=#{numberOfFloors},active=#{active}
+        WHERE id=#{id}
+    </update>
+    
+    
+     <insert id="updateHostelBlockHistory" parameterType="map">
+    
+    INSERT INTO audit.acc_block_hist(
+            operation
+            , id
+            , code
+            , description
+            , hostelid
+            , numberoffloors
+            , writewho
+            , active
+            
+            ) VALUES (
+    
+           	  #{operation}
+            , #{HostelBlock.id}
+            , #{HostelBlock.code}
+            , #{HostelBlock.description}
+            , #{HostelBlock.hostel.id}
+            , #{HostelBlock.numberOfFloors}
+            , #{HostelBlock.writeWho}
+            , #{HostelBlock.active}
+    )
+    
+    </insert>
+    
+    <delete id="deleteBlock" parameterType="int">
+        DELETE FROM opuscollege.acc_block WHERE id=#{id}
+    </delete>
+    
+    <select id="findBlock" parameterType="int" resultMap="BlockResultMap">
+        SELECT * FROM opuscollege.acc_block WHERE id=#{id}
+    </select>
+    
+    <select id="findAllBlocks" resultMap="BlockResultMap">
+        SELECT * FROM opuscollege.acc_block ORDER BY code
+    </select>
+    
+    <select id="findBlocksByParams" parameterType="map" resultMap="BlockResultMap">
+        SELECT b.* FROM opuscollege.acc_block as b INNER JOIN opuscollege.acc_hostel as h ON h.id=b.hostelid 
+        INNER JOIN opuscollege.acc_hosteltype AS ht ON h.hosteltypeCode=ht.code 
+        WHERE 1=1
+        <if test='id != null and id != "0"'>
+            AND b.id=#{id}
+        </if>
+        <if test='code != null and code != "0"'>
+            AND b.code=#{code}
+        </if>
+        <if test="description != null">
+            AND b.description=#{description}
+        </if>
+        <if test="active != null">
+            AND b.active=#{active}
+        </if>
+        <if test='hostelId != null and hostelId != "0"'>
+            AND b.hostelId=#{hostelId}
+        </if>
+        <if test="numberOfFloors != null">
+            AND b.numberoffloors=#{numberOfFloors}
+        </if>
+        <if test='hostelTypeCode != null and hostelTypeCode != "0"'>
+            AND h.hostelTypeCode=#{hostelTypeCode}
+        </if>
+        <if test="lang != null">
+            AND ht.lang=#{lang} 
+        </if>
+        ORDER BY b.code
+    </select>
+        
+    <!-- End of Block -->
+
+    
+    <!-- Start of Room -->
+    <insert id="addRoom" parameterType="Room">
+        INSERT INTO opuscollege.acc_room(
+        code,description,floornumber,numberofbedspaces,hostelid,roomTypeCode,blockid,active,availablebedspace
+        )VALUES(
+        #{code},#{description},#{floorNumber},#{numberOfBedSpaces},#{hostel.id},#{roomTypeCode},#{block.id},#{active},#{availableBedSpace}
+        )
+        <selectKey keyProperty="id" resultType="int">
+            SELECT CURRVAL('opuscollege.acc_roomseq')
+        </selectKey>
+    </insert>
+    
+    <update id="updateRoom" parameterType="Room">
+        UPDATE opuscollege.acc_room SET
+        code=#{code},description=#{description},floornumber=#{floorNumber},numberofbedspaces=#{numberOfBedSpaces},hostelid=#{hostel.id},roomTypeCode=#{roomTypeCode},blockid=#{block.id},active=#{active},availablebedspace=#{availableBedSpace}
+        WHERE id=#{id}
+    </update>
+    
+    	<insert id="updateRoomHistory" parameterType="map">
+		INSERT INTO audit.acc_room_hist(
+              operation
+            , id
+            , code            
+            , description
+            , numberofbedspaces
+            , hostelid
+            , blockid
+            , floornumber
+            , writewho
+            , active
+            , availablebedspace
+            , roomtypecode
+            
+            ) VALUES (
+			  
+			  #{operation}
+            , #{Room.id}
+            , #{Room.code}            
+            , #{Room.description}
+            , #{Room.numberOfBedSpaces}
+            , #{Room.hostel.id}
+            , #{Room.block.id}
+            , #{Room.floorNumber}
+            , #{Room.writeWho}
+            , #{Room.active}
+            , #{Room.availableBedSpace}
+            , #{Room.roomTypeCode}
+            
+            )
+	</insert>
+    
+    <delete id="deleteRoom" parameterType="int">
+        DELETE FROM opuscollege.acc_room WHERE id=#{id}
+    </delete>
+    
+    <select id="findRoom" parameterType="int" resultMap="RoomResultMap">
+        SELECT * FROM opuscollege.acc_room WHERE id=#{id}
+    </select>
+    
+    <select id="findAllRooms" resultMap="RoomResultMap">
+        SELECT * FROM opuscollege.acc_room
+        ORDER BY code
+    </select>
+    
+    <select id="isRoomRepeated" parameterType="map" resultType="boolean">
+        
+        SELECT EXISTS (
+        SELECT 1 FROM opuscollege.acc_room AS room 
+        
+        WHERE id != #{id} 
+        
+        <if test="code != null">
+            AND room.code=#{code}
+        </if>
+        <if test="description != null">
+            AND room.description=#{description}
+        </if>
+        <if test="floorNumber != null">
+            AND room.floorNumber=#{floorNumber}
+        </if>
+        <if test="numberofBedSpaces != null">
+            AND room.numberofbedspaces=#{numberOfBedSpaces}
+        </if>
+        <if test="blockId != null">
+            AND room.blockId=#{blockId}
+        </if>
+        <if test="active != null">
+            AND room.active=#{active}
+        </if>
+        )
+    </select>
+    
+    <select id="findRoomsByParams" parameterType="map" resultMap="RoomResultMap">
+        SELECT room.* FROM opuscollege.acc_room AS room INNER JOIN opuscollege.acc_hostel AS hostel 
+        ON hostel.id=room.hostelId  WHERE 1=1 
+        <if test='id != null and id != "0"'>
+            AND room.id=#{id}
+        </if>
+        <if test='code != null and code != "0"'>
+            AND room.code=#{code}
+        </if>
+        <if test="description != null">
+            AND room.description=#{description}
+        </if>
+        <if test="floorNumber != null">
+            AND room.floorNumber=#{floorNumber}
+        </if>
+        <if test="numberOfBedSapces != null">
+            AND room.numberofbedspaces=#{numberOfBedSpaces}
+        </if>
+        <if test='hostelId != null and hostelId != "0"'>
+            AND room.hostelId=#{hostelId}            
+        </if>
+        <if test='hostelTypeCode != null and hostelTypeCode != "0"'>
+            AND hostel.hostelTypeCode=#{hostelTypeCode}
+        </if>
+        <if test='blockId != null and blockId != "0"'>
+            	AND room.blockId=#{blockId}
+        </if>
+        <if test="active != null">
+            AND room.active=#{active}
+        </if>
+        <if test='roomTypeCode != null and roomTypeCode != "0"'>
+            AND roomTypeCode=#{roomTypeCode}
+        </if>
+        ORDER BY room.code
+    </select>
+
+    <select id="findAvailableRoomsByParams" parameterType="map" resultMap="RoomResultMap">
+        SELECT room.* FROM opuscollege.acc_room AS room INNER JOIN opuscollege.acc_hostel AS hostel 
+        ON hostel.id=room.hostelId  WHERE availableBedSpace &gt; 0
+        <if test='id != null and id != "0"'>
+            AND room.id=#{id}
+        </if>
+        <if test="code != null">
+            AND room.code=#{code}
+        </if>
+        <if test="description != null">
+            AND room.description=#{description}
+        </if>
+        <if test="floorNumber != null">
+            AND room.floorNumber=#{floorNumber}
+        </if>
+        <if test="numberOfBedSpaces != null">
+            AND room.numberofbedspaces=#{numberOfBedSpaces}
+        </if>
+        <if test='hostelId != null and hostelId != "0"'>
+            AND room.hostelId=#{hostelId}
+        </if>
+        <if test='blockId != null and blockId != "0"'>
+            AND room.blockId=#{blockId}
+        </if>
+        <if test="active != null">
+            AND room.active=#{active}
+        </if>
+        ORDER BY room.code
+    </select>
+    
+    <!-- End of Room -->
+</mapper>

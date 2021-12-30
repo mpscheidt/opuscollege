@@ -1,0 +1,501 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+  ***** BEGIN LICENSE BLOCK *****
+  Version: MPL 1.1/GPL 2.0/LGPL 2.1
+  
+  The contents of this file are subject to the Mozilla Public License Version
+  1.1 (the "License"); you may not use this file except in compliance with
+  the License. You may obtain a copy of the License at
+  http://www.mozilla.org/MPL/
+  
+  Software distributed under the License is distributed on an "AS IS" basis,
+  WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+  for the specific language governing rights and limitations under the
+  License.
+  
+  The Original Code is Opus-College accommodation module code.
+  
+  The Initial Developer of the Original Code is
+  Computer Centre, Copperbelt University, Zambia.
+  Portions created by the Initial Developer are Copyright (C) 2008
+  the Initial Developer. All Rights Reserved.
+  
+  Contributor(s):
+    For Java files, see Javadoc @author tags.
+  
+  Alternatively, the contents of this file may be used under the terms of
+  either the GNU General Public License Version 2 or later (the "GPL"), or
+  the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+  in which case the provisions of the GPL or the LGPL are applicable instead
+  of those above. If you wish to allow use of your version of this file only
+  under the terms of either the GPL or the LGPL, and not to allow others to
+  use your version of this file under the terms of the MPL, indicate your
+  decision by deleting the provisions above and replace them with the notice
+  and other provisions required by the GPL or the LGPL. If you do not delete
+  the provisions above, a recipient may use your version of this file under
+  the terms of any one of the MPL, the GPL or the LGPL.
+  
+  ***** END LICENSE BLOCK *****
+--><!--Converted at: Wed Feb 03 09:44:44 CET 2016-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.uci.opus.accommodation.persistence.AccommodationMapper">
+
+    <resultMap id="StudentAccommodationResultMap" type="StudentAccommodation">
+        <id property="id" column="id"/>
+        <result property="roomId" column="roomid"/>
+        <result property="bedNumber" column="bednumber"/>
+        <result property="accepted" column="accepted"/>
+        <result property="approved" column="approved"/>
+        <result property="approvedById" column="approvedbyid"/>
+        <result property="reasonForApplyingForAccommodation" column="reasonForApplyingForAccommodation"/>
+        <result property="comment" column="comment"/>
+        <result property="dateApplied" column="dateApplied" javaType="Date"/>
+        <result property="dateApproved" column="dateapproved" javaType="Date"/>
+        <result property="dateAccepted" column="dateAccepted" javaType="Date"/>
+        <result property="writeWhen" column="writeWhen" javaType="Date"/>
+        <result property="writeWho" column="writeWho"/>
+        <result property="allocated" column="allocated"/>
+        <result property="dateDeallocated" column="datedeallocated" javaType="Date"/>
+        <association property="room" select="org.uci.opus.accommodation.persistence.HostelMapper.findRoom" column="roomid"/>
+        <association property="student" select="org.uci.opus.college.persistence.StudentMapper.findStudentByStudentId" column="studentid"/>
+        <association property="academicYear" select="org.uci.opus.college.persistence.AcademicYearMapper.findAcademicYearById" column="academicyearid"/>
+        <association property="approvedBy" select="org.uci.opus.college.persistence.StaffMemberMapper.findStaffMemberByStaffMemberId" column="approvedbyid"/>
+    </resultMap>
+    
+    <resultMap id="StudentAccommodationResourceResultMap" type="StudentAccommodationResource">
+        <result property="id" column="id"/>
+        <result property="studentAccommodationId" column="studentaccommodationid"/>
+        <result property="accommodationResourceId" column="accommodationresourceId"/>
+        <result property="dateCollected" column="datecollected" javaType="Date"/>
+        <result property="dateReturned" column="datereturned" javaType="Date"/>
+        <result property="commentWhenReturning" column="commentwhenreturning"/>
+        <result property="commentWhenCollecting" column="commentwhencollecting"/>
+    </resultMap>
+    
+    <resultMap id="AccommodationResourceResultMap" type="AccommodationResource">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="description" column="description"/>
+        <result property="active" column="active"/>
+    </resultMap>
+
+    <!-- Start of StudentAccommodation -->
+    <insert id="addStudentAccommodation" parameterType="StudentAccommodation">
+        INSERT INTO opuscollege.acc_studentaccommodation(
+        studentid,academicyearid,dateapplied,reasonForApplyingForAccommodation,comment,allocated,writewho
+        )VALUES(
+        #{student.studentId},#{academicYear.id},#{dateApplied},#{reasonForApplyingForAccommodation},#{comment},#{allocated},#{writeWho}
+        )
+        <selectKey keyProperty="id" resultType="int">
+            SELECT CURRVAL('opuscollege.acc_studentaccommodationseq')
+        </selectKey>
+    </insert>
+    
+    <update id="updateStudentAccommodation" parameterType="StudentAccommodation">
+        UPDATE opuscollege.acc_studentaccommodation SET
+        studentid=#{student.studentId},academicyearid=#{academicYear.id},roomid=#{roomId},bednumber=#{bedNumber},dateapplied=#{dateApplied},accepted=#{accepted},dateaccepted=#{dateAccepted},approved=#{approved},dateApproved=#{dateApproved},approvedById=#{approvedById},reasonForApplyingForAccommodation=#{reasonForApplyingForAccommodation},comment=#{comment},allocated=#{allocated},datedeallocated=#{dateDeallocated}
+        WHERE id=#{id}
+    </update>
+    
+    <delete id="deleteStudentAccommodation" parameterType="int">
+        DELETE FROM opuscollege.acc_studentaccommodation WHERE id=#{id}
+    </delete>
+    
+    <select id="findStudentAccommodation" parameterType="int" resultMap="StudentAccommodationResultMap">
+        SELECT * FROM opuscollege.acc_studentaccommodation WHERE id=#{id}
+    </select>
+    
+    <select id="findStudentAccommodationsByParams" parameterType="map" resultMap="StudentAccommodationResultMap">
+        SELECT * FROM opuscollege.acc_studentaccommodation WHERE 1=1
+        
+        <if test="id != null">
+            AND id=#{id}
+        </if>
+        <if test="studentId != null">
+            AND studentid=#{studentId}
+        </if>
+        <if test="academicYearId != null">
+            AND academicYearId=#{academicYearId}
+        </if>
+        <if test="dateApplied != null">
+            AND dateapplied=#{dateApplied}
+        </if>
+        <if test="dateApproved != null">
+            AND dateapproved=#{dateApproved}
+        </if>
+        <if test="approvedById != null">
+            AND approvedById=#{approvedById}
+        </if>
+        <if test="comment != null">
+            AND comment=#{comment}
+        </if>
+        <if test="approved != null">
+            AND approved=#{approved}
+        </if>
+        <if test="accepted != null">
+            AND accepted=#{accepted}
+        </if>
+        <if test="roomId != null">
+            AND roomId=#{roomId}
+        </if>
+        <if test="allocated != null">
+            AND allocated=#{allocated}
+        </if>
+    </select>
+
+    <!-- End of StudentAccommodation-->
+    <select id="findAccommodatedStudentsByParams" parameterType="map">
+        SELECT  student.studentCode FROM opuscollege.student AS student
+        INNER JOIN opuscollege.studyplan AS studyplan ON studyplan.studentid=student.studentid
+        INNER JOIN opuscollege.studyplandetail AS  studyplandetail ON studyplan.id=studyplandetail.studyplanid
+        INNER JOIN opuscollege.studygradetype AS studygradetype ON studyplandetail.studygradetypeid=studygradetype.id
+        INNER JOIN opuscollege.studentaccommodation AS studentaccommodation ON student.studentid=studentaccommodation.studentid
+        INNER JOIN opuscollege.studytime AS studytime ON studytime.code=studygradetype.studytimecode
+        INNER JOIN opuscollege.studyform AS studyform ON studyform.code=studygradetype.studyformcode 
+        WHERE TRUE 
+        AND studygradetype.currentacademicyearid=studentaccommodation.academicyearid
+        AND studentaccommodation.accepted='1'
+        AND studentaccommodation.approved='1'
+         
+        <if test="studentId != null">
+            AND studentaccommodation.studentid=#{studentId}
+        </if>
+        <if test="academicYearId != null">
+            AND studentaccommodation.academicyearid=#{academicYearId}
+        </if>
+        <if test="studyGradeTypeId != null">
+            AND studyplandetail.studygradetypeid=#{studyGradeTypeId}
+        </if>
+        <if test='cardinalTimeUnitCode != null and cardinalTimeUnitCode != ""'>
+            AND studygradetype.cardinaltimeunitcode=#{cardinalTimeUnitCode}
+        </if>
+        <if test='studyFormCode != null and studyFormCode != ""'>
+            AND studyform.code=#{studyFormCode}
+        </if>
+        <if test='studyTimeCode != null and studyTimeCode != ""'>
+            AND studytime.code=#{studyTimeCode}
+        </if>
+        ORDER   BY lower(student.lastnamefull), lower(student.firstnamesfull)
+    </select>
+    
+    <!-- End of StudentAccommodationSelectionCriteria-->
+    <select id="findApplicantsByParams" parameterType="map" resultMap="StudentAccommodationResultMap">
+        SELECT  DISTINCT stud_acc.*, personSort.surnameFull, personSort.firstnamesfull
+        FROM opuscollege.acc_studentaccommodation AS stud_acc
+        LEFT JOIN opuscollege.acc_room AS room on stud_acc.roomid=room.id
+        INNER JOIN opuscollege.studyplan AS studyplan ON stud_acc.studentid=studyplan.studentid
+        INNER JOIN opuscollege.studyplancardinaltimeunit AS studyplancardinaltimeunit ON studyplan.id=studyplancardinaltimeunit.studyplanid
+        INNER JOIN opuscollege.studygradetype AS studygradetype On studygradetype.studyid=studyplan.studyid
+        INNER JOIN opuscollege.study AS study ON study.id=studyplan.studyid
+        INNER JOIN opuscollege.organizationalunit AS org_unit ON org_unit.id=study.organizationalunitid
+        INNER JOIN opuscollege.branch AS branch on org_unit.branchid=branch.id
+        INNER JOIN opuscollege.institution AS institution ON branch.institutionid=institution.id
+        INNER JOIN opuscollege.student studentSort ON stud_acc.studentid = studentSort.studentid
+        INNER JOIN opuscollege.person personSort ON studentSort.personId = personSort.id
+        WHERE true
+        
+        <if test="approved != null">
+            AND stud_acc.approved=#{approved}
+        </if>
+        <if test="roomId != null">
+            AND stud_acc.roomId=#{roomId}
+        </if>
+        <if test="hostelId != null">
+            AND room.hostelId=#{hostelId}
+        </if>
+        <if test="blockId != null">
+            AND room.blockId=#{blockId}
+        </if>
+        <if test="studentId != null">
+            AND stud_acc.studentid=#{studentId}
+        </if>
+        <if test="cardinalTimeUnitNumber != null">
+            AND studyplancardinaltimeunit.cardinaltimeunitnumber=#{cardinalTimeUnitNumber}
+        </if>
+        <if test="studyId != null">
+            AND studyplan.studyid=#{studyId}
+        </if>
+        <if test="studyGradeTypeId != null">
+            AND studygradetype.id=#{studyGradeTypeId}
+        </if>
+        <if test="gradeTypeCode != null">
+            AND StudyGradeType.gradeTypeCode = #{gradeTypeCode}
+        </if>
+        <if test="academicYearId != null">
+            AND stud_acc.academicyearid=#{academicYearId}
+        </if>
+        <if test="branchId != null">
+            AND branch.id=#{branchId}
+        </if>
+        <if test="institutionId != null">
+            AND institution.id=#{institutionId}
+        </if>
+        <if test="organizationalUnitId != null">
+            AND org_unit.id=#{organizationalUnitId}
+        </if>
+        <if test="genderCode != null">
+          AND personSort.genderCode = #{genderCode}
+        </if>
+        <if test="progressStatusCode != null">
+          AND studyPlanCardinalTimeUnit.progressStatusCode = #{progressStatusCode}
+        </if>
+        <if test="studyPlanStatusCode != null">
+           AND studyPlan.studyPlanStatusCode = #{studyPlanStatusCode}
+        </if>
+        <if test="allocated != null">
+            AND stud_acc.allocated=#{allocated}
+        </if>
+        <if test='searchValue != null and searchValue != ""'>
+            AND (
+                opuscollege.remove_diacritics(lower(studentcode))
+                || ' ' || opuscollege.remove_diacritics(lower(personSort.firstnamesfull))
+                || ' ' || opuscollege.remove_diacritics(lower(personSort.surnameFull))
+                like opuscollege.remove_diacritics(lower('%' || #{searchValue} || '%'))
+                )
+        </if>
+
+        ORDER BY personSort.surnameFull, personSort.firstnamesfull
+    </select>
+    
+    <!-- End of StudentAccommodationSelectionCriteria-->
+    <select id="findStudentAccommodationsToReAllocateByParams" parameterType="map" resultMap="StudentAccommodationResultMap">
+        SELECT  DISTINCT stud_acc.* FROM opuscollege.acc_studentaccommodation AS stud_acc
+        LEFT JOIN opuscollege.acc_room AS room on stud_acc.roomid=room.id
+        INNER JOIN opuscollege.studyplan AS studyplan ON stud_acc.studentid=studyplan.studentid
+        INNER JOIN opuscollege.studyplancardinaltimeunit AS studyplancardinaltimeunit ON studyplan.id=studyplancardinaltimeunit.studyplanid
+        INNER JOIN opuscollege.studygradetype AS studygradetype On studygradetype.studyid=studyplan.studyid
+        INNER JOIN opuscollege.study AS study ON study.id=studyplan.studyid
+        INNER JOIN opuscollege.organizationalunit AS org_unit ON org_unit.id=study.organizationalunitid
+        INNER JOIN opuscollege.branch AS branch on org_unit.branchid=branch.id
+        INNER JOIN opuscollege.institution AS institution ON branch.institutionid=institution.id
+        WHERE stud_acc.roomid &lt;&gt;'0' AND stud_acc.allocated='N' AND stud_acc.id=(SELECT MAX(id) FROM 
+        opuscollege.acc_studentaccommodation WHERE studentId=stud_acc.studentId)
+        
+        <if test="approved != null">
+            AND stud_acc.approved=#{approved}
+        </if>
+        <if test="hostelId != null">
+            AND room.hostelId=#{hostelId}
+        </if>
+        <if test="blockId != null">
+            AND room.blockId=#{blockId}
+        </if>
+        <if test="studentId != null">
+            AND stud_acc.studentid=#{studentId}
+        </if>
+        <if test="cardinalTimeUnitNumber != null">
+            AND studyplancardinaltimeunit.cardinaltimeunitnumber=#{cardinalTimeUnitNumber}
+        </if>
+        <if test="studyId != null">
+            AND studyplan.studyid=#{studyId}
+        </if>
+        <if test="studyGradeTypeId != null">
+            AND studygradetype.id=#{studyGradeTypeId}
+        </if>
+        <if test="academicYearId != null">
+            AND stud_acc.academicyearid=#{academicYearId}
+        </if>
+        <if test="branchId != null">
+            AND branch.id=#{branchId}
+        </if>
+        <if test="institutionId != null">
+            AND institution.id=#{institutionId}
+        </if>
+        <if test="organizationalUnitId != null">
+            AND org_unit.id=#{organizationalUnitId}
+        </if>
+    </select>
+    
+    <select id="findNonAccommodatedStudentsByParams" parameterType="map">
+        SELECT  student.studentCode FROM opuscollege.student AS student
+        INNER JOIN opuscollege.studyplan AS studyplan ON studyplan.studentid=student.studentid
+        INNER JOIN opuscollege.studyplandetail AS  studyplandetail ON studyplan.id=studyplandetail.studyplanid
+        INNER JOIN opuscollege.studygradetype AS studygradetype ON studyplandetail.studygradetypeid=studygradetype.id
+        INNER JOIN opuscollege.studentaccommodation AS studentaccommodation ON student.studentid=studentaccommodation.studentid
+        INNER JOIN opuscollege.studytime AS studytime ON studytime.code=studygradetype.studytimecode
+        INNER JOIN opuscollege.studyform AS studyform ON studyform.code=studygradetype.studyformcode 
+        WHERE student.studentid NOT IN (SELECT studentid FROM opuscollege.studentaccommodation
+        WHERE academicyearid=student.studygradetype.currentacademicyearid) OR
+        (studygradetype.currentacademicyearid=studentaccommodation.academicyearid
+        AND studentaccommodation.accepted='0'
+        AND studentaccommodation.approved='0'
+
+        <if test="studentId != null">
+            AND studentaccommodation.studentid=#{studentId}
+        </if>
+        <if test="academicYearId != null">
+            AND studentaccommodation.academicyearid=#{academicYearId}
+        </if>
+        <if test="studyGradeTypeId != null">
+            AND studyplandetail.studygradetypeid=#{studyGradeTypeId}
+        </if>
+        <if test="cardinalTimeUnitCode != null">
+            AND studygradetype.cardinaltimeunitcode=#{cardinalTimeUnitCode}
+        </if>
+        <if test="studyFormCode != null">
+            AND studyform.code=#{studyFormCode}
+        </if>
+        <if test="studyTimeCode != null">
+            AND studytime.code=#{studyTimeCode}
+        </if>
+
+        ORDER   BY lower(stud.firstnamefull),lower(stud.lastnamefull)
+    </select>
+    
+    <select id="findApprovedAccommodationStudentsByParams" parameterType="map">
+        SELECT  student.studentCode FROM opuscollege.student AS student
+        INNER JOIN opuscollege.studyplan AS studyplan ON studyplan.studentid=student.studentid
+        INNER JOIN opuscollege.studyplandetail AS  studyplandetail ON studyplan.id=studyplandetail.studyplanid
+        INNER JOIN opuscollege.studygradetype AS studygradetype ON studyplandetail.studygradetypeid=studygradetype.id
+        INNER JOIN opuscollege.studentaccommodation AS studentaccommodation ON student.studentid=studentaccommodation.studentid
+        INNER JOIN opuscollege.studytime AS studytime ON studytime.code=studygradetype.studytimecode
+        INNER JOIN opuscollege.studyform AS studyform ON studyform.code=studygradetype.studyformcode 
+        WHERE studygradetype.currentacademicyearid=studentaccommodation.academicyearid
+        AND studentaccommodation.approved='1' 
+        <if test="studentId != null">
+            AND studentaccommodation.studentid=#{studentId}
+        </if>
+        <if test="academicYearId != null">
+            AND studentaccommodation.academicyearid=#{academicYearId}
+        </if>
+        <if test="studyGradeTypeId != null">
+            AND studyplandetail.studygradetypeid=#{studyGradeTypeId}
+        </if>
+        <if test="cardinalTimeUnitCode != null">
+            AND studygradetype.cardinaltimeunitcode=#{cardinalTimeUnitCode}
+        </if>
+        <if test="studyFormCode != null">
+            AND studyform.code=#{studyFormCode}
+        </if>
+        <if test="studyTimeCode != null">
+            AND studytime.code=#{studyTimeCode}
+        </if>
+        ORDER   BY lower(stud.firstnamefull),lower(stud.lastnamefull)
+    </select>
+
+    <select id="findNonApprovedAccommodationStudentsByParams" parameterType="map">
+        SELECT  student.studentCode FROM opuscollege.student AS student
+        INNER JOIN opuscollege.studyplan AS studyplan ON studyplan.studentid=student.studentid
+        INNER JOIN opuscollege.studyplandetail AS  studyplandetail ON studyplan.id=studyplandetail.studyplanid
+        INNER JOIN opuscollege.studygradetype AS studygradetype ON studyplandetail.studygradetypeid=studygradetype.id
+        INNER JOIN opuscollege.studentaccommodation AS studentaccommodation ON student.studentid=studentaccommodation.studentid
+        INNER JOIN opuscollege.studytime AS studytime ON studytime.code=studygradetype.studytimecode
+        INNER JOIN opuscollege.studyform AS studyform ON studyform.code=studygradetype.studyformcode 
+        WHERE studygradetype.currentacademicyearid=studentaccommodation.academicyearid
+        AND studentaccommodation.approved='0' 
+        <if test="studentId != null">
+            AND studentaccommodation.studentid=#{studentId}
+        </if>
+        <if test="academicYearId != null">
+            AND studentaccommodation.academicyearid=#{academicYearId}
+        </if>
+        <if test="studyGradeTypeId != null">
+            AND studyplandetail.studygradetypeid=#{studyGradeTypeId}
+        </if>
+        <if test="cardinalTimeUnitCode != null">
+            AND studygradetype.cardinaltimeunitcode=#{cardinalTimeUnitCode}
+        </if>
+        <if test="studyFormCode != null">
+            AND studyform.code=#{studyFormCode}
+        </if>
+        <if test="studyTimeCode != null">
+            AND studytime.code=#{studyTimeCode}
+        </if>
+        ORDER   BY lower(stud.firstnamefull),lower(stud.lastnamefull)
+    </select>    
+
+	<insert id="updateStudentAccommodationHistory" parameterType="map">
+	
+		INSERT INTO audit.acc_studentaccommodation_hist(
+              operation
+            , id
+            , studentid
+            , bednumber
+            , academicyearid
+            , dateapplied
+            , dateapproved
+            , approved
+            , approvedbyid
+            , accepted
+            , dateaccepted
+            , reasonforapplyingforaccommodation
+            , "comment"
+            , roomid
+            , writewho
+            , allocated
+            , datedeallocated
+            
+            ) VALUES (
+            
+              #{operation}
+            , #{StudentAccommodation.id}
+            , #{StudentAccommodation.student.studentId}
+            , #{StudentAccommodation.bedNumber}
+            , #{StudentAccommodation.academicYear.id}
+            , #{StudentAccommodation.dateApplied}
+            , #{StudentAccommodation.dateApproved}
+            , #{StudentAccommodation.approved}
+            , #{StudentAccommodation.approvedById}
+            , #{StudentAccommodation.accepted}
+            , #{StudentAccommodation.dateAccepted}
+            , #{StudentAccommodation.reasonForApplyingForAccommodation}
+            , #{StudentAccommodation.comment}
+            , #{StudentAccommodation.roomId}
+            , #{StudentAccommodation.writeWho}
+            , #{StudentAccommodation.allocated}
+            , #{StudentAccommodation.dateDeallocated}
+	
+		)
+	</insert>
+   
+   <!-- Allocate Accommodation Resouce to a Student --> 
+   <insert id="allocateAccommodationResource" parameterType="StudentAccommodationResource">
+   	INSERT INTO opuscollege.acc_studentaccommodationresource (studentAccommodationId,accommodationResourceId,dateCollected,commentWhenCollecting)
+   	VALUES (#{studentAccommodationId},#{accommodationResourceId},#{dateCollected},#{commentWhenCollecting})
+   </insert> 
+   
+   <!-- Update the details when a Student has returned the resourses/items -->
+   <update id="deallocateAccommodationResource" parameterType="map">
+   	UPDATE opuscollege.acc_studentaccommodationresource SET dateReturned=#{dateReturned}, commentWhenReturning=#{commentWhenReturning}
+   	WHERE id=#{id}
+   </update>
+   
+   <!-- Delete the details when a Student has returned the resourses/items -->
+   <delete id="deleteStudentAccommodationResource" parameterType="int">
+   	DELETE FROM opuscollege.acc_studentaccommodationresource WHERE id=#{id}
+   </delete>
+   
+    <!-- Get all type of accommodation resources -->
+   <select id="getAccommodationResources" resultMap="AccommodationResourceResultMap">
+   	SELECT * FROM opuscollege.acc_accommodationresource ORDER BY "name" 
+   </select>
+   
+   <!-- Get all the resources assigned to the student during a specific period -->
+   <select id="findStudentAccommodationResourceByStudentAccommodationId" parameterType="int" resultMap="StudentAccommodationResourceResultMap">
+   	SELECT * FROM opuscollege.acc_studentaccommodationresource WHERE studentAccommodationId=#{studentAccommodationId} 
+   </select>
+   
+   <!--  Get all the resources assigned to the student(s) matching the supplied parameters -->
+   <select id="findStudentAccommodationResourceByParams" parameterType="map" resultMap="StudentAccommodationResourceResultMap">
+   		SELECT * FROM opuscollege.acc_studentaccommodationresource WHERE 1=1
+   
+	   <if test="id != null">
+	   		AND id=#{id}
+	   </if>
+	   
+	   <if test="studentAccommodationId != null">
+	   		AND studentAccommodationId=#{studentAccommodationId}
+	   </if>
+	   
+	   <if test="accommodationResourceId != null">
+	   		AND accommodationResourceId=#{accommodationResourceId}
+	   </if>
+	    
+	    <if test="dateCollected != null">
+   			AND dateCollected=#{dateCollected}
+   		</if>
+   		
+   		<if test="dateReturned != null">
+   			AND dateReturned=#{dateReturned}
+   		</if>
+   </select>
+ </mapper>
