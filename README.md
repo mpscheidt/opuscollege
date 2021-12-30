@@ -74,3 +74,46 @@ University Information Centre (UCI)
 Geert Grooteplein 41  
 Nijmegen  
 Tel.(31) (24) 3617999  
+
+# Developers team
+
+## FROM RADBOUD UNIVERSITY:
+Ed Simons (Project leader)  
+Radboud University Nijmegen  
+Central Administration Staff  
+Comeniuslaan 4  
+6525 SL Nijmegen - NL  
+Tel. +31 (24) 3612343  
+e-mail: e.simons@cim.ru.nl  
+
+Markus Pscheidt (Austria, Independent IT Expert)  
+e-mail: markus.pscheidt@gmx.at  
+ 	
+Janneke Nooitgedagt (JAVA programmer)  
+Radboud University Nijmegen  
+University Information Centre  
+Tel. +31 (24) 3617808  
+e-mail: j.nooitgedagt@uci.ru.nl  
+
+Monique in het Veld(former main developer, now left the team for another job)  
+Radboud University Nijmegen  
+
+Gerbrand ten Napel (JAVA programmer)  
+Radboud University Nijmegen  
+University Information Centre  
+Tel. +31 (24) 3617969  
+e-mail: g.tennapel@uci.ru.nl  
+
+Wim van Zanten (System analyst)  
+Radboud University Nijmegen  
+University Information Centre  
+Tel. +31 (24) 3617921  
+e-mail: w.vanzanten@uci.ru.nl  
+
+## EXTERNAL EXPERTS:
+Stelio Macumbe  
+Mozambican IT Epert, woking at UCM)  
+Universidade Católica de Moçambique  
+Beira, MZ  
+e-mail: stelio.macumbe@GMAIL.COM  
+
