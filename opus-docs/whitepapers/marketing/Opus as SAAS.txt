@@ -1,0 +1,9 @@
+OPUS as SAAS - Requirements
+
+Issues to be solved in Opus to have more than one institution running on the same Opus instance:
+- Options per institution
+- Languages per institution (might be solved by having options per institution)
+- Lookup data per institution
+- Report logos per institution
+- (De-)Activate modules per institution
+- Verify that extensions are not executed / do not make problems in case a module implementing extensions is not executed for an institution

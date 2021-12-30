@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ***** BEGIN LICENSE BLOCK *****
+  Version: MPL 1.1/GPL 2.0/LGPL 2.1
+  
+  The contents of this file are subject to the Mozilla Public License Version
+  1.1 (the "License"); you may not use this file except in compliance with
+  the License. You may obtain a copy of the License at
+  http://www.mozilla.org/MPL/
+  
+  Software distributed under the License is distributed on an "AS IS" basis,
+  WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+  for the specific language governing rights and limitations under the
+  License.
+  
+  The Original Code is Opus-College college module code.
+  
+  The Initial Developer of the Original Code is
+  Center for Information Services, Radboud University Nijmegen.
+  Portions created by the Initial Developer are Copyright (C) 2008
+  the Initial Developer. All Rights Reserved.
+  
+  Contributor(s):
+    For Java files, see Javadoc @author tags.
+  
+  Alternatively, the contents of this file may be used under the terms of
+  either the GNU General Public License Version 2 or later (the "GPL"), or
+  the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+  in which case the provisions of the GPL or the LGPL are applicable instead
+  of those above. If you wish to allow use of your version of this file only
+  under the terms of either the GPL or the LGPL, and not to allow others to
+  use your version of this file under the terms of the MPL, indicate your
+  decision by deleting the provisions above and replace them with the notice
+  and other provisions required by the GPL or the LGPL. If you do not delete
+  the provisions above, a recipient may use your version of this file under
+  the terms of any one of the MPL, the GPL or the LGPL.
+  
+  ***** END LICENSE BLOCK *****
+-->
+<!--Converted at: Mon Dec 08 20:25:37 CAT 2014-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.uci.opus.college.persistence.PersonMapper">
+
+    <!-- find one Person by code-->
+    <select id="findPersonByCode" parameterType="String" resultType="Person">
+        select opuscollege.person.* 
+        from opuscollege.person
+        WHERE opuscollege.person.personCode = #{value}
+    </select>
+    
+    <!-- find one Person by id-->
+    <select id="findPersonById" parameterType="int" resultType="Person">
+        select opuscollege.person.* 
+        from opuscollege.person
+        WHERE opuscollege.person.id = #{value}
+    </select>    
+
+    <select id="findDirectors" parameterType="map" resultType="StaffMember">
+        select opuscollege.person.*
+        ,      staffmember.primaryUnitOfAppointmentId
+        from   opuscollege.person
+        inner join opuscollege.staffmember on staffmember.personId = person.id
+        inner join opuscollege.organizationalunit on staffMember.primaryUnitOfAppointmentId = organizationalunit.id
+        inner join opuscollege.branch on organizationalunit.branchid = branch.id
+        where  true
+        <if test='institutionId != null and institutionId != "" and institutionId != "0"'>
+            and branch.institutionId = #{institutionId}
+        </if>
+        <if test='branchId != null and branchId != "" and branchId != "0"'>
+            and organizationalunit.branchId = #{branchId}
+        </if>
+        <if test='organizationalUnitId != null and organizationalUnitId != "" and organizationalUnitId != "0"'>
+            and organizationalunit.id in (select id from opuscollege.crawl_tree(#{organizationalUnitId}, 0))
+        </if>
+        order by lower(person.surnameFull), lower(person.firstnamesFull)
+    </select>
+        
+      <insert id="addPerson" parameterType="Person">
+    
+        INSERT INTO opuscollege.person (
+            personCode
+        ,   surnameFull
+        ,   surnameAlias
+        ,   firstnamesFull
+        ,   firstnamesAlias
+        ,   nationalRegistrationNumber
+        ,   civilTitleCode
+        ,   gradeTypeCode
+        ,   genderCode
+        ,   birthdate
+        ,   nationalityCode
+        ,   placeOfBirth
+        ,   districtOfBirthCode
+        ,   provinceOfBirthCode
+        ,   countryOfBirthCode
+        ,   cityOfOrigin
+        ,   administrativePostOfOriginCode
+        ,   districtOfOriginCode           
+        ,   provinceOfOriginCode      
+        ,   countryOfOriginCode     
+        ,   civilStatusCode    
+        ,   housingOnCampus   
+        ,   identificationTypeCode  
+        ,   identificationNumber   
+        ,   identificationPlaceOfIssue 
+        ,   identificationDateOfIssue   
+        ,   identificationDateOfExpiration   
+        ,   professionCode   
+        ,   professionDescription   
+        ,   languageFirstCode   
+        ,   languageFirstMasteringLevelCode  
+        ,   languageSecondCode   
+        ,   languageSecondMasteringLevelCode  
+        ,   languageThirdCode   
+        ,   languageThirdMasteringLevelCode  
+        ,   contactPersonEmergenciesName 
+        ,   contactPersonEmergenciesTelephoneNumber 
+        ,   bloodTypeCode   
+        ,   healthIssues 
+        ,   motivation
+        ,   publicHomepage
+        ,   socialNetworks
+        ,   hobbies
+        ,   active  
+       <!--   ,   photograph
+            , photographName 
+            , photographMimeType -->
+       ,    remarks
+        ) VALUES (
+            #{personCode}
+        ,   #{surnameFull}
+        ,   #{surnameAlias}
+        ,   #{firstnamesFull}
+        ,   #{firstnamesAlias}
+        ,   #{nationalRegistrationNumber}
+        ,   #{civilTitleCode}
+        ,   #{gradeTypeCode}
+        ,   #{genderCode}
+        ,   #{birthdate}
+        ,   #{nationalityCode}
+        ,   #{placeOfBirth}
+        ,   #{districtOfBirthCode}
+        ,   #{provinceOfBirthCode}
+        ,   #{countryOfBirthCode}
+        ,   #{cityOfOrigin}
+        ,   #{administrativePostOfOriginCode}
+        ,   #{districtOfOriginCode}
+        ,   #{provinceOfOriginCode}
+        ,   #{countryOfOriginCode}
+        ,   #{civilStatusCode}
+        ,   #{housingOnCampus}
+        ,   #{identificationTypeCode}
+        ,   #{identificationNumber}
+        ,   #{identificationPlaceOfIssue}
+        ,   #{identificationDateOfIssue}
+        ,   #{identificationDateOfExpiration}
+        ,   #{professionCode}
+        ,   #{professionDescription}  
+        ,   #{languageFirstCode}   
+        ,   #{languageFirstMasteringLevelCode} 
+        ,   #{languageSecondCode}
+        ,   #{languageSecondMasteringLevelCode}
+        ,   #{languageThirdCode}
+        ,   #{languageThirdMasteringLevelCode}
+        ,   #{contactPersonEmergenciesName}
+        ,   #{contactPersonEmergenciesTelephoneNumber}
+        ,   #{bloodTypeCode}
+        ,   #{healthIssues}
+        ,   #{motivation}
+        ,   #{publicHomepage}
+        ,   #{socialNetworks}
+        ,   #{hobbies}
+        ,   #{active}
+       <!-- ,   #{photograph} 
+            , #{photographName}
+            , #{photographMimeType} -->
+       ,    #{remarks}
+        )
+          
+        <selectKey keyProperty="id" resultType="int">
+            SELECT currVal('opuscollege.personseq')
+        </selectKey>
+     </insert>   
+        
+    <insert id="addPersonHistory" parameterType="map">
+        INSERT INTO audit.person_hist (
+            operation
+        ,   id
+        ,   writeWho
+        ,   personCode
+        ,   surnameFull
+        ,   surnameAlias
+        ,   firstnamesFull
+        ,   firstnamesAlias
+        ,   nationalRegistrationNumber
+        ,   civilTitleCode
+        ,   gradeTypeCode
+        ,   genderCode
+        ,   birthdate
+        ,   nationalityCode
+        ,   placeOfBirth
+        ,   districtOfBirthCode
+        ,   provinceOfBirthCode
+        ,   countryOfBirthCode
+        ,   cityOfOrigin
+        ,   administrativePostOfOriginCode
+        ,   districtOfOriginCode           
+        ,   provinceOfOriginCode      
+        ,   countryOfOriginCode     
+        ,   civilStatusCode    
+        ,   housingOnCampus   
+        ,   identificationTypeCode  
+        ,   identificationNumber   
+        ,   identificationPlaceOfIssue 
+        ,   identificationDateOfIssue   
+        ,   identificationDateOfExpiration   
+        ,   professionCode   
+        ,   professionDescription   
+        ,   languageFirstCode   
+        ,   languageFirstMasteringLevelCode  
+        ,   languageSecondCode   
+        ,   languageSecondMasteringLevelCode  
+        ,   languageThirdCode   
+        ,   languageThirdMasteringLevelCode  
+        ,   contactPersonEmergenciesName 
+        ,   contactPersonEmergenciesTelephoneNumber 
+        ,   bloodTypeCode   
+        ,   healthIssues 
+        ,   motivation
+        ,   publicHomepage
+        ,   socialNetworks
+        ,   hobbies
+        ,   active       
+       ,    remarks
+        ) VALUES (
+            #{operation}
+        ,   #{Person.id}
+        ,   #{Person.writeWho}  
+        ,   #{Person.personCode}
+        ,   #{Person.surnameFull}
+        ,   #{Person.surnameAlias}
+        ,   #{Person.firstnamesFull}
+        ,   #{Person.firstnamesAlias}
+        ,   #{Person.nationalRegistrationNumber}
+        ,   #{Person.civilTitleCode}
+        ,   #{Person.gradeTypeCode}
+        ,   #{Person.genderCode}
+        ,   #{Person.birthdate}
+        ,   #{Person.nationalityCode}
+        ,   #{Person.placeOfBirth}
+        ,   #{Person.districtOfBirthCode}
+        ,   #{Person.provinceOfBirthCode}
+        ,   #{Person.countryOfBirthCode}
+        ,   #{Person.cityOfOrigin}
+        ,   #{Person.administrativePostOfOriginCode}
+        ,   #{Person.districtOfOriginCode}
+        ,   #{Person.provinceOfOriginCode}
+        ,   #{Person.countryOfOriginCode}
+        ,   #{Person.civilStatusCode}
+        ,   #{Person.housingOnCampus}
+        ,   #{Person.identificationTypeCode}
+        ,   #{Person.identificationNumber}
+        ,   #{Person.identificationPlaceOfIssue}
+        ,   #{Person.identificationDateOfIssue}
+        ,   #{Person.identificationDateOfExpiration}
+        ,   #{Person.professionCode}
+        ,   #{Person.professionDescription}  
+        ,   #{Person.languageFirstCode}   
+        ,   #{Person.languageFirstMasteringLevelCode} 
+        ,   #{Person.languageSecondCode}
+        ,   #{Person.languageSecondMasteringLevelCode}
+        ,   #{Person.languageThirdCode}
+        ,   #{Person.languageThirdMasteringLevelCode}
+        ,   #{Person.contactPersonEmergenciesName}
+        ,   #{Person.contactPersonEmergenciesTelephoneNumber}
+        ,   #{Person.bloodTypeCode}
+        ,   #{Person.healthIssues}
+        ,   #{Person.motivation}
+        ,   #{Person.publicHomepage}
+        ,   #{Person.socialNetworks}
+        ,   #{Person.hobbies}
+        ,   #{Person.active}       
+       ,    #{Person.remarks}
+        )
+        
+     </insert>
+
+    <update id="updatePerson" parameterType="Person">
+        UPDATE  opuscollege.person
+        SET surnameFull                             = #{surnameFull}
+        ,   surnameAlias                            = #{surnameAlias}
+        ,   firstnamesFull                          = #{firstnamesFull}
+        ,   firstnamesAlias                         = #{firstnamesAlias}
+        ,   nationalRegistrationNumber              = #{nationalRegistrationNumber}
+        ,   civilTitleCode                          = #{civilTitleCode}
+        ,   gradeTypeCode                           = #{gradeTypeCode}
+        ,   genderCode                              = #{genderCode}
+        ,   birthdate                               = #{birthdate}
+        ,   nationalityCode                         = #{nationalityCode}
+        ,   placeOfBirth                            = #{placeOfBirth}
+        ,   districtOfBirthCode                     = #{districtOfBirthCode}
+        ,   provinceOfBirthCode                     = #{provinceOfBirthCode}
+        ,   countryOfBirthCode                      = #{countryOfBirthCode}
+        ,   cityOfOrigin                            = #{cityOfOrigin}
+        ,   administrativePostOfOriginCode          = #{administrativePostOfOriginCode}
+        ,   districtOfOriginCode                    = #{districtOfOriginCode}
+        ,   provinceOfOriginCode                    = #{provinceOfOriginCode}
+        ,   countryOfOriginCode                     = #{countryOfOriginCode}
+        ,   civilStatusCode                          = #{civilStatusCode}
+        ,   housingOnCampus                         = #{housingOnCampus}
+        ,   identificationTypeCode                  = #{identificationTypeCode}
+        ,   identificationNumber                    = #{identificationNumber}
+        ,   identificationPlaceOfIssue              = #{identificationPlaceOfIssue}
+        ,   identificationDateOfIssue               = #{identificationDateOfIssue}
+        ,   identificationDateOfExpiration          = #{identificationDateOfExpiration}
+        ,   professionCode                          = #{professionCode}
+        ,   professionDescription                   = #{professionDescription}
+        ,   languageFirstCode                       = #{languageFirstCode}
+        ,   languageFirstMasteringLevelCode         = #{languageFirstMasteringLevelCode}
+        ,   languageSecondCode                      = #{languageSecondCode}
+        ,   languageSecondMasteringLevelCode        = #{languageSecondMasteringLevelCode}
+        ,   languageThirdCode                       = #{languageThirdCode}
+        ,   languageThirdMasteringLevelCode         = #{languageThirdMasteringLevelCode}
+        ,   contactPersonEmergenciesName            = #{contactPersonEmergenciesName}
+        ,   contactPersonEmergenciesTelephoneNumber = #{contactPersonEmergenciesTelephoneNumber}
+        ,   bloodTypeCode                           = #{bloodTypeCode}
+        ,   motivation                              = #{motivation}
+        ,   healthIssues                            = #{healthIssues}
+        ,   publicHomepage                          = #{publicHomepage}
+        ,   socialNetworks                          = #{socialNetworks}
+        ,   hobbies                                 = #{hobbies}
+        ,   active                                = #{active}
+        ,   photograph                              = #{photograph}
+        ,   photographName                          = #{photographName}
+        ,   photographMimeType                      = #{photographMimeType}
+       ,    remarks                                 = #{remarks}
+        WHERE   id    = #{id}
+    </update>
+
+    <update id="deletePerson" parameterType="int">
+        DELETE FROM opuscollege.person
+        WHERE   id   = #{value}
+    </update>
+
+    <update id="updatePersonPhotograph" parameterType="Person">
+        UPDATE  opuscollege.person
+        SET photograph = #{photograph}
+            ,photographName = #{photographName}
+            ,photographMimeType = #{photographMimeType}
+        WHERE   id     = #{id}
+    </update>       
+</mapper>

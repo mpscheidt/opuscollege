@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="yearbook" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="NoDataSection" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="ireport.zoom" value="1.0"/>
+	<parameter name="whereClause" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="image_dir" class="java.io.File" isForPrompting="false">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="institution" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="lang" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="orderClause" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="format" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="nameFormat" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="reportLogo" class="net.sf.jasperreports.engine.JRRenderable" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[net.sf.jasperreports.engine.JRImageRenderer.getInstance($P{image_dir} + "/logo_unza.gif")]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select distinct student.studentcode, person.surnamefull,firstnamesfull,studyplan.studyplandescription,
+studyplancardinaltimeunit.cardinaltimeunitnumber,gradetype.title,gender.description, study.studydescription,
+organizationalunit.organizationalunitdescription,academicyear.description as ayear,nationality.description as nationality,nationality.code,acc_room.code  as room,
+branch.branchdescription,institution.institutiondescription
+from opuscollege.student
+inner join opuscollege.person on student.personid = person.id
+inner join opuscollege.studyplan on studyplan.studentid = student.studentid
+inner join opuscollege.studyplancardinaltimeunit on studyplan.id = studyplancardinaltimeunit.studyplanid
+inner join opuscollege.studygradetype on studyplancardinaltimeunit.studygradetypeid = studygradetype.id
+inner join opuscollege.gradetype on studygradetype.gradetypecode = gradetype.code
+inner join opuscollege.gender on person.gendercode = gender.code
+left outer join opuscollege.nationality on person.nationalitycode = nationality.code
+inner join opuscollege.study on student.primarystudyid =study.id
+inner join opuscollege.organizationalunit on organizationalunit.id=study.organizationalunitid
+inner join opuscollege.academicyear on studygradetype.currentacademicyearid = academicyear.id
+left outer join opuscollege.acc_studentaccommodation on student.studentid = acc_studentaccommodation.studentid
+left outer join opuscollege.acc_room on acc_studentaccommodation.roomid = acc_room.id
+inner join opuscollege.branch on organizationalunit.branchid=branch.id
+inner join opuscollege.institution on branch.institutionid=institution.id
+where
+true $P!{whereClause}]]>
+	</queryString>
+	<field name="studentcode" class="java.lang.String"/>
+	<field name="surnamefull" class="java.lang.String"/>
+	<field name="firstnamesfull" class="java.lang.String"/>
+	<field name="studyplandescription" class="java.lang.String"/>
+	<field name="cardinaltimeunitnumber" class="java.lang.Integer"/>
+	<field name="title" class="java.lang.String"/>
+	<field name="description" class="java.lang.String"/>
+	<field name="studydescription" class="java.lang.String"/>
+	<field name="organizationalunitdescription" class="java.lang.String"/>
+	<field name="ayear" class="java.lang.String"/>
+	<field name="nationality" class="java.lang.String"/>
+	<field name="code" class="java.lang.String"/>
+	<field name="room" class="java.lang.String"/>
+	<field name="branchdescription" class="java.lang.String"/>
+	<field name="institutiondescription" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="203" splitType="Stretch">
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="590" y="157" width="100" height="20"/>
+				<textElement>
+					<font size="10" isItalic="true"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="527" y="157" width="63" height="20"/>
+				<textElement>
+					<font size="10" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Date/Time:]]></text>
+			</staticText>
+			<textField pattern="h.mm a">
+				<reportElement x="702" y="157" width="100" height="20"/>
+				<textElement>
+					<font size="10" isItalic="true"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="2" y="180" width="800" height="20" forecolor="#FFFFFF" backcolor="#006633"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true" isStrikeThrough="false"/>
+				</textElement>
+				<text><![CDATA[Full-Time/Part-Time/Parallel and Distance Education Students]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="156" width="92" height="20"/>
+				<textElement>
+					<font size="12" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Academic year:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="169" y="157" width="59" height="20"/>
+				<textElement>
+					<font size="12" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Semester:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="188" y="98" width="423" height="25"/>
+				<textElement textAlignment="Center">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{branchdescription}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="141" y="68" width="496" height="30"/>
+				<textElement textAlignment="Center">
+					<font size="18" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{institutiondescription}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="231" y="158" width="37" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$F{cardinaltimeunitnumber}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="157" width="69" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{ayear}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="324" y="129" width="131" height="23"/>
+				<textElement textAlignment="Center">
+					<font size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Year Book]]></text>
+			</staticText>
+			<image>
+				<reportElement key="image-1" x="355" y="0" width="100" height="68"/>
+				<imageExpression class="java.lang.String"><![CDATA[$P{reportLogo}]]></imageExpression>
+			</image>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="114" height="20"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="228" y="0" width="84" height="20"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Student Code]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="400" y="0" width="114" height="20"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[School]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="637" y="0" width="71" height="20"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Room]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="324" y="0" width="66" height="20"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Gender]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="527" y="0" width="39" height="20"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Quota]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="727" y="0" width="74" height="20"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nationality]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="23" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="3" width="114" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{surnamefull}.substring(0,1).toUpperCase()+$F{surnamefull}.substring(1)]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="114" y="3" width="114" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{firstnamesfull}.substring(0,1).toUpperCase()+$F{firstnamesfull}.substring(1)]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="228" y="0" width="84" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{studentcode}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="324" y="0" width="66" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{description}.substring(0,1).toUpperCase()+$F{description}.substring(1)]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="400" y="0" width="114" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{organizationalunitdescription}.substring(0,1).toUpperCase()+$F{organizationalunitdescription}.substring(1)]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="727" y="3" width="74" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{nationality}.substring(0,1).toUpperCase()+$F{nationality}.substring(1)]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="637" y="3" width="80" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{room}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="527" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{title}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="60" splitType="Stretch">
+			<textField>
+				<reportElement x="682" y="37" width="80" height="20" forecolor="#000000"/>
+				<textElement textAlignment="Right">
+					<font size="12" isBold="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="762" y="37" width="40" height="20" forecolor="#000000"/>
+				<textElement>
+					<font size="12" isBold="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+	<noData>
+		<band height="50">
+			<staticText>
+				<reportElement x="2" y="10" width="799" height="40"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="32" isBold="false"/>
+				</textElement>
+				<text><![CDATA[- no data -]]></text>
+			</staticText>
+		</band>
+	</noData>
+</jasperReport>

@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
+<!-- 2015-06-30T21:39:10 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="HistoryReportSubjectResult" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" resourceBundle="org/uci/opus/report/messages" uuid="6dc670cf-962e-4085-93dd-12449e348257">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="id" class="java.lang.Integer" isForPrompting="false">
+		<defaultValueExpression><![CDATA[686]]></defaultValueExpression>
+	</parameter>
+	<parameter name="writeWhen" class="java.sql.Timestamp" isForPrompting="false">
+		<defaultValueExpression><![CDATA[java.sql.Timestamp.valueOf("2012-01-10 16:21:50.007269")]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select * from audit.examinationresult_hist
+left outer join opuscollege.subject on examinationresult_hist.subjectId = subject.id
+left outer join opuscollege.staffmember on examinationresult_hist.staffmemberid = staffmember.staffmemberid
+left outer join opuscollege.person on staffmember.personid = person.id
+where examinationresult_hist.id = $P!{id} and examinationresult_hist.writewhen = '$P!{writeWhen}']]>
+	</queryString>
+	<field name="operation" class="java.lang.String"/>
+	<field name="writewho" class="java.lang.String"/>
+	<field name="writewhen" class="java.sql.Timestamp"/>
+	<field name="id" class="java.lang.Integer"/>
+	<field name="examinationid" class="java.lang.Integer"/>
+	<field name="subjectid" class="java.lang.Integer"/>
+	<field name="studyplandetailid" class="java.lang.Integer"/>
+	<field name="examinationresultdate" class="java.sql.Date"/>
+	<field name="attemptnr" class="java.lang.Integer"/>
+	<field name="mark" class="java.lang.String"/>
+	<field name="staffmemberid" class="java.lang.Integer"/>
+	<field name="active" class="java.lang.String"/>
+	<field name="passed" class="java.lang.String"/>
+	<field name="subjectcode" class="java.lang.String"/>
+	<field name="subjectdescription" class="java.lang.String"/>
+	<field name="subjectcontentdescription" class="java.lang.String"/>
+	<field name="primarystudyid" class="java.lang.Integer"/>
+	<field name="targetgroupcode" class="java.lang.String"/>
+	<field name="freechoiceoption" class="java.lang.String"/>
+	<field name="creditamount" class="java.math.BigDecimal"/>
+	<field name="hourstoinvest" class="java.lang.Integer"/>
+	<field name="frequencycode" class="java.lang.String"/>
+	<field name="studytimecode" class="java.lang.String"/>
+	<field name="examtypecode" class="java.lang.String"/>
+	<field name="maximumparticipants" class="java.lang.Integer"/>
+	<field name="brspassingsubject" class="java.lang.String"/>
+	<field name="registrationdate" class="java.sql.Date"/>
+	<field name="currentacademicyearid" class="java.lang.Integer"/>
+	<field name="resulttype" class="java.lang.String"/>
+	<field name="staffmembercode" class="java.lang.String"/>
+	<field name="personid" class="java.lang.Integer"/>
+	<field name="dateofappointment" class="java.sql.Date"/>
+	<field name="appointmenttypecode" class="java.lang.String"/>
+	<field name="stafftypecode" class="java.lang.String"/>
+	<field name="primaryunitofappointmentid" class="java.lang.Integer"/>
+	<field name="institutiontypecode" class="java.lang.String"/>
+	<field name="startworkday" class="java.sql.Time"/>
+	<field name="endworkday" class="java.sql.Time"/>
+	<field name="teachingdaypartcode" class="java.lang.String"/>
+	<field name="supervisingdaypartcode" class="java.lang.String"/>
+	<field name="personcode" class="java.lang.String"/>
+	<field name="surnamefull" class="java.lang.String"/>
+	<field name="surnamealias" class="java.lang.String"/>
+	<field name="firstnamesfull" class="java.lang.String"/>
+	<field name="firstnamesalias" class="java.lang.String"/>
+	<field name="nationalregistrationnumber" class="java.lang.String"/>
+	<field name="civiltitlecode" class="java.lang.String"/>
+	<field name="gradetypecode" class="java.lang.String"/>
+	<field name="gendercode" class="java.lang.String"/>
+	<field name="birthdate" class="java.sql.Date"/>
+	<field name="nationalitycode" class="java.lang.String"/>
+	<field name="placeofbirth" class="java.lang.String"/>
+	<field name="districtofbirthcode" class="java.lang.String"/>
+	<field name="provinceofbirthcode" class="java.lang.String"/>
+	<field name="countryofbirthcode" class="java.lang.String"/>
+	<field name="cityoforigin" class="java.lang.String"/>
+	<field name="administrativepostoforigincode" class="java.lang.String"/>
+	<field name="districtoforigincode" class="java.lang.String"/>
+	<field name="provinceoforigincode" class="java.lang.String"/>
+	<field name="countryoforigincode" class="java.lang.String"/>
+	<field name="civilstatuscode" class="java.lang.String"/>
+	<field name="housingoncampus" class="java.lang.String"/>
+	<field name="identificationtypecode" class="java.lang.String"/>
+	<field name="identificationnumber" class="java.lang.String"/>
+	<field name="identificationplaceofissue" class="java.lang.String"/>
+	<field name="identificationdateofissue" class="java.sql.Date"/>
+	<field name="identificationdateofexpiration" class="java.sql.Date"/>
+	<field name="professioncode" class="java.lang.String"/>
+	<field name="professiondescription" class="java.lang.String"/>
+	<field name="languagefirstcode" class="java.lang.String"/>
+	<field name="languagefirstmasteringlevelcode" class="java.lang.String"/>
+	<field name="languagesecondcode" class="java.lang.String"/>
+	<field name="languagesecondmasteringlevelcode" class="java.lang.String"/>
+	<field name="languagethirdcode" class="java.lang.String"/>
+	<field name="languagethirdmasteringlevelcode" class="java.lang.String"/>
+	<field name="contactpersonemergenciesname" class="java.lang.String"/>
+	<field name="contactpersonemergenciestelephonenumber" class="java.lang.String"/>
+	<field name="bloodtypecode" class="java.lang.String"/>
+	<field name="healthissues" class="java.lang.String"/>
+	<field name="photograph" class="java.lang.Object"/>
+	<field name="remarks" class="java.lang.String"/>
+	<field name="photographname" class="java.lang.String"/>
+	<field name="photographmimetype" class="java.lang.String"/>
+	<field name="publichomepage" class="java.lang.String"/>
+	<field name="socialnetworks" class="java.lang.String"/>
+	<field name="hobbies" class="java.lang.String"/>
+	<field name="motivation" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="32" splitType="Stretch">
+			<textField isStretchWithOverflow="true">
+				<reportElement x="80" y="0" width="60" height="16" uuid="6a8aa7a4-5caa-4598-92f1-5594029a89e0"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{subjectid}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="0" y="0" width="80" height="16" uuid="a4813245-053e-4ba6-8dd5-61034e88a2d9"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{report.historyreportsubjectresult.subjectid} + ":"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="450" y="16" width="50" height="16" uuid="62190899-cbb3-4835-9e11-beea08265039"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{studyplandetailid}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="360" y="16" width="90" height="16" uuid="db3ac030-ff3e-47e8-8a49-8939622fc30a"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{report.historyreportsubjectresult.studyplandetailid} + ":"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="360" y="0" width="90" height="16" uuid="4f879dda-6624-4784-81c8-0cf74c1e5511"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{report.historyreport.resultdate} + ":"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="450" y="0" width="120" height="16" uuid="2b6e610d-ee0b-4290-8ada-b4123c6739cc"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[DateFormat.getDateInstance(DateFormat.MEDIUM, $P{REPORT_LOCALE}).format($F{examinationresultdate})]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="600" y="0" width="60" height="16" uuid="761dc249-01a1-4923-8c3d-672edbaf2908"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{report.historyreport.mark} + ":"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="660" y="0" width="60" height="16" uuid="bcaa2bc2-664b-4c06-8efd-3541b4e79a28"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{mark}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="0" y="16" width="80" height="16" uuid="82d2148b-1f36-4d75-a80c-0d5135b798ba"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{report.historyreportsubjectresult.staffmemberid} + ":"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="80" y="16" width="60" height="16" uuid="79e47edb-78b5-4070-b31e-0f86989b0348"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{staffmemberid}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="720" y="16" width="60" height="16" uuid="fb633bc7-cf1d-4346-9e01-78e4a358bfc1"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{general.active} + ":"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="780" y="16" width="40" height="16" uuid="efd6bfad-43ed-431a-adb8-aadde4758f4f"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{active}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="720" y="0" width="60" height="16" uuid="e16c0a87-9879-4e11-a464-091075b8554f"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{report.historyreport.passed} + ":"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="780" y="0" width="60" height="16" uuid="db4be1a0-4658-47ab-973e-3c5f13736f67"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{passed}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="140" y="0" width="60" height="16" uuid="f7903ef3-59c8-4c46-99c2-d2885d2dcc41"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{general.subject} + ":"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="200" y="0" width="160" height="16" uuid="c2d22270-bd93-4bcb-b7bc-1435c91a3043"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{subjectdescription}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="140" y="16" width="60" height="16" uuid="b02e49d6-83ef-4019-b998-c1975af12904"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{general.staffmember} + ":"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="200" y="16" width="160" height="16" uuid="f1600175-2555-4d0a-9b99-2e0511a6233e"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{firstnamesfull} + " " + $F{surnamefull}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="500" y="16" width="60" height="16" uuid="94e801dd-8ad9-4c6a-8eca-3a4c68e79508"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{report.historyreportexaminationresult.examinationid} + ":"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="560" y="16" width="50" height="16" uuid="825e53f1-3dc0-46cd-920f-18b3a3541416"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{examinationid}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="610" y="16" width="80" height="16" uuid="cb08cf2e-3c18-48c4-a591-e9f1e1532c8e"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{report.historyreportexaminationresult.attemptnr} + ":"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="690" y="16" width="30" height="16" uuid="f1d63007-ef24-4488-b703-0eea18081819"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{attemptnr}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

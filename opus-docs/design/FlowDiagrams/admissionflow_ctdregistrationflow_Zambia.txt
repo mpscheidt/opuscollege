@@ -1,0 +1,19 @@
+UNZA - admission flow
+
+1. waiting for payment initial admission				Finance
+
+2. Waiting for selection : 
+	cut-off point (only bachelors) / select masterstudents (master)	DEAN / HOD
+
+3. approved admission / reject admission				-
+
+
+UNZA - ctd registration flow:
+
+1. waiting for payment	ctd. registration				Finance
+
+2. customize programme (electives, exemptions, etc.)			DEAN / HOD
+
+3. waiting for approval of programme					DEAN / HOD
+
+4. actively registered / reject						-

@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+  ***** BEGIN LICENSE BLOCK *****
+  Version: MPL 1.1/GPL 2.0/LGPL 2.1
+  
+  The contents of this file are subject to the Mozilla Public License Version
+  1.1 (the "License"); you may not use this file except in compliance with
+  the License. You may obtain a copy of the License at
+  http://www.mozilla.org/MPL/
+  
+  Software distributed under the License is distributed on an "AS IS" basis,
+  WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+  for the specific language governing rights and limitations under the
+  License.
+  
+  The Original Code is Opus-College fee module code.
+  
+  The Initial Developer of the Original Code is
+  Center for Information Services, Radboud University Nijmegen.
+  Portions created by the Initial Developer are Copyright (C) 2008
+  the Initial Developer. All Rights Reserved.
+  
+  Contributor(s):
+    For Java files, see Javadoc @author tags.
+  
+  Alternatively, the contents of this file may be used under the terms of
+  either the GNU General Public License Version 2 or later (the "GPL"), or
+  the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+  in which case the provisions of the GPL or the LGPL are applicable instead
+  of those above. If you wish to allow use of your version of this file only
+  under the terms of either the GPL or the LGPL, and not to allow others to
+  use your version of this file under the terms of the MPL, indicate your
+  decision by deleting the provisions above and replace them with the notice
+  and other provisions required by the GPL or the LGPL. If you do not delete
+  the provisions above, a recipient may use your version of this file under
+  the terms of any one of the MPL, the GPL or the LGPL.
+  
+  ***** END LICENSE BLOCK *****
+--><!--Converted at: Fri Feb 26 10:49:11 CET 2016-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.uci.opus.fee.persistence.PaymentMapper">
+
+    <select id="findPaymentsForStudent" parameterType="int" resultType="Payment">
+	    SELECT  opuscollege.fee_payment.*
+        FROM	opuscollege.fee_payment
+        WHERE 	fee_payment.studentId = #{value}
+        ORDER BY fee_payment.feeId, fee_payment.payDate, fee_payment.installmentNumber
+    </select>
+
+    <select id="findPayment" parameterType="int" resultType="Payment">
+		SELECT  opuscollege.fee_payment.*
+		FROM	opuscollege.fee_payment
+		WHERE	fee_payment.id = #{value}
+    </select>
+
+    <select id="findPaymentByParams" parameterType="map" resultType="Payment">
+		SELECT  opuscollege.fee_payment.*
+		FROM	opuscollege.fee_payment
+		WHERE	fee_payment.studentId = #{studentId}
+		AND		fee_payment.payDate = #{payDate}
+		AND		fee_payment.sumPaid = #{sumPaid}
+		AND		fee_payment.subjectId = #{feeId}
+		AND 	fee_payment.subjectBlockId = #{studentBalanceId}
+		AND     fee_payment.installmentNumber = #{installmentNumber}
+		<!--  AND 	fee_payment.studyYearId = #{studyYearId}-->
+    </select>
+
+    <select id="findPaymentsByParams" parameterType="map" resultType="Payment">
+        SELECT  opuscollege.fee_payment.*
+        FROM    opuscollege.fee_payment
+        WHERE   true
+        <if test="studentId != null">
+            AND fee_payment.studentId = #{studentId}
+        </if>
+        <if test="payDate != null">
+        AND     fee_payment.payDate = #{payDate}
+        </if>
+        <if test="sumPaid != null">
+        AND     fee_payment.sumPaid = #{sumPaid}
+        </if>
+        <if test="feeId != null">
+        AND     fee_payment.feeId = #{feeId}
+        </if>
+        <if test="studentBalanceId != null">
+        AND     fee_payment.studentBalanceId = #{studentBalanceId}
+        </if>
+        <if test="installmentNumber != null">
+        AND     fee_payment.installmentNumber = #{installmentNumber}
+        </if>
+    </select>
+
+    <insert id="addPayment" parameterType="Payment">
+        INSERT INTO
+        	opuscollege.fee_payment (
+		        payDate
+		        ,studentId
+		        ,feeId
+		        ,studentBalanceId
+		        ,installmentNumber
+		        ,sumPaid
+		        ,active
+		        ) values (
+		        #{payDate}
+		        ,#{studentId}
+		        ,#{feeId}
+		        ,#{studentBalanceId}
+		        ,#{installmentNumber}
+		        ,#{sumPaid}
+		        ,#{active}
+        	)
+        <selectKey keyProperty="id" resultType="int">
+            SELECT currVal('opuscollege.fee_paymentSeq')
+        </selectKey> 
+    </insert>
+
+    <insert id="addPaymentHistory" parameterType="Payment">
+        INSERT INTO
+            audit.fee_payment_hist (
+                operation
+                ,writeWho
+        <!--  , writeWhen: is written automatically-->
+                ,id
+                ,payDate
+                ,studentId
+                ,feeId
+                ,studentBalanceId
+                ,installmentNumber
+                ,sumPaid
+                ,active
+                ) values (
+                'I'
+                ,#{writeWho}
+                ,#{id}
+                ,#{payDate}
+                ,#{studentId}
+                ,#{feeId}
+                ,#{studentBalanceId}
+                ,#{installmentNumber}
+                ,#{sumPaid}
+                ,#{active}
+            )
+    </insert>
+
+    <update id="updatePayment" parameterType="Payment">
+        UPDATE	opuscollege.fee_payment
+	    SET		payDate			= #{payDate}
+	        	,studentId    	= #{studentId}
+                ,feeId          = #{feeId}
+                ,studentBalanceId = #{studentBalanceId}
+                ,installmentNumber = #{installmentNumber}
+	        	,sumPaid      	= #{sumPaid}
+	        	,active        	= #{active}
+	    WHERE	id = #{id}
+    </update>
+
+    <insert id="updatePaymentHistory" parameterType="Payment">
+        INSERT INTO
+            audit.fee_payment_hist (
+                operation
+                ,writeWho
+        <!--  , writeWhen: is written automatically-->
+                ,id
+                ,payDate
+                ,studentId
+                ,feeId
+                ,studentBalanceId
+                ,installmentNumber
+                ,sumPaid
+                ,active
+                ) values (
+                'U'
+                ,#{writeWho}
+                ,#{id}
+                ,#{payDate}
+                ,#{studentId}
+                ,#{feeId}
+                ,#{studentBalanceId}
+                ,#{installmentNumber}
+                ,#{sumPaid}
+                ,#{active}
+            )
+    </insert>
+
+    <delete id="deletePayment" parameterType="int">
+        DELETE 
+        FROM	opuscollege.fee_payment
+        WHERE	id  = #{value}
+    </delete>
+
+    <insert id="deletePaymentHistory" parameterType="Payment">
+        INSERT INTO
+            audit.fee_payment_hist (
+                operation
+                ,writeWho
+        <!--  , writeWhen: is written automatically-->
+                ,id
+                ,payDate
+                ,studentId
+                ,feeId
+                ,studentBalanceId
+                ,installmentNumber
+                ,sumPaid
+                ,active
+                ) values (
+                'D'
+                ,#{writeWho}
+                ,#{id}
+                ,#{payDate}
+                ,#{studentId}
+                ,#{feeId}
+                ,#{studentBalanceId}
+                ,#{installmentNumber}
+                ,#{sumPaid}
+                ,#{active}
+            )
+    </insert>
+
+</mapper>

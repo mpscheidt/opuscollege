@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ***** BEGIN LICENSE BLOCK *****
+  Version: MPL 1.1/GPL 2.0/LGPL 2.1
+  
+  The contents of this file are subject to the Mozilla Public License Version
+  1.1 (the "License"); you may not use this file except in compliance with
+  the License. You may obtain a copy of the License at
+  http://www.mozilla.org/MPL/
+  
+  Software distributed under the License is distributed on an "AS IS" basis,
+  WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+  for the specific language governing rights and limitations under the
+  License.
+  
+  The Original Code is Opus-College college module code.
+  
+  The Initial Developer of the Original Code is
+  Center for Information Services, Radboud University Nijmegen.
+  Portions created by the Initial Developer are Copyright (C) 2008
+  the Initial Developer. All Rights Reserved.
+  
+  Contributor(s):
+    For Java files, see Javadoc @author tags.
+  
+  Alternatively, the contents of this file may be used under the terms of
+  either the GNU General Public License Version 2 or later (the "GPL"), or
+  the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+  in which case the provisions of the GPL or the LGPL are applicable instead
+  of those above. If you wish to allow use of your version of this file only
+  under the terms of either the GPL or the LGPL, and not to allow others to
+  use your version of this file under the terms of the MPL, indicate your
+  decision by deleting the provisions above and replace them with the notice
+  and other provisions required by the GPL or the LGPL. If you do not delete
+  the provisions above, a recipient may use your version of this file under
+  the terms of any one of the MPL, the GPL or the LGPL.
+  
+  ***** END LICENSE BLOCK *****
+-->
+
+<dataset>
+
+  <opuscollege.academicyear id="1" />
+  <opuscollege.academicyear id="2" />
+  <opuscollege.academicyear id="3" />
+
+  <opuscollege.institution id="107" institutioncode="UCM" institutionTypeCode="3"/>
+  <opuscollege.branch id="118" branchcode="05" institutionid="107" />
+  <opuscollege.organizationalunit id="18" organizationalunitcode="O1" organizationalunitdescription="Faculdade de Ciencias de Saude" branchid="118" />
+  <opuscollege.study id="1213" organizationalunitid="18" />
+  <!-- Bachelor with 6 semesters spanning over three academic years -->
+  <opuscollege.studygradetype id="256" studyid="1213" gradetypecode="B" active="Y" currentacademicyearid="1" cardinaltimeunitcode="2" numberofcardinaltimeunits="6" maxnumberofcardinaltimeunits="0" numberofsubjectspercardinaltimeunit="2" maxnumberofsubjectspercardinaltimeunit="4" studytimecode="1" studyformcode="1" maxnumberoffailedsubjectspercardinaltimeunit="1" studyintensitycode="" maxnumberofstudents="0" />
+  <opuscollege.studygradetype id="262" studyid="1213" gradetypecode="B" active="Y" currentacademicyearid="2" cardinaltimeunitcode="2" numberofcardinaltimeunits="6" maxnumberofcardinaltimeunits="0" numberofsubjectspercardinaltimeunit="2" maxnumberofsubjectspercardinaltimeunit="4" studytimecode="1" studyformcode="1" maxnumberoffailedsubjectspercardinaltimeunit="1" studyintensitycode="" maxnumberofstudents="0" />
+  <opuscollege.studygradetype id="270" studyid="1213" gradetypecode="B" active="Y" currentacademicyearid="3" cardinaltimeunitcode="2" numberofcardinaltimeunits="6" maxnumberofcardinaltimeunits="0" numberofsubjectspercardinaltimeunit="2" maxnumberofsubjectspercardinaltimeunit="4" studytimecode="1" studyformcode="1" maxnumberoffailedsubjectspercardinaltimeunit="1" studyintensitycode="" maxnumberofstudents="0" />
+  
+  <opuscollege.subject id="1690" currentacademicyearid="1" subjectcode="BIOL001" subjectdescription="Biology 1" primarystudyid="1213" active="Y" creditamount="1.0" studytimecode="1" />
+  <opuscollege.subject id="1685" currentacademicyearid="1" subjectcode="PHYS001" subjectdescription="Physics 1" primarystudyid="1213" active="Y" creditamount="1.0" studytimecode="1" />
+  <opuscollege.subject id="1709" currentacademicyearid="1" subjectcode="BIOL002" subjectdescription="Biology 2" primarystudyid="1213" active="Y" creditamount="1.0" studytimecode="1" />
+  <opuscollege.subject id="1713" currentacademicyearid="1" subjectcode="PHYS002" subjectdescription="Physics 2" primarystudyid="1213" active="Y" creditamount="1.0" studytimecode="1" />
+  <opuscollege.subject id="1714" currentacademicyearid="2" subjectcode="BIOL003" subjectdescription="Biology 3" primarystudyid="1213" active="Y" creditamount="1.0" studytimecode="1" />
+  <opuscollege.subject id="1716" currentacademicyearid="2" subjectcode="PHYS003" subjectdescription="Physics 3" primarystudyid="1213" active="Y" creditamount="1.0" studytimecode="1" />
+  <opuscollege.subject id="1719" currentacademicyearid="2" subjectcode="BIOL004" subjectdescription="Biology 4" primarystudyid="1213" active="Y" creditamount="1.0" studytimecode="1" />
+  <opuscollege.subject id="1720" currentacademicyearid="2" subjectcode="PHYS004" subjectdescription="Physics 4" primarystudyid="1213" active="Y" creditamount="1.0" studytimecode="1" />
+  <opuscollege.subject id="1960" currentacademicyearid="3" subjectcode="PHYS005" subjectdescription="Physics 5" primarystudyid="1213" active="Y" creditamount="1.0" studytimecode="1" />
+  <opuscollege.subject id="1959" currentacademicyearid="3" subjectcode="PHYS006" subjectdescription="Physics 6" primarystudyid="1213" active="Y" creditamount="1.0" studytimecode="1" />
+
+  <opuscollege.subjectstudygradetype id="2099" subjectid="1690" studygradetypeid="256" active="Y" cardinaltimeunitnumber="1" rigiditytypecode="1"/>
+  <opuscollege.subjectstudygradetype id="2094" subjectid="1685" studygradetypeid="256" active="Y" cardinaltimeunitnumber="1" rigiditytypecode="1"/>
+  <opuscollege.subjectstudygradetype id="2111" subjectid="1709" studygradetypeid="256" active="Y" cardinaltimeunitnumber="2" rigiditytypecode="1"/>
+  <opuscollege.subjectstudygradetype id="2115" subjectid="1713" studygradetypeid="256" active="Y" cardinaltimeunitnumber="2" rigiditytypecode="1"/>
+  <opuscollege.subjectstudygradetype id="2116" subjectid="1714" studygradetypeid="262" active="Y" cardinaltimeunitnumber="3" rigiditytypecode="1"/>
+  <opuscollege.subjectstudygradetype id="2117" subjectid="1716" studygradetypeid="262" active="Y" cardinaltimeunitnumber="3" rigiditytypecode="1"/>
+  <opuscollege.subjectstudygradetype id="2121" subjectid="1719" studygradetypeid="262" active="Y" cardinaltimeunitnumber="4" rigiditytypecode="1"/>
+  <opuscollege.subjectstudygradetype id="2122" subjectid="1720" studygradetypeid="262" active="Y" cardinaltimeunitnumber="4" rigiditytypecode="1"/>
+  <opuscollege.subjectstudygradetype id="2363" subjectid="1960" studygradetypeid="270" active="Y" cardinaltimeunitnumber="5" rigiditytypecode="1"/>
+  <opuscollege.subjectstudygradetype id="2364" subjectid="1959" studygradetypeid="270" active="Y" cardinaltimeunitnumber="6" rigiditytypecode="1"/>
+
+  <opuscollege.organizationalunit id="19" organizationalunitcode="O2" organizationalunitdescription="A Department" branchid="118" />
+  <opuscollege.study id="39" organizationalunitid="19" />
+<!--   <opuscollege.studygradetype id="59" studyid="39" gradetypecode="BSC" active="Y" currentacademicyearid="1"  /> -->
+
+  <opuscollege.person id="16" personcode="61" surnamefull="Juergens" firstnamesfull="Udo" />
+  <opuscollege.staffmember staffmemberid="1" staffmembercode="ju" personid="16" primaryunitofappointmentid="18" />
+
+  <opuscollege.person id="26" personcode="71" surnamefull="Hesse" firstnamesfull="Hermann" />
+  <opuscollege.student studentid="1" studentcode="hh" personid="26" />
+
+  <opuscollege.person id="36" personcode="81" surnamefull="Adams" firstnamesfull="Mary" />
+  <opuscollege.student studentid="317" studentcode="am" personid="36" />
+  <opuscollege.studyplan id="255" studentid="317" studyplandescription="Physics - Bachelor" active="Y" studyplanstatuscode="3" studyid="1213" gradetypecode="B" />
+<!--   <opuscollege.studyplancardinaltimeunit id="415" studyplanid="255" cardinaltimeunitnumber="1" progressstatuscode="01" active="Y" studygradetypeid="256" cardinaltimeunitstatuscode="10" studyintensitycode="F"/> -->
+  <opuscollege.studyplancardinaltimeunit id="485" studyplanid="255" cardinaltimeunitnumber="2" progressstatuscode="01" active="Y" studygradetypeid="256" cardinaltimeunitstatuscode="10" studyintensitycode="F"/>
+  <opuscollege.studyplancardinaltimeunit id="486" studyplanid="255" cardinaltimeunitnumber="3" progressstatuscode="01" active="Y" studygradetypeid="262" cardinaltimeunitstatuscode="10" studyintensitycode="F"/>
+  <opuscollege.studyplancardinaltimeunit id="487" studyplanid="255" cardinaltimeunitnumber="4" progressstatuscode="01" active="Y" studygradetypeid="262" cardinaltimeunitstatuscode="10" studyintensitycode="F"/>
+  <opuscollege.studyplancardinaltimeunit id="488" studyplanid="255" cardinaltimeunitnumber="5" progressstatuscode="01" active="Y" studygradetypeid="270" cardinaltimeunitstatuscode="10" studyintensitycode="F"/>
+  <opuscollege.studyplancardinaltimeunit id="489" studyplanid="255" cardinaltimeunitnumber="6" progressstatuscode=""   active="Y" studygradetypeid="270" cardinaltimeunitstatuscode="10" studyintensitycode="F"/>
+
+  <!-- Student immediately starts in semester 2. Subjects of 1st semester are exempted. -->
+  <opuscollege.studyplandetail id="1018" subjectid="1690" exempted="true"  studyplanid="255" subjectblockid="0" active="Y" studyplancardinaltimeunitid="485" studygradetypeid="256"/>
+  <opuscollege.studyplandetail id="1017" subjectid="1685" exempted="true"  studyplanid="255" subjectblockid="0" active="Y" studyplancardinaltimeunitid="485" studygradetypeid="256"/>
+  <opuscollege.studyplandetail id="1339" subjectid="1709" exempted="false" studyplanid="255" subjectblockid="0" active="Y" studyplancardinaltimeunitid="485" studygradetypeid="256"/>
+  <opuscollege.studyplandetail id="1344" subjectid="1713" exempted="false" studyplanid="255" subjectblockid="0" active="Y" studyplancardinaltimeunitid="485" studygradetypeid="256"/>
+  <opuscollege.studyplandetail id="1345" subjectid="1714" exempted="false" studyplanid="255" subjectblockid="0" active="Y" studyplancardinaltimeunitid="486" studygradetypeid="262"/>
+  <opuscollege.studyplandetail id="1346" subjectid="1716" exempted="false" studyplanid="255" subjectblockid="0" active="Y" studyplancardinaltimeunitid="486" studygradetypeid="262"/>
+  <opuscollege.studyplandetail id="1349" subjectid="1719" exempted="false" studyplanid="255" subjectblockid="0" active="Y" studyplancardinaltimeunitid="487" studygradetypeid="262"/>
+  <opuscollege.studyplandetail id="1350" subjectid="1720" exempted="false" studyplanid="255" subjectblockid="0" active="Y" studyplancardinaltimeunitid="487" studygradetypeid="262"/>
+  <opuscollege.studyplandetail id="1353" subjectid="1960" exempted="false" studyplanid="255" subjectblockid="0" active="Y" studyplancardinaltimeunitid="488" studygradetypeid="270"/>
+  <opuscollege.studyplandetail id="1357" subjectid="1959" exempted="false" studyplanid="255" subjectblockid="0" active="Y" studyplancardinaltimeunitid="489" studygradetypeid="270"/>
+
+  <opuscollege.subjectresult id="448" studyplandetailid="1339" subjectid="1709" subjectresultdate="2014-09-16" mark="56" staffmemberid="1" active="Y" passed="Y" endgradecomment="B"/>
+  <opuscollege.subjectresult id="507" studyplandetailid="1344" subjectid="1713" subjectresultdate="2015-01-08" mark="66" staffmemberid="1" active="Y" passed="Y" endgradecomment="B+"/>
+  <opuscollege.subjectresult id="508" studyplandetailid="1345" subjectid="1714" subjectresultdate="2015-01-08" mark="77" staffmemberid="1" active="Y" passed="Y" endgradecomment="A"/>
+  <opuscollege.subjectresult id="509" studyplandetailid="1346" subjectid="1716" subjectresultdate="2015-01-08" mark="77" staffmemberid="1" active="Y" passed="Y" endgradecomment="A"/>
+  <opuscollege.subjectresult id="512" studyplandetailid="1349" subjectid="1719" subjectresultdate="2015-01-08" mark="88" staffmemberid="1" active="Y" passed="Y" endgradecomment="A+"/>
+  <opuscollege.subjectresult id="514" studyplandetailid="1350" subjectid="1720" subjectresultdate="2015-01-08" mark="88" staffmemberid="1" active="Y" passed="Y" endgradecomment="A+"/>
+  <opuscollege.subjectresult id="516" studyplandetailid="1353" subjectid="1960" subjectresultdate="2015-01-08" mark="74" staffmemberid="1" active="Y" passed="Y" endgradecomment="B+"/>
+  <opuscollege.subjectresult id="518" studyplandetailid="1357" subjectid="1959" subjectresultdate="2015-01-08" mark="85" staffmemberid="1" active="Y" passed="Y" endgradecomment="A"/>
+
+</dataset>

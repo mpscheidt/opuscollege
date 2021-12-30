@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ***** BEGIN LICENSE BLOCK *****
+  Version: MPL 1.1/GPL 2.0/LGPL 2.1
+  
+  The contents of this file are subject to the Mozilla Public License Version
+  1.1 (the "License"); you may not use this file except in compliance with
+  the License. You may obtain a copy of the License at
+  http://www.mozilla.org/MPL/
+  
+  Software distributed under the License is distributed on an "AS IS" basis,
+  WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+  for the specific language governing rights and limitations under the
+  License.
+  
+  The Original Code is Opus-College college module code.
+  
+  The Initial Developer of the Original Code is
+  Center for Information Services, Radboud University Nijmegen.
+  Portions created by the Initial Developer are Copyright (C) 2008
+  the Initial Developer. All Rights Reserved.
+  
+  Contributor(s):
+    For Java files, see Javadoc @author tags.
+  
+  Alternatively, the contents of this file may be used under the terms of
+  either the GNU General Public License Version 2 or later (the "GPL"), or
+  the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+  in which case the provisions of the GPL or the LGPL are applicable instead
+  of those above. If you wish to allow use of your version of this file only
+  under the terms of either the GPL or the LGPL, and not to allow others to
+  use your version of this file under the terms of the MPL, indicate your
+  decision by deleting the provisions above and replace them with the notice
+  and other provisions required by the GPL or the LGPL. If you do not delete
+  the provisions above, a recipient may use your version of this file under
+  the terms of any one of the MPL, the GPL or the LGPL.
+  
+  ***** END LICENSE BLOCK *****
+-->
+
+<dataset>
+
+<!-- Test data to calculate study plan result for a student with all subject results available.
+     Test data comes from student 705110108.
+     See 705110108_Student_profile_sheet.xls for information purposes.
+     Verify that the calculation of the final result is correct. 
+     
+     -->
+
+  <opuscollege.academicyear id="50" />
+  <opuscollege.academicyear id="51" />
+  <opuscollege.academicyear id="52" />
+  <opuscollege.academicyear id="53" />
+
+  <opuscollege.institution id="107" institutioncode="UCM" institutionTypeCode="3"/>
+  <opuscollege.branch id="118" branchcode="05" institutionid="107" />
+  <opuscollege.organizationalunit id="18" organizationalunitcode="O1" organizationalunitdescription="Faculdade de Ciencias de Saude" branchid="118" />
+  <opuscollege.study id="29" organizationalunitid="18" />
+
+  <opuscollege.studygradetype id="801"  studyid="29" gradetypecode="LIC" active="Y" contactid="22" registrationdate="2008-11-20" writewho="opuscollege" writewhen="2012-01-05 12:45:09.882889" studytimecode="1" currentacademicyearid="50" cardinaltimeunitcode="1" numberofcardinaltimeunits="4" maxnumberofcardinaltimeunits="7" numberofsubjectspercardinaltimeunit="0" maxnumberofsubjectspercardinaltimeunit="0" studyformcode="1" maxnumberoffailedsubjectspercardinaltimeunit="3" studyintensitycode="F" maxnumberofstudents="0"/>
+  <opuscollege.studygradetype id="1029" studyid="29" gradetypecode="LIC" active="Y" contactid="22" registrationdate="2008-11-20" writewho="opuscollege" writewhen="2012-02-13 08:25:45.089833" studytimecode="1" currentacademicyearid="51" cardinaltimeunitcode="1" numberofcardinaltimeunits="4" maxnumberofcardinaltimeunits="7" numberofsubjectspercardinaltimeunit="0" maxnumberofsubjectspercardinaltimeunit="0" studyformcode="1" maxnumberoffailedsubjectspercardinaltimeunit="3" studyintensitycode="F" maxnumberofstudents="0"/>
+  <opuscollege.studygradetype id="1544" studyid="29" gradetypecode="LIC" active="Y" contactid="22" registrationdate="2008-11-20" writewho="opuscollege" writewhen="2013-01-25 17:45:06.32362" studytimecode="1" currentacademicyearid="52" cardinaltimeunitcode="1" numberofcardinaltimeunits="4" maxnumberofcardinaltimeunits="7" numberofsubjectspercardinaltimeunit="0" maxnumberofsubjectspercardinaltimeunit="0" studyformcode="1" maxnumberoffailedsubjectspercardinaltimeunit="3" studyintensitycode="F" maxnumberofstudents="0"/>
+  <opuscollege.studygradetype id="2117" studyid="29" gradetypecode="LIC" active="Y" contactid="2115" registrationdate="2014-02-17" writewho="opuscollege" writewhen="2014-02-17 15:30:16.962595" studytimecode="1" currentacademicyearid="53" cardinaltimeunitcode="1" numberofcardinaltimeunits="4" maxnumberofcardinaltimeunits="0" numberofsubjectspercardinaltimeunit="0" maxnumberofsubjectspercardinaltimeunit="0" brspassingsubject="" studyformcode="1" maxnumberoffailedsubjectspercardinaltimeunit="3" studyintensitycode="" maxnumberofstudents="0"/>
+
+  <opuscollege.subject id="7648" subjectcode="LEE 111"  subjectdescription="OSCE/Est&#225;gio na Medicina" primarystudyid="29" active="Y" creditamount="10.0" hourstoinvest="40" frequencycode="0" studytimecode="1" maximumparticipants="0" brspassingsubject="9.5" registrationdate="2009-08-10" writewho="opuscollege" writewhen="2012-01-05 12:45:09.882889" currentacademicyearid="50"/>
+  <opuscollege.subject id="10814" subjectcode="LE 101"  subjectdescription="Introdu&#231;&#227;o &#225; Enfermagem" primarystudyid="29" active="Y" creditamount="4.0" hourstoinvest="40" frequencycode="0" studytimecode="1" maximumparticipants="0" brspassingsubject="9.5" registrationdate="2009-07-23" writewho="opuscollege" writewhen="2012-01-05 12:45:09.882889" currentacademicyearid="50"/>
+  <opuscollege.subject id="10818" subjectcode="LE 110"  subjectdescription="Ingl&#234;s" primarystudyid="29" active="Y" creditamount="4.0" hourstoinvest="40" frequencycode="0" studytimecode="1" maximumparticipants="0" brspassingsubject="9.5" registrationdate="2009-07-23" writewho="opuscollege" writewhen="2012-01-05 12:45:09.882889" currentacademicyearid="50"/>
+  <opuscollege.subject id="10822" subjectcode="LE 109"  subjectdescription="Inform&#225;tica " primarystudyid="29" active="Y" creditamount="4.0" hourstoinvest="40" frequencycode="0" studytimecode="1" maximumparticipants="0" brspassingsubject="9.5" registrationdate="2009-07-23" writewho="opuscollege" writewhen="2012-01-05 12:45:09.882889" currentacademicyearid="50"/>
+  <opuscollege.subject id="10826" subjectcode="LE 103"  subjectdescription="Enfermagem B&#225;sica e o Sistema Digestivo " primarystudyid="29" active="Y" creditamount="4.0" hourstoinvest="40" frequencycode="0" studytimecode="1" maximumparticipants="0" brspassingsubject="9.5" registrationdate="2009-07-23" writewho="opuscollege" writewhen="2012-01-05 12:45:09.882889" currentacademicyearid="50"/>
+  <opuscollege.subject id="10830" subjectcode="LE 104"  subjectdescription="Enfermagem B&#225;sica e o Sistema Cardiovascular e Respirat&#243;rio " primarystudyid="29" active="Y" creditamount="4.0" hourstoinvest="40" frequencycode="0" studytimecode="1" maximumparticipants="0" brspassingsubject="9.5" registrationdate="2009-07-23" writewho="opuscollege" writewhen="2012-01-05 12:45:09.882889" currentacademicyearid="50"/>
+  <opuscollege.subject id="10834" subjectcode="LE 105"  subjectdescription="Enfermagem B&#225;sica e o Sistema Urin&#225;rio e Pele" primarystudyid="29" active="Y" creditamount="4.0" hourstoinvest="40" frequencycode="0" studytimecode="1" maximumparticipants="0" brspassingsubject="9.5" registrationdate="2009-07-23" writewho="opuscollege" writewhen="2012-01-05 12:45:09.882889" currentacademicyearid="50"/>
+  <opuscollege.subject id="10838" subjectcode="LE 106"  subjectdescription="Enfermagem B&#225;sica e o Sistema Reprodutor e End&#243;crino" primarystudyid="29" active="Y" creditamount="4.0" hourstoinvest="40" frequencycode="0" studytimecode="1" maximumparticipants="0" brspassingsubject="9.5" registrationdate="2009-07-23" writewho="opuscollege" writewhen="2012-01-05 12:45:09.882889" currentacademicyearid="50"/>
+  <opuscollege.subject id="10842" subjectcode="LE 107"  subjectdescription="Enfermagem B&#225;sica e o Sistema Hematol&#243;gico e Iimunit&#225;rio " primarystudyid="29" active="Y" creditamount="4.0" hourstoinvest="40" frequencycode="0" studytimecode="1" maximumparticipants="0" brspassingsubject="9.5" registrationdate="2009-07-23" writewho="opuscollege" writewhen="2012-01-05 12:45:09.882889" currentacademicyearid="50"/>
+  <opuscollege.subject id="10846" subjectcode="LE 102"  subjectdescription="Enfermagem B&#225;sica e o Sistema Osteoarticular e Muscular" primarystudyid="29" active="Y" creditamount="4.0" hourstoinvest="40" frequencycode="0" studytimecode="1" maximumparticipants="0" brspassingsubject="9.5" registrationdate="2009-07-23" writewho="opuscollege" writewhen="2012-01-05 12:45:09.882889" currentacademicyearid="50"/>
+  <opuscollege.subject id="10850" subjectcode="LE 108"  subjectdescription="Enfermagem B&#225;sica e o Sistema Neurosensorial" primarystudyid="29" active="Y" creditamount="4.0" hourstoinvest="40" frequencycode="0" studytimecode="1" maximumparticipants="0" brspassingsubject="9.5" registrationdate="2009-07-23" writewho="opuscollege" writewhen="2012-01-05 12:45:09.882889" currentacademicyearid="50"/>
+  <opuscollege.subject id="12330" subjectcode="LEE 209" subjectdescription="Est&#225;gio na Cirurgia e Cirurgia-Especialidades " primarystudyid="29" active="Y" creditamount="20.0" hourstoinvest="40" frequencycode="0" studytimecode="1" maximumparticipants="0" brspassingsubject="9.5" registrationdate="2009-07-23" writewho="opuscollege" writewhen="2012-02-13 08:25:45.089833" currentacademicyearid="51"/>
+  <opuscollege.subject id="12333" subjectcode="LE 205"  subjectdescription="Enfermagem M&#233;dico-Cir&#250;rgica do Sistema Neurosensorial" primarystudyid="29" active="Y" creditamount="4.0" hourstoinvest="40" frequencycode="0" studytimecode="1" maximumparticipants="0" brspassingsubject="9.5" registrationdate="2009-07-23" writewho="opuscollege" writewhen="2012-02-13 08:25:45.089833" currentacademicyearid="51"/>
+  <opuscollege.subject id="12335" subjectcode="LE 206"  subjectdescription="Enfermagem M&#233;dico-Cir&#250;rgica do Sistema Osteoarticular e Muscular" primarystudyid="29" active="Y" creditamount="4.0" hourstoinvest="40" frequencycode="0" studytimecode="1" maximumparticipants="0" brspassingsubject="9.5" registrationdate="2009-07-23" writewho="opuscollege" writewhen="2012-02-13 08:25:45.089833" currentacademicyearid="51"/>
+  <opuscollege.subject id="12336" subjectcode="LE 207"  subjectdescription="Enfermagem M&#233;dico-Cir&#250;rgica em Ginecologia " primarystudyid="29" active="Y" creditamount="4.0" hourstoinvest="40" frequencycode="0" studytimecode="1" maximumparticipants="0" brspassingsubject="9.5" registrationdate="2009-07-23" writewho="opuscollege" writewhen="2012-02-13 08:25:45.089833" currentacademicyearid="51"/>
+  <opuscollege.subject id="12338" subjectcode="LE 208"  subjectdescription="Enfermagem Obst&#233;trica" primarystudyid="29" active="Y" creditamount="4.0" hourstoinvest="40" frequencycode="0" studytimecode="1" maximumparticipants="0" brspassingsubject="9.5" registrationdate="2009-07-23" writewho="opuscollege" writewhen="2012-02-13 08:25:45.089833" currentacademicyearid="51"/>
+  <opuscollege.subject id="12341" subjectcode="LE 201"  subjectdescription="Enfermagem M&#233;dico-Cir&#250;rgica do Sistema Digestivo " primarystudyid="29" active="Y" creditamount="4.0" hourstoinvest="40" frequencycode="0" studytimecode="1" maximumparticipants="0" brspassingsubject="9.5" registrationdate="2009-07-23" writewho="opuscollege" writewhen="2012-02-13 08:25:45.089833" currentacademicyearid="51"/>
+  <opuscollege.subject id="12342" subjectcode="LE 202"  subjectdescription="Enfermagem M&#233;dico-Cir&#250;rgica do Sistema Cardiovascular e Respirat&#243;rio" primarystudyid="29" active="Y" creditamount="4.0" hourstoinvest="40" frequencycode="0" studytimecode="1" maximumparticipants="0" brspassingsubject="9.5" registrationdate="2009-07-23" writewho="opuscollege" writewhen="2012-02-13 08:25:45.089833" currentacademicyearid="51"/>
+  <opuscollege.subject id="12345" subjectcode="LE 203"  subjectdescription="Enfermagem M&#233;dico-Cir&#250;rgica do Sistema Genitourin&#225;rio e End&#243;crino" primarystudyid="29" active="Y" creditamount="4.0" hourstoinvest="40" frequencycode="0" studytimecode="1" maximumparticipants="0" brspassingsubject="9.5" registrationdate="2009-07-23" writewho="opuscollege" writewhen="2012-02-13 08:25:45.089833" currentacademicyearid="51"/>
+  <opuscollege.subject id="12348" subjectcode="LE 204"  subjectdescription="Enfermagem M&#233;dico-Cir&#250;rgica do Sistema Hematol&#243;gico e Imunit&#225;rio " primarystudyid="29" active="Y" creditamount="4.0" hourstoinvest="40" frequencycode="0" studytimecode="1" maximumparticipants="0" brspassingsubject="9.5" registrationdate="2009-07-23" writewho="opuscollege" writewhen="2012-02-13 08:25:45.089833" currentacademicyearid="51"/>
+  <opuscollege.subject id="19303" subjectcode="LE 307"  subjectdescription="Enfermagem em Sa&#250;de Comunit&#225;ria e Pedagogia" primarystudyid="29" active="Y" creditamount="4.0" hourstoinvest="40" frequencycode="0" studytimecode="1" maximumparticipants="0" brspassingsubject="9.5" registrationdate="2010-11-25" writewho="opuscollege" writewhen="2013-01-25 17:45:06.32362" currentacademicyearid="52"/>
+  <opuscollege.subject id="19308" subjectcode="LE 304"  subjectdescription="Enfermagem em Sa&#250;de P&#250;blica, Epidemiologia e Bio-Estat&#237;stica" primarystudyid="29" active="Y" creditamount="4.0" hourstoinvest="40" frequencycode="0" studytimecode="1" maximumparticipants="0" brspassingsubject="9.5" registrationdate="2010-07-12" writewho="opuscollege" writewhen="2013-01-25 17:45:06.32362" currentacademicyearid="52"/>
+  <opuscollege.subject id="19313" subjectcode="LE 301"  subjectdescription="Enfermagem Pedi&#225;trica" primarystudyid="29" active="Y" creditamount="4.0" hourstoinvest="40" frequencycode="0" studytimecode="1" maximumparticipants="0" brspassingsubject="9.5" registrationdate="2009-08-13" writewho="opuscollege" writewhen="2013-01-25 17:45:06.32362" currentacademicyearid="52"/>
+  <opuscollege.subject id="19316" subjectcode="LE 306"  subjectdescription="Enfermagem em Sa&#250;de Comunit&#225;ria, Geriatria, Administra&#231;&#227;o e Gest&#227;o Hospitalar" primarystudyid="29" active="Y" creditamount="4.0" hourstoinvest="40" frequencycode="0" studytimecode="1" maximumparticipants="0" brspassingsubject="9.5" registrationdate="2009-08-13" writewho="opuscollege" writewhen="2013-01-25 17:45:06.32362" currentacademicyearid="52"/>
+  <opuscollege.subject id="19317" subjectcode="LE 302"  subjectdescription="Enfermagem Psiqui&#225;trica" primarystudyid="29" active="Y" creditamount="4.0" hourstoinvest="40" frequencycode="0" studytimecode="1" maximumparticipants="0" brspassingsubject="9.5" registrationdate="2009-08-13" writewho="opuscollege" writewhen="2013-01-25 17:45:06.32362" currentacademicyearid="52"/>
+  <opuscollege.subject id="19319" subjectcode="LEE 310" subjectdescription="Est&#225;gio de Enfermagem na Sa&#250;de comunit&#225;ria" primarystudyid="29" active="Y" creditamount="12.0" hourstoinvest="40" frequencycode="0" studytimecode="1" maximumparticipants="0" brspassingsubject="9.5" registrationdate="2009-08-13" writewho="opuscollege" writewhen="2013-01-25 17:45:06.32362" currentacademicyearid="52"/>
+  <opuscollege.subject id="19322" subjectcode="LE 305"  subjectdescription="Enfermagem em AIDI, Programas de Sa&#250;de e Educa&#231;&#227;o Sanit&#225;ria" primarystudyid="29" active="Y" creditamount="4.0" hourstoinvest="40" frequencycode="0" studytimecode="1" maximumparticipants="0" brspassingsubject="9.5" registrationdate="2009-08-13" writewho="opuscollege" writewhen="2013-01-25 17:45:06.32362" currentacademicyearid="52"/>
+  <opuscollege.subject id="19332" subjectcode="LEE 309" subjectdescription="Est&#225;gio de Enfermagem na Psiquiatria, Reanima&#231;&#227;o e Banco de Socorro " primarystudyid="29" active="Y" creditamount="5.0" hourstoinvest="40" frequencycode="0" studytimecode="1" maximumparticipants="0" brspassingsubject="9.5" registrationdate="2009-08-13" writewho="opuscollege" writewhen="2013-01-25 17:45:06.32362" currentacademicyearid="52"/>
+  <opuscollege.subject id="19336" subjectcode="LE 303"  subjectdescription=" Enfermagem em Urg&#234;ncias M&#233;dico-Cir&#250;rgicas" primarystudyid="29" active="Y" creditamount="4.0" hourstoinvest="40" frequencycode="0" studytimecode="1" maximumparticipants="0" brspassingsubject="9.5" registrationdate="2010-05-26" writewho="opuscollege" writewhen="2013-01-25 17:45:06.32362" currentacademicyearid="52"/>
+  <opuscollege.subject id="19341" subjectcode="LEE 308" subjectdescription="Est&#225;gio de Enfermagem Materno-Infantil" primarystudyid="29" active="Y" creditamount="5.0" hourstoinvest="40" frequencycode="0" studytimecode="1" maximumparticipants="0" brspassingsubject="9.5" registrationdate="2010-11-02" writewho="opuscollege" writewhen="2013-01-25 17:45:06.32362" currentacademicyearid="52"/>
+  <opuscollege.subject id="19343" subjectcode="LEE 311" subjectdescription="Est&#225;gio de Enfermagem Pedi&#225;trica" primarystudyid="29" active="Y" creditamount="7.0" hourstoinvest="40" frequencycode="0" studytimecode="1" maximumparticipants="0" brspassingsubject="9.5" registrationdate="2010-11-02" writewho="opuscollege" writewhen="2013-01-25 17:45:06.32362" currentacademicyearid="52"/>
+  <opuscollege.subject id="19344" subjectcode="LE 312"  subjectdescription=" Forma&#231;&#227;o Profissional de Enfermagem baseada na Reflex&#227;o" primarystudyid="29" active="Y" creditamount="4.0" hourstoinvest="40" frequencycode="0" studytimecode="1" maximumparticipants="0" brspassingsubject="9.5" registrationdate="2011-01-18" writewho="opuscollege" writewhen="2013-01-25 17:45:06.32362" currentacademicyearid="52"/>
+  <opuscollege.subject id="33654" subjectcode="LEE 411" subjectdescription="Est&#225;gio Integral" primarystudyid="29" active="Y" freechoiceoption="N" creditamount="30.0" hourstoinvest="40" frequencycode="0" studytimecode="1" maximumparticipants="0" brspassingsubject="9.5" registrationdate="2014-04-02" writewho="opuscollege" writewhen="2014-04-02 14:32:09.801308" currentacademicyearid="53"/>
+  <opuscollege.subject id="33693" subjectcode="LE 403"  subjectdescription="Qualidade dos Cuidados de Enfermagem I" primarystudyid="29" active="Y" freechoiceoption="N" creditamount="4.0" hourstoinvest="40" frequencycode="0" studytimecode="1" maximumparticipants="0" brspassingsubject="9.5" registrationdate="2014-04-02" writewho="opuscollege" writewhen="2014-04-02 15:02:25.249834" currentacademicyearid="53"/>
+  <opuscollege.subject id="33694" subjectcode="LEE 405" subjectdescription="Treinar e Supervisionar na Enfermagem" primarystudyid="29" active="Y" freechoiceoption="N" creditamount="4.0" hourstoinvest="40" frequencycode="0" studytimecode="1" maximumparticipants="0" brspassingsubject="9.5" registrationdate="2014-04-02" writewho="opuscollege" writewhen="2014-04-02 15:03:17.434501" currentacademicyearid="53"/>
+  <opuscollege.subject id="33695" subjectcode="LE 402"  subjectdescription="A Profiss&#227;o de Enfermagem Mundialmente" primarystudyid="29" active="Y" freechoiceoption="N" creditamount="5.0" hourstoinvest="40" frequencycode="0" studytimecode="1" maximumparticipants="0" brspassingsubject="9.5" registrationdate="2014-04-02" writewho="opuscollege" writewhen="2014-04-02 15:04:15.0402" currentacademicyearid="53"/>
+  <opuscollege.subject id="33696" subjectcode="LE 407"  subjectdescription="Cooperar e Dirigir na Enfermagem" primarystudyid="29" active="Y" freechoiceoption="N" creditamount="4.0" hourstoinvest="40" frequencycode="0" studytimecode="1" maximumparticipants="0" brspassingsubject="9.5" registrationdate="2014-04-02" writewho="opuscollege" writewhen="2014-04-02 15:05:12.930987" currentacademicyearid="53"/>
+  <opuscollege.subject id="33697" subjectcode="LE 409"  subjectdescription="Elabora&#231;&#227;o e Apresenta&#231;&#227;o de um Trabalho de Pesquisa" primarystudyid="29" active="Y" freechoiceoption="N" creditamount="1.0" hourstoinvest="40" frequencycode="0" studytimecode="1" maximumparticipants="0" brspassingsubject="9.5" registrationdate="2014-04-02" writewho="opuscollege" writewhen="2014-04-02 15:06:09.510538" currentacademicyearid="53"/>
+  <opuscollege.subject id="33698" subjectcode="LEE 406" subjectdescription="Est&#225;gio no Distrito" primarystudyid="29" active="Y" freechoiceoption="N" creditamount="10.0" hourstoinvest="40" frequencycode="0" studytimecode="1" maximumparticipants="0" brspassingsubject="9.5" registrationdate="2014-04-02" writewho="opuscollege" writewhen="2014-04-02 15:06:59.992706" currentacademicyearid="53"/>
+  <opuscollege.subject id="33699" subjectcode="LE 401"  subjectdescription="Enfermagem na Doen&#231;a Terminal" primarystudyid="29" active="Y" freechoiceoption="N" creditamount="4.0" hourstoinvest="40" frequencycode="0" studytimecode="1" maximumparticipants="0" brspassingsubject="9.5" registrationdate="2014-04-02" writewho="opuscollege" writewhen="2014-04-02 15:08:03.916687" currentacademicyearid="53"/>
+  <opuscollege.subject id="33700" subjectcode="LE 404"  subjectdescription="Qualidade dos Cuidados de Enfermagem II" primarystudyid="29" active="Y" freechoiceoption="N" creditamount="6.0" hourstoinvest="40" frequencycode="0" studytimecode="1" maximumparticipants="0" brspassingsubject="9.5" registrationdate="2014-04-02" writewho="opuscollege" writewhen="2014-04-02 15:09:05.448751" currentacademicyearid="53"/>
+  <opuscollege.subject id="33701" subjectcode="LE 408"  subjectdescription="O/A Enfermeiro/a Competente" primarystudyid="29" active="Y" freechoiceoption="N" creditamount="3.0" hourstoinvest="40" frequencycode="0" studytimecode="1" maximumparticipants="0" brspassingsubject="9.5" registrationdate="2014-04-02" writewho="opuscollege" writewhen="2014-04-02 15:10:00.365866" currentacademicyearid="53"/>
+  <opuscollege.subject id="33703" subjectcode="LE 405"  subjectdescription="Est&#225;gio de Treinar e Supervisionar" primarystudyid="29" active="Y" freechoiceoption="N" creditamount="5.0" hourstoinvest="40" frequencycode="0" studytimecode="1" maximumparticipants="0" brspassingsubject="9.5" registrationdate="2014-04-02" writewho="opuscollege" writewhen="2014-04-02 15:10:56.292093" currentacademicyearid="53"/>
+  <opuscollege.subject id="33704" subjectcode="LE 410"  subjectdescription="Leitura e An&#225;lises de Artigos Cient&#237;ficos" primarystudyid="29" active="Y" freechoiceoption="N" creditamount="1.0" hourstoinvest="40" frequencycode="0" studytimecode="1" maximumparticipants="0" brspassingsubject="9.5" registrationdate="2014-04-02" writewho="opuscollege" writewhen="2014-04-02 15:11:46.701137" currentacademicyearid="53"/>
+
+  <opuscollege.subjectblock id="2320" subjectblockcode="SB2320" subjectblockdescription="1&#176; ano" active="Y" registrationdate="2009-02-19" writewho="opuscollege" writewhen="2012-01-05 12:45:09.882889" blocktypecode="2" brsmaxcontacthours="1" studytimecode="1" currentacademicyearid="50" primarystudyid="29" freechoiceoption="Y"/>
+  <opuscollege.subjectblock id="2633" subjectblockcode="SB2321" subjectblockdescription="2&#176; ano" active="Y" registrationdate="2009-02-19" writewho="opuscollege" writewhen="2012-02-13 08:25:45.089833" blocktypecode="2" brsmaxcontacthours="1" studytimecode="1" currentacademicyearid="51" primarystudyid="29" freechoiceoption="Y"/>
+  <opuscollege.subjectblock id="3852" subjectblockcode="SB2322" subjectblockdescription="3&#176; ano" active="Y" registrationdate="2009-08-12" writewho="opuscollege" writewhen="2013-01-25 17:45:06.32362" blocktypecode="2" brsmaxcontacthours="1" studytimecode="1" currentacademicyearid="52" primarystudyid="29" freechoiceoption="Y"/>
+  <opuscollege.subjectblock id="5332" subjectblockcode="SB0170" subjectblockdescription="4&#186; Ano" active="Y" registrationdate="2014-02-17" writewho="opuscollege" writewhen="2014-02-17 15:34:38.818088" brspassingsubjectblock="" blocktypecode="2" brsmaxcontacthours="" studytimecode="1" currentacademicyearid="53" primarystudyid="29"/>
+
+  <opuscollege.subjectblockstudygradetype id="665" subjectblockid="2320" studygradetypeid="801" active="Y" writewho="opuscollege" writewhen="2012-01-05 12:45:09.882889" cardinaltimeunitnumber="1" rigiditytypecode="1"/>
+  <opuscollege.subjectblockstudygradetype id="976" subjectblockid="2633" studygradetypeid="1029" active="Y" writewho="opuscollege" writewhen="2012-02-13 08:25:45.089833" cardinaltimeunitnumber="2" rigiditytypecode="1"/>
+  <opuscollege.subjectblockstudygradetype id="2015" subjectblockid="3852" studygradetypeid="1544" active="Y" writewho="opuscollege" writewhen="2013-01-25 17:45:06.32362" cardinaltimeunitnumber="3" rigiditytypecode="1"/>
+  <opuscollege.subjectblockstudygradetype id="3343" subjectblockid="5332" studygradetypeid="2117" active="Y" writewho="opuscollege" writewhen="2014-02-17 15:35:14.176297" cardinaltimeunitnumber="4" rigiditytypecode="1"/>
+
+  <opuscollege.subjectsubjectblock id="5178"  subjectid="7648" subjectblockid="2320" active="Y" writewho="opuscollege" writewhen="2012-01-05 12:45:09.882889"/>
+  <opuscollege.subjectsubjectblock id="5144"  subjectid="10814" subjectblockid="2320" active="Y" writewho="opuscollege" writewhen="2012-01-05 12:45:09.882889"/>
+  <opuscollege.subjectsubjectblock id="5145"  subjectid="10818" subjectblockid="2320" active="Y" writewho="opuscollege" writewhen="2012-01-05 12:45:09.882889"/>
+  <opuscollege.subjectsubjectblock id="5146"  subjectid="10822" subjectblockid="2320" active="Y" writewho="opuscollege" writewhen="2012-01-05 12:45:09.882889"/>
+  <opuscollege.subjectsubjectblock id="5147"  subjectid="10826" subjectblockid="2320" active="Y" writewho="opuscollege" writewhen="2012-01-05 12:45:09.882889"/>
+  <opuscollege.subjectsubjectblock id="5148"  subjectid="10830" subjectblockid="2320" active="Y" writewho="opuscollege" writewhen="2012-01-05 12:45:09.882889"/>
+  <opuscollege.subjectsubjectblock id="5149"  subjectid="10834" subjectblockid="2320" active="Y" writewho="opuscollege" writewhen="2012-01-05 12:45:09.882889"/>
+  <opuscollege.subjectsubjectblock id="5150"  subjectid="10838" subjectblockid="2320" active="Y" writewho="opuscollege" writewhen="2012-01-05 12:45:09.882889"/>
+  <opuscollege.subjectsubjectblock id="5151"  subjectid="10842" subjectblockid="2320" active="Y" writewho="opuscollege" writewhen="2012-01-05 12:45:09.882889"/>
+  <opuscollege.subjectsubjectblock id="5152"  subjectid="10846" subjectblockid="2320" active="Y" writewho="opuscollege" writewhen="2012-01-05 12:45:09.882889"/>
+  <opuscollege.subjectsubjectblock id="5153"  subjectid="10850" subjectblockid="2320" active="Y" writewho="opuscollege" writewhen="2012-01-05 12:45:09.882889"/>
+  <opuscollege.subjectsubjectblock id="7648"  subjectid="12330" subjectblockid="2633" active="Y" writewho="opuscollege" writewhen="2012-02-13 08:25:45.089833"/>
+  <opuscollege.subjectsubjectblock id="7649"  subjectid="12333" subjectblockid="2633" active="Y" writewho="opuscollege" writewhen="2012-02-13 08:25:45.089833"/>
+  <opuscollege.subjectsubjectblock id="7650"  subjectid="12335" subjectblockid="2633" active="Y" writewho="opuscollege" writewhen="2012-02-13 08:25:45.089833"/>
+  <opuscollege.subjectsubjectblock id="7651"  subjectid="12336" subjectblockid="2633" active="Y" writewho="opuscollege" writewhen="2012-02-13 08:25:45.089833"/>
+  <opuscollege.subjectsubjectblock id="7652"  subjectid="12338" subjectblockid="2633" active="Y" writewho="opuscollege" writewhen="2012-02-13 08:25:45.089833"/>
+  <opuscollege.subjectsubjectblock id="7644"  subjectid="12341" subjectblockid="2633" active="Y" writewho="opuscollege" writewhen="2012-02-13 08:25:45.089833"/>
+  <opuscollege.subjectsubjectblock id="7645"  subjectid="12342" subjectblockid="2633" active="Y" writewho="opuscollege" writewhen="2012-02-13 08:25:45.089833"/>
+  <opuscollege.subjectsubjectblock id="7646"  subjectid="12345" subjectblockid="2633" active="Y" writewho="opuscollege" writewhen="2012-02-13 08:25:45.089833"/>
+  <opuscollege.subjectsubjectblock id="7647"  subjectid="12348" subjectblockid="2633" active="Y" writewho="opuscollege" writewhen="2012-02-13 08:25:45.089833"/>
+  <opuscollege.subjectsubjectblock id="15938" subjectid="19303" subjectblockid="3852" active="Y" writewho="opuscollege" writewhen="2013-01-25 17:45:06.32362"/>
+  <opuscollege.subjectsubjectblock id="15935" subjectid="19308" subjectblockid="3852" active="Y" writewho="opuscollege" writewhen="2013-01-25 17:45:06.32362"/>
+  <opuscollege.subjectsubjectblock id="15928" subjectid="19313" subjectblockid="3852" active="Y" writewho="opuscollege" writewhen="2013-01-25 17:45:06.32362"/>
+  <opuscollege.subjectsubjectblock id="15930" subjectid="19316" subjectblockid="3852" active="Y" writewho="opuscollege" writewhen="2013-01-25 17:45:06.32362"/>
+  <opuscollege.subjectsubjectblock id="15929" subjectid="19317" subjectblockid="3852" active="Y" writewho="opuscollege" writewhen="2013-01-25 17:45:06.32362"/>
+  <opuscollege.subjectsubjectblock id="15932" subjectid="19319" subjectblockid="3852" active="Y" writewho="opuscollege" writewhen="2013-01-25 17:45:06.32362"/>
+  <opuscollege.subjectsubjectblock id="15931" subjectid="19322" subjectblockid="3852" active="Y" writewho="opuscollege" writewhen="2013-01-25 17:45:06.32362"/>
+  <opuscollege.subjectsubjectblock id="15933" subjectid="19332" subjectblockid="3852" active="Y" writewho="opuscollege" writewhen="2013-01-25 17:45:06.32362"/>
+  <opuscollege.subjectsubjectblock id="15934" subjectid="19336" subjectblockid="3852" active="Y" writewho="opuscollege" writewhen="2013-01-25 17:45:06.32362"/>
+  <opuscollege.subjectsubjectblock id="15937" subjectid="19341" subjectblockid="3852" active="Y" writewho="opuscollege" writewhen="2013-01-25 17:45:06.32362"/>
+  <opuscollege.subjectsubjectblock id="15936" subjectid="19343" subjectblockid="3852" active="Y" writewho="opuscollege" writewhen="2013-01-25 17:45:06.32362"/>
+  <opuscollege.subjectsubjectblock id="15939" subjectid="19344" subjectblockid="3852" active="Y" writewho="opuscollege" writewhen="2013-01-25 17:45:06.32362"/>
+  <opuscollege.subjectsubjectblock id="31645" subjectid="33654" subjectblockid="5332" active="Y" writewho="opuscollege" writewhen="2014-04-02 14:32:31.028891"/>
+  <opuscollege.subjectsubjectblock id="31685" subjectid="33693" subjectblockid="5332" active="Y" writewho="opuscollege" writewhen="2014-04-02 15:02:41.625917"/>
+  <opuscollege.subjectsubjectblock id="31686" subjectid="33694" subjectblockid="5332" active="Y" writewho="opuscollege" writewhen="2014-04-02 15:03:34.485327"/>
+  <opuscollege.subjectsubjectblock id="31687" subjectid="33695" subjectblockid="5332" active="Y" writewho="opuscollege" writewhen="2014-04-02 15:04:32.036822"/>
+  <opuscollege.subjectsubjectblock id="31688" subjectid="33696" subjectblockid="5332" active="Y" writewho="opuscollege" writewhen="2014-04-02 15:05:39.04094"/>
+  <opuscollege.subjectsubjectblock id="31689" subjectid="33697" subjectblockid="5332" active="Y" writewho="opuscollege" writewhen="2014-04-02 15:06:24.281005"/>
+  <opuscollege.subjectsubjectblock id="31690" subjectid="33698" subjectblockid="5332" active="Y" writewho="opuscollege" writewhen="2014-04-02 15:07:22.547588"/>
+  <opuscollege.subjectsubjectblock id="31691" subjectid="33699" subjectblockid="5332" active="Y" writewho="opuscollege" writewhen="2014-04-02 15:08:20.187868"/>
+  <opuscollege.subjectsubjectblock id="31692" subjectid="33700" subjectblockid="5332" active="Y" writewho="opuscollege" writewhen="2014-04-02 15:09:21.099471"/>
+  <opuscollege.subjectsubjectblock id="31693" subjectid="33701" subjectblockid="5332" active="Y" writewho="opuscollege" writewhen="2014-04-02 15:10:15.822686"/>
+  <opuscollege.subjectsubjectblock id="31695" subjectid="33703" subjectblockid="5332" active="Y" writewho="opuscollege" writewhen="2014-04-02 15:11:13.886696"/>
+  <opuscollege.subjectsubjectblock id="31696" subjectid="33704" subjectblockid="5332" active="Y" writewho="opuscollege" writewhen="2014-04-02 15:12:03.450783"/>
+
+  <opuscollege.organizationalunit id="19" organizationalunitcode="O2" organizationalunitdescription="A Department" branchid="118" />
+  <opuscollege.study id="39" organizationalunitid="19" />
+
+  <opuscollege.person id="16" personcode="61" surnamefull="Juergens" firstnamesfull="Udo" />
+  <opuscollege.staffmember staffmemberid="1" staffmembercode="ju" personid="16" primaryunitofappointmentid="18" />
+
+  <opuscollege.person id="32" personcode="81" surnamefull="Adams" firstnamesfull="Mary" />
+
+  <opuscollege.student studentid="13454" studentcode="705110108" personid="32" dateofenrolment="2011-02-28" primarystudyid="29" previousinstitutionid="0" previousinstitutionname="" previousinstitutiondistrictcode="0" previousinstitutionprovincecode="MZ-10" previousinstitutioncountrycode="508" previousinstitutiontypecode="0" previousinstitutionfinalgradetypecode="0" scholarship="N" fatherfullname="Alberto Abdala Mutumpua" fathereducationcode="0" fatherprofessiondescription="" motherfullname="Vict&#243;ria Namaquita" mothereducationcode="0" motherprofessiondescription="" financialguardianfullname="" financialguardianrelation="" financialguardianprofession="" previousinstitutiondiplomaphotographremarks="" subscriptionrequirementsfulfilled="Y" secondarystudyid="0" foreignstudent="N" fathertelephone="" mothertelephone="" relativeofstaffmember="N" ruralareaorigin="N"/>
+
+  <opuscollege.studyplan id="13232" studentid="13454" studyplandescription="Enfermagem - licentiate" active="Y" studyplanstatuscode="3" studyid="29" gradetypecode="LIC" minor1id="0" major2id="0" minor2id="0" applicationnumber="0" applicantcategorycode="0" firstchoiceonwardstudyid="0" firstchoiceonwardgradetypecode="" secondchoiceonwardstudyid="0" secondchoiceonwardgradetypecode="" thirdchoiceonwardstudyid="0" thirdchoiceonwardgradetypecode=""/>
+
+  <opuscollege.studyplancardinaltimeunit id="39279" studyplanid="13232" cardinaltimeunitnumber="3" progressstatuscode="27" active="Y" studygradetypeid="1544" cardinaltimeunitstatuscode="10" tuitionwaiver="N" studyintensitycode="F"/>
+  <opuscollege.studyplancardinaltimeunit id="10388" studyplanid="13232" cardinaltimeunitnumber="1" progressstatuscode="01" active="Y" studygradetypeid="801"  cardinaltimeunitstatuscode="10" tuitionwaiver="N" studyintensitycode="F"/>
+  <opuscollege.studyplancardinaltimeunit id="24960" studyplanid="13232" cardinaltimeunitnumber="2" progressstatuscode="01" active="Y" studygradetypeid="1029" cardinaltimeunitstatuscode="10" tuitionwaiver="N" studyintensitycode="F"/>
+  <opuscollege.studyplancardinaltimeunit id="70947" studyplanid="13232" cardinaltimeunitnumber="4" progressstatuscode="25" active="Y" studygradetypeid="2117" cardinaltimeunitstatuscode="10" tuitionwaiver="N" studyintensitycode="F"/>
+
+  <opuscollege.studyplandetail id="16753" studyplanid="13232" subjectid="0" subjectblockid="2320" active="Y" studyplancardinaltimeunitid="10388" studygradetypeid="801" exempted="false"/>
+  <opuscollege.studyplandetail id="27970" studyplanid="13232" subjectid="0" subjectblockid="2633" active="Y" studyplancardinaltimeunitid="24960" studygradetypeid="1029" exempted="false"/>
+  <opuscollege.studyplandetail id="48766" studyplanid="13232" subjectid="0" subjectblockid="3852" active="Y" studyplancardinaltimeunitid="39279" studygradetypeid="1544" exempted="false"/>
+  <opuscollege.studyplandetail id="84220" studyplanid="13232" subjectid="0" subjectblockid="5332" active="Y" studyplancardinaltimeunitid="70947" studygradetypeid="2117" exempted="false"/>
+
+  <opuscollege.subjectresult id="398020" subjectid="33693" studyplandetailid="84220" subjectresultdate="2014-05-08" mark="14.1"  staffmemberid="1" active="Y" passed="Y"/>
+  <opuscollege.subjectresult id="398832" subjectid="33700" studyplandetailid="84220" subjectresultdate="2014-05-15" mark="13.5"  staffmemberid="1" active="Y" passed="Y"/>
+  <opuscollege.subjectresult id="460559" subjectid="33654" studyplandetailid="84220" subjectresultdate="2014-09-09" mark="11.3"  staffmemberid="1" active="Y" passed="Y"/>
+  <opuscollege.subjectresult id="478100" subjectid="33696" studyplandetailid="84220" subjectresultdate="2014-11-06" mark="14"    staffmemberid="1" active="Y" passed="Y"/>
+  <opuscollege.subjectresult id="493048" subjectid="33704" studyplandetailid="84220" subjectresultdate="2014-12-16" mark="18.2"  staffmemberid="1" active="Y" passed="Y"/>
+  <opuscollege.subjectresult id="497556" subjectid="33698" studyplandetailid="84220" subjectresultdate="2014-12-22" mark="10.4"  staffmemberid="1" active="Y" passed="Y"/>
+  <opuscollege.subjectresult id="497893" subjectid="33695" studyplandetailid="84220" subjectresultdate="2014-12-22" mark="10.66" staffmemberid="1" active="Y" passed="Y"/>
+  <opuscollege.subjectresult id="496006" subjectid="33703" studyplandetailid="84220" subjectresultdate="2014-12-18" mark="14"    staffmemberid="1" active="Y" passed="Y"/>
+  <opuscollege.subjectresult id="497851" subjectid="33694" studyplandetailid="84220" subjectresultdate="2014-12-22" mark="10.65" staffmemberid="1" active="Y" passed="Y"/>
+  <opuscollege.subjectresult id="497872" subjectid="33701" studyplandetailid="84220" subjectresultdate="2014-12-22" mark="14"    staffmemberid="1" active="Y" passed="Y"/>
+  <opuscollege.subjectresult id="333925" subjectid="19303" studyplandetailid="48766" subjectresultdate="2014-01-15" mark="9.5"   staffmemberid="1" active="Y" passed="Y"/>
+  <opuscollege.subjectresult id="219621" subjectid="19317" studyplandetailid="48766" subjectresultdate="2013-04-26" mark="12.8"  staffmemberid="1" active="Y" passed="Y"/>
+  <opuscollege.subjectresult id="219645" subjectid="19313" studyplandetailid="48766" subjectresultdate="2013-04-26" mark="9.5"   staffmemberid="1" active="Y" passed="Y"/>
+  <opuscollege.subjectresult id="221978" subjectid="19341" studyplandetailid="48766" subjectresultdate="2013-05-02" mark="15.3"  staffmemberid="1" active="Y" passed="Y"/>
+  <opuscollege.subjectresult id="291897" subjectid="19316" studyplandetailid="48766" subjectresultdate="2013-10-29" mark="13.1"  staffmemberid="1" active="Y" passed="Y"/>
+  <opuscollege.subjectresult id="333459" subjectid="19332" studyplandetailid="48766" subjectresultdate="2014-01-15" mark="12"    staffmemberid="1" active="Y" passed="Y"/>
+  <opuscollege.subjectresult id="333952" subjectid="19344" studyplandetailid="48766" subjectresultdate="2014-01-15" mark="11.6"  staffmemberid="1" active="Y" passed="Y"/>
+  <opuscollege.subjectresult id="333860" subjectid="19319" studyplandetailid="48766" subjectresultdate="2014-01-15" mark="11.3"  staffmemberid="1" active="Y" passed="Y"/>
+  <opuscollege.subjectresult id="393002" subjectid="33699" studyplandetailid="84220" subjectresultdate="2014-04-16" mark="12.3"  staffmemberid="1" active="Y" passed="Y"/>
+  <opuscollege.subjectresult id="393023" subjectid="33697" studyplandetailid="84220" subjectresultdate="2014-04-16" mark="10.25" staffmemberid="1" active="Y" passed="Y"/>
+  <opuscollege.subjectresult id="27135"  subjectid="10814" studyplandetailid="16753" subjectresultdate="2011-03-16" mark="9.8"   staffmemberid="1" active="Y" passed="Y"/>
+  <opuscollege.subjectresult id="35029"  subjectid="10826" studyplandetailid="16753" subjectresultdate="2011-06-08" mark="13"    staffmemberid="1" active="Y" passed="Y"/>
+  <opuscollege.subjectresult id="43334"  subjectid="10830" studyplandetailid="16753" subjectresultdate="2011-07-12" mark="12.8"  staffmemberid="1" active="Y" passed="Y"/>
+  <opuscollege.subjectresult id="29405"  subjectid="10846" studyplandetailid="16753" subjectresultdate="2011-04-19" mark="11.3"  staffmemberid="1" active="Y" passed="Y"/>
+  <opuscollege.subjectresult id="79520"  subjectid="10818" studyplandetailid="16753" subjectresultdate="2012-02-24" mark="11.8"  staffmemberid="1" active="Y" passed="Y"/>
+  <opuscollege.subjectresult id="79542"  subjectid="7648"  studyplandetailid="16753" subjectresultdate="2012-02-24" mark="13"    staffmemberid="1" active="Y" passed="Y"/>
+  <opuscollege.subjectresult id="65814"  subjectid="10834" studyplandetailid="16753" subjectresultdate="2011-11-08" mark="10.9"  staffmemberid="1" active="Y" passed="Y"/>
+  <opuscollege.subjectresult id="59015"  subjectid="10838" studyplandetailid="16753" subjectresultdate="2011-10-18" mark="11.8"  staffmemberid="1" active="Y" passed="Y"/>
+  <opuscollege.subjectresult id="79564"  subjectid="10822" studyplandetailid="16753" subjectresultdate="2012-02-24" mark="12"    staffmemberid="1" active="Y" passed="Y"/>
+  <opuscollege.subjectresult id="72890"  subjectid="10842" studyplandetailid="16753" subjectresultdate="2012-01-04" mark="9.6"   staffmemberid="1" active="Y" passed="Y"/>
+  <opuscollege.subjectresult id="79478"  subjectid="10850" studyplandetailid="16753" subjectresultdate="2012-02-23" mark="14.8"  staffmemberid="1" active="Y" passed="Y"/>
+  <opuscollege.subjectresult id="81576"  subjectid="12341" studyplandetailid="27970" subjectresultdate="2012-04-11" mark="10.3"  staffmemberid="1" active="Y" passed="Y"/>
+  <opuscollege.subjectresult id="83766"  subjectid="12342" studyplandetailid="27970" subjectresultdate="2012-05-30" mark="9.9"   staffmemberid="1" active="Y" passed="Y"/>
+  <opuscollege.subjectresult id="87783"  subjectid="12345" studyplandetailid="27970" subjectresultdate="2012-06-08" mark="9.5"   staffmemberid="1" active="Y" passed="Y"/>
+  <opuscollege.subjectresult id="101163" subjectid="12348" studyplandetailid="27970" subjectresultdate="2012-07-17" mark="11.2"  staffmemberid="1" active="Y" passed="Y"/>
+  <opuscollege.subjectresult id="249476" subjectid="19343" studyplandetailid="48766" subjectresultdate="2013-07-29" mark="10"    staffmemberid="1" active="Y" passed="Y"/>
+  <opuscollege.subjectresult id="250001" subjectid="19336" studyplandetailid="48766" subjectresultdate="2013-07-30" mark="11.7"  staffmemberid="1" active="Y" passed="Y"/>
+  <opuscollege.subjectresult id="287605" subjectid="19308" studyplandetailid="48766" subjectresultdate="2013-10-25" mark="10.8"  staffmemberid="1" active="Y" passed="Y"/>
+  <opuscollege.subjectresult id="158401" subjectid="12335" studyplandetailid="27970" subjectresultdate="2012-11-28" mark="11.4"  staffmemberid="1" active="Y" passed="Y"/>
+  <opuscollege.subjectresult id="158424" subjectid="12336" studyplandetailid="27970" subjectresultdate="2012-11-28" mark="9.7"   staffmemberid="1" active="Y" passed="Y"/>
+  <opuscollege.subjectresult id="168493" subjectid="12338" studyplandetailid="27970" subjectresultdate="2012-12-21" mark="12.9"  staffmemberid="1" active="Y" passed="Y"/>
+  <opuscollege.subjectresult id="175550" subjectid="12333" studyplandetailid="27970" subjectresultdate="2013-01-24" mark="10.4"  staffmemberid="1" active="Y" passed="Y"/>
+  <opuscollege.subjectresult id="175613" subjectid="12330" studyplandetailid="27970" subjectresultdate="2013-01-25" mark="11.8"  staffmemberid="1" active="Y" passed="Y"/>
+  <opuscollege.subjectresult id="269251" subjectid="19322" studyplandetailid="48766" subjectresultdate="2013-10-08" mark="13.5"  staffmemberid="1" active="Y" passed="Y"/>
+
+</dataset>

@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="HistoryReportStudentExpulsion" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" resourceBundle="org/uci/opus/report/messages">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="id" class="java.lang.Integer" isForPrompting="false">
+		<defaultValueExpression><![CDATA[6]]></defaultValueExpression>
+	</parameter>
+	<parameter name="writeWhen" class="java.sql.Timestamp" isForPrompting="false">
+		<defaultValueExpression><![CDATA[java.sql.Timestamp.valueOf("2012-01-11 16:38:34.262239")]]></defaultValueExpression>
+	</parameter>
+	<parameter name="preferredLanguage" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+
+     studentexpulsion_hist.*,
+     expellationtype.description AS expellationType,
+     person."firstnamesfull" || ' ' || UPPER(person."surnamefull") AS person_name,
+     student."studentcode" AS student_studentcode
+
+FROM
+"audit".studentexpulsion_hist studentexpulsion_hist INNER JOIN "opuscollege".student student ON studentexpulsion_hist.studentId = student.studentId
+INNER JOIN "opuscollege".person person ON student.personId = person.id
+LEFT OUTER JOIN opuscollege.expellationtype expellationtype ON studentexpulsion_hist.expulsiontypecode = expellationtype.code AND expellationtype.lang = $P{preferredLanguage}
+
+WHERE studentexpulsion_hist.id = $P!{id} and studentexpulsion_hist.writewhen = '$P!{writeWhen}'
+
+]]>
+	</queryString>
+	<field name="operation" class="java.lang.String"/>
+	<field name="id" class="java.lang.Integer"/>
+	<field name="studentid" class="java.lang.Integer"/>
+	<field name="startdate" class="java.sql.Date"/>
+	<field name="enddate" class="java.sql.Date"/>
+	<field name="expulsiontypecode" class="java.lang.String"/>
+	<field name="reasonforexpulsion" class="java.lang.String"/>
+	<field name="writewho" class="java.lang.String"/>
+	<field name="writewhen" class="java.sql.Timestamp"/>
+	<field name="expellationtype" class="java.lang.String"/>
+	<field name="person_name" class="java.lang.String"/>
+	<field name="student_studentcode" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="16" splitType="Stretch">
+			<textField>
+				<reportElement x="44" y="0" width="40" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{studentid}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="44" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isItalic="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$R{general.studentid} + ":"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="168" y="0" width="30" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isItalic="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$R{general.end} + ":"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="198" y="0" width="48" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[DateFormat.getDateInstance(DateFormat.MEDIUM, $P{REPORT_LOCALE}).format($F{enddate})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="246" y="0" width="56" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isItalic="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$R{general.expulsiontype} + ":"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="302" y="0" width="76" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{expellationtype}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="655" y="0" width="31" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isItalic="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$R{general.name} + ":"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="686" y="0" width="156" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{person_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="565" y="0" width="50" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isItalic="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$R{general.studentcode} + ":"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="615" y="0" width="40" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{student_studentcode}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="84" y="0" width="28" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isItalic="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$R{general.start} + ":"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="112" y="0" width="56" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[DateFormat.getDateInstance(DateFormat.MEDIUM, $P{REPORT_LOCALE}).format($F{startdate})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="378" y="0" width="50" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isItalic="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$R{general.reasonforexpulsion} + ":"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="428" y="0" width="137" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{reasonforexpulsion}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

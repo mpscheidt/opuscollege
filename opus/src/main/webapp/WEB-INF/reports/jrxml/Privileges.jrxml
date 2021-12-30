@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Privileges" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" resourceBundle="org/uci/opus/college/messages">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<parameter name="lang" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["en"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="whereClause" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="image_dir" class="java.io.File" isForPrompting="false">
+		<parameterDescription><![CDATA[The base directory of images used in this report]]></parameterDescription>
+		<defaultValueExpression><![CDATA[new java.io.File(net.sf.jasperreports.engine.util.JRResourcesUtil.findClassLoaderResource("/images/report",null,null).getFile())]]></defaultValueExpression>
+	</parameter>
+	<parameter name="reportLogo" class="net.sf.jasperreports.engine.JRRenderable" isForPrompting="false">
+		<defaultValueExpression><![CDATA[net.sf.jasperreports.engine.RenderableUtil.getInstance($P{JASPER_REPORTS_CONTEXT}).getRenderable($P{image_dir}.toString() + "/report-logo.gif")]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select * from opuscollege.opusrole_privilege
+inner join opuscollege.opusprivilege on opusrole_privilege.privilegecode = opusprivilege.code and opusprivilege.lang = $P{lang}
+inner join opuscollege."role" on opusrole_privilege."role" = "role"."role" and role.lang = $P{lang}
+where true
+$P!{whereClause}
+order by "role"."roledescription", privilegecode]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer"/>
+	<field name="privilegecode" class="java.lang.String"/>
+	<field name="writewho" class="java.lang.String"/>
+	<field name="writewhen" class="java.sql.Timestamp"/>
+	<field name="role" class="java.lang.String"/>
+	<field name="validfrom" class="java.sql.Date"/>
+	<field name="validthrough" class="java.sql.Date"/>
+	<field name="active" class="java.lang.String"/>
+	<field name="code" class="java.lang.String"/>
+	<field name="lang" class="java.lang.String"/>
+	<field name="description" class="java.lang.String"/>
+	<field name="roledescription" class="java.lang.String"/>
+	<field name="level" class="java.lang.Integer"/>
+	<group name="roleGroup" isStartNewPage="true">
+		<groupExpression><![CDATA[$F{roledescription}]]></groupExpression>
+		<groupHeader>
+			<band height="40">
+				<textField>
+					<reportElement style="SubTitle" x="47" y="13" width="508" height="24" forecolor="#990099"/>
+					<textElement>
+						<font fontName="SansSerif" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{roledescription}]]></textFieldExpression>
+				</textField>
+				<rectangle>
+					<reportElement mode="Opaque" x="0" y="13" width="36" height="24" forecolor="#CCCCCC" backcolor="#CCCCCC"/>
+				</rectangle>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="6"/>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="55" splitType="Stretch">
+			<textField>
+				<reportElement style="Title" x="82" y="0" width="473" height="47"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{jsp.general.privileges}]]></textFieldExpression>
+			</textField>
+			<image scaleImage="RetainShape" isUsingCache="false">
+				<reportElement key="image-1" x="0" y="0" width="65" height="47"/>
+				<imageExpression><![CDATA[$P{reportLogo}]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="36" splitType="Stretch">
+			<textField>
+				<reportElement style="Column header" x="0" y="19" width="220" height="15"/>
+				<textElement markup="none">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{jsp.general.privilege}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="35" width="555" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement style="Column header" x="220" y="19" width="334" height="15"/>
+				<textElement markup="none">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{jsp.general.description}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="16" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="15" width="555" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="Detail" x="0" y="0" width="220" height="15"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{privilegecode}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="Detail" x="220" y="0" width="335" height="15"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement style="Column header" x="200" y="0" width="313" height="20"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[msg($R{report.general.pageof}, $V{PAGE_NUMBER})]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement style="Column header" x="513" y="0" width="42" height="20"/>
+				<textElement>
+					<font fontName="SansSerif" size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement style="Column header" x="0" y="0" width="200" height="20"/>
+				<textElement>
+					<font fontName="SansSerif" size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[DateFormat.getDateInstance(DateFormat.MEDIUM, $P{REPORT_LOCALE}).format(new Date())]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

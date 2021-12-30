@@ -1,0 +1,1 @@
+<c:forEach var="error" items="${status.errorMessages}"><span class="error"><c:out value='${error}'/></span></c:forEach>

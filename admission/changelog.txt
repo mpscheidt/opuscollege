@@ -1,0 +1,4 @@
+version 4.2.1
+* fixed - #123 Html-encode all dynamic content to prevent cross site scripting (XSS) attacks
+* fixed - return to correct panel of the requestadmission screen when submitting careerposition or obtained qualification
+ 

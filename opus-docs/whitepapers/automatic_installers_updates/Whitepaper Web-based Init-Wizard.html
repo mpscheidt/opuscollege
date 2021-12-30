@@ -1,0 +1,68 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE>Whitepaper</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.2  (Linux)">
+	<META NAME="AUTHOR" CONTENT="Markus Pscheidt">
+	<META NAME="CREATED" CONTENT="20070928;9284200">
+	<META NAME="CHANGEDBY" CONTENT="Markus Pscheidt">
+	<META NAME="CHANGED" CONTENT="20070928;16095400">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { size: 8.5in 11in; margin: 0.79in }
+		P { margin-bottom: 0.08in }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" DIR="LTR">
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in"><B>Whitepaper Web-based Init-Wizard</B></P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in">Objective:</P>
+<P STYLE="margin-bottom: 0in">At the first time the user starts
+opusCollege in the webbrowser, ask the user for essential
+configuration settings</P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in">Issues:</P>
+<UL>
+	<LI><P STYLE="margin-bottom: 0in">Initialize database connection
+	settings</P>
+	<LI><P STYLE="margin-bottom: 0in">Setup the database (if not yet
+	existing)</P>
+	<LI><P>Create (administrative) user for opusCollege</P>
+</UL>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<H1>Initialize database connection settings</H1>
+<P>Advantage: Avoid to have jdbc settings in files, allow for
+individual (secure) passwords.</P>
+<P>Affected settings: 
+</P>
+<UL>
+	<LI><P>JDBC connection string – Default:
+	jdbc:postgresql://localhost:5432/opusCollege</P>
+	<LI><P>username – Default: postgres</P>
+	<LI><P>password – No default</P>
+</UL>
+<P><BR><BR>
+</P>
+<P>JDBC connection settings are different for each installation. In
+many cases the database will reside on the same host as the tomcat
+server but this might not always be the case. 
+</P>
+<P STYLE="margin-bottom: 0in">For a secure setup the password has to
+be chosen at each site individually.</P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+</BODY>
+</HTML>

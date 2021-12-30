@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="HistoryReportAccHostel" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" resourceBundle="org/uci/opus/report/messages">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="id" class="java.lang.Integer" isForPrompting="false">
+		<defaultValueExpression><![CDATA[8348]]></defaultValueExpression>
+	</parameter>
+	<parameter name="writeWhen" class="java.sql.Timestamp" isForPrompting="false">
+		<defaultValueExpression><![CDATA[java.sql.Timestamp.valueOf("2012-01-09 22:24:48.15351")]]></defaultValueExpression>
+	</parameter>
+	<parameter name="preferredLanguage" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT id
+, code
+, description
+, numberoffloors
+, hosteltypecode
+, writewho
+, writewhen
+, active
+
+FROM audit.acc_hostel_hist
+
+WHERE audit.acc_hostel_hist.id = $P!{id} AND audit.acc_hostel_hist.writewhen = '$P!{writeWhen}']]>
+	</queryString>
+	<field name="id" class="java.lang.Integer"/>
+	<field name="code" class="java.lang.String"/>
+	<field name="description" class="java.lang.String"/>
+	<field name="numberoffloors" class="java.lang.Integer"/>
+	<field name="hosteltypecode" class="java.lang.String"/>
+	<field name="writewho" class="java.lang.String"/>
+	<field name="writewhen" class="java.sql.Timestamp"/>
+	<field name="active" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="18" splitType="Stretch">
+			<textField>
+				<reportElement x="80" y="0" width="108" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{code} + ""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="80" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isItalic="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$R{general.code} + ":"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="268" y="0" width="108" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{description} + ""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="188" y="0" width="80" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isItalic="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$R{general.description} + ":"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="456" y="0" width="108" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{hosteltypecode} + ""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="376" y="0" width="80" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isItalic="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$R{general.typecode} + ":"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="644" y="0" width="108" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{numberoffloors} + ""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="564" y="0" width="80" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isItalic="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$R{general.numberoffloors} + ":"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="800" y="0" width="42" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{active} + ""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="752" y="0" width="48" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isItalic="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$R{general.active} + ":"]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

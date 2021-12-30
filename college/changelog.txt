@@ -1,0 +1,120 @@
+trunk
+* modified - moved init parameters from web.xml to appconfig database table
+* added - auto-run database upgrade scripts on sever startup, because without running db upgrades login is not possible in rare cases 
+* modified - updated list of countries and prepared country, province, district and administrativepsot tables to retrieve updates from geonames.org
+* added - in addition to the province, the country can be selected in institution.view; added database field institution.countrycode
+* migrated - log4j from version 1 to version 2
+* added - testresults.view: "Delete all" button
+* added - automatically remove subject result when removing examination result and autoGenerateSubjectResults is turned on
+* added - examinationresults.view: delete all examination results button in 
+* improved - delete subject speed improvement: checks only for existence of dependent records, instead of loading subjectresult and studyplandetail records
+* added - classgroup select boxes in subjectresults.view and examinationresults.view, similar to testresults.view
+* modified - moved init parameter "iCountry" to appconfig database table with key "country.code"
+* fixed - edit student: enable selection of previous institution country, province and district
+* fixed - reset lookup cache when any lookup is edited or deleted
+* fixed - fixed problem of cutting leading zeroes in MD5 hash
+* security - staffmembers overview: only show users with highest role level that is lower or equal to logged in user role
+* added - DBUpgrade writes versions automatically into appversions table
+* modified - students overview shows students including those that have at least one studyplancardinaltimeunit at the select organization, in addition to the students with a matching primaryStudyId
+* fixed - show classgroup for examinationTeachers and testTeachers in staffmember.view
+* added - subject result comment: Automatically fail subject with comment (e.g. "excluded") after failing or missing minimum threshold of examination results according examinationType attributes
+* fixed - subjectresult.view: after entering lower level result in examinationresult.view and automatic calculation of subject result, display generated result when returning to subjectresult.view
+* added - Show modifications of subject results, examination results and test results
+
+version 4.3
+* modified - compile.targets: added includeantruntime="false" to javac, triggered by Ant warnings
+* modified - test-targets: Replace junit with testng, since testng can run both kind of tests in mixed mode
+* added - #763: Transfer curriculum: Include classgroups
+* added - #764: Set up environment for automated execution of unit tests
+* fixed - #765: Subject.view: Wrong tab after saving content
+* fixed - #738: DisciplineGroup in lookupTables, but exception on opening
+* added - #773 students overview: add links to all study plans
+* added - #768: Edit Staffmember / Identification tab: indicate if no privilege assigned for viewing or editing data
+* added - #770: subjectstudygradetype.view: Make the CTUnr field mandatory
+* added - #771 subject.view: Examinations tab should list both examinations and tests
+* added - #772 subject.view, Examinations tab: Show examination and test teachers in an additional column
+* fixed - #769 subject.view: Trim subject code and description upon saving
+* fixed - #774 Progress student with REPEAT: subjects are added more than once to new studyPlanCTU
+* fixed - #775 studyplan.view: once student is admitted don't show message "this student does not have enough secondary schools graded or... selected during admission"
+* fixed - #776 Progress students, preselect status: Puts "Exclude program" even if all subjects passed
+* modified - #777 Move Secondary Schools menu to Admin menu
+* modified - #779 If only one UI language configured, don't show language selection link
+* modified - #780 Study: Date of establishment + Start date: Put underwater
+* fixed - #781 Student: Edit address leads to an exception
+* fixed - #783 New study plan name is missing studygradetype
+* fixed - #784 studyplanresult.view: NPE when no time unit assigned to study plan
+* fixed - #785 student-subscription.view: Study programme empty if different department
+* fixed - #786 studyplanresult.view: IndexOutOfBoundException when no study plan exists
+* fixed - #787 students.view: study name empty if study outside selected school
+* added - #789 Add a study program code
+* modified - Use of Java generics to simplify several lookup methods
+* fixed - #791 openwysiwig doesn't work in Chrome
+* added - Exemption of subjects feature (see technical design document)
+* refactored "Add study plan details" to enable multiple selection of subjects and blocks (similar to fast student input)
+* refactored - use same include for studyPlanDetails list in studyplan.view and studyplancardinaltimeunit.view
+* refactored - speed improvement in StudyPlanCardinalTimeUnitEditController
+* added - welcome screen can be configured by web.xml parameter "initWelcomeScreen"
+* added - footer can be configured by web.xml parameter "initFooterScreen"
+* fixed - #790 subscribeToSubjects.view: Grouping incorrect
+* added - Introduced new privileges READ_OWN_SUBJECT_RESULTS, READ_OWN_EXAMINATION_RESULTS and READ_OWN_TEST_RESULTS to control student access
+* refactored - student-personal.view and student-subscrition.view served by the same controller; various bugs fixed
+* fixed - edit lookups when only app languages with country specifier (e.g. en_ZM, but not en) are configured
+* added - Indicate study plan status in subject/exam/test results screens
+* fixed - SQL script to remove zombie studyPlanDetails + add foreign key studyplandetail.studyplancardinaltimeunitid -> studyplancardinaltimeunit.id 
+* upgrade - Jasperreports from 5.1.2 to 6.1.0
+* added - display information about available DB upgrades after login (for users with administration rights)
+* added - separate institutiontype from educationtype -> new lookup table institutiontype
+* fixed - error when no current academic year available for the filters in subjects overview
+* added - refresh buttons for end grade and progress status calculation
+* added - privilege EDIT_HISTORIC_RESULTS that allows certain users to edit results in historic time units
+* fixed - classgroup(s).view: in studyGradeType combo show study form and study time in addition to grade type
+* modified - "mark" input fields throughout the system set to autocomplete="off"
+* fixed - studygradetype.view: Add study grade type prerequisite: Fixed unresponsive study filter and case of empty organizational unit filter
+* fixed - if failed test or examination results, do not calculate the higher level result, ie. examination or subject result, but issue an error
+* fixed - studyplan.view and studyplanresults.view: show studyPlanCTUs even if no studyPlanDetails assigned - don't swallow empty studyPlanCTUs
+* added - Sys-option "defaultBrPassingTest" to set a system-wide default business rule for passing tests
+* fixed - Progress students: repeat failed subjects correctly when working with subject blocks
+* modified - switched from commons-logging to slf4j as suggested by Spring Docs (section Logging)
+* upgraded - jawr 3.8 (upgraded from jawr 3.3)
+* upgraded - jquery-1.11.3 (upgraded from jQuery 1.4.2)
+* upgraded - jquery-ui-1.11.4 (upgraded from jQuery-UI 1.8.4)
+* added - filters added for selecting institution/branch/organizational unit so that the number is reduced of of study programs to load
+* refactored - Performance optimization in studygradetype.view
+* added - sys-option "defaultFailedTestResults"
+* added - filters for primary study and academic year in teacherssubject.view to improve performance in case of a lot of subjects
+* added - screen titles that are displayed in the browser title bar
+* modified - at login fall back to first application language (instead of plain English) when user's language is not supported
+* added - auto-generate subject results when all required examination results have been entered
+* modified - openwysiwyg replaced by CKEditor
+* modified - migrated iBatis to MyBatis
+* modified - Caching activated for 'appconfig' sql map using MyBatis caching feature
+
+version 4.2.1
+* added - appconfig parameter MAX_FAILED_LOGIN_ATTEMPTS
+* fixed - #123 Html-encode all dynamic content to prevent cross site scripting (XSS) attacks
+* added - studentcode column in subjectresults.view
+* fixed - #740 table timeunit removed, since it was replaced by cardinalTimeUnit concept
+* fixed - #750 Edit student: Setting code to same as of other student throws exception
+* fixed - #748 Create staffMember with same code as existing staffMember throws exception
+* fixed - #755 Statistics: several entries in messages.properties missing
+* fixed - #758 BigInteger.divide(): Always specify precision and rounding mode
+* fixed - #757 Transfer students: Generate endgrades leads to error: Invalid property 'mark'
+
+version 4.2
+- New appConfig parameter 'cntdRegistrationAutoApproveDefaultSubjects' for automatic approval of default subjects
+- Customize program screen: Fixed duplicate subject block display as both mandatory and eligible
+- useHttpOnly configured in the context.xml of the Opus application
+- Student screen / OpusUser tab: Fixed bug on setting preferred language of student, which was not stored to the database
+- Extended gradeType lookup table with educationLevelCode
+- Subjects overview: include subject code when using search value
+- Added missing role filter to deletePrivilegeFromRole statement
+- Listener method for updateStudyPlanStatusCode in IStudyPlanListener
+- TimeUnitInYear Bug fix: Display semester 2 instead of semester 0
+- Fixed: Reset failed logins for staff members
+- On failed logins show either 'bad credentials' or 'account locked' error message
+- Staff member view: Show examination in tests tab and subject in examinations and tests tabs
+- Staff member view: Fixed bug where combo boxes for branch and org.unit were not updated upon selection
+- Admission: Show studies of departments with admission period end date = today
+- Student view / subscription tab: fulfilled enrolment requirements: added empty (-choose-) to yes and no
+- the total of weighing factors of tests under an examination cannot exceed a 100% anymore. The same is true for the
+  total of weighing factors of examinations under a subject.

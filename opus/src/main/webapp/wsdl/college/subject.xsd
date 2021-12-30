@@ -1,0 +1,251 @@
+<!--
+  ***** BEGIN LICENSE BLOCK *****
+  Version: MPL 1.1/GPL 2.0/LGPL 2.1
+  
+  The contents of this file are subject to the Mozilla Public License Version
+  1.1 (the "License"); you may not use this file except in compliance with
+  the License. You may obtain a copy of the License at
+  http://www.mozilla.org/MPL/
+  
+  Software distributed under the License is distributed on an "AS IS" basis,
+  WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+  for the specific language governing rights and limitations under the
+  License.
+  
+  The Original Code is Opus-College college module code.
+  
+  The Initial Developer of the Original Code is
+  Center for Information Services, Radboud University Nijmegen.
+  Portions created by the Initial Developer are Copyright (C) 2008
+  the Initial Developer. All Rights Reserved.
+  
+  Contributor(s):
+    For Java files, see Javadoc @author tags.
+  
+  Alternatively, the contents of this file may be used under the terms of
+  either the GNU General Public License Version 2 or later (the "GPL"), or
+  the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+  in which case the provisions of the GPL or the LGPL are applicable instead
+  of those above. If you wish to allow use of your version of this file only
+  under the terms of either the GPL or the LGPL, and not to allow others to
+  use your version of this file under the terms of the MPL, indicate your
+  decision by deleting the provisions above and replace them with the notice
+  and other provisions required by the GPL or the LGPL. If you do not delete
+  the provisions above, a recipient may use your version of this file under
+  the terms of any one of the MPL, the GPL or the LGPL.
+  
+  ***** END LICENSE BLOCK *****
+-->
+
+<xs:schema xmlns:subject="http://domain.college.opus.uci.org/subject" 
+    xmlns="http://domain.college.opus.uci.org/subject" 
+    xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+    targetNamespace="http://domain.college.opus.uci.org/subject" 
+    elementFormDefault="qualified" 
+    attributeFormDefault="qualified">
+    
+	<!-- start top level study element definition -->
+	<xs:element name="subject">
+		<xs:complexType>
+			<xs:all>
+				<!-- xs:element minOccurs="0" maxOccurs="1" ref="rss"/  -->
+				<xs:element ref="subject_data" minOccurs="0" maxOccurs="1"/>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	
+	<!-- start study element definition -->
+	<xs:element name="subject_data">
+		<xs:complexType>
+            <xs:sequence>
+                <xs:element ref="subjectStudyGradeTypes" minOccurs="0"/>
+                <xs:element ref="subjectStudyTypes" minOccurs="0"/>
+                <xs:element ref="subjectSubjectBlocks" minOccurs="0"/>
+                <xs:element ref="subjectTeachers" minOccurs="0"/>
+                <xs:element ref="examinations" minOccurs="0"/>
+            </xs:sequence>
+			<xs:attribute name="id" type="xs:string" use="optional"/>
+			<xs:attribute name="subjectCode" type="xs:string" use="optional"/>
+			<xs:attribute name="subjectDescription" type="xs:string" use="optional"/>
+			<xs:attribute name="subjectContentDescription" type="xs:string" use="optional"/>
+			<xs:attribute name="primaryStudyId" type="xs:string" use="optional"/>
+			<xs:attribute name="active" type="xs:string" use="optional"/>
+			<xs:attribute name="targetGroupCode" type="xs:string" use="optional"/>
+            <xs:attribute name="freeChoiceOption" type="xs:string" use="optional"/>
+            <xs:attribute name="creditAmount" type="xs:string" use="optional"/>
+            <xs:attribute name="hoursToInvest" type="xs:string" use="optional"/>
+            <xs:attribute name="frequencyCode" type="xs:string" use="optional"/>
+            <xs:attribute name="studyFormCode" type="xs:string" use="optional"/>
+            <xs:attribute name="studyTimeCode" type="xs:string" use="optional"/>
+            <xs:attribute name="examTypeCode" type="xs:string" use="optional"/>
+            <xs:attribute name="maximumParticipants" type="xs:string" use="optional"/>
+            <xs:attribute name="brsApplyingToSubject" type="xs:string" use="optional"/>
+            <xs:attribute name="brsPassingSubject" type="xs:string" use="optional"/>
+           <!--  <xs:attribute name="subjectStructureValidFromYear" type="xs:string" use="optional"/>
+            <xs:attribute name="subjectStructureValidThroughYear" type="xs:string" use="optional"/> -->
+		</xs:complexType>
+	</xs:element>
+	
+	<!--  derived elements from here -->
+    <xs:element name="subjectStudyGradeType">
+        <xs:complexType>
+            <xs:attribute name="id" type="xs:string" use="optional"/>
+            <xs:attribute name="subjectId" type="xs:string" use="optional"/>
+            <xs:attribute name="studyId" type="xs:string" use="optional"/>
+            <xs:attribute name="gradeTypeCode" type="xs:string" use="optional"/>
+            <xs:attribute name="studyGradeTypeId" type="xs:string" use="optional"/>
+            <xs:attribute name="studyDescription" type="xs:string" use="optional"/>
+            <xs:attribute name="gradeTypeDescription" type="xs:string" use="optional"/>
+            <xs:attribute name="rigidityTypeCode" type="xs:string" use="optional"/>
+            <xs:attribute name="importanceTypeCode" type="xs:string" use="optional"/>
+            <xs:attribute name="active" type="xs:string" use="optional"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="subjectStudyGradeTypes">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="subjectStudyGradeType" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+            <xs:attribute name="id" type="xs:string" use="optional"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="subjectStudyType">
+        <xs:complexType>
+            <xs:attribute name="id" type="xs:string" use="optional"/>
+            <xs:attribute name="subjectId" type="xs:string" use="optional"/>
+            <xs:attribute name="studyTypeCode" type="xs:string" use="optional"/>
+            <xs:attribute name="studyTypeDescription" type="xs:string" use="optional"/>
+            <xs:attribute name="active" type="xs:string" use="optional"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="subjectStudyTypes">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="subjectStudyType" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+            <xs:attribute name="id" type="xs:string" use="optional"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="subjectSubjectBlock">
+        <xs:complexType>
+            <xs:attribute name="id" type="xs:string" use="optional"/>
+            <xs:attribute name="subjectBlockId" type="xs:string" use="optional"/>
+            <xs:attribute name="subjectId" type="xs:string" use="optional"/>
+            <xs:attribute name="semester" type="xs:string" use="optional"/>
+            <xs:attribute name="active" type="xs:string" use="optional"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="subjectSubjectBlocks">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="subjectSubjectBlock" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+            <xs:attribute name="id" type="xs:string" use="optional"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="subjectTeacher">
+        <xs:complexType>
+            <xs:attribute name="id" type="xs:string" use="optional"/>
+            <xs:attribute name="staffMemberId" type="xs:string" use="optional"/>
+            <xs:attribute name="subjectId" type="xs:string" use="optional"/>
+            <xs:attribute name="active" type="xs:string" use="optional"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="subjectTeachers">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="subjectTeacher" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+            <xs:attribute name="id" type="xs:string" use="optional"/>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="examinationTeacher">
+        <xs:complexType>
+            <xs:attribute name="id" type="xs:string" use="optional"/>
+            <xs:attribute name="staffMemberId" type="xs:string" use="optional"/>
+            <xs:attribute name="examinationId" type="xs:string" use="optional"/>
+            <xs:attribute name="active" type="xs:string" use="optional"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="teachersForExamination">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="examinationTeacher" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+            <xs:attribute name="id" type="xs:string" use="optional"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="testTeacher">
+        <xs:complexType>
+            <xs:attribute name="id" type="xs:string" use="optional"/>
+            <xs:attribute name="staffMemberId" type="xs:string" use="optional"/>
+            <xs:attribute name="testId" type="xs:string" use="optional"/>
+            <xs:attribute name="active" type="xs:string" use="optional"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="teachersForTest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="testTeacher" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+            <xs:attribute name="id" type="xs:string" use="optional"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="test">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="teachersForTest" minOccurs="0"/>
+            </xs:sequence>
+            <xs:attribute name="id" type="xs:string" use="optional"/>
+            <xs:attribute name="testCode" type="xs:string" use="optional"/>
+            <xs:attribute name="testDescription" type="xs:string" use="optional"/>
+            <xs:attribute name="examinationId" type="xs:string" use="optional"/>
+            <xs:attribute name="examinationTypeCode" type="xs:string" use="optional"/>
+            <xs:attribute name="numberOfAttempts" type="xs:string" use="optional"/>
+            <xs:attribute name="weighingFactor" type="xs:string" use="optional"/>
+            <xs:attribute name="BRsPassingTest" type="xs:string" use="optional"/>
+            <xs:attribute name="active" type="xs:string" use="optional"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="tests">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="test" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+            <xs:attribute name="id" type="xs:string" use="optional"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="examination">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="teachersForExamination" minOccurs="0"/>
+                <xs:element ref="tests" minOccurs="0"/>
+            </xs:sequence>
+            <xs:attribute name="id" type="xs:string" use="optional"/>
+            <xs:attribute name="examinationCode" type="xs:string" use="optional"/>
+            <xs:attribute name="examinationDescription" type="xs:string" use="optional"/>
+            <xs:attribute name="subjectId" type="xs:string" use="optional"/>
+            <xs:attribute name="examinationTypeCode" type="xs:string" use="optional"/>
+            <xs:attribute name="numberOfAttempts" type="xs:string" use="optional"/>
+            <xs:attribute name="weighingFactor" type="xs:string" use="optional"/>
+            <xs:attribute name="BRsPassingExamination" type="xs:string" use="optional"/>
+            <xs:attribute name="active" type="xs:string" use="optional"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="examinations">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="examination" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+            <xs:attribute name="id" type="xs:string" use="optional"/>
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>

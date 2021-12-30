@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ***** BEGIN LICENSE BLOCK *****
+  Version: MPL 1.1/GPL 2.0/LGPL 2.1
+  
+  The contents of this file are subject to the Mozilla Public License Version
+  1.1 (the "License"); you may not use this file except in compliance with
+  the License. You may obtain a copy of the License at
+  http://www.mozilla.org/MPL/
+  
+  Software distributed under the License is distributed on an "AS IS" basis,
+  WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+  for the specific language governing rights and limitations under the
+  License.
+  
+  The Original Code is Opus-College fee module code.
+  
+  The Initial Developer of the Original Code is
+  Center for Information Services, Radboud University Nijmegen.
+  Portions created by the Initial Developer are Copyright (C) 2008
+  the Initial Developer. All Rights Reserved.
+  
+  Contributor(s):
+    For Java files, see Javadoc @author tags.
+  
+  Alternatively, the contents of this file may be used under the terms of
+  either the GNU General Public License Version 2 or later (the "GPL"), or
+  the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+  in which case the provisions of the GPL or the LGPL are applicable instead
+  of those above. If you wish to allow use of your version of this file only
+  under the terms of either the GPL or the LGPL, and not to allow others to
+  use your version of this file under the terms of the MPL, indicate your
+  decision by deleting the provisions above and replace them with the notice
+  and other provisions required by the GPL or the LGPL. If you do not delete
+  the provisions above, a recipient may use your version of this file under
+  the terms of any one of the MPL, the GPL or the LGPL.
+  
+  ***** END LICENSE BLOCK *****
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns:aop="http://www.springframework.org/schema/aop"
+		xmlns:context="http://www.springframework.org/schema/context"
+		xsi:schemaLocation="http://www.springframework.org/schema/beans
+							http://www.springframework.org/schema/beans/spring-beans.xsd
+							http://www.springframework.org/schema/context
+                            http://www.springframework.org/schema/context/spring-context.xsd
+							http://www.springframework.org/schema/aop
+       						http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+	<!-- base package for components (like @Controller a.o.) -->
+	<context:component-scan base-package="org.uci.opus.fee.web.flow, org.uci.opus.finance.web.flow" />
+
+    <!-- Controller bean definitions: -->
+
+    <bean id="feesStudiesController" class="org.uci.opus.fee.web.flow.FeesStudiesController">
+        <property name="viewName"><value>fee/fee/feesStudies</value></property>
+        <property name="securityChecker"><ref bean="securityChecker"/></property>
+        <property name="studyManager"><ref bean="studyManager" /></property>
+        <property name="opusMethods"><ref bean="opusMethods" /></property>
+        <property name="lookupCacher"><ref bean="lookupCacher" /></property>
+        <property name="studentManager"><ref bean="studentManager" /></property>
+        <property name="organizationalUnitManager"><ref bean="organizationalUnitManager" /></property>
+  	</bean>   
+
+    <bean id="feesStudyController" class="org.uci.opus.fee.web.flow.FeesStudyController">
+        <property name="viewName"><value>fee/fee/feesStudy</value></property>
+        <property name="securityChecker"><ref bean="securityChecker"/></property>
+        <property name="lookupManager"><ref bean="lookupManager"/></property>
+        <property name="opusMethods"><ref bean="opusMethods"/></property>
+        <property name="studyManager"><ref bean="studyManager"/></property>
+        <property name="subjectManager"><ref bean="subjectManager"/></property>
+        <property name="feeManager"><ref bean="feeManager"/></property>
+    </bean>
+
+<!--     <bean id="feeStudyGradeTypeEditController" class="org.uci.opus.fee.web.flow.FeeStudyGradeTypeEditController">
+        <property name="formView"><value>fee/fee/feeStudyGradeType</value></property>
+        <property name="successView"><value>redirect:feesstudy.view</value></property>
+        <property name="validator">
+            <bean class="org.uci.opus.fee.validators.FeeStudyGradeTypeValidator" />
+        </property>
+    </bean> -->
+    <bean id="feeDeleteController" class="org.uci.opus.fee.web.flow.FeeDeleteController">
+        <property name="viewName"><value>fee/fee/feesstudy</value></property>
+        <property name="securityChecker"><ref bean="securityChecker"/></property>
+        <property name="feeManager"><ref bean="feeManager"/></property>
+    </bean>
+
+<!--     <bean id="financialTransactionsController" class="org.uci.opus.finance.web.flow.FinancialTransactionsController"> -->
+<!--          <property name="formView"><value>fee/finance/financialTransactions</value></property> -->
+<!--           <property name="successView"><value>redirect:financialTransactions.view</value></property> -->
+<!--          <property name="validator"> -->
+<!--             <bean class="org.uci.opus.finance.validators.FinancialTransactionsValidator" /> -->
+<!--          </property> -->
+<!--     </bean> -->
+
+<!--     <bean id="studentFinancialTransactionsController" class="org.uci.opus.finance.web.flow.StudentFinancialTransactionsController"> -->
+<!--          <property name="formView"><value>fee/finance/studentFinancialTransactions</value></property> -->
+<!--           <property name="successView"><value>redirect:studentFinancialTransactions.view</value></property> -->
+<!--          <property name="validator"> -->
+<!--             <bean class="org.uci.opus.finance.validators.StudentFinancialTransactionsValidator" /> -->
+<!--          </property> -->
+<!--     </bean>                  -->
+
+    <bean id="paymentsStudentsController" class="org.uci.opus.fee.web.flow.PaymentsStudentsController">
+        <property name="viewName"><value>fee/payment/paymentsStudents</value></property>
+        <property name="securityChecker"><ref bean="securityChecker"/></property>
+        <property name="opusMethods"><ref bean="opusMethods"/></property>
+        <property name="studyManager"><ref bean="studyManager"/></property>
+        <property name="studentManager"><ref bean="studentManager"/></property>
+        <property name="lookupCacher"><ref bean="lookupCacher"/></property>
+    </bean>
+
+    <bean id="paymentsStudentController" class="org.uci.opus.fee.web.flow.PaymentsStudentController">
+        <property name="viewName"><value>fee/payment/paymentsStudent</value></property>
+    </bean>
+
+<!--     <bean id="paymentEditController" class="org.uci.opus.fee.web.flow.PaymentEditController"> -->
+<!--         <property name="securityChecker"><ref bean="securityChecker"/></property> -->
+<!--         <property name="studentManager"><ref bean="studentManager"/></property> -->
+<!--         <property name="studyManager"><ref bean="studyManager"/></property> -->
+<!--         <property name="paymentManager"><ref bean="paymentManager"/></property> -->
+<!--         <property name="subjectManager"><ref bean="subjectManager"/></property> -->
+<!--         <property name="feeManager"><ref bean="feeManager"/></property> -->
+<!--         <property name="formView"><value>fee/payment/payment</value></property> -->
+<!--         <property name="successView"><value>redirect:paymentsstudent.view</value></property> -->
+<!--         <property name="validator"> -->
+<!--             <bean class="org.uci.opus.fee.validators.PaymentValidator" /> -->
+<!--         </property> -->
+<!--     </bean> -->
+
+    <bean id="paymentDeleteController" class="org.uci.opus.fee.web.flow.PaymentDeleteController">
+        <property name="viewName"><value>fee/payment/paymentsstudent</value></property>
+        <property name="securityChecker"><ref bean="securityChecker"/></property>
+        <property name="paymentManager"><ref bean="paymentManager"/></property>
+    </bean>
+
+    <bean id="studentBalanceController" class="org.uci.opus.fee.web.flow.StudentBalanceController">
+        <property name="viewName"><value>fee/payment/paymentsstudent</value></property>
+        <property name="securityChecker"><ref bean="securityChecker"/></property>
+    </bean>
+
+    <bean id="allOutstandingFeesPayOutPaymentsController" class="org.uci.opus.fee.web.flow.AllOutstandingFeesPayOutPaymentsController">
+        <property name="viewName"><value>fee/payment/paymentsstudent</value></property>
+        <property name="securityChecker"><ref bean="securityChecker"/></property>
+    </bean>
+
+    <bean id="moveToNextCardinalUnitSurplusPaymentsController" class="org.uci.opus.fee.web.flow.MoveToNextCardinalUnitSurplusPaymentsController">
+        <property name="viewName"><value>fee/payment/paymentsstudent</value></property>
+        <property name="securityChecker"><ref bean="securityChecker"/></property>
+    </bean>
+
+    <bean id="moveToNextCardinalUnitOutstandingPaymentsController" class="org.uci.opus.fee.web.flow.MoveToNextCardinalUnitOutstandingPaymentsController">
+        <property name="viewName"><value>fee/payment/paymentsstudent</value></property>
+        <property name="securityChecker"><ref bean="securityChecker"/></property>
+    </bean> 
+
+</beans> 

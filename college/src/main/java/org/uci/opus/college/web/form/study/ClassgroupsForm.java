@@ -1,0 +1,170 @@
+/*
+ * ***** BEGIN LICENSE BLOCK *****
+ * Version: MPL 1.1/GPL 2.0/LGPL 2.1
+ * 
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ * 
+ * Software distributed under the License is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the
+ * License.
+ * 
+ * The Original Code is Opus-College college module code.
+ * 
+ * The Initial Developer of the Original Code is
+ * Center for Information Services, Radboud University Nijmegen.
+ * Portions created by the Initial Developer are Copyright (C) 2008
+ * the Initial Developer. All Rights Reserved.
+ * 
+ * Contributor(s):
+ *   For Java files, see Javadoc @author tags.
+ * 
+ * Alternatively, the contents of this file may be used under the terms of
+ * either the GNU General Public License Version 2 or later (the "GPL"), or
+ * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+ * in which case the provisions of the GPL or the LGPL are applicable instead
+ * of those above. If you wish to allow use of your version of this file only
+ * under the terms of either the GPL or the LGPL, and not to allow others to
+ * use your version of this file under the terms of the MPL, indicate your
+ * decision by deleting the provisions above and replace them with the notice
+ * and other provisions required by the GPL or the LGPL. If you do not delete
+ * the provisions above, a recipient may use your version of this file under
+ * the terms of any one of the MPL, the GPL or the LGPL.
+ * 
+ * ***** END LICENSE BLOCK *****
+ */
+
+package org.uci.opus.college.web.form.study;
+
+import java.util.List;
+
+import org.uci.opus.college.domain.AcademicYear;
+import org.uci.opus.college.domain.Classgroup;
+import org.uci.opus.college.domain.Study;
+import org.uci.opus.college.domain.StudyGradeType;
+import org.uci.opus.college.domain.util.IdToAcademicYearMap;
+import org.uci.opus.college.web.form.AcademicYearIdField;
+import org.uci.opus.college.web.form.OverviewForm;
+import org.uci.opus.util.CodeToLookupMap;
+
+public class ClassgroupsForm extends OverviewForm<Classgroup> implements AcademicYearIdField {
+
+	private int studyId;
+	private int academicYearId;
+	private int studyGradeTypeId;
+
+	// used to show the name of the primary study of each subject in the
+	// overview
+	private List<Study> allStudies;
+	private List<AcademicYear> allAcademicYears;
+	private List<StudyGradeType> allStudyGradeTypes;
+    private IdToAcademicYearMap idToAcademicYearMap;
+    private CodeToLookupMap codeToGradeTypeMap;
+    private CodeToLookupMap codeToStudyFormMap;
+    private CodeToLookupMap codeToStudyTimeMap;
+
+	/*
+	 * if a subject is linked to a result, it can not be deleted; this attribute
+	 * is used to show an error message.
+	 */
+	private int classgroupCount;
+
+	public int getStudyId() {
+		return studyId;
+	}
+
+	public void setStudyId(int studyId) {
+		this.studyId = studyId;
+	}
+
+	public List<Study> getAllStudies() {
+		return allStudies;
+	}
+
+	public void setAllStudies(List<Study> allStudies) {
+		this.allStudies = allStudies;
+	}
+
+	public int getAcademicYearId() {
+		return academicYearId;
+	}
+
+	public void setAcademicYearId(int academicYearId) {
+		this.academicYearId = academicYearId;
+	}
+
+	public List<AcademicYear> getAllAcademicYears() {
+		return allAcademicYears;
+	}
+
+	public void setAllAcademicYears(List<AcademicYear> allAcademicYears) {
+		this.allAcademicYears = allAcademicYears;
+	}
+
+	public int getClassgroupCount() {
+		return classgroupCount;
+	}
+
+	public void setClassgroupCount(int subjectCount) {
+		this.classgroupCount = subjectCount;
+	}
+
+	public List<Classgroup> getAllClassgroups() {
+		return getAllItems();
+	}
+
+	public void setAllClassgroups(List<Classgroup> allClassgroups) {
+	    setAllItems(allClassgroups);
+	}
+
+	public List<StudyGradeType> getAllStudyGradeTypes() {
+		return allStudyGradeTypes;
+	}
+
+	public void setAllStudyGradeTypes(List<StudyGradeType> allStudyGradeTypes) {
+		this.allStudyGradeTypes = allStudyGradeTypes;
+	}
+
+	public IdToAcademicYearMap getIdToAcademicYearMap() {
+		return idToAcademicYearMap;
+	}
+
+	public void setIdToAcademicYearMap(IdToAcademicYearMap idToAcademicYearMap) {
+		this.idToAcademicYearMap = idToAcademicYearMap;
+	}
+
+	public CodeToLookupMap getCodeToGradeTypeMap() {
+		return codeToGradeTypeMap;
+	}
+
+	public void setCodeToGradeTypeMap(CodeToLookupMap codeToGradeTypeMap) {
+		this.codeToGradeTypeMap = codeToGradeTypeMap;
+	}
+
+	public int getStudyGradeTypeId() {
+		return studyGradeTypeId;
+	}
+
+	public void setStudyGradeTypeId(int studyGradeTypeId) {
+		this.studyGradeTypeId = studyGradeTypeId;
+	}
+
+    public CodeToLookupMap getCodeToStudyFormMap() {
+        return codeToStudyFormMap;
+    }
+
+    public void setCodeToStudyFormMap(CodeToLookupMap codeToStudyFormMap) {
+        this.codeToStudyFormMap = codeToStudyFormMap;
+    }
+
+    public CodeToLookupMap getCodeToStudyTimeMap() {
+        return codeToStudyTimeMap;
+    }
+
+    public void setCodeToStudyTimeMap(CodeToLookupMap codeToStudyTimeMap) {
+        this.codeToStudyTimeMap = codeToStudyTimeMap;
+    }
+}

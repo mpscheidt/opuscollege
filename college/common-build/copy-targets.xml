@@ -1,0 +1,119 @@
+<?xml version="1.0"?>
+<!--
+  ***** BEGIN LICENSE BLOCK *****
+  Version: MPL 1.1/GPL 2.0/LGPL 2.1
+  
+  The contents of this file are subject to the Mozilla Public License Version
+  1.1 (the "License"); you may not use this file except in compliance with
+  the License. You may obtain a copy of the License at
+  http://www.mozilla.org/MPL/
+  
+  Software distributed under the License is distributed on an "AS IS" basis,
+  WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+  for the specific language governing rights and limitations under the
+  License.
+  
+  The Original Code is Opus-College college module code.
+  
+  The Initial Developer of the Original Code is
+  Center for Information Services, Radboud University Nijmegen.
+  Portions created by the Initial Developer are Copyright (C) 2008
+  the Initial Developer. All Rights Reserved.
+  
+  Contributor(s):
+    For Java files, see Javadoc @author tags.
+  
+  Alternatively, the contents of this file may be used under the terms of
+  either the GNU General Public License Version 2 or later (the "GPL"), or
+  the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+  in which case the provisions of the GPL or the LGPL are applicable instead
+  of those above. If you wish to allow use of your version of this file only
+  under the terms of either the GPL or the LGPL, and not to allow others to
+  use your version of this file under the terms of the MPL, indicate your
+  decision by deleting the provisions above and replace them with the notice
+  and other provisions required by the GPL or the LGPL. If you do not delete
+  the provisions above, a recipient may use your version of this file under
+  the terms of any one of the MPL, the GPL or the LGPL.
+  
+  ***** END LICENSE BLOCK *****
+-->
+<project name="module-copy-targets" basedir=".">
+
+	<!--
+		The 'target' project is the web project to which everything needs to
+		be copied, before we can run things in Eclipse. the two copy targets
+		defined here copy the class files (after they've been compiled)
+		and the web artifacts to the 'target' project.
+		Added: copy-jasper for compiled Jasper Reports files (*.jasper)
+	-->
+
+	<import file="compile-targets.xml" />
+
+
+	<target name="copy-classes" depends="compile" description="Copy all classes to the 'target' project">
+		<copy todir="${targetproject.dir}/src/main/webapp/WEB-INF/classes">
+			<fileset dir="${basedir}/build/classes">
+				<include name="**/*.*" />
+			</fileset>
+		</copy>
+	</target>
+
+    <target name="copy-test-classes" depends="compile" description="Copy all test classes to the 'target' project">
+        <copy todir="${targetproject.dir}/build/test-classes">
+            <fileset dir="${basedir}/build/test-classes">
+                <include name="**/*.*" />
+            </fileset>
+        </copy>
+    </target>
+
+    <target name="copy-resources" description="Copy all resources (src/main/resources) to the 'target' project">
+        <copy todir="${targetproject.dir}/src/main/webapp/WEB-INF/classes">
+            <fileset dir="${basedir}/src/main/resources">
+                <include name="**/*.*" />
+            </fileset>
+        </copy>
+    </target>
+
+<!-- "copy-database" is not needed anymore, because database scripts reside now inside src/main/resources and are copied by "copy-resources"
+	<target name="copy-database" depends="compile" description="Copy all database scripts to the 'target' project">
+		<copy todir="${targetproject.dir}/src/main/webapp/WEB-INF/database">
+			<fileset dir="${basedir}/database">
+				<include name="**/*.*" />
+			</fileset>
+		</copy>
+	</target>
+-->
+
+	<target name="copy-sources" description="Copy all sources to the 'target' project for debugging">
+		<copy todir="${targetproject.dir}/src/main/java">
+			<fileset dir="${basedir}/src/main/java">
+				<include name="**/*.*" />
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="copy-web-artifacts" description="Copy all web artifacts to the 'target' project">
+		<copy todir="${targetproject.dir}/src/main/webapp">
+			<fileset dir="${basedir}/src/main/webapp">
+				<include name="**/*" />
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="copy-jasper" depends="compile" description="Copy all compiled jasper reports to the 'target' project">
+		<copy todir="${targetproject.dir}/src/main/webapp/WEB-INF/reports">
+			<fileset dir="${basedir}/build/reports">
+				<include name="**/*.*" />
+			</fileset>
+		</copy>
+	</target>
+
+	<!-- MoVe - not used yet: copy-sources.
+        Copying sources into target project could help if you want to debug,
+        but gives errors apparently.
+	<target name="copy" depends="copy-web-artifacts,copy-sources,copy-classes,copy-jasper" 
+	   description="Copy classes, web artifacts, log-properties and jasper-files" />
+    -->
+	<target name="copy" depends="copy-web-artifacts,copy-classes,copy-resources,copy-jasper" description="Copy classes, resources, web artifacts, log-properties and jasper-files" />
+
+</project>

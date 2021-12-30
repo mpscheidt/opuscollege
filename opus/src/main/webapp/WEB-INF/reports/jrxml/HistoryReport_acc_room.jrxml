@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="HistoryReportAccRoom" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" resourceBundle="org/uci/opus/report/messages">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="id" class="java.lang.Integer" isForPrompting="false">
+		<defaultValueExpression><![CDATA[8348]]></defaultValueExpression>
+	</parameter>
+	<parameter name="writeWhen" class="java.sql.Timestamp" isForPrompting="false">
+		<defaultValueExpression><![CDATA[java.sql.Timestamp.valueOf("2012-01-09 22:24:48.15351")]]></defaultValueExpression>
+	</parameter>
+	<parameter name="preferredLanguage" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT operation
+, id
+, code
+, description
+, numberofbedspaces
+, hostelid
+, blockid
+, floornumber
+, writewho
+, writewhen
+, active
+, availablebedspace
+, roomtypecode
+
+FROM audit.acc_room_hist
+
+WHERE audit.acc_room_hist.id = $P!{id} AND audit.acc_room_hist.writewhen = '$P!{writeWhen}']]>
+	</queryString>
+	<field name="operation" class="java.lang.String"/>
+	<field name="id" class="java.lang.Integer"/>
+	<field name="code" class="java.lang.String"/>
+	<field name="description" class="java.lang.String"/>
+	<field name="numberofbedspaces" class="java.lang.Integer"/>
+	<field name="hostelid" class="java.lang.Integer"/>
+	<field name="blockid" class="java.lang.Integer"/>
+	<field name="floornumber" class="java.lang.Integer"/>
+	<field name="writewho" class="java.lang.String"/>
+	<field name="writewhen" class="java.sql.Timestamp"/>
+	<field name="active" class="java.lang.String"/>
+	<field name="availablebedspace" class="java.lang.Integer"/>
+	<field name="roomtypecode" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="65" splitType="Stretch">
+			<textField>
+				<reportElement x="80" y="0" width="108" height="32"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{code} + ""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="0" y="0" width="80" height="32"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isItalic="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$R{general.code} + ":"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="268" y="0" width="108" height="32"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{description} + ""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="188" y="0" width="80" height="32"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isItalic="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$R{general.description} + ":"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="456" y="0" width="108" height="32"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{roomtypecode} + ""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="376" y="0" width="80" height="32"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isItalic="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$R{general.typecode} + ":"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="644" y="0" width="108" height="32"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{numberofbedspaces} + ""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="564" y="0" width="80" height="32"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isItalic="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$R{general.numberofbedspaces} + ":"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="800" y="0" width="42" height="32"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{active} + ""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="752" y="0" width="48" height="32"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isItalic="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$R{general.active} + ":"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="80" y="32" width="108" height="32"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{hostelid} + ""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="32" width="80" height="32"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isItalic="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$R{general.hostelid} + ":"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="268" y="32" width="108" height="32"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{blockid} + ""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="188" y="32" width="80" height="32"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isItalic="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$R{general.blockid} + ":"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="456" y="32" width="108" height="32"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{floornumber} + ""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="376" y="32" width="80" height="32"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isItalic="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$R{general.floornumber} + ":"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="644" y="32" width="108" height="32"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{availablebedspace} + ""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="564" y="32" width="80" height="32"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isItalic="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$R{general.availablebedspace} + ":"]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

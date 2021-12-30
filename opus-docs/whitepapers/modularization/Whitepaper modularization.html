@@ -1,0 +1,219 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE>Whitepaper</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.2  (Linux)">
+	<META NAME="AUTHOR" CONTENT="Markus Pscheidt">
+	<META NAME="CREATED" CONTENT="20070928;15445900">
+	<META NAME="CHANGEDBY" CONTENT="Markus Pscheidt">
+	<META NAME="CHANGED" CONTENT="20080207;22433100">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { size: 8.5in 11in; margin: 0.79in }
+		P { margin-bottom: 0.08in }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" DIR="LTR">
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in"><B>Whitepaper Component based
+architecture (CBA)</B></P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in">Objective:</P>
+<P STYLE="margin-bottom: 0in">Allow development of plugins (=modules)
+for opusCollege which are independent of the opusCollege core.</P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in">Benefits for management:</P>
+<P STYLE="margin-bottom: 0in">Each university can install the
+particular plugins that they want, and is not obliged to install
+other plugins.</P>
+<P STYLE="margin-bottom: 0in">Each university can develop its own
+plugins.</P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in">Benefits for system development
+(according to Nora Mulira):</P>
+<P STYLE="margin-bottom: 0in">- Reduce development and maintenance
+costs</P>
+<P STYLE="margin-bottom: 0in">- Increase productivity</P>
+<P STYLE="margin-bottom: 0in">- Increased scalability</P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in">Issues:</P>
+<UL>
+	<LI><P STYLE="margin-bottom: 0in">Prepare the kernel to handle
+	plugins</P>
+	<LI><P STYLE="margin-bottom: 0in">Versioning of plugins (and the
+	kernel itself)</P>
+	<LI><P STYLE="margin-bottom: 0in">Updating from one version to the
+	next, particularly DB changes</P>
+	<LI><P STYLE="margin-bottom: 0in">adding and removing plugins at
+	least at server startup or, ideally, at any time</P>
+	<LI><P STYLE="margin-bottom: 0in">dependencies between bundles 
+	</P>
+	<LI><P STYLE="margin-bottom: 0in">classloader issues 
+	</P>
+	<LI><P STYLE="margin-bottom: 0in">exporting services to and
+	importing services from other bundles 
+	</P>
+	<LI><P STYLE="margin-bottom: 0in">sharing of resources between
+	plugins (like HTTP sessions) 
+	</P>
+	<LI><P STYLE="margin-bottom: 0in">using plugin architecture together
+	with servlet container (which one controls the other?)</P>
+</UL>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in">The dynamic nature of a plugin
+architecture becomes apparent when plugins are installed and
+uninstalled during runtime of opusCollege. This is especially with
+class loading: Typically in Java, there is a classpath defined when a
+Java Virtual Machine (VM) is started and the classpath is rather not
+dynamic. With dynamic plugins the classpath changes and this is a
+challenge not only for classes written for  opusCollege plugins but
+also for classes from 3<SUP>rd</SUP> party libraries.</P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in">Alternatives:</P>
+<UL>
+	<LI><P STYLE="margin-bottom: 0in">a) build tools like 'ant' or
+	'maven' 
+	</P>
+	<P STYLE="margin-bottom: 0in">b) develop own plug-in framework which
+	deploys WAR and JAR files within Tomcat</P>
+	<P STYLE="margin-bottom: 0in">c) use a framework that enables
+	plug-in architecture and is already available, like OSGi</P>
+</UL>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in">ad a) Build tools like 'ant' or 'maven'</P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in">When build tools only are used to
+achieve a certain level of component based architecture, then it is
+necessary to create the application archive every time additional
+modules shall be added or updated to a new version. This can be an
+easy solution to have at least a limited level of modularization. No
+issues arise concerning sharing of resources or classloaders. On the
+other hand, the separation between modules is not as clear as with
+other solutions: It is difficult to protect modules from being
+accessed by other modules. Additionally, it is necessary to deal with
+build tool configurations on the command line in order to build the
+stack of wanted modules into one single WAR file.</P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in">ad b) develop own plug-in framework
+which deploys WAR and JAR files within Tomcat</P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in">This option would enable a framework
+where plugins can be managed from within the OpusCollege web
+application. One of the great challenges would be to handle sharing
+of resources and classloader issues. In a web application which is
+deployed in a WAR file, a HTTP session is present. If plugins are
+deployed outside the WAR file in separate JARs or WARs, it is not
+easily possible to use the same HTTP session since they are not part
+of the same WAR file, and hence a separate session would be created.</P>
+<P STYLE="margin-bottom: 0in">This option requires considerable
+implementation effort.</P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in">ad c) use a framework that enables
+plug-in architecture and is already available, like OSGi</P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in">If an existing framework can be reused
+it obviously has to potential to prevent reinventing the wheel.
+However, frameworks in this area are rare or not mature yet. Examples
+include the <SPAN STYLE="background: transparent">“Java Plugin
+Framework” or OSGi. Some of these framework are not applicable to
+web applications.</SPAN></P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in"><SPAN STYLE="background: transparent">OSGi
+is a much broader technology and is designed to handle many issues
+like</SPAN></P>
+<UL>
+	<LI><P STYLE="margin-bottom: 0in"><SPAN STYLE="background: transparent">portability
+	of applications</SPAN></P>
+	<LI><P STYLE="margin-bottom: 0in"><SPAN STYLE="background: transparent">complexity
+	of big software systems: here the plugin-architecture comes in,
+	together with configuration issues and service oriented architecture</SPAN></P>
+	<LI><P STYLE="margin-bottom: 0in"><SPAN STYLE="background: transparent">life
+	cycle of software modules</SPAN></P>
+</UL>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in"><SPAN STYLE="background: transparent">The
+OSGi specification is already implemented independently several times
+by e. g. Apache and Eclipse. There have been developed solutions for
+web based systems, including servlet container based systems like
+Tomcat. It is difficult to estimate, though, how big the
+implementation effort will be.</SPAN></P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in">Not all 3<SUP>rd</SUP> party libraries
+are capable of being run within the dynamic OSGi environment.
+Hibernate still seems incapable to be run in OSGi whereas iBatis can
+be used already.</P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in">Spring Dynamic Modules (Spring DM)
+version 1.0 has been released recently and it is a good sign to have
+a stable and tested version for integration of OSGi into Spring.</P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in">Equinox (by Eclipse) has developed
+libraries for deploying OSGi on the server side – both deploying
+Equinox as a OSGi container within a servlet container and deploying
+a servlet container (Jetty, not Tomcat) as OSGi bundles.</P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in">There are several issues on the way to
+have a web application powered by plugins:</P>
+<UL>
+	<LI><P STYLE="margin-bottom: 0in">Use Spring DM</P>
+	<LI><P STYLE="margin-bottom: 0in">Use Equinox</P>
+	<LI><P STYLE="margin-bottom: 0in">Use Jetty instead of Tomcat</P>
+</UL>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in">As there is no dependency on Tomcat the
+switch to Jetty should be possible – both conform to the servlet
+specifications.</P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in">The recommended setup is Equinox being
+the base container deploying the servlet container as a bundle within
+Equinox (although it seems only a configuration issue to switch the
+setup). To get Spring DM into play, each bundle including the servlet
+container bundle would need to be able to have its own Spring
+application context. Spring DM promises to have a “highly
+non-intrusive nature” to take care of this aspect.</P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in">A difficulty might remain the
+integration of 3<SUP>rd</SUP> party libraries not yet prepared for
+OSGi. But there seem to be several ways around for most of the
+libraries, as described in the FAQ of Spring DM. Furthermore, the
+next release (version 1.1) will mainly take care about this issue, so
+help seems underway.</P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in">The change in the opusCollege
+application would be profound with some hurdles underway, at the same
+time possibly opening the door to an application that can be managed
+more easily from the perspectives of system administrators,
+developers and project coordinators, and with its SOA like
+architecture would make system integration with other applications in
+the university easier.</P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+</BODY>
+</HTML>

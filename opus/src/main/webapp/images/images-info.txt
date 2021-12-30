@@ -1,0 +1,7 @@
+
+graduate-small.png: https://pixabay.com/de/absolvent-graduierung-schule-150374/
+
+Flat icons: free icons taken from http://flaticons.net
+  - size: 16
+  - padding: 0
+  - icon color: 808080

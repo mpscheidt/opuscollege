@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="newClasslist" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="10"/>
+	<parameter name="subject" class="java.lang.String"/>
+	<parameter name="academicyear" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT DISTINCT
+     student."studentcode",
+     person."surnamefull",
+     person."firstnamesfull",
+     gender."description",
+     studyplan."studyplandescription",
+     organizationalunit."organizationalunitdescription",
+     academicyear."description" AS academicyear_description,
+     subject."subjectdescription" AS subject_subjectdescription,
+     subject."primarystudyid" AS subject_primarystudyid,
+     subject."currentacademicyearid" AS subject_currentacademicyearid,
+     study."studydescription" AS study_studydescription,
+     studygradetype."studyid" AS studygradetype_studyid,
+     studygradetype."gradetypecode" AS studygradetype_gradetypecode,
+     studygradetype."numberofcardinaltimeunits" AS studygradetype_numberofcardinaltimeunits,
+     studygradetype."maxnumberofcardinaltimeunits" AS studygradetype_maxnumberofcardinaltimeunits
+FROM
+     "opuscollege"."studyplan" studyplan INNER JOIN "opuscollege"."student" student ON studyplan."studentid" = student."studentid"
+     AND student."studentid" = studyplan."studentid"
+     INNER JOIN "opuscollege"."study" study ON studyplan."studyid" = study."id"
+     INNER JOIN "opuscollege"."organizationalunit" organizationalunit ON study."organizationalunitid" = organizationalunit."id"
+     INNER JOIN "opuscollege"."subject" subject ON study."id" = subject."primarystudyid"
+     INNER JOIN "opuscollege"."studygradetype" studygradetype ON study."id" = studygradetype."studyid"
+     INNER JOIN "opuscollege"."academicyear" academicyear ON subject."currentacademicyearid" = academicyear."id"
+     INNER JOIN "opuscollege"."person" person ON student."studentid" = person."id"
+     INNER JOIN "opuscollege"."gender" gender ON person."gendercode" = gender."code"
+WHERE
+     subject.subjectdescription = $P{subject}
+ AND academicyear.description = $P{academicyear}
+ORDER BY
+     person.surnamefull ASC,
+     person.firstnamesfull ASC,
+     student.studentcode ASC,
+     gender.description ASC,
+     organizationalunit.organizationalunitdescription ASC,
+     studyplan.studyplandescription ASC,
+     study.studydescription ASC]]>
+	</queryString>
+	<field name="studentcode" class="java.lang.String"/>
+	<field name="surnamefull" class="java.lang.String"/>
+	<field name="firstnamesfull" class="java.lang.String"/>
+	<field name="description" class="java.lang.String"/>
+	<field name="studyplandescription" class="java.lang.String"/>
+	<field name="organizationalunitdescription" class="java.lang.String"/>
+	<field name="academicyear_description" class="java.lang.String"/>
+	<field name="subject_subjectdescription" class="java.lang.String"/>
+	<field name="subject_primarystudyid" class="java.lang.Integer"/>
+	<field name="subject_currentacademicyearid" class="java.lang.Integer"/>
+	<field name="study_studydescription" class="java.lang.String"/>
+	<field name="studygradetype_studyid" class="java.lang.Integer"/>
+	<field name="studygradetype_gradetypecode" class="java.lang.String"/>
+	<field name="studygradetype_numberofcardinaltimeunits" class="java.lang.Integer"/>
+	<field name="studygradetype_maxnumberofcardinaltimeunits" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="155" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Transparent" x="222" y="81" width="292" height="22" backcolor="#006600"/>
+				<textElement textAlignment="Center">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[The University of Zambia]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="0" y="123" width="802" height="20" backcolor="#006600"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="4" y="123" width="123" height="20" forecolor="#FFFFFF"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Academic year:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="408" y="123" width="161" height="20" forecolor="#FFFFFF"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Subject:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="127" y="123" width="146" height="20" forecolor="#FFFFFF"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{academicyear_description}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="503" y="123" width="230" height="20" forecolor="#FFFFFF"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{subject_subjectdescription}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="103" width="345" height="20"/>
+				<textElement>
+					<font size="12" isBold="false" isStrikeThrough="false"/>
+				</textElement>
+				<text><![CDATA[Full-Time/Part-Time and Distance Education Students]]></text>
+			</staticText>
+			<image>
+				<reportElement x="322" y="-25" width="129" height="106"/>
+				<imageExpression class="java.lang.String"><![CDATA["logo_b.gif"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="19" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="26" splitType="Stretch">
+			<staticText>
+				<reportElement x="4" y="2" width="87" height="20"/>
+				<textElement>
+					<font isBold="true" isStrikeThrough="false"/>
+				</textElement>
+				<text><![CDATA[studentcode]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="97" y="2" width="100" height="20"/>
+				<textElement>
+					<font isBold="true" isStrikeThrough="false"/>
+				</textElement>
+				<text><![CDATA[surnamefull]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="203" y="2" width="100" height="20"/>
+				<textElement>
+					<font isBold="true" isStrikeThrough="false"/>
+				</textElement>
+				<text><![CDATA[firstnamesfull]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="625" y="2" width="153" height="20"/>
+				<textElement>
+					<font isBold="true" isStrikeThrough="false"/>
+				</textElement>
+				<text><![CDATA[organizational unit]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="308" y="2" width="62" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sex]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="414" y="2" width="100" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Study]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="29" splitType="Stretch">
+			<textField>
+				<reportElement x="4" y="2" width="87" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{studentcode}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="97" y="3" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{surnamefull}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="203" y="3" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{firstnamesfull}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="601" y="2" width="193" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{organizationalunitdescription}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="308" y="3" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{description}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="415" y="4" width="210" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{study_studydescription}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="8" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="21" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="802" height="20" backcolor="#006600"/>
+			</rectangle>
+			<textField>
+				<reportElement x="625" y="1" width="97" height="20" forecolor="#FFFFFF"/>
+				<textElement textAlignment="Right">
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="733" y="1" width="61" height="20" forecolor="#FFFFFF"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEE, d MMM yyyy HH:mm:ss ">
+				<reportElement x="7" y="1" width="239" height="20" forecolor="#FFFFFF"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="14" splitType="Stretch"/>
+	</summary>
+</jasperReport>

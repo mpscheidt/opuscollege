@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ***** BEGIN LICENSE BLOCK *****
+  Version: MPL 1.1/GPL 2.0/LGPL 2.1
+  
+  The contents of this file are subject to the Mozilla Public License Version
+  1.1 (the "License"); you may not use this file except in compliance with
+  the License. You may obtain a copy of the License at
+  http://www.mozilla.org/MPL/
+  
+  Software distributed under the License is distributed on an "AS IS" basis,
+  WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+  for the specific language governing rights and limitations under the
+  License.
+  
+  The Original Code is Opus-College college module code.
+  
+  The Initial Developer of the Original Code is
+  Center for Information Services, Radboud University Nijmegen.
+  Portions created by the Initial Developer are Copyright (C) 2008
+  the Initial Developer. All Rights Reserved.
+  
+  Contributor(s):
+    For Java files, see Javadoc @author tags.
+  
+  Alternatively, the contents of this file may be used under the terms of
+  either the GNU General Public License Version 2 or later (the "GPL"), or
+  the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+  in which case the provisions of the GPL or the LGPL are applicable instead
+  of those above. If you wish to allow use of your version of this file only
+  under the terms of either the GPL or the LGPL, and not to allow others to
+  use your version of this file under the terms of the MPL, indicate your
+  decision by deleting the provisions above and replace them with the notice
+  and other provisions required by the GPL or the LGPL. If you do not delete
+  the provisions above, a recipient may use your version of this file under
+  the terms of any one of the MPL, the GPL or the LGPL.
+  
+  ***** END LICENSE BLOCK *****
+-->
+
+<dataset>
+
+  <opuscollege.academicyear id="1" />
+
+  <opuscollege.institution id="107" institutioncode="UCM" institutionTypeCode="3"/>
+  <opuscollege.branch id="118" branchcode="05" institutionid="107" />
+  <opuscollege.branch id="129" branchcode="08" institutionid="107" />
+  <opuscollege.organizationalunit id="18" organizationalunitcode="O1070710200824102" organizationalunitdescription="Faculdade de Ci&#234;ncias de Sa&#250;de - Beira" active="Y" branchid="118" unitlevel="1" parentorganizationalunitid="0" unitareacode="1" unittypecode="1" academicfieldcode="85" directorid="0" registrationdate="2008-10-07" writewho="opuscollege" writewhen="2009-03-09 10:21:51.024802"/>
+
+  <opuscollege.study id="12" organizationalunitid="18" />
+  <opuscollege.studygradetype id="244" studyid="12" gradetypecode="B" active="Y" currentacademicyearid="1" cardinaltimeunitcode="2" numberofcardinaltimeunits="6" maxnumberofcardinaltimeunits="0" numberofsubjectspercardinaltimeunit="2" maxnumberofsubjectspercardinaltimeunit="4" studytimecode="1" studyformcode="1" maxnumberoffailedsubjectspercardinaltimeunit="1" studyintensitycode="" maxnumberofstudents="0" />
+
+  <opuscollege.subject id="989" subjectcode="S01711200990347" subjectdescription="Teste de Progresso 1&#186; ano" subjectcontentdescription="" primarystudyid="12" active="Y" targetgroupcode="" freechoiceoption="N" creditamount="4" hourstoinvest="40" frequencycode="0" studytimecode="0" examtypecode="" maximumparticipants="0" brspassingsubject="0" registrationdate="2009-11-17" writewho="opuscollege" writewhen="2009-11-17 09:03:47.973629" currentacademicyearid="0" resultType="1" />
+  <opuscollege.subjectresult/>
+  <opuscollege.examination id="20" examinationcode="E9891705201055307" examinationdate="2014-01-01" examinationdescription="1&#176; teste" subjectid="989" examinationtypecode="2" numberofattempts="1" weighingfactor="25" brspassingexamination="" active="Y" writewho="opuscollege" writewhen="2010-05-17 05:54:25.913193"/>
+  <opuscollege.examinationresult/>
+  <opuscollege.test id="7" testcode="T9891705201055307" testdate="2014-02-02" testdescription="2nd level test" examinationId="20" examinationtypecode="1" numberofattempts="2" weighingfactor="33" minimummark="3" maximummark="6" brspassingtest="abc" active="Y" writewho="opuscollege" writewhen="2010-05-17 05:54:25.913193"/>
+  <opuscollege.testresult/>
+  <opuscollege.person id="558" personcode="P14920082013182343" active="Y" surnamefull="10271008" firstnamesfull="10271008" firstnamesalias="" nationalregistrationnumber="" civiltitlecode="0" gradetypecode="0" gendercode="2" birthdate="1972-09-01" districtofbirthcode="" provinceofbirthcode="0" districtoforigincode="" provinceoforigincode="0" civilstatuscode="0" identificationtypecode="4" identificationnumber="207992/45/1" healthissues="" registrationdate="2013-08-20" writewho="opuscollege" writewhen="2013-08-20 18:23:43.733" publichomepage="N" motivation=""/>
+  <opuscollege.student studentid="9824" studentcode="10271008" personid="558" dateofenrolment="2013-08-20" primarystudyid="1210" previousinstitutionid="0" previousinstitutionprovincecode="0" scholarship="N" writewho="opuscollege" writewhen="2013-08-20 18:23:43.733" subscriptionrequirementsfulfilled="Y" secondarystudyid="0" foreignstudent="N" relativeofstaffmember="N" ruralareaorigin="N"/>
+  <opuscollege.studyplan id="9543" studentid="9824" studyplandescription="Medicina geral - licentiate" active="Y" writewho="opuscollege" writewhen="2011-03-24 09:15:51.166298" studyplanstatuscode="1" studyid="12" gradetypecode="LIC" minor1id="0" major2id="0" minor2id="0" applicationnumber="0" firstchoiceonwardstudyid="12" firstchoiceonwardgradetypecode="SEC" secondchoiceonwardstudyid="28" secondchoiceonwardgradetypecode="SEC" thirdchoiceonwardstudyid="0" thirdchoiceonwardgradetypecode="" brspassingexam="10" applicantcategorycode="2" previousdisciplinecode="" previousdisciplinegrade="" missingdocuments="" />
+  <opuscollege.studyplanresult/>
+  <opuscollege.studyplancardinaltimeunit id="3600" studyplanid="9543" cardinaltimeunitnumber="1" progressstatuscode="0" active="Y" writewho="opuscollege" writewhen="2011-05-26 09:37:00.011516" studygradetypeid="244" cardinaltimeunitstatuscode="10" tuitionwaiver="N" studyintensitycode="" />
+  <opuscollege.studyplandetail id="8541" studyplanid="9543" subjectid="0" subjectblockid="0" active="Y" studyplancardinaltimeunitid="3600" studygradetypeid="244" exempted="false" />
+  <opuscollege.cardinaltimeunitresult/>
+  <opuscollege.thesis id="1" studyplanid="9543" thesiscode="T006122010160240" thesisdescription="the Thesis" creditamount="40" brsapplyingtothesis="1" brspassingthesis="2" thesisstatusdate="2010-12-06" startacademicyearid="44" affiliationfee="3.45" active="Y" writewho="opuscollege" writewhen="2010-12-06 16:02:40.230214" defensecommittee="Prof. Doe" keywords="appropriate technology" nonrelatedpublications="conference A" publications="paper B" readingcommittee="Dr. X" research="Marine biology" researchers="A., B." statusofclearness="somewhat unclear" supervisors="Dr. Dick" thesiscontentdescription="Short outline" />
+  <opuscollege.thesisresult/>
+  <opuscollege.person id="669" personcode="P14920082013182344" active="Y" surnamefull="Full" firstnamesfull="First" firstnamesalias="" nationalregistrationnumber="" civiltitlecode="0" gradetypecode="0" gendercode="2" birthdate="1970-01-01" districtofbirthcode="" provinceofbirthcode="0" districtoforigincode="" provinceoforigincode="0" civilstatuscode="0" identificationtypecode="4" identificationnumber="207994/67/1" healthissues="" registrationdate="2013-08-20" writewho="opuscollege" writewhen="2013-08-20 18:23:43.733" publichomepage="N" motivation=""/>
+  <opuscollege.staffmember staffmemberid="19" staffmembercode="61" personid="669" dateofappointment="2008-02-07" stafftypecode="2" primaryunitofappointmentid="13" educationtypecode="3" writewho="opuscollege" writewhen="2008-02-07 13:52:45.15741"/>
+  <audit.examinationresult_hist/>
+  <audit.subjectresult_hist/>
+  <audit.testresult_hist/>
+  <audit.cardinaltimeunitresult_hist/>
+  <audit.studyplanresult_hist/>
+  <audit.thesisresult_hist/>
+</dataset>

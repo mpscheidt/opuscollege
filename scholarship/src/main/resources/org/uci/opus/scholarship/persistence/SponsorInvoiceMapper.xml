@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+  ***** BEGIN LICENSE BLOCK *****
+  Version: MPL 1.1/GPL 2.0/LGPL 2.1
+  
+  The contents of this file are subject to the Mozilla Public License Version
+  1.1 (the "License"); you may not use this file except in compliance with
+  the License. You may obtain a copy of the License at
+  http://www.mozilla.org/MPL/
+  
+  Software distributed under the License is distributed on an "AS IS" basis,
+  WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+  for the specific language governing rights and limitations under the
+  License.
+  
+  The Original Code is Opus-College scholarship module code.
+  
+  The Initial Developer of the Original Code is
+  Center for Information Services, Radboud University Nijmegen.
+  Portions created by the Initial Developer are Copyright (C) 2008
+  the Initial Developer. All Rights Reserved.
+  
+  Contributor(s):
+    For Java files, see Javadoc @author tags.
+  
+  Alternatively, the contents of this file may be used under the terms of
+  either the GNU General Public License Version 2 or later (the "GPL"), or
+  the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+  in which case the provisions of the GPL or the LGPL are applicable instead
+  of those above. If you wish to allow use of your version of this file only
+  under the terms of either the GPL or the LGPL, and not to allow others to
+  use your version of this file under the terms of the MPL, indicate your
+  decision by deleting the provisions above and replace them with the notice
+  and other provisions required by the GPL or the LGPL. If you do not delete
+  the provisions above, a recipient may use your version of this file under
+  the terms of any one of the MPL, the GPL or the LGPL.
+  
+  ***** END LICENSE BLOCK *****
+-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.uci.opus.scholarship.persistence.SponsorInvoiceMapper">
+
+    <resultMap id="SponsorInvoiceResultMap" type="SponsorInvoice">
+        <result property="id" column="id"/>
+        <result property="scholarshipId" column="scholarshipId"/>
+        <result property="invoiceNumber" column="invoiceNumber"/>
+        <result property="invoiceDate" column="invoiceDate"/>
+        <result property="amount" column="amount"/>
+        <result property="cleared" column="cleared"/>
+        <result property="nrOfTimesPrinted" column="nrOfTimesPrinted"/>
+        <result property="active" column="active"/>
+        <result property="writeWho" column="writeWho"/>
+        <association property="scholarship" select="org.uci.opus.scholarship.persistence.ScholarshipMapper.findScholarshipById" column="scholarshipId"/>
+        <association property="outstandingAmount" select="findOutstandingAmount" column="id"/>
+    </resultMap>
+
+    <select id="findSponsorInvoiceById" parameterType="int" resultMap="SponsorInvoiceResultMap">
+        select *
+        from opuscollege.sch_sponsorInvoice
+        where id = #{value}
+    </select>
+
+    <select id="findSponsorInvoices" parameterType="map" resultMap="SponsorInvoiceResultMap">
+        SELECT *
+        FROM opuscollege.sch_sponsorInvoice
+        inner join opuscollege.sch_scholarship ON sch_sponsorInvoice.scholarshipId = sch_scholarship.id
+        inner join opuscollege.sch_sponsor ON sch_scholarship.sponsorId = sch_sponsor.id
+        where 1=1
+        <if test='sponsorInvoiceId != null and sponsorInvoiceId != ""'>
+            and sch_sponsorInvoice.id = #{sponsorInvoiceId}
+        </if>
+        <if test='scholarshipId != null and scholarshipId != "" and scholarshipId != "0"'>
+            and sch_sponsorInvoice.scholarshipId = #{scholarshipId}
+        </if>
+        <if test='sponsorId != null and sponsorId != "" and sponsorId != "0"'>
+            and sch_scholarship.sponsorId = #{sponsorId}
+        </if>
+        <if test='academicYearId != null and academicYearId != ""'>
+            and sch_sponsor.academicYearId = #{academicYearId}
+        </if>
+        <if test='cleared != null'>
+            and sch_sponsorInvoice.cleared = #{cleared}
+        </if>
+        <if test='onlyOutstanding == "Y"'>
+            and ( NOT EXISTS (
+                    SELECT 1 FROM opuscollege.sch_sponsorPayment where sch_sponsorPayment.sponsorInvoiceId = sch_sponsorInvoice.id
+                  )
+                  OR (
+                    SELECT SUM(sch_sponsorPayment.amount) &lt; sch_sponsorInvoice.amount FROM opuscollege.sch_sponsorPayment WHERE sch_sponsorPayment.sponsorInvoiceId = sch_sponsorInvoice.id
+                  )
+                )
+        </if>
+        ORDER BY sch_sponsorInvoice.invoiceNumber
+    </select>
+    
+    <insert id="addSponsorInvoice" parameterType="SponsorInvoice">
+        INSERT INTO opuscollege.sch_sponsorInvoice
+        (     scholarshipId
+            , invoiceNumber
+            , invoiceDate
+            , amount
+            , cleared
+            , nrOfTimesPrinted
+            , active
+            , writeWho
+        ) VALUES (
+             #{scholarshipId}
+            , #{invoiceNumber}
+            , #{invoiceDate}
+            , #{amount}
+            , #{cleared}
+            , #{nrOfTimesPrinted}
+            , #{active}
+            , #{writeWho}
+        )
+        <selectKey keyProperty="id" resultType="int">
+            SELECT currVal('opuscollege.sch_sponsorInvoiceSeq')
+        </selectKey>
+    </insert>
+    
+    <update id="updateSponsorInvoice" parameterType="SponsorInvoice">
+        
+        UPDATE opuscollege.sch_sponsorInvoice
+        SET scholarshipId = #{scholarshipId}
+        , invoiceNumber = #{invoiceNumber}
+        , invoiceDate = #{invoiceDate}
+        , amount = #{amount}
+        , cleared = #{cleared}
+        , nrOfTimesPrinted = #{nrOfTimesPrinted}
+        , active = #{active}
+        , writeWho = #{writeWho}
+ 
+        WHERE id = #{id};
+            
+    </update>
+
+    <delete id="deleteSponsorInvoice" parameterType="int">
+        DELETE FROM opuscollege.sch_sponsorInvoice
+        WHERE id = #{id};        
+    </delete>
+
+    <select id="doesSponsorInvoiceExist" parameterType="map" resultType="boolean">
+        
+        SELECT (COUNT(*) != 0)
+        FROM opuscollege.sch_sponsorInvoice
+        WHERE id != #{id}
+
+        <if test="invoiceNumber != null">
+            AND lower(invoiceNumber) = lower(#{invoiceNumber})
+        </if>
+        <if test="active != null">
+            AND active = #{active}
+        </if>
+        
+    </select>
+
+    <insert id="insertSponsorInvoiceHistory">
+
+        INSERT INTO audit.sch_sponsorInvoice_hist(
+            operation
+            , id
+            , scholarshipId
+            , invoiceNumber
+            , invoiceDate
+            , amount
+            , cleared
+            , nrOfTimesPrinted
+            , active
+            , writeWho
+        ) VALUES (
+            #{operation}
+            , #{sponsorInvoice.id}
+            , #{sponsorInvoice.scholarshipId}
+            , #{sponsorInvoice.invoiceNumber}
+            , #{sponsorInvoice.invoiceDate}
+            , #{sponsorInvoice.amount}
+            , #{sponsorInvoice.cleared}
+            , #{sponsorInvoice.nrOfTimesPrinted}
+            , #{sponsorInvoice.active}
+            , #{sponsorInvoice.writeWho}
+        )
+    </insert>
+
+    <!-- used in association element here in this sql map -->
+    <select id="findOutstandingAmount" parameterType="int" resultType="java.math.BigDecimal">
+        SELECT CASE WHEN count(sch_sponsorPayment.*) = 0
+                    THEN sch_sponsorInvoice.amount
+                    ELSE (sch_sponsorInvoice.amount - sum(sch_sponsorPayment.amount))
+               END AS outstandingAmount
+        FROM opuscollege.sch_sponsorInvoice
+        LEFT OUTER JOIN opuscollege.sch_sponsorPayment ON sch_sponsorPayment.sponsorInvoiceId = sch_sponsorInvoice.id
+        where sch_sponsorInvoice.id = #{sponsorInvoiceId}
+        GROUP BY sch_sponsorInvoice.id        
+    </select>
+
+</mapper>

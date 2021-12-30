@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ***** BEGIN LICENSE BLOCK *****
+  Version: MPL 1.1/GPL 2.0/LGPL 2.1
+  
+  The contents of this file are subject to the Mozilla Public License Version
+  1.1 (the "License"); you may not use this file except in compliance with
+  the License. You may obtain a copy of the License at
+  http://www.mozilla.org/MPL/
+  
+  Software distributed under the License is distributed on an "AS IS" basis,
+  WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+  for the specific language governing rights and limitations under the
+  License.
+  
+  The Original Code is Opus-College college module code.
+  
+  The Initial Developer of the Original Code is
+  Center for Information Services, Radboud University Nijmegen.
+  Portions created by the Initial Developer are Copyright (C) 2008
+  the Initial Developer. All Rights Reserved.
+  
+  Contributor(s):
+    For Java files, see Javadoc @author tags.
+  
+  Alternatively, the contents of this file may be used under the terms of
+  either the GNU General Public License Version 2 or later (the "GPL"), or
+  the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+  in which case the provisions of the GPL or the LGPL are applicable instead
+  of those above. If you wish to allow use of your version of this file only
+  under the terms of either the GPL or the LGPL, and not to allow others to
+  use your version of this file under the terms of the MPL, indicate your
+  decision by deleting the provisions above and replace them with the notice
+  and other provisions required by the GPL or the LGPL. If you do not delete
+  the provisions above, a recipient may use your version of this file under
+  the terms of any one of the MPL, the GPL or the LGPL.
+  
+  ***** END LICENSE BLOCK *****
+-->
+
+<dataset>
+
+  <opuscollege.lookuptable id="3" tablename="addresstype" lookuptype="Lookup" active="Y" writewho="opuscollege" writewhen="2009-02-03 01:45:27.511305"/>
+
+  <opuscollege.addresstype id="1" code="1" lang="en" active="Y" description="home" writewho="opuscollege" writewhen="2008-09-14 02:59:13.688196"/>
+  <opuscollege.addresstype id="2" code="2" lang="en" active="Y" description="formal communication address student" writewho="opuscollege" writewhen="2008-09-14 02:59:13.688196"/>
+  <opuscollege.addresstype id="3" code="3" lang="en" active="Y" description="financial guardian" writewho="opuscollege" writewhen="2008-09-14 02:59:13.688196"/>
+  <opuscollege.addresstype id="4" code="4" lang="en" active="Y" description="formal communication address study" writewho="opuscollege" writewhen="2008-09-14 02:59:13.688196"/>
+  <opuscollege.addresstype id="5" code="5" lang="en" active="Y" description="formal communication address organizational unit" writewho="opuscollege" writewhen="2008-09-14 02:59:13.688196"/>
+  <opuscollege.addresstype id="6" code="6" lang="en" active="Y" description="formal communication address work" writewho="opuscollege" writewhen="2008-09-14 02:59:13.688196"/>
+  <opuscollege.addresstype id="7" code="7" lang="en" active="Y" description="parents" writewho="opuscollege" writewhen="2008-09-14 02:59:13.688196"/>
+
+  <opuscollege.institution id="107" institutioncode="UCM" institutionTypeCode="3"/>
+  <opuscollege.branch id="118" branchcode="05" institutionid="107" />
+  <opuscollege.organizationalunit id="18" organizationalunitcode="O1" organizationalunitdescription="Faculdade de Ciencias de Saude" branchid="118" />
+  <opuscollege.study id="38" organizationalunitid="18" />
+  <opuscollege.studygradetype id="58" studyid="38" gradetypecode="LIC" currentacademicyearid="44"  />
+  <opuscollege.person id="16" personcode="61" surnamefull="UCM-PEMBA" firstnamesfull="Administrator" />
+  <opuscollege.staffmember staffmemberid="19" staffmembercode="61" personid="16" />
+
+  <!-- person (staff member) address -->
+  <opuscollege.address id="1"  addresstypecode="6" personid="16" studyid="0" organizationalunitid="0" active="Y" street="Home drive" number="5" zipcode="8160" countrycode="AT" provincecode="ST" districtcode="WZ" />
+
+  <!-- study address -->
+  <opuscollege.address id="11" addresstypecode="4" personid="0" studyid="38" organizationalunitid="0" active="Y" street="University lane" number="13" zipcode="8010" countrycode="AT" provincecode="ST" districtcode="G" />
+
+  <!-- organizational unit address -->
+  <opuscollege.address id="21" addresstypecode="5" personid="0" studyid="0" organizationalunitid="18" active="Y" street="Department street" number="27" zipcode="1010" countrycode="AT" provincecode="V" districtcode="I" />
+
+</dataset>

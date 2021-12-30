@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE dataset SYSTEM "../../../../../../opuscollege.dtd">
+<!--
+  ***** BEGIN LICENSE BLOCK *****
+  Version: MPL 1.1/GPL 2.0/LGPL 2.1
+  
+  The contents of this file are subject to the Mozilla Public License Version
+  1.1 (the "License"); you may not use this file except in compliance with
+  the License. You may obtain a copy of the License at
+  http://www.mozilla.org/MPL/
+  
+  Software distributed under the License is distributed on an "AS IS" basis,
+  WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+  for the specific language governing rights and limitations under the
+  License.
+  
+  The Original Code is Opus-College college module code.
+  
+  The Initial Developer of the Original Code is
+  Center for Information Services, Radboud University Nijmegen.
+  Portions created by the Initial Developer are Copyright (C) 2008
+  the Initial Developer. All Rights Reserved.
+  
+  Contributor(s):
+    For Java files, see Javadoc @author tags.
+  
+  Alternatively, the contents of this file may be used under the terms of
+  either the GNU General Public License Version 2 or later (the "GPL"), or
+  the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+  in which case the provisions of the GPL or the LGPL are applicable instead
+  of those above. If you wish to allow use of your version of this file only
+  under the terms of either the GPL or the LGPL, and not to allow others to
+  use your version of this file under the terms of the MPL, indicate your
+  decision by deleting the provisions above and replace them with the notice
+  and other provisions required by the GPL or the LGPL. If you do not delete
+  the provisions above, a recipient may use your version of this file under
+  the terms of any one of the MPL, the GPL or the LGPL.
+  
+  ***** END LICENSE BLOCK *****
+-->
+
+<!-- This dataset comprises a study grade type with 3 associated subjects -->
+<dataset>
+  <opuscollege.academicyear id="44" description="2009" active="Y" writewho="opuscollege" writewhen="2009-02-03 01:53:46.661258" startdate="2009-01-01" enddate="2009-12-31" nextacademicyearid="48"/>
+  <opuscollege.academicyear id="48" description="2010" active="Y" writewho="opuscollege" writewhen="2009-10-13 10:41:33.656999" startdate="2010-01-01" enddate="2010-12-31" nextacademicyearid="50"/>
+  <opuscollege.institution id="107" institutioncode="UCM" institutiontypecode="3" institutiondescription="Universidade Cat&#243;lica de Mo&#231;ambique" active="Y" provincecode="MZ-08" rector="" registrationdate="2008-09-14" writewho="opuscollege" writewhen="2008-09-14 03:02:43.056984"/>
+  <opuscollege.branch id="118" branchcode="05" branchdescription="FCS - Faculdade de Ci&#234;ncias de Sa&#250;de" institutionid="107" active="Y" registrationdate="2008-10-01" writewho="opuscollege" writewhen="2008-10-01 10:27:06.279982"/>
+  <opuscollege.organizationalunit id="18" organizationalunitcode="O1070710200824102" organizationalunitdescription="Faculdade de Ci&#234;ncias de Sa&#250;de - Beira" active="Y" branchid="118" unitlevel="1" parentorganizationalunitid="0" unitareacode="1" unittypecode="1" academicfieldcode="85" directorid="0" registrationdate="2008-10-07" writewho="opuscollege" writewhen="2009-03-09 10:21:51.024802"/>
+  <opuscollege.study id="38" studydescription="Curso Superior de Laborat&#243;rio Cl&#237;nico" active="Y" organizationalunitid="18" academicfieldcode="85" dateofestablishment="2009-03-01" startdate="2009-03-01" registrationdate="2009-03-06" writewho="opuscollege" writewhen="2009-03-06 03:51:07.003846" minimummarksubject="0" maximummarksubject="20" brspassingsubject="10"/>
+  <opuscollege.studygradetype id="58"  studyid="38" studygradetypecode="A" gradetypecode="4" active="Y" contactid="22" registrationdate="2009-03-06" writewho="opuscollege" writewhen="2009-03-06 04:02:16.470131" studytimecode="1" currentacademicyearid="44" cardinaltimeunitcode="1" numberofcardinaltimeunits="4" maxnumberoffailedsubjectspercardinaltimeunit="2" maxnumberofcardinaltimeunits="7" numberofsubjectspercardinaltimeunit="0" maxnumberofsubjectspercardinaltimeunit="0" studyformcode="0" brspassingsubject="10" studyintensitycode="F" disciplinegroupcode="1" maxnumberofstudents="0" />
+  <opuscollege.studygradetype id="158" studyid="38" studygradetypecode="B" gradetypecode="3" active="Y" contactid="22" registrationdate="2009-03-06" writewho="opuscollege" writewhen="2009-03-06 04:02:16.470131" studytimecode="1" currentacademicyearid="44" cardinaltimeunitcode="1" numberofcardinaltimeunits="6" maxnumberoffailedsubjectspercardinaltimeunit="3" maxnumberofcardinaltimeunits="10" numberofsubjectspercardinaltimeunit="0" maxnumberofsubjectspercardinaltimeunit="0" studyformcode="0" brspassingsubject="10" studyintensitycode="P" disciplinegroupcode="" maxnumberofstudents="10" />
+  <opuscollege.studygradetypeprerequisite studygradetypeid="58" requiredstudyid="38" requiredgradetypecode="3" active="Y" writewho="opuscollege" writewhen="2011-03-04 17:54:04.259239"/>
+  <opuscollege.cardinaltimeunitstudygradetype id="16" studygradetypeid="58" cardinaltimeunitnumber="1" numberofelectivesubjectblocks="2" numberofelectivesubjects="3" active="Y" writewho="opuscollege" writewhen="2011-03-05 12:45:04.757583"/>
+  <opuscollege.classgroup id="1" description="Class A" studygradetypeid="58" writewho="opuscollege" writewhen="2010-11-29 08:38:39.886544"/>
+  <opuscollege.classgroup id="2" description="Class B" studygradetypeid="58" writewho="opuscollege" writewhen="2010-11-29 08:38:39.886544"/>
+  <opuscollege.secondaryschoolsubjectgroup id="1" groupnumber="2" minimumnumbertograde="3" maximumnumbertograde="4" studygradetypeid="58" active="Y" writewho="opuscollege" writewhen="2010-11-29 08:38:39.886544"/>
+  <opuscollege.secondaryschoolsubject id="2" code="A" active="Y" description="AA" writewho="opuscollege" writewhen="2011-03-04 17:54:04.259239"/>
+  <opuscollege.groupedsecondaryschoolsubject id="1" secondaryschoolsubjectid="2" secondaryschoolsubjectgroupid="1" weight="5" minimumgradepoint="3" maximumgradepoint="4" active="Y" writewho="opuscollege" writewhen="2010-11-29 08:38:39.886544"/>
+  <opuscollege.person id="16" personcode="61" active="Y" surnamefull="UCM-PEMBA" firstnamesfull="Administrator" firstnamesalias="UCM-PEMBA" gendercode="3" birthdate="1960-01-01" registrationdate="2008-02-07" writewho="opuscollege" writewhen="2008-02-07 13:51:58.201302" publichomepage="N"/>
+  <opuscollege.staffmember staffmemberid="19" staffmembercode="61" personid="16" dateofappointment="2008-02-07" stafftypecode="2" primaryunitofappointmentid="13" educationtypecode="3" writewho="opuscollege" writewhen="2008-02-07 13:52:45.15741"/>
+
+  <opuscollege.subject id="3240" subjectcode="S01504201034619" subjectdescription="&#200;tica e Deontologia Professional" subjectcontentdescription="" primarystudyid="38" active="Y" targetgroupcode="" freechoiceoption="Y" creditamount="1" hourstoinvest="40" frequencycode="0" studytimecode="0" examtypecode="" maximumparticipants="0" brspassingsubject="9.5" registrationdate="2010-04-15" writewho="opuscollege" writewhen="2010-04-15 03:46:19.322429" currentacademicyearid="44" resulttype="1" />
+  <opuscollege.subject id="3242" subjectcode="S01504201034853" subjectdescription="Ingl&#234;s" subjectcontentdescription="" primarystudyid="38" active="Y" targetgroupcode="" freechoiceoption="Y" creditamount="1" hourstoinvest="40" frequencycode="0" studytimecode="0" examtypecode="" maximumparticipants="0" brspassingsubject="9.5" registrationdate="2010-04-15" writewho="opuscollege" writewhen="2010-04-15 03:48:53.693102" currentacademicyearid="44" resulttype="" />
+  <opuscollege.subject id="3246" subjectcode="S01504201035659" subjectdescription="Microbiologia" subjectcontentdescription="" primarystudyid="38" active="Y" targetgroupcode="" freechoiceoption="Y" creditamount="1" hourstoinvest="40" frequencycode="0" studytimecode="0" examtypecode="" maximumparticipants="0" brspassingsubject="9.5" registrationdate="2010-04-15" writewho="opuscollege" writewhen="2010-04-15 03:56:59.354585" currentacademicyearid="44" resulttype="" />
+  <opuscollege.subjectteacher id="3155" staffmemberid="19" subjectid="3246" classgroupid="1" active="Y" writewho="opuscollege" writewhen="2010-04-15 03:57:28.19837"/>
+  <opuscollege.subjectteacher id="3166" staffmemberid="19" subjectid="3240"                  active="Y" writewho="opuscollege" writewhen="2010-04-15 03:57:28.19837"/>
+  <opuscollege.subjectstudytype id="46" subjectid="3242" studytypecode="3" active="Y" writewho="opuscollege" writewhen="2011-02-26 21:18:00.042942"/>
+  <opuscollege.subjectstudytype id="47" subjectid="3242" studytypecode="5" active="Y" writewho="opuscollege" writewhen="2011-02-26 21:18:20.619471"/>
+  <opuscollege.subjectstudygradetype id="2971" subjectid="3240" studygradetypeid="58" active="Y" cardinaltimeunitnumber="1" rigiditytypecode="2" writewho="opuscollege" writewhen="2010-04-15 03:46:41.878011" importancetypecode="1" />
+  <opuscollege.subjectstudygradetype id="2972" subjectid="3242" studygradetypeid="58" active="Y" cardinaltimeunitnumber="1" rigiditytypecode="2" writewho="opuscollege" writewhen="2010-04-15 03:49:17.138902" importancetypecode="2" />
+  <opuscollege.subjectstudygradetype id="2973" subjectid="3246" studygradetypeid="58" active="Y" cardinaltimeunitnumber="1" rigiditytypecode="2" writewho="opuscollege" writewhen="2010-04-15 03:57:08.010888" importancetypecode="3" />
+  <opuscollege.subjectprerequisite requiredsubjectcode="S01504201034619" subjectstudygradetypeid="2972" active="Y" writewho="opuscollege" writewhen="2011-02-27 01:56:22.468746"/>
+  <opuscollege.subjectprerequisite requiredsubjectcode="S01504201034619" subjectstudygradetypeid="2973" active="Y" writewho="opuscollege" writewhen="2011-02-27 01:56:22.468746"/>
+  <opuscollege.subjectprerequisite requiredsubjectcode="S01504201034853" subjectstudygradetypeid="2973" active="Y" writewho="opuscollege" writewhen="2011-02-27 01:56:22.468746"/>
+  <opuscollege.examination id="39" subjectid="3240" examinationcode="E32402911201083718" examinationdescription="PBL sessions"  examinationtypecode="6" numberofattempts="0" weighingfactor="0" examinationdate="2009-03-04" brspassingexamination="" active="Y" writewho="opuscollege" writewhen="2010-11-29 08:37:26.251381"/>
+  <opuscollege.examination id="40" subjectid="3242" examinationcode="E32422911201085548" examinationdescription="Mid-term exam" examinationtypecode="8" numberofattempts="0" weighingfactor="0" examinationdate="2009-03-05" brspassingexamination="" active="Y" writewho="opuscollege" writewhen="2010-11-29 08:55:57.579602"/>
+  <opuscollege.examination id="41" subjectid="3240" examinationcode="E32402911201085804" examinationdescription="Final exam"    examinationtypecode="4" numberofattempts="0" weighingfactor="0" examinationdate="2009-03-06" brspassingexamination="" active="Y" writewho="opuscollege" writewhen="2010-11-29 08:58:09.305522"/>
+  <opuscollege.examinationTeacher id="1" examinationid="39" staffmemberid="19" classgroupid="1" active="Y" writewho="opuscollege" writewhen="2010-11-29 08:37:38.78539"/>
+  <opuscollege.examinationTeacher id="2" examinationid="40" staffmemberid="19"                  active="Y" writewho="opuscollege" writewhen="2010-11-29 08:37:38.78539"/>
+  <opuscollege.test id="9"  examinationid="39" testcode="T392911201083822" testdescription="PBL session 1" examinationtypecode="7" numberofattempts="0" weighingfactor="0" testdate="2009-02-11" minimummark="0" maximummark="20" brspassingtest="" active="Y" writewho="opuscollege" writewhen="2010-11-29 08:38:39.886544"/>
+  <opuscollege.test id="10" examinationid="39" testcode="T392911201090229" testdescription="PBL session 2" examinationtypecode="1" numberofattempts="1" weighingfactor="0" testdate="2009-03-11" minimummark="0" maximummark="20" brspassingtest="" active="Y" writewho="opuscollege" writewhen="2010-11-29 09:02:41.44474"/>
+  <opuscollege.testTeacher id="1" testid="9"  staffmemberid="19" classgroupid="2" active="Y" writewho="opuscollege" writewhen="2010-11-29 08:38:55.550931"/>
+  <opuscollege.testTeacher id="2" testid="10" staffmemberid="19"                  active="Y" writewho="opuscollege" writewhen="2010-11-29 08:38:55.550931"/>
+
+  <opuscollege.subjectblock id="1" subjectblockcode="729" subjectblockdescription="1&#186; ano " active="Y" targetgroupcode="" brsapplyingtosubjectblock="" registrationdate="2010-09-15" writewho="opuscollege" writewhen="2010-09-15 10:14:05.377746" brspassingsubjectblock="" blocktypecode="0" brsmaxcontacthours="" studytimecode="2" currentacademicyearid="44" primarystudyid="38" freechoiceoption="N" />
+  <opuscollege.subjectblock id="2" subjectblockcode="SB150" subjectblockdescription="1&#176; ano Specializacao A" active="Y" brsapplyingtosubjectblock="" registrationdate="2010-09-15" writewho="opuscollege" writewhen="2010-09-15 10:14:05.377746" brspassingsubjectblock="" blocktypecode="0" brsmaxcontacthours="" studytimecode="1" currentacademicyearid="44" primarystudyid="38" freechoiceoption="N" />
+  <opuscollege.subjectblockstudygradetype id="1" subjectblockid="1" studygradetypeid="58" cardinaltimeunitnumber="0" rigiditytypecode="" active="Y" writewho="opuscollege" writewhen="2010-09-15 10:14:05.377746" importancetypecode="1" />
+  <opuscollege.subjectblockstudygradetype id="2" subjectblockid="2" studygradetypeid="58" cardinaltimeunitnumber="0" rigiditytypecode="" active="Y" writewho="opuscollege" writewhen="2010-09-15 10:14:05.377746" importancetypecode="2" />
+  <opuscollege.subjectblockprerequisite requiredsubjectblockcode="729" subjectblockstudygradetypeid="2" active="Y" writewho="opuscollege" writewhen="2011-02-27 03:12:05.824867"/>
+  <opuscollege.subjectsubjectblock id="3276" subjectid="3240" subjectblockid="1" active="Y" writewho="opuscollege" writewhen="2010-09-15 10:14:05.377746"/>
+  <opuscollege.subjectsubjectblock id="3277" subjectid="3242" subjectblockid="1" active="Y" writewho="opuscollege" writewhen="2010-09-15 10:14:05.377746"/>
+  <opuscollege.subjectsubjectblock id="3278" subjectid="3242" subjectblockid="2" active="Y" writewho="opuscollege" writewhen="2010-09-15 10:14:05.377746"/>
+  <opuscollege.subjectsubjectblock id="3279" subjectid="3246" subjectblockid="2" active="Y" writewho="opuscollege" writewhen="2010-09-15 10:14:05.377746"/>
+
+  <opuscollege.endgrade id="5220" code="S"  lang="en    " active="Y" endgradetypecode="AR"  gradepoint="2.50" percentagemin="55.80" percentagemax="100.00" comment="Satisfactory" description="" temporarygrade="N" writewho="opuscollege" writewhen="2011-12-12 12:18:10.007206" passed="Y" academicyearid="44"/>
+  <opuscollege.endgrade id="5221" code="F"  lang="en    " active="Y" endgradetypecode="AR"  gradepoint="0.00" percentagemin="0.00"  percentagemax="54.70"  comment="Fail"         description="" temporarygrade="N" writewho="opuscollege" writewhen="2011-12-12 12:18:10.007206" passed="N" academicyearid="44"/>
+  <opuscollege.endgrade id="5222" code="A+" lang="en    " active="Y" endgradetypecode="BSC" gradepoint="2.50" percentagemin="85.80" percentagemax="100.00" comment="Distinction"  description="" temporarygrade="N" writewho="opuscollege" writewhen="2011-12-12 12:18:10.007206" passed="Y" academicyearid="44"/>
+
+</dataset>

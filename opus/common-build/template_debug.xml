@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><templates><template autoinsert="true" context="java" deleted="false" description="Standard conditional debug telling a method has started" enabled="true" name="db">if (log.isDebugEnabled()) {&#13;
+    log.debug("${enclosing_type}.${enclosing_method} started...");&#13;
+}</template></templates>

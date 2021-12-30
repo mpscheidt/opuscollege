@@ -1,0 +1,415 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ***** BEGIN LICENSE BLOCK *****
+  Version: MPL 1.1/GPL 2.0/LGPL 2.1
+  
+  The contents of this file are subject to the Mozilla Public License Version
+  1.1 (the "License"); you may not use this file except in compliance with
+  the License. You may obtain a copy of the License at
+  http://www.mozilla.org/MPL/
+  
+  Software distributed under the License is distributed on an "AS IS" basis,
+  WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+  for the specific language governing rights and limitations under the
+  License.
+  
+  The Original Code is Opus-College college module code.
+  
+  The Initial Developer of the Original Code is
+  Center for Information Services, Radboud University Nijmegen.
+  Portions created by the Initial Developer are Copyright (C) 2008
+  the Initial Developer. All Rights Reserved.
+  
+  Contributor(s):
+    For Java files, see Javadoc @author tags.
+  
+  Alternatively, the contents of this file may be used under the terms of
+  either the GNU General Public License Version 2 or later (the "GPL"), or
+  the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+  in which case the provisions of the GPL or the LGPL are applicable instead
+  of those above. If you wish to allow use of your version of this file only
+  under the terms of either the GPL or the LGPL, and not to allow others to
+  use your version of this file under the terms of the MPL, indicate your
+  decision by deleting the provisions above and replace them with the notice
+  and other provisions required by the GPL or the LGPL. If you do not delete
+  the provisions above, a recipient may use your version of this file under
+  the terms of any one of the MPL, the GPL or the LGPL.
+  
+  ***** END LICENSE BLOCK *****
+-->
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.uci.opus.college.persistence.StudyplanDetailMapper"> 
+
+    <resultMap id="BasicStudyPlanDetailResultMap" type="StudyPlanDetail">
+        <id property="id" column="id"/>
+        <result property="studyPlanId" column="studyPlanId"/>
+        <result property="studyPlanCardinalTimeUnitId" column="studyPlanCardinalTimeUnitId"/>
+        <result property="subjectBlockId" column="subjectBlockId"/>
+        <result property="subjectId" column="subjectId"/>
+        <result property="studyGradeTypeId" column="studyGradeTypeId"/>
+        <result property="exempted" column="exempted"/>
+        <result property="active" column="active"/>
+    </resultMap>
+    
+    <!-- resultmap to define complete StudyPlanDetail (all lazy loaded) -->
+    <resultMap id="StudyPlanDetailResultMap" type="StudyPlanDetail" extends="BasicStudyPlanDetailResultMap">
+        <collection property="examinationResults" select="org.uci.opus.college.persistence.ExaminationResultMapper.findExaminationResultsForStudyPlanDetailId" column="id"/>
+        <collection property="testResults" select="org.uci.opus.college.persistence.TestResultMapper.findTestResultsForStudyPlanDetailId" column="id"/>
+        <collection property="subjects" select="org.uci.opus.college.persistence.SubjectMapper.findSubjectsForStudyPlanDetailAndInBlocks" column="id"/>
+    </resultMap>
+
+    <!-- complete StudyPlanDetail with some eager loaded collections -->
+    <resultMap id="StudyPlanDetailEagerSubjectsResultMap" type="StudyPlanDetail" extends="BasicStudyPlanDetailResultMap">
+        <collection property="examinationResults" select="org.uci.opus.college.persistence.ExaminationResultMapper.findExaminationResultsForStudyPlanDetailId" column="id"/>
+        <collection property="testResults" select="org.uci.opus.college.persistence.TestResultMapper.findTestResultsForStudyPlanDetailId" column="id"/>
+        <collection property="subjects" fetchType="eager" select="org.uci.opus.college.persistence.SubjectMapper.findSubjectsForStudyPlanDetailAndInBlocksEagerExamination" column="id"/>
+    </resultMap>
+
+    <!-- FQ result maps shall use automapping="false", see StudyPlanDetailResultMap_WithSubjectResults -->
+    <resultMap id="BasicFQStudyPlanDetailResultMap" type="StudyPlanDetail" autoMapping="false">
+        <id property="id" column="studyPlanDetail_id"/>
+        <result property="studyPlanId" column="studyPlanDetail_studyPlanId"/>
+        <result property="studyPlanCardinalTimeUnitId" column="studyPlanDetail_studyPlanCardinalTimeUnitId"/>
+        <result property="subjectBlockId" column="studyPlanDetail_subjectBlockId"/>
+        <result property="subjectId" column="studyPlanDetail_subjectId"/>
+        <result property="studyGradeTypeId" column="studyPlanDetail_studyGradeTypeId"/>
+        <result property="active" column="studyPlanDetail_active"/>
+    </resultMap>
+
+    <!-- FQ result maps have no reason to use automapping, on the contrary unneeded objects with false id values may be created for non-existing records.
+         For more info on  autoMapping="false" see the SubjectResultMapper and http://www.mybatis.org/mybatis-3/sqlmap-xml.html#Auto-mapping -->
+    <resultMap id="StudyPlanDetailResultMap_WithSubjectResults" type="StudyPlanDetail" extends="BasicFQStudyPlanDetailResultMap" autoMapping="false">
+        <collection property="subjectResults" resultMap="org.uci.opus.college.persistence.SubjectResultMapper.BasicFQSubjectResultResultMap"/>
+        <collection property="subjects" resultMap="org.uci.opus.college.persistence.SubjectMapper.BasicFQSubjectResultMap"/>
+    </resultMap>
+
+    <!-- NOTE MP 2015-05-27: inner join to spctu was introduced because there are spd records that have invalid spctuId and make problems - these records should be ignored -->
+    <!-- find all studyPlanDetails for one Student -->
+    <select id="findStudyPlanDetailsForStudent" parameterType="map" resultMap="StudyPlanDetailResultMap">
+        SELECT  opuscollege.studyPlanDetail.*
+        FROM    opuscollege.studyPlanDetail
+        INNER JOIN opuscollege.studyPlanCardinalTimeUnit on studyPlanDetail.studyPlanCardinalTimeUnitId = studyPlanCardinalTimeUnit.id
+        INNER JOIN opuscollege.studyPlan on studyPlanCardinalTimeUnit.studyPlanId = studyPlan.id
+        WHERE   opuscollege.studyPlan.studentId = #{studentId}
+        <if test='studyPlanId != null and studyPlanId != "0"'>
+            and opuscollege.studyPlanDetail.studyPlanId = #{studyPlanId}
+        </if>
+        <if test='active != null and active != ""'>
+            and opuscollege.studyPlanDetail.active = #{active}
+        </if>
+        ORDER BY studyPlanDetail.subjectBlockId, studyPlanDetail.subjectId    
+    </select>
+
+    <select id="findStudyPlanDetailsForStudyPlan" parameterType="int" resultMap="StudyPlanDetailResultMap">
+        SELECT  opuscollege.studyPlanDetail.*
+        from opuscollege.studyPlanDetail
+        INNER JOIN opuscollege.studyPlanCardinalTimeUnit ON studyPlanDetail.studyPlanCardinalTimeUnitId = studyPlanCardinalTimeUnit.id
+        INNER JOIN opuscollege.studyGradeType ON studyPlanCardinalTimeUnit.studyGradeTypeId = studyGradeType.id
+        WHERE opuscollege.studyPlanDetail.studyPlanId = #{value}
+        ORDER BY studyGradeType.currentAcademicYearId ASC
+    </select>
+
+    <select id="findStudyPlanDetailsForSubject" parameterType="int" resultMap="StudyPlanDetailResultMap">
+        select opuscollege.studyPlanDetail.*
+        from   opuscollege.studyPlanDetail
+        where  studyPlanDetail.subjectId = #{value}
+        OR      studyPlanDetail.subjectBlockId IN (
+                SELECT studyPlanDetail.subjectBlockId 
+                FROM opuscollege.studyPlanDetail
+                INNER JOIN opuscollege.subjectSubjectBlock ON studyPlanDetail.subjectBlockId = subjectSubjectBlock.subjectBlockId
+                WHERE subjectSubjectBlock.subjectId = #{value}                
+                )
+        ORDER BY   studyPlanDetail.id 
+    </select>
+
+	<sql id="findStudyPlanDetailsByParams_common_filters">
+        <if test="classgroupId != null">
+            AND EXISTS (
+                SELECT 1 from opuscollege.studentclassgroup where studentId = studyPlan.studentId AND classgroupId = #{classgroupId}
+            )
+        </if>
+        <if test='subjectBlockId != null and subjectBlockId != "0"'>
+            AND studyPlanDetail.subjectBlockId = #{subjectBlockId}
+        </if>
+        <if test="subjectBlockCode != null">
+            AND exists (SELECT 1 from opuscollege.subjectBlock WHERE studyplandetail.subjectBlockid = subjectBlock.id AND subjectBlock.subjectBlockCode = #{subjectBlockCode} )
+        </if>
+        <if test='studyPlanId != null and studyPlanId != "0"'>
+            AND  studyPlanCardinalTimeUnit.studyPlanId = #{studyPlanId}
+        </if>
+        <if test='studyPlanCardinalTimeUnitId != null and studyPlanCardinalTimeUnitId != "0"'>
+            AND     studyPlanCardinalTimeUnitId = #{studyPlanCardinalTimeUnitId}
+        </if>
+        <if test='cardinalTimeUnitStatusCode != null and cardinalTimeUnitStatusCode != ""'>
+            AND     studyPlanCardinalTimeUnit.cardinalTimeUnitStatusCode = #{cardinalTimeUnitStatusCode}
+        </if>
+        <if test='progressStatusCodeNotCarryingAll != null and progressStatusCodeNotCarryingAll != ""'>
+            AND not exists (
+                select carrying from opuscollege.progressStatus
+                where studyPlanCardinalTimeUnit.progressStatusCode = progressStatus.code
+                  and progressStatus.lang = #{preferredLanguage}
+                  and upper(carrying) = 'A'
+            )
+        </if>
+        <if test="rigidityTypeCode != null">
+            AND     rigidityTypeCode = #{rigidityTypeCode}
+        </if>
+        <if test='studyGradeTypeId != null and studyGradeTypeId != "0"'>
+            AND     studyGradeType.id = #{studyGradeTypeId}
+        </if>
+        <if test='academicYearId != null and academicYearId != "0"'>
+            AND     studyGradeType.currentAcademicYearId = #{academicYearId}
+        </if>
+        <if test='active != null and active != ""'>
+            AND     studyPlanDetail.active = #{active}
+        </if>
+        <if test="exempted != null">
+            AND studyPlanDetail.exempted = #{exempted}
+        </if>
+	</sql>
+    <sql id="findStudyPlanDetailsByParams_query">
+        select opuscollege.studyPlanDetail.*
+        from   opuscollege.studyPlanDetail
+        INNER JOIN opuscollege.studyPlanCardinalTimeUnit ON studyPlanDetail.studyPlanCardinalTimeUnitId = studyPlanCardinalTimeUnit.id
+        INNER JOIN opuscollege.studyPlan ON studyPlanCardinalTimeUnit.studyPlanId = studyPlan.id
+        INNER JOIN opuscollege.studyGradeType ON studyPlanCardinalTimeUnit.studyGradeTypeId = studyGradeType.id
+        where true
+		<include refid="findStudyPlanDetailsByParams_common_filters" />
+        <if test='subjectId != null and subjectId != "0"'>
+            AND studyPlanDetail.subjectId = #{subjectId}
+        </if>
+        <if test="subjectCode != null">
+            AND exists (
+            	SELECT 1 from opuscollege.subject WHERE studyplandetail.subjectid = subject.id AND subject.subjectCode = #{subjectCode}
+           	)
+        </if>
+
+        <if test='(subjectId != null and subjectId != "0") or subjectCode != null'>
+			UNION
+			select opuscollege.studyPlanDetail.*
+	        from   opuscollege.studyPlanDetail
+	        INNER JOIN opuscollege.studyPlanCardinalTimeUnit ON studyPlanDetail.studyPlanCardinalTimeUnitId = studyPlanCardinalTimeUnit.id
+	        INNER JOIN opuscollege.studyPlan ON studyPlanCardinalTimeUnit.studyPlanId = studyPlan.id
+	        INNER JOIN opuscollege.studyGradeType ON studyPlanCardinalTimeUnit.studyGradeTypeId = studyGradeType.id
+	        where true
+			<include refid="findStudyPlanDetailsByParams_common_filters" />
+
+	        <if test='subjectId != null and subjectId != "0"'>
+		        and exists (
+	                SELECT 1
+	                FROM opuscollege.subjectSubjectBlock 
+	                WHERE  studyPlanDetail.subjectBlockId = subjectSubjectBlock.subjectBlockId and subjectSubjectBlock.subjectId = #{subjectId}
+	            )
+	        </if>
+	        <if test="subjectCode != null">
+	            and exists (
+	            	SELECT 1 from opuscollege.subjectSubjectBlock
+					INNER JOIN opuscollege.subject ON subjectSubjectBlock.subjectid = subject.id
+                    WHERE studyPlanDetail.subjectBlockId = subjectSubjectBlock.subjectBlockId           
+                   	AND subject.subjectCode = #{subjectCode}
+                )
+	        </if>
+		</if>
+        ORDER BY id
+    </sql>
+    <select id="findStudyPlanDetailsByParams" parameterType="map" resultMap="StudyPlanDetailResultMap">
+		<include refid="findStudyPlanDetailsByParams_query" />
+    </select>
+    
+    <select id="findStudyPlanDetailsWithEagerSubjects" parameterType="map" resultMap="StudyPlanDetailEagerSubjectsResultMap">
+		<include refid="findStudyPlanDetailsByParams_query" />
+    </select>
+
+    <select id="findStudyPlanDetailByParams" parameterType="map" resultType="StudyPlanDetail">
+        select opuscollege.studyPlanDetail.*
+        from   opuscollege.studyPlanDetail
+        INNER JOIN opuscollege.studyPlanCardinalTimeUnit ON studyPlanDetail.studyPlanCardinalTimeUnitId = studyPlanCardinalTimeUnit.id
+        INNER JOIN opuscollege.studyGradeType ON studyPlanCardinalTimeUnit.studyGradeTypeId = studyGradeType.id
+        where
+        <if test='subjectId != null and subjectId != "0"'>
+            ( studyPlanDetail.subjectId = #{subjectId}
+                OR  studyPlanDetail.subjectBlockId IN (
+                    SELECT studyPlanDetail.subjectBlockId 
+                    FROM opuscollege.studyPlanDetail
+                    INNER JOIN opuscollege.subjectSubjectBlock ON studyPlanDetail.subjectBlockId = subjectSubjectBlock.subjectBlockId
+                    WHERE subjectSubjectBlock.subjectId = #{subjectId}                
+                    )
+             )
+        </if>
+        <if test='subjectBlockId != null and subjectBlockId != "0"'>
+            studyPlanDetail.subjectBlockId = #{subjectBlockId}
+        </if>
+        <if test='studyPlanId != null and studyPlanId != "0"'>
+            AND  studyPlanDetail.studyPlanId = #{studyPlanId}
+        </if>
+        <if test='studyPlanCardinalTimeUnitId != null and studyPlanCardinalTimeUnitId != "0"'>
+            AND     studyPlanCardinalTimeUnitId = #{studyPlanCardinalTimeUnitId}
+        </if>
+        <if test='studyGradeTypeId != null and studyGradeTypeId != "0"'>
+            AND     studyPlanDetail.studyGradeTypeId = #{studyGradeTypeId}
+        </if>
+        ORDER BY   studyPlanDetail.id 
+    </select>
+    
+    <select id="findStudyPlanDetail" parameterType="int" resultMap="StudyPlanDetailResultMap">
+        SELECT  opuscollege.studyPlanDetail.*
+        from opuscollege.studyPlanDetail
+        WHERE opuscollege.studyPlanDetail.id = #{value}
+    </select>
+
+    <insert id="addStudyPlanDetail" parameterType="StudyPlanDetail">
+        INSERT into opuscollege.studyPlanDetail
+        (   
+            studyPlanId
+            ,studyPlanCardinalTimeUnitId
+            ,subjectBlockId
+            ,subjectId
+            ,studyGradeTypeId
+            ,exempted
+            ,active
+        ) values (
+            #{studyPlanId}
+            ,#{studyPlanCardinalTimeUnitId}
+            ,#{subjectBlockId}
+            ,#{subjectId}
+            ,#{studyGradeTypeId}
+            ,#{exempted}
+            ,#{active}
+        )
+        <selectKey keyProperty="id" resultType="int">
+            SELECT currVal('opuscollege.studyplandetailseq')
+        </selectKey>
+    </insert>
+
+    <update id="updateStudyPlanDetail" parameterType="StudyPlanDetail">
+        UPDATE  opuscollege.studyPlanDetail
+        SET  studyPlanId        = #{studyPlanId}
+            ,studyPlanCardinalTimeUnitId    = #{studyPlanCardinalTimeUnitId}
+            ,subjectBlockId                 = #{subjectBlockId}
+            ,subjectId                      = #{subjectId}
+            ,studyGradeTypeId               = #{studyGradeTypeId}
+            ,exempted                       = #{exempted}
+            ,active                         = #{active}
+        WHERE   id = #{id}
+    </update>
+
+    <delete id="deleteStudyPlanDetail" parameterType="int">
+        DELETE FROM opuscollege.studyPlanDetail
+        WHERE   id   = #{value}
+    </delete>
+    
+    <delete id="deleteStudyPlanDetailsForStudyPlan" parameterType="int">
+        DELETE FROM opuscollege.studyPlanDetail
+        WHERE   studyPlanId   = #{value}
+    </delete>
+
+    <select id="findStudyPlanDetailsForStudyPlanCardinalTimeUnit" parameterType="int" resultMap="StudyPlanDetailResultMap">
+        SELECT  opuscollege.studyPlanDetail.*
+        from opuscollege.studyPlanDetail
+        INNER JOIN opuscollege.studyPlanCardinalTimeUnit ON studyPlanDetail.studyPlanCardinalTimeUnitId = studyPlanCardinalTimeUnit.id
+        LEFT JOIN opuscollege.subjectBlock ON studyPlanDetail.subjectBlockId = subjectBlock.id
+        LEFT JOIN opuscollege.subject ON studyPlanDetail.subjectId = subject.id
+        WHERE opuscollege.studyPlanCardinalTimeUnit.id = #{value}
+        ORDER BY studyPlanDetail.studyPlanId, subjectBlockId, subjectId ASC
+    </select>
+
+    <select id="findStudyPlanDetailsForStudyPlanCardinalTimeUnitByParams" parameterType="map" resultMap="StudyPlanDetailResultMap">
+        select  opuscollege.studyPlanDetail.*
+        from    opuscollege.studyPlanDetail
+        INNER JOIN opuscollege.studyPlanCardinalTimeUnit ON studyPlanDetail.studyPlanCardinalTimeUnitId = studyPlanCardinalTimeUnit.id
+        INNER JOIN opuscollege.studyGradeType ON studyPlanCardinalTimeUnit.studyGradeTypeId = studyGradeType.id
+        where 1=1
+        <if test="studyPlanId != null">
+            AND studyPlanCardinalTimeUnit.studyPlanId = #{studyPlanId}
+        </if>
+        <if test="active != null">
+            AND studyPlanDetail.active = #{active}
+        </if>
+        <if test='studyPlanCardinalTimeUnitId != null and studyPlanCardinalTimeUnitId != "0"'>
+            AND studyPlanDetail.studyPlanCardinalTimeUnitId = #{studyPlanCardinalTimeUnitId}
+        </if>
+        <if test='cardinalTimeUnitNumber != null and cardinalTimeUnitNumber != "0"'>
+            AND studyPlanCardinalTimeUnit.cardinalTimeUnitNumber = #{cardinalTimeUnitNumber}  
+        </if>
+        <if test='currentAcademicYearId != null and currentAcademicYearId != "0"'>
+            AND studyGradeType.currentAcademicYearId = #{currentAcademicYearId}
+        </if>
+        AND  ( studyPlanDetail.subjectId IN (
+                    SELECT subjectId from opuscollege.subjectStudyGradeType
+                    INNER JOIN opuscollege.studyGradeType ON subjectStudyGradeType.studyGradeTypeId = studyGradeType.id
+                    )
+               OR studyPlanDetail.subjectId IN (
+                    select distinct(subject.id)        
+                    FROM opuscollege.subject                                                  
+                    INNER JOIN opuscollege.subjectsubjectblock ON subject.id = subjectsubjectblock.subjectid  
+                    INNER JOIN opuscollege.subjectblockstudygradetype ON subjectsubjectblock.subjectblockid = subjectblockstudygradetype.subjectblockid 
+                    INNER JOIN opuscollege.studyGradeType ON subjectblockstudygradetype.studyGradeTypeid = studyGradeType.id    
+                    WHERE 1=1
+                    <if test='studyGradeTypeId != null and studyGradeTypeId != "0"'>
+                        AND studyGradeType.id = #{studyGradeTypeId}
+                    </if>
+                    <if test='cardinalTimeUnitNumber != null and cardinalTimeUnitNumber != "0"'>
+	                    AND (subjectBlockStudyGradeType.cardinalTimeUnitNumber = (#{cardinalTimeUnitNumber} - 1) 
+                            OR subjectBlockStudyGradeType.cardinalTimeUnitNumber = 0)
+                    </if>
+                    )    
+               OR  studyPlanDetail.subjectBlockId IN (
+                    SELECT  subjectBlockId from opuscollege.subjectBlockStudyGradeType  
+                    INNER JOIN opuscollege.studyGradeType ON subjectBlockStudyGradeType.studyGradeTypeId = studyGradeType.id
+                    )
+                )
+        ORDER BY   studyPlanDetail.id 
+    </select>
+
+    <select id="findStudyPlanDetailsForCardinalTimeUnit" parameterType="int" resultMap="StudyPlanDetailResultMap">
+        select  opuscollege.studyPlanDetail.*
+        from    opuscollege.studyPlanDetail
+        INNER JOIN opuscollege.studyPlanCardinalTimeUnit ON studyPlanDetail.studyPlanCardinalTimeUnitId = studyPlanCardinalTimeUnit.id
+        where   studyPlanCardinalTimeUnit.id = #{studyPlanCardinalTimeUnitId}  
+        ORDER BY   studyPlanDetail.id 
+    </select>
+
+
+    <select id="findStudyPlanDetailsForSubjectStudyGradeType" parameterType="int" resultType="StudyPlanDetail">
+        SELECT studyPlanDetail.*
+        from        opuscollege.studyPlanDetail
+        INNER JOIN  opuscollege.subjectstudygradetype on studyplandetail.subjectid = subjectstudygradetype.subjectid
+                    AND studyPlanDetail.studygradetypeid = subjectstudygradetype.studygradetypeid
+        where subjectstudygradetype.id = #{value}
+        
+    </select>
+    
+    <select id="findStudyPlanDetailsForSubjectBlock" parameterType="int" resultType="StudyPlanDetail">
+        select opuscollege.studyPlanDetail.*
+        from   opuscollege.studyPlanDetail
+        where  subjectBlockId = #{value}
+    </select>
+    
+    <select id="findStudyPlanDetailsForSubjectBlockStudyGradeType" parameterType="int" resultType="StudyPlanDetail">
+        SELECT studyPlanDetail.*
+        from        opuscollege.studyPlanDetail
+        INNER JOIN  opuscollege.subjectblockstudygradetype on studyplandetail.subjectblockid = subjectblockstudygradetype.subjectblockid
+                    AND studyPlanDetail.studygradetypeid = subjectblockstudygradetype.studygradetypeid
+        where subjectblockstudygradetype.id = #{value}
+        
+    </select>
+
+    <select id="findStudyPlanDetailsForCardinalTimeUnitResult" parameterType="int" resultMap="StudyPlanDetailResultMap">
+        SELECT  opuscollege.studyPlanDetail.*
+        from opuscollege.studyPlanDetail
+        INNER JOIN opuscollege.cardinalTimeUnitResult ON studyPlanDetail.studyPlanId = cardinalTimeUnitResult.studyPlanId
+        INNER JOIN opuscollege.studyPlanCardinalTimeUnit ON studyPlanDetail.studyPlanCardinalTimeUnitId = studyPlanCardinalTimeUnit.id
+        INNER JOIN opuscollege.studyGradeType ON studyPlanCardinalTimeUnit.studyGradeTypeId = studyGradeType.id
+        LEFT JOIN opuscollege.subjectBlock ON studyPlanDetail.subjectBlockId = subjectBlock.id
+        LEFT JOIN opuscollege.subject ON studyPlanDetail.subjectId = subject.id
+        WHERE opuscollege.cardinalTimeUnitResult.id = #{value}
+        <!--  AND (
+            subjectBlock.cardinalTimeUnitNumber = studyPlanCardinalTimeUnit.cardinalTimeUnitNumber
+            OR 
+            subject.cardinalTimeUnitNumber = studyPlanCardinalTimeUnit.cardinalTimeUnitNumber
+        )-->
+        ORDER BY studyGradeType.currentAcademicYearId ASC
+    </select>
+
+</mapper>

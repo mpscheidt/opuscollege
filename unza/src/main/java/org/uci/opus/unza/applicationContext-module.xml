@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ***** BEGIN LICENSE BLOCK *****
+  Version: MPL 1.1/GPL 2.0/LGPL 2.1
+  
+  The contents of this file are subject to the Mozilla Public License Version
+  1.1 (the "License"); you may not use this file except in compliance with
+  the License. You may obtain a copy of the License at
+  http://www.mozilla.org/MPL/
+  
+  Software distributed under the License is distributed on an "AS IS" basis,
+  WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+  for the specific language governing rights and limitations under the
+  License.
+  
+  The Original Code is Opus-College unza module code.
+  
+  The Initial Developer of the Original Code is
+  Center for Information Services, Radboud University Nijmegen.
+  Portions created by the Initial Developer are Copyright (C) 2008
+  the Initial Developer. All Rights Reserved.
+  
+  Contributor(s):
+    For Java files, see Javadoc @author tags.
+  
+  Alternatively, the contents of this file may be used under the terms of
+  either the GNU General Public License Version 2 or later (the "GPL"), or
+  the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+  in which case the provisions of the GPL or the LGPL are applicable instead
+  of those above. If you wish to allow use of your version of this file only
+  under the terms of either the GPL or the LGPL, and not to allow others to
+  use your version of this file under the terms of the MPL, indicate your
+  decision by deleting the provisions above and replace them with the notice
+  and other provisions required by the GPL or the LGPL. If you do not delete
+  the provisions above, a recipient may use your version of this file under
+  the terms of any one of the MPL, the GPL or the LGPL.
+  
+  ***** END LICENSE BLOCK *****
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns:aop="http://www.springframework.org/schema/aop"
+		xmlns:tx="http://www.springframework.org/schema/tx"
+		xmlns:context="http://www.springframework.org/schema/context"
+		xsi:schemaLocation="http://www.springframework.org/schema/beans
+							http://www.springframework.org/schema/beans/spring-beans.xsd
+							http://www.springframework.org/schema/context
+                            http://www.springframework.org/schema/context/spring-context.xsd
+							http://www.springframework.org/schema/aop
+       						http://www.springframework.org/schema/aop/spring-aop.xsd
+							http://www.springframework.org/schema/tx
+       						http://www.springframework.org/schema/tx/spring-tx.xsd
+       						">
+
+	<bean id="unzaModule" class="org.uci.opus.college.module.Module">
+		<property name="name" value="UNZA Module"/>
+		<property name="module" value="unza"/>
+		<property name="order" value="10"/>
+        <property name="menu" value="/WEB-INF/views/unza/unzaMenu.jsp"/>
+        <!-- MoVe - Modular structure: startPage has the root of the targetproject -->
+		<property name="startPage" value="/unza/index.html"/>
+		<property name="messagesBasename" value="org/uci/opus/unza/messages"/>
+		<!-- <property name="sqlMapLocations">
+			<list>
+				<value>Unza.xml</value>
+			</list>
+		</property> -->
+		<property name="moduleVersion" value="4.2" />
+	</bean>
+
+    <bean name="unza-3.22" class="org.uci.opus.util.dbupgrade.SqlFileUpgradeCommand">
+        <property name="sqlFile" value="classpath:../database/version34_version40/34_U030001_opuscollege_unza_update.sql"/>
+        <property name="dataSource"><ref bean="dataSource" /></property>
+        <property name="order" value="2012-06-04" />
+        <property name="module" ref="unzaModule" />
+        <property name="version" value="3.22" />
+    </bean>
+
+    <bean name="unza-3.23" class="org.uci.opus.util.dbupgrade.SqlFileUpgradeCommand">
+        <property name="sqlFile" value="classpath:../database/version34_version40/34_U030002_opuscollege_unza_update.sql"/>
+        <property name="dataSource"><ref bean="dataSource" /></property>
+        <property name="order" value="2012-06-05" />
+        <property name="module" ref="unzaModule" />
+        <property name="version" value="3.23" />
+    </bean>
+
+    <bean name="unza-3.24" class="org.uci.opus.util.dbupgrade.SqlFileUpgradeCommand">
+        <property name="sqlFile" value="classpath:../database/version34_version40/34_U03003_opuscollege_unza_update.sql"/>
+        <property name="dataSource"><ref bean="dataSource" /></property>
+        <property name="order" value="2012-06-07" />
+        <property name="module" ref="unzaModule" />
+        <property name="version" value="3.24" />
+    </bean>
+
+    <bean name="unza-3.25" class="org.uci.opus.util.dbupgrade.SqlFileUpgradeCommand">
+        <property name="sqlFile" value="classpath:../database/version34_version40/34_U03004_opuscollege_unza_update.sql"/>
+        <property name="dataSource"><ref bean="dataSource" /></property>
+        <property name="order" value="2012-06-28 b" />
+        <property name="module" ref="unzaModule" />
+        <property name="version" value="3.25" />
+    </bean>
+
+    <bean name="unza-3.26" class="org.uci.opus.util.dbupgrade.SqlFileUpgradeCommand">
+        <property name="sqlFile" value="classpath:../database/version34_version40/34_U03005_opuscollege_unza_update.sql"/>
+        <property name="dataSource"><ref bean="dataSource" /></property>
+        <property name="order" value="2012-06-28 c" />
+        <property name="module" ref="unzaModule" />
+        <property name="version" value="3.26" />
+    </bean>
+
+    <bean name="unza-3.27" class="org.uci.opus.util.dbupgrade.SqlFileUpgradeCommand">
+        <property name="sqlFile" value="classpath:../database/version34_version40/34_U03006_opuscollege_unza_update.sql"/>
+        <property name="dataSource"><ref bean="dataSource" /></property>
+        <property name="order" value="2012-08-20" />
+        <property name="module" ref="unzaModule" />
+        <property name="version" value="3.27" />
+    </bean>
+
+    <bean name="unza-4.00" class="org.uci.opus.util.dbupgrade.SqlFileUpgradeCommand">
+        <property name="sqlFile" value="classpath:../database/version34_version40/34_U03007_opuscollege_unza_update.sql"/>
+        <property name="dataSource"><ref bean="dataSource" /></property>
+        <property name="order" value="2012-10-04" />
+        <property name="module" ref="unzaModule" />
+        <property name="version" value="4.00" />
+    </bean>
+
+    <bean name="unza-4.01" class="org.uci.opus.util.dbupgrade.SqlFileUpgradeCommand">
+        <property name="sqlFile" value="classpath:../database/version41_version42/401_unza.sql"/>
+        <property name="dataSource"><ref bean="dataSource" /></property>
+        <property name="order" value="2013-01-22" />
+        <property name="module" ref="unzaModule" />
+        <property name="version" value="4.01" />
+    </bean>
+
+    <!-- 4.02 to 4.05 are UNZA internal (SRS) an not to be executed from the interface -->
+        
+    <bean name="unza-4.06" class="org.uci.opus.util.dbupgrade.SqlFileUpgradeCommand">
+        <property name="sqlFile" value="classpath:../database/version41_version42/406_unza.sql"/>
+        <property name="dataSource"><ref bean="dataSource" /></property>
+        <property name="order" value="2013-02-14 8:54" />
+        <property name="module" ref="unzaModule" />
+        <property name="version" value="4.06" />
+    </bean>
+    
+  
+</beans>

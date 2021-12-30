@@ -1,0 +1,210 @@
+<?xml version="1.0"?>
+<!--
+  ***** BEGIN LICENSE BLOCK *****
+  Version: MPL 1.1/GPL 2.0/LGPL 2.1
+  
+  The contents of this file are subject to the Mozilla Public License Version
+  1.1 (the "License"); you may not use this file except in compliance with
+  the License. You may obtain a copy of the License at
+  http://www.mozilla.org/MPL/
+  
+  Software distributed under the License is distributed on an "AS IS" basis,
+  WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+  for the specific language governing rights and limitations under the
+  License.
+  
+  The Original Code is Opus-College opus module code.
+  
+  The Initial Developer of the Original Code is
+  Center for Information Services, Radboud University Nijmegen.
+  Portions created by the Initial Developer are Copyright (C) 2008
+  the Initial Developer. All Rights Reserved.
+  
+  Contributor(s):
+    For Java files, see Javadoc @author tags.
+  
+  Alternatively, the contents of this file may be used under the terms of
+  either the GNU General Public License Version 2 or later (the "GPL"), or
+  the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+  in which case the provisions of the GPL or the LGPL are applicable instead
+  of those above. If you wish to allow use of your version of this file only
+  under the terms of either the GPL or the LGPL, and not to allow others to
+  use your version of this file under the terms of the MPL, indicate your
+  decision by deleting the provisions above and replace them with the notice
+  and other provisions required by the GPL or the LGPL. If you do not delete
+  the provisions above, a recipient may use your version of this file under
+  the terms of any one of the MPL, the GPL or the LGPL.
+  
+  ***** END LICENSE BLOCK *****
+-->
+<project name="application-targets">
+
+	<!-- workspace.dir may be overwritten in main build.xml -->
+	<property name="workspace.dir" location="${basedir}/../../../"></property>
+	<echo message="workspace.dir: ${workspace.dir}"></echo>
+
+	<property name="targetproject.dir" location="${workspace.dir}/opus" />
+
+	<import file="web-targets.xml"/>
+
+	<condition property="sqlmap-targets" value="sqlmap-targets-linux.xml" else="sqlmap-targets.xml">
+		<os name="Linux" />
+	</condition>
+	<import file="${sqlmap-targets}"/>
+
+	<property name="webxml-targets" value="web-xml-targets.xml"/>
+	<import file="${webxml-targets}"/>
+
+	<!-- MoVe - not used yet: clean-target.
+        Cleaning target project implies copying sources into target project
+        This would be done within the common-build of college: copy-targets.xml
+        <target name="all" depends="clean-modules,clean-target,all-but-clean"/>
+	-->
+	<target name="all" depends="clean-modules,clean-target-webapp,clean-target-java-sources,all-but-clean"/>
+	<target name="all-but-clean" depends="compile,copy,copy-properties,create-webxml"/>
+
+	<target name="clean-modules" description="Delete the target area of all modules">
+		<subant target="clean" verbose="true">
+            <property name="workspace.dir" value="${workspace.dir}"></property>
+			<buildpath refid="modules" />
+		</subant>
+	</target>
+
+	<target name="clean-modules-without-jasper" description="Delete the target area of all modules without .jasper files">
+		<subant target="clean-without-jasper" verbose="true">
+            <property name="workspace.dir" value="${workspace.dir}"></property>
+			<buildpath refid="modules" />
+		</subant>
+	</target>
+
+	<target name="clean-target-webapp" description="Clean target /src/main/webapp">
+		<echo message="delete ${targetproject.dir}/src/main/webapp except WEB-INF/classes"/>
+		<delete quiet="true" includeEmptyDirs="true">
+			<fileset dir="${targetproject.dir}/src/main/webapp">
+				<exclude name="WEB-INF/classes"/>
+			</fileset>
+		</delete>
+	</target>
+
+	<!-- MoVe - clean src/main/java directory of extra log-properties etc. -->
+	<target name="clean-target-java-sources" description="Delete /src/main/java of the target project except log- and messagesfiles">
+		<echo message="delete ${targetproject.dir}/src/main/java except log- and messagesfiles"/>
+		<delete quiet="true" includeEmptyDirs="true">
+			<fileset dir="${targetproject.dir}/src/main/java">
+				<exclude name="log4j*.*"/>
+				<exclude name="messages_*"/>
+				<exclude name="jawr.*"/>
+			</fileset>
+		</delete>
+		<delete quiet="true" includeEmptyDirs="true">
+			<fileset dir="${targetproject.dir}/build/test-classes" />
+		</delete>
+	</target>
+
+	<target name="compile" description="Compile classes in all modules">
+		<subant target="compile" verbose="true">
+			<property name="workspace.dir" value="${workspace.dir}"></property>
+			<buildpath refid="modules" />
+		</subant>
+	</target>
+
+	<!-- doubly mentioned (also in subant file) for copy of jsp-purposes -->
+	<target name="copy-classes">
+		<subant target="copy-classes" verbose="true">
+            <property name="workspace.dir" value="${workspace.dir}"></property>
+			<buildpath refid="modules" />
+		</subant>
+	</target>
+
+	<target name="copy-test-classes">
+		<subant target="copy-test-classes" verbose="true">
+            <property name="workspace.dir" value="${workspace.dir}"></property>
+			<buildpath refid="modules" />
+		</subant>
+	</target>
+
+	<target name="copy-web-artifacts">
+		<subant target="copy-web-artifacts" verbose="true">
+            <property name="workspace.dir" value="${workspace.dir}"></property>
+			<buildpath refid="modules" />
+		</subant>
+	</target>
+
+	<target name="copy" description="Copy all classes and web artifacts of all modules">
+		<subant target="copy" verbose="true">
+            <property name="workspace.dir" value="${workspace.dir}"></property>
+			<buildpath refid="modules" />
+		</subant>
+	</target>
+
+	<target name="copy-properties" 
+    	description="Copy the log, messages and jawr properties to classes of the 'target' project">
+		<copy todir="${targetproject.dir}/src/main/webapp/WEB-INF/classes">
+			<fileset dir="${targetproject.dir}/src/main/java">
+				<exclude name="log4j.properties.template"/>
+			</fileset>
+		</copy>
+		<echo message="${targetproject.dir}/src/main/webapp/WEB-INF/lib/classes/jawr.properties"/>
+		<copy todir="${targetproject.dir}/src/main/webapp/WEB-INF/lib/classes">
+			<fileset dir="${targetproject.dir}/src/main/java">
+				<include name="jawr.properties"/>
+			</fileset>
+		</copy>
+		<echo message="${targetproject.dir}/src/main/webapp/WEB-INF/lib/jawr.properties"/>
+		<copy todir="${targetproject.dir}/src/main/webapp/WEB-INF/lib">
+			<fileset dir="${targetproject.dir}/src/main/java">
+				<include name="jawr.properties"/>
+			</fileset>
+		</copy>
+		<echo message="${targetproject.dir}/src/main/webapp/jawr.properties"/>
+		<copy todir="${targetproject.dir}/src/main/webapp/">
+			<fileset dir="${targetproject.dir}/src/main/java">
+				<include name="jawr.properties"/>
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="copy-sources" description="Copy sources to target (for debugging)">
+		<subant target="copy-sources" verbose="true">
+            <property name="workspace.dir" value="${workspace.dir}"></property>
+			<buildpath refid="modules" />
+		</subant>
+	</target>
+
+	<target name="test" depends="all-but-clean,copy-test-classes" description="Run tests of all modules in one go">
+		<path id="provided-libs">
+			<fileset dir="${targetproject.dir}/lib" includes="**/*.jar"/>
+		</path>
+		<taskdef resource="testngtasks" classpathref="provided-libs" />
+
+		<fileset id="WEBINF.libs" dir="${targetproject.dir}/src/main/webapp/WEB-INF/lib">
+			<include name="**/*.jar"/>
+		</fileset>
+
+		<!-- testng "mixed" mode: both JUnit and TestNG tests are executed 
+             outputdir: ${basedir}/test-output -> basedir is the directory of the application build.xml file
+        -->
+		<testng mode="mixed" outputdir="${basedir}/test-output">
+			<classpath>
+				<pathelement location="${targetproject.dir}/build/test-classes" />
+				<pathelement location="${targetproject.dir}/src/main/webapp/WEB-INF/classes" />
+				<fileset refid="WEBINF.libs" />
+				<path refid="provided-libs"/>
+			</classpath>
+			<classfileset dir="${targetproject.dir}/build/test-classes"
+                includes="**/*TestNG.class, **/*TestsNG.class, **/*Test.class, **/*Tests.class, **/*Tester.class" 
+                excludes="**/Abstract*.class,${excluded.tests}"
+                />
+		</testng>
+	</target>
+	<target name="dummy">
+	</target>
+
+	<target name="test-separate" description="Test every module separately">
+		<subant target="test-separate" verbose="true">
+            <property name="workspace.dir" value="${workspace.dir}"></property>
+			<buildpath refid="modules" />
+		</subant>
+	</target>
+
+</project>

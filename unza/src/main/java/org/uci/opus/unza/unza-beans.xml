@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ***** BEGIN LICENSE BLOCK *****
+  Version: MPL 1.1/GPL 2.0/LGPL 2.1
+  
+  The contents of this file are subject to the Mozilla Public License Version
+  1.1 (the "License"); you may not use this file except in compliance with
+  the License. You may obtain a copy of the License at
+  http://www.mozilla.org/MPL/
+  
+  Software distributed under the License is distributed on an "AS IS" basis,
+  WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+  for the specific language governing rights and limitations under the
+  License.
+  
+  The Original Code is Opus-College unza module code.
+  
+  The Initial Developer of the Original Code is
+  Center for Information Services, Radboud University Nijmegen.
+  Portions created by the Initial Developer are Copyright (C) 2008
+  the Initial Developer. All Rights Reserved.
+  
+  Contributor(s):
+    For Java files, see Javadoc @author tags.
+  
+  Alternatively, the contents of this file may be used under the terms of
+  either the GNU General Public License Version 2 or later (the "GPL"), or
+  the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+  in which case the provisions of the GPL or the LGPL are applicable instead
+  of those above. If you wish to allow use of your version of this file only
+  under the terms of either the GPL or the LGPL, and not to allow others to
+  use your version of this file under the terms of the MPL, indicate your
+  decision by deleting the provisions above and replace them with the notice
+  and other provisions required by the GPL or the LGPL. If you do not delete
+  the provisions above, a recipient may use your version of this file under
+  the terms of any one of the MPL, the GPL or the LGPL.
+  
+  ***** END LICENSE BLOCK *****
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:aop="http://www.springframework.org/schema/aop"
+        xmlns:tx="http://www.springframework.org/schema/tx"
+        xmlns:context="http://www.springframework.org/schema/context"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans
+                            http://www.springframework.org/schema/beans/spring-beans.xsd
+                            http://www.springframework.org/schema/context
+                            http://www.springframework.org/schema/context/spring-context.xsd
+                            http://www.springframework.org/schema/aop
+                            http://www.springframework.org/schema/aop/spring-aop.xsd
+                            http://www.springframework.org/schema/tx
+                            http://www.springframework.org/schema/tx/spring-tx.xsd
+                            ">
+
+    <!-- Configurer that replaces ${...} placeholders with values from properties files -->
+    <!-- (in this case, JDBC related properties) -->
+    <bean id="unzaPropertyPlaceholderConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="ignoreUnresolvablePlaceholders" value="true"/>
+        <property name="locations">
+            <list>
+                <value>classpath:org/uci/opus/unza/dbconversion/srs-jdbc.properties</value>
+            </list>
+        </property>
+    </bean>
+    
+    
+
+    <!-- SRS Data Source -->
+    <bean id="srsDataSource" class="org.apache.commons.dbcp.BasicDataSource" autowire="no" destroy-method="close">
+        <property name="driverClassName" value="${srs.jdbc.driverClassName}"/>
+        <property name="url" value="${srs.jdbc.url}"/>
+        <property name="username" value="${srs.jdbc.username}"/>
+        <property name="password" value="${srs.jdbc.password}"/>
+    </bean>
+
+    <bean id="messageSource"
+         class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+     <property name="basenames">
+       <list>
+         <value>org/uci/opus/college/messages</value>
+         <value>messages</value>
+       </list>
+     </property>
+    </bean>
+
+    <bean id="unzaDbConversion" class="org.uci.opus.unza.dbconversion.UnzaDbConversion">
+    </bean>
+
+    <bean id="unzaInstitutionMigrator" class="org.uci.opus.unza.dbconversion.UnzaInstitutionMigrator">
+        <!--  <property name="srsDataSource"><ref bean="srsDataSource"/></property>-->
+        <property name="opusDataSource"><ref bean="dataSource"/></property>                
+    </bean>
+     <bean id="unzaCurriculumMigrator" class="org.uci.opus.unza.dbconversion.UnzaCurriculumMigrator">
+        <property name="srsDataSource"><ref bean="srsDataSource"/></property>
+        <property name="opusDataSource"><ref bean="dataSource"/></property>
+    </bean>
+
+    <bean id="unzaStudentMigrator" class="org.uci.opus.unza.dbconversion.UnzaStudentMigrator">
+        <property name="srsDataSource"><ref bean="srsDataSource"/></property>
+    </bean>
+     <bean id="unzaStageStudentMigrator" class="org.uci.opus.unza.dbconversion.UnzaStageStudentMigrator">
+        <property name="opusDataSource"><ref bean="dataSource"/></property>
+    </bean>
+    <bean id="unzaUtils" class="org.uci.opus.unza.util.UnzaUtils">
+        <property name="opusDataSource"><ref bean="dataSource"/></property>
+    </bean>
+    <bean id="unzaStageStaffMigrator" class="org.uci.opus.unza.dbconversion.UnzaStageStaffMigrator">
+        <property name="opusDataSource"><ref bean="dataSource"/></property>
+    </bean>
+    <bean id="unzaStageCurriculumMigrator" class="org.uci.opus.unza.dbconversion.UnzaStageCurriculumMigrator">
+        <property name="opusDataSource"><ref bean="dataSource"/></property>
+    </bean>
+    <bean id="unzaStageAccommodationMigrator" class="org.uci.opus.unza.dbconversion.UnzaStageAccommodationMigrator">
+        <property name="opusDataSource"><ref bean="dataSource"/></property>
+    </bean>
+    <bean id="unzaBranchMigrator" class="org.uci.opus.unza.dbconversion.UnzaBranchMigrator">
+        <property name="opusDataSource"><ref bean="dataSource"/></property>
+    </bean>
+    <bean id="unzaOrganizationalUnitMigrator" class="org.uci.opus.unza.dbconversion.UnzaOrganizationalUnitMigrator">
+        <property name="srsDataSource"><ref bean="srsDataSource"/></property>
+        <property name="opusDataSource"><ref bean="dataSource"/></property>
+    </bean>
+    <bean id="unzaStaffMigrator" class="org.uci.opus.unza.dbconversion.UnzaStaffMigrator">
+        <property name="srsDataSource"><ref bean="srsDataSource"/></property>
+    </bean>
+    <bean id="unzaStudentResultsMigrator" class="org.uci.opus.unza.dbconversion.UnzaStudentResultsMigrator">
+       <property name="opusDataSource"><ref bean="dataSource"/></property>
+    </bean>
+  <!--   <bean id="financialTransactionGenerator" class="org.uci.opus.unza.dbconversion.FinancialTransaction">
+    	<property name="orsDataSource"><ref bean="dataSource"/></property>
+    </bean>-->
+
+    <!-- so that autowiring the application context doesn't give errors -->
+    <bean id="servletContext" class="org.springframework.mock.web.MockServletContext">
+    </bean>
+
+</beans>

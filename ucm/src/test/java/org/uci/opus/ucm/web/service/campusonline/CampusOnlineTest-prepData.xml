@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ***** BEGIN LICENSE BLOCK *****
+  Version: MPL 1.1/GPL 2.0/LGPL 2.1
+  
+  The contents of this file are subject to the Mozilla Public License Version
+  1.1 (the "License"); you may not use this file except in compliance with
+  the License. You may obtain a copy of the License at
+  http://www.mozilla.org/MPL/
+  
+  Software distributed under the License is distributed on an "AS IS" basis,
+  WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+  for the specific language governing rights and limitations under the
+  License.
+  
+  The Original Code is Opus-College ucm module code.
+  
+  The Initial Developer of the Original Code is
+  Center for Information Services, Radboud University Nijmegen.
+  Portions created by the Initial Developer are Copyright (C) 2008
+  the Initial Developer. All Rights Reserved.
+  
+  Contributor(s):
+    For Java files, see Javadoc @author tags.
+  
+  Alternatively, the contents of this file may be used under the terms of
+  either the GNU General Public License Version 2 or later (the "GPL"), or
+  the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+  in which case the provisions of the GPL or the LGPL are applicable instead
+  of those above. If you wish to allow use of your version of this file only
+  under the terms of either the GPL or the LGPL, and not to allow others to
+  use your version of this file under the terms of the MPL, indicate your
+  decision by deleting the provisions above and replace them with the notice
+  and other provisions required by the GPL or the LGPL. If you do not delete
+  the provisions above, a recipient may use your version of this file under
+  the terms of any one of the MPL, the GPL or the LGPL.
+  
+  ***** END LICENSE BLOCK *****
+-->
+
+<!-- This dataset comprises a study grade type with 3 associated subjects -->
+<dataset>
+
+  <opuscollege.lookuptable id="52" tablename="studentstatus" lookuptype="Lookup" active="Y"/>
+  <opuscollege.lookuptable id="59" tablename="progressstatus" lookuptype="Lookup7" active="N" />
+  <opuscollege.lookuptable id="81" tablename="gradetype" lookuptype="Lookup9" active="Y" />
+
+  <opuscollege.studentstatus id="1" code="1" lang="en    " active="Y" description="Active" />
+  <opuscollege.studentstatus id="2" code="5" lang="en"     active="Y" description="Deceased" />
+  <opuscollege.studentstatus id="5" code="1" lang="pt    " active="Y" description="Activo" />
+  <opuscollege.studentstatus id="6" code="5" lang="pt"     active="Y" description="Falecido" />
+
+  <opuscollege.gradetype id="50" code="LIC" lang="pt" active="Y" description="Licenciatura" title="Lic." />
+  <opuscollege.gradetype id="51" code="MSC" lang="pt" active="Y" description="Mestrado" title="M.Sc." />
+
+  <opuscollege.progressstatus id="1"  code="01" lang="en" active="Y" description="Clear pass" continuing="Y" increment="Y" graduating="N" carrying="N"/>
+  <opuscollege.progressstatus id="2"  code="27" lang="en" active="Y" description="Proceed and Repeat" continuing="Y" increment="Y" graduating="N" carrying="S"/>
+  <opuscollege.progressstatus id="23" code="01" lang="pt" active="Y" description="Transitar (todas cadeiras aprovadas)" continuing="Y" increment="Y" graduating="N" carrying="N"/>
+  <opuscollege.progressstatus id="24" code="27" lang="pt" active="Y" description="Transitar e repetir" continuing="Y" increment="Y" graduating="N" carrying="S"/>
+
+  <opuscollege.subjectresultcomment id="1" sort="10" commentkey="junit.subjectresultcomment.excluded" active="true" />
+
+  <!-- Curriculum -->
+
+  <opuscollege.academicyear id="44" />
+
+  <opuscollege.institution id="107" institutioncode="UCM" institutionTypeCode="3"/>
+  <opuscollege.branch id="118" branchcode="05" institutionid="107" />
+  <opuscollege.organizationalunit id="18" organizationalunitcode="O1" organizationalunitdescription="Faculdade de Ciencias de Saude" branchid="118" />
+  <opuscollege.study id="38" organizationalunitid="18" studydescription="Medicina" />
+  <opuscollege.studygradetype id="58" studyid="38" gradetypecode="LIC" currentacademicyearid="44"  />
+  <opuscollege.studygradetype id="60" studyid="38" gradetypecode="MSC" currentacademicyearid="44"  />
+  <opuscollege.person id="16" personcode="61" surnamefull="UCM-PEMBA" firstnamesfull="Administrator" photographmimetype="" photographname="" photograph=""/>
+  <opuscollege.staffmember staffmemberid="19" staffmembercode="61" personid="16" />
+
+  <!-- Subjects for studygradetype id="58": LiC -->
+  <opuscollege.subject id="3240" subjectcode="s1" subjectdescription="Introducao a Medicina" primarystudyid="38" creditAmount="2.0" />
+  <opuscollege.subject id="3242" subjectcode="s2" subjectdescription="Saude Familiar 1" primarystudyid="38" creditAmount="1.5" />
+  <opuscollege.subject id="3246" subjectcode="s3" subjectdescription="Interaccao e regulacao" primarystudyid="38" creditAmount="1.0" />
+  <opuscollege.subjectstudygradetype id="2971" subjectid="3240" studygradetypeid="58" />
+  <opuscollege.subjectstudygradetype id="2972" subjectid="3242" studygradetypeid="58" />
+  <opuscollege.subjectstudygradetype id="2973" subjectid="3246" studygradetypeid="58" />
+  <opuscollege.examination id="39" subjectid="3242" examinationcode="e1" examinationdescription="Nota Frequencia" examinationtypecode="6" numberofattempts="0" weighingfactor="0"/>
+  <opuscollege.examination id="41" subjectid="3242" examinationcode="e3" examinationdescription="Final exam" examinationtypecode="4" numberofattempts="0" weighingfactor="0"/>
+  <opuscollege.test id="9"  examinationid="39" testcode="t1" testdescription="PBL session 1" examinationtypecode="7" numberofattempts="0" weighingfactor="0"/>
+  <opuscollege.test id="10" examinationid="39" testcode="t2" testdescription="PBL session 2" examinationtypecode="1" numberofattempts="1" weighingfactor="0"/>
+
+  <!-- Subjects for studygradetype id="60": MSC -->
+  <opuscollege.subject id="3260" subjectcode="m1" subjectdescription="Cadeira do mestrado 1" primarystudyid="38" creditAmount="3.0" />
+  <opuscollege.subjectstudygradetype id="2980" subjectid="3260" studygradetypeid="60" />
+
+  <!-- Study plans -->
+
+  <opuscollege.person id="19065" personcode="p1" surnamefull="Tomo" firstnamesfull="Ailton Artur" photographmimetype="image/png" photographname="xy.png" photograph="MTIzNDU=" />
+  <opuscollege.person id="19076" personcode="p2" surnamefull="Ernesto" firstnamesfull="Aldivandia Da Merilia" photographmimetype="image/pjpeg" photographname="damerilia.jpg" photograph="/9j/4AAQSkZJRgABAQEAlgCWAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0a&#xA;HBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIy&#xA;MjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCAEAAMADASIA&#xA;AhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQA&#xA;AAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3&#xA;ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWm&#xA;p6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEA&#xA;AwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSEx&#xA;BhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElK&#xA;U1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3&#xA;uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD3ukIz&#xA;0paQ1jYBOtGKKKAAUY5pB0pSeKAEJopKwPEHjLw/4XO3V9TigmK7lgUF5WHb5FyefemlcDoSeKCS&#xA;VXPUjmvG9Y+O0CEppGlHbyBPeyBR7fIp/rWH4p+IXiIXf9nzXcthPFFavLDGChBe3jd1PcHc7dTx&#xA;0601Eep77lSSAeR1FGCOx/KvlOXxrrroUk1O5wQPvyZPfHp7/wD1qox+KtZifzINX1GCQnBkW5YM&#xA;R7nPIxgfr34rkHySPrs9qXNfJ0XjvxZC4EXiLUgM/ee4JB9MAg8cZ/yK6HS/jJ4usCv2i5tNRj4y&#xA;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"/>
+
+  <opuscollege.student studentid="18699" studentcode="705120131" personid="19065" />
+  <opuscollege.student studentid="18710" studentcode="705120134" personid="19076" />
+
+  <opuscollege.studentstudentstatus id="308" studentid="18699" startdate="2012-01-16" studentstatuscode="1"/>
+  <opuscollege.studentstudentstatus id="2005" studentid="18710" startdate="2009-03-09" studentstatuscode="1"/>
+  <opuscollege.studentstudentstatus id="32685" studentid="18710" startdate="2014-11-07" studentstatuscode="5"/>
+
+  <opuscollege.studyPlan id="26306" studentid="18699" studyid="38" gradetypecode="LIC" />
+  <opuscollege.studyPlan id="26307" studentid="18710" studyid="38" gradetypecode="LIC" />
+  <opuscollege.studyPlan id="26308" studentid="18710" studyid="38" gradetypecode="MSC" />
+
+  <opuscollege.studyplancardinaltimeunit id="39473" studyplanid="26306" studygradetypeid="58" cardinaltimeunitnumber="1" progressstatuscode="01" />
+  <opuscollege.studyplancardinaltimeunit id="39474" studyplanid="26307" studygradetypeid="58" cardinaltimeunitnumber="5" progressstatuscode=""   />
+  <opuscollege.studyplancardinaltimeunit id="39475" studyplanid="26308" studygradetypeid="60" cardinaltimeunitnumber="1" progressstatuscode="27" />
+
+  <!-- 3 subjects for student with code 705120131 -->
+  <opuscollege.studyPlanDetail id="48951" studyplanid="26306" subjectid="3240" studyplancardinaltimeunitid="39473" studygradetypeid="58" />
+  <opuscollege.studyPlanDetail id="48952" studyplanid="26306" subjectid="3242" studyplancardinaltimeunitid="39473" studygradetypeid="58" />
+  <opuscollege.studyPlanDetail id="48953" studyplanid="26306" subjectid="3246" studyplancardinaltimeunitid="39473" studygradetypeid="58" />
+
+  <opuscollege.subjectResult id="297127" subjectid="3240" studyplandetailid="48951" subjectresultdate="2014-07-21" mark="" passed="N" subjectResultCommentId="1" staffmemberid="19" />
+  <opuscollege.subjectResult id="297128" subjectid="3242" studyplandetailid="48952" subjectresultdate="2014-07-21" mark="9.2" passed="N" staffmemberid="19" />
+    <opuscollege.examinationResult id="1260" examinationid="39" subjectid="3242" studyplandetailid="48952" examinationresultdate="2014-07-21" attemptnr="1" passed="N" mark="9.8" staffmemberid="19" />
+      <opuscollege.testResult id="218" testid="9" examinationid="39" studyplandetailid="48952" testresultdate="2014-07-21" attemptnr="1" mark="1" passed="N" staffmemberid="19"/>
+      <opuscollege.testResult id="224" testid="10" examinationid="39" studyplandetailid="48952" testresultdate="2014-07-21" attemptnr="1" mark="10" passed="Y" staffmemberid="19"/>
+    <opuscollege.examinationResult id="1266" examinationid="41" subjectid="3242" studyplandetailid="48952" examinationresultdate="2014-07-21" attemptnr="1" mark="12" passed="Y" staffmemberid="19"/>
+  <opuscollege.subjectResult id="297129" subjectid="3246" studyplandetailid="48953" subjectresultdate="2014-07-21" mark="15.3" passed="Y" staffmemberid="19" />
+
+  <!-- 2 LIC subjects and 1 MSC subject for student with code 705120134 -->
+  <opuscollege.studyPlanDetail id="48962" studyplanid="26307" subjectid="3240" studyplancardinaltimeunitid="39474" studygradetypeid="58" />
+  <opuscollege.studyPlanDetail id="48963" studyplanid="26307" subjectid="3242" studyplancardinaltimeunitid="39474" studygradetypeid="58" />
+  <opuscollege.studyPlanDetail id="48964" studyplanid="26308" subjectid="3260" studyplancardinaltimeunitid="39475" studygradetypeid="60" />
+
+  <opuscollege.subjectResult id="297138" subjectid="3240" studyplandetailid="48962" subjectresultdate="2014-07-21" mark="13.2" passed="Y" staffmemberid="19" />
+  <opuscollege.subjectResult id="297139" subjectid="3242" studyplandetailid="48963" subjectresultdate="2014-07-21" mark="14.3" passed="Y" staffmemberid="19" />
+    <!-- no examinationResult yet, but only one test resuls (second test result still outstanding); therefore examinationResult cannot be calculated yet -->
+      <opuscollege.testResult id="215" testid="9" examinationid="39" studyplandetailid="48962" testresultdate="2014-07-21" attemptnr="1" mark="2" passed="N" staffmemberid="19"/>
+    <opuscollege.examinationResult id="1267" examinationid="41" subjectid="3242" studyplandetailid="48963" examinationresultdate="2014-07-21" attemptnr="1" mark="15.5" passed="Y" staffmemberid="19"/>
+  <opuscollege.subjectResult id="297140" subjectid="3260" studyplandetailid="48964" subjectresultdate="2014-07-23" mark="15.4" passed="Y" staffmemberid="19" />
+
+</dataset>

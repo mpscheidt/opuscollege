@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
+<!-- 2017-04-28T15:24:09 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="SubjectHistory" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" resourceBundle="org/uci/opus/report/messages" uuid="1d577092-b4fb-4c02-bd2f-2c1c5da4fa97">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="opusCollege"/>
+	<parameter name="whereClause" class="java.lang.Integer" isForPrompting="false">
+		<defaultValueExpression><![CDATA["subjectresult_hist.studyPlanDetailId=108852 and subjectresult_hist.subjectId=50219"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select  DISTINCT
+split_part(subjectresult_hist.writewho, ':', 2)::int,
+   subjectresult_hist.operation AS subjectresult_hist_operation,
+   subjectresult_hist.writewho AS subjectresult_hist_writewho,
+   subjectresult_hist.writewhen AS subjectresult_hist_writewhen,
+   subjectresult_hist.mark AS subjectresult_hist_mark,
+   subjectresult_hist.passed AS subjectresult_hist_passed,
+   subject.subjectcode AS subject_subjectcode,
+   subject.subjectdescription AS subject_subjectdescription,
+   person.surnamefull AS person_surnamefull,
+   person.firstnamesfull AS person_firstnamesfull, 
+   person_std.surnamefull AS person_std_surnamefull,
+   person_std.firstnamesfull AS person_std_firstnamesfull, 
+       
+   institution.institutiondescription AS institution_description,
+   branch.branchdescription AS branch_branchdescription,
+   organizationalunit.organizationalunitdescription AS organizationalunit_organizationalunitdescription,
+   study.studydescription AS study_studydescription
+    
+FROM audit.subjectresult_hist
+INNER JOIN opuscollege.subject on subjectresult_hist.subjectId = subject.id
+inner JOIN opuscollege.opususer ON split_part(subjectresult_hist.writewho, ':', 2)::int = opususer.id
+--INNER JOIN opuscollege.staffmember on subjectresult_hist.staffmemberid = staffmember.staffmemberid
+INNER JOIN opuscollege.person on opususer.personid = person.id
+INNER JOIN opuscollege.studyplandetail studyplandetail ON subjectresult_hist.studyplandetailid = studyplandetail.id
+INNER JOIN opuscollege.studyplan ON studyplandetail.studyplanid = studyplan.id
+inner JOIN opuscollege.student student ON studyplan.studentid = student.studentid
+LEFT OUTER JOIN opuscollege.person person_std on student.personid= person_std.id
+LEFT OUTER JOIN opuscollege.study primarystudy ON student.primarystudyid = primarystudy.id
+LEFT OUTER JOIN opuscollege.studyGradeType ON studyPlanDetail.studyGradeTypeId = studyGradeType.id
+LEFT OUTER JOIN opuscollege.cardinalTimeUnit ON studyGradeType.cardinaltimeunitcode = cardinaltimeunit.code AND cardinaltimeunit.lang = 'pt'
+LEFT OUTER JOIN opuscollege.studyPlanCardinalTimeUnit ON studyplandetail.studyplancardinaltimeunitid = studyplancardinaltimeunit.id
+LEFT OUTER JOIN opuscollege.study study ON studygradetype.studyid = study.id
+LEFT OUTER JOIN opuscollege.gradetype gradetype ON studygradetype.gradetypecode = gradetype.code AND gradetype.lang = 'pt'
+LEFT OUTER JOIN opuscollege.organizationalunit organizationalunit ON study.organizationalunitid = organizationalunit.id
+LEFT OUTER JOIN opuscollege.branch ON branch.id = organizationalunit.branchId
+LEFT OUTER JOIN opuscollege.institution institution ON institution.id = branch.institutionid
+     
+  
+where true
+--subjectresult_hist.studyPlanDetailId=108852 and subjectresult_hist.subjectId=50219
+$P!{whereClause}]]>
+	</queryString>
+	<field name="institution_description" class="java.lang.String"/>
+	<field name="branch_branchdescription" class="java.lang.String"/>
+	<field name="organizationalunit_organizationalunitdescription" class="java.lang.String"/>
+	<field name="subjectresult_hist_operation" class="java.lang.String"/>
+	<field name="subject_subjectdescription" class="java.lang.String"/>
+	<field name="subjectresult_hist_writewho" class="java.lang.String"/>
+	<field name="person_surnamefull" class="java.lang.String"/>
+	<field name="person_firstnamesfull" class="java.lang.String"/>
+	<field name="person_std_surnamefull" class="java.lang.String"/>
+	<field name="person_std_firstnamesfull" class="java.lang.String"/>
+	<field name="subjectresult_hist_writewhen" class="java.lang.String"/>
+	<field name="subjectresult_hist_mark" class="java.lang.String"/>
+	<field name="subject_subjectcode" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="123" splitType="Stretch">
+			<textField>
+				<reportElement x="80" y="80" width="400" height="30" uuid="cb36a464-5d8b-4e54-ba51-0d2f56c4ae6c">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="16" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{branch_branchdescription}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="80" y="45" width="400" height="30" uuid="48b23b75-a1ec-4f35-a229-5ca446d187e1"/>
+				<box topPadding="3" leftPadding="5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{institution_description}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="89" splitType="Stretch">
+			<textField>
+				<reportElement x="127" y="56" width="157" height="20" uuid="ed9a60d7-5bb6-4774-8e3e-0ea577ce6ca4">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{person_std_firstnamesfull}+" "+$F{person_std_surnamefull}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="429" y="36" width="100" height="20" uuid="66ed972c-ff39-491d-9a10-4acd273b67b7">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{subject_subjectcode}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="80" y="2" width="400" height="25" uuid="c4ebf3c8-a1b0-47fe-8e19-b8728d7b3680"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{report.historicodisciplina.title}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="35" y="56" width="92" height="20" backcolor="#FFFFFF" uuid="3b4edc6b-8b76-42c9-97a0-e61cc34af3a6"/>
+				<box topPadding="3" leftPadding="5" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{studentpersubjectreproved.studentnumber}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="300" y="36" width="120" height="20" backcolor="#FFFFFF" uuid="e54ff2ad-9899-4904-a292-1df5c318325f"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{studentprofile.subjectcode}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="35" y="35" width="69" height="20" backcolor="#FFFFFF" uuid="eccbf01b-987e-419b-b0fa-bb05b24edc48"/>
+				<box topPadding="3" leftPadding="5" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{studentsbysubject.subjectdescription}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="127" y="35" width="157" height="20" uuid="9f6ab9fc-a569-4e9f-b1ac-2c418429394f">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{subject_subjectdescription}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="42" splitType="Stretch">
+			<textField>
+				<reportElement mode="Opaque" x="280" y="22" width="57" height="20" backcolor="#C795F5" uuid="ad4b28a2-c051-4fb7-859d-a7d721f2a88c"/>
+				<box topPadding="3" leftPadding="5" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.2"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.2"/>
+					<rightPen lineWidth="0.2"/>
+				</box>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{jsp.historyreport.operation}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="43" y="22" width="98" height="20" backcolor="#C795F5" uuid="999a592c-f84c-48df-aef4-f86fcc0a2fc3"/>
+				<box topPadding="3" leftPadding="5" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.2"/>
+					<leftPen lineWidth="0.2"/>
+					<bottomPen lineWidth="0.2"/>
+					<rightPen lineWidth="0.2"/>
+				</box>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{jsp.historyreport.writewho}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="148" y="22" width="132" height="20" backcolor="#C795F5" uuid="972cacf1-e211-43cd-9f57-393038f0f4f4"/>
+				<box topPadding="3" leftPadding="5" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.2"/>
+					<leftPen lineWidth="0.2"/>
+					<bottomPen lineWidth="0.2"/>
+					<rightPen lineWidth="0.2"/>
+				</box>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{general.staffmember}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="407" y="22" width="109" height="20" backcolor="#C795F5" uuid="a3e97c19-5db4-4521-a4f4-b91a879e82aa"/>
+				<box topPadding="3" leftPadding="5" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.2"/>
+					<leftPen lineWidth="0.2"/>
+					<bottomPen lineWidth="0.2"/>
+					<rightPen lineWidth="0.2"/>
+				</box>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{report.historyreport.writewhen}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="337" y="22" width="70" height="20" backcolor="#C795F5" uuid="0f462b92-72cd-4ba2-a6d2-51bf50a9d286"/>
+				<box topPadding="3" leftPadding="5" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.2"/>
+					<leftPen lineWidth="0.2"/>
+					<bottomPen lineWidth="0.2"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{studentsbysubject.mark}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="280" y="0" width="57" height="20" uuid="3fcb2519-cd85-4be7-a340-f882eeaca7e6">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<box leftPadding="8">
+					<topPen lineWidth="0.2"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.3"/>
+					<rightPen lineWidth="0.2"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["I".equalsIgnoreCase($F{subjectresult_hist_operation}) ? "Insert" :
+"D".equalsIgnoreCase($F{subjectresult_hist_operation}) ? "Delete" :
+"U".equalsIgnoreCase($F{subjectresult_hist_operation}) ? "Update" :
+"Unknown"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="43" y="0" width="98" height="20" uuid="0eb4127e-fae2-4994-a719-26c007de1be8">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<box leftPadding="8">
+					<topPen lineWidth="0.2"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.3"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{subjectresult_hist_writewho}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="148" y="0" width="132" height="20" uuid="11fcaf43-7dcb-4355-ba74-fb8518224d73"/>
+				<box leftPadding="8">
+					<topPen lineWidth="0.2"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.3"/>
+					<rightPen lineWidth="0.2"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{person_firstnamesfull}+" "+$F{person_surnamefull}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="407" y="0" width="109" height="20" uuid="4d75e763-80b3-4585-980e-ae2b438ed70e"/>
+				<box leftPadding="8">
+					<topPen lineWidth="0.2"/>
+					<leftPen lineWidth="0.2"/>
+					<bottomPen lineWidth="0.3"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{subjectresult_hist_writewhen}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="337" y="0" width="70" height="20" uuid="63699d22-adfc-4a31-a8ce-a83ab28e270e"/>
+				<box leftPadding="8">
+					<topPen lineWidth="0.2"/>
+					<leftPen lineWidth="0.2"/>
+					<bottomPen lineWidth="0.3"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{subjectresult_hist_mark}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="22" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="16" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="50" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="20" width="550" height="20" uuid="1657700c-c209-4dd0-8126-63b7084257b9"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[DateFormat.getDateInstance(DateFormat.MEDIUM, $P{REPORT_LOCALE}).format(new Date())]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+  ***** BEGIN LICENSE BLOCK *****
+  Version: MPL 1.1/GPL 2.0/LGPL 2.1
+  
+  The contents of this file are subject to the Mozilla Public License Version
+  1.1 (the "License"); you may not use this file except in compliance with
+  the License. You may obtain a copy of the License at
+  http://www.mozilla.org/MPL/
+  
+  Software distributed under the License is distributed on an "AS IS" basis,
+  WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+  for the specific language governing rights and limitations under the
+  License.
+  
+  The Original Code is Opus-College scholarship module code.
+  
+  The Initial Developer of the Original Code is
+  Center for Information Services, Radboud University Nijmegen.
+  Portions created by the Initial Developer are Copyright (C) 2008
+  the Initial Developer. All Rights Reserved.
+  
+  Contributor(s):
+    For Java files, see Javadoc @author tags.
+  
+  Alternatively, the contents of this file may be used under the terms of
+  either the GNU General Public License Version 2 or later (the "GPL"), or
+  the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+  in which case the provisions of the GPL or the LGPL are applicable instead
+  of those above. If you wish to allow use of your version of this file only
+  under the terms of either the GPL or the LGPL, and not to allow others to
+  use your version of this file under the terms of the MPL, indicate your
+  decision by deleting the provisions above and replace them with the notice
+  and other provisions required by the GPL or the LGPL. If you do not delete
+  the provisions above, a recipient may use your version of this file under
+  the terms of any one of the MPL, the GPL or the LGPL.
+  
+  ***** END LICENSE BLOCK *****
+-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.uci.opus.scholarship.persistence.SponsorPaymentMapper">
+
+    <resultMap id="SponsorPaymentResultMap" type="SponsorPayment">
+        <result property="id" column="id"/>
+        <result property="sponsorInvoiceId" column="sponsorInvoiceId"/>
+        <result property="paymentReceivedDate" column="paymentReceivedDate"/>
+        <result property="amount" column="amount"/>
+        <result property="receiptNumber" column="receiptNumber"/>
+        <result property="writeWho" column="writeWho"/>
+        <association property="sponsorInvoice" select="org.uci.opus.scholarship.persistence.SponsorInvoiceMapper.findSponsorInvoiceById" column="sponsorInvoiceId"/>
+    </resultMap>
+
+    <insert id="addSponsorPayment" parameterType="SponsorPayment"> 
+        insert into opuscollege.sch_sponsorPayment
+        ( sponsorInvoiceId
+        , paymentReceivedDate
+        , amount
+        , receiptNumber
+        , writeWho
+        ) values
+        ( #{sponsorInvoiceId}
+        , #{paymentReceivedDate}
+        , #{amount}
+        , #{receiptNumber}
+        , #{writeWho}
+        )
+        <selectKey keyProperty="id" resultType="int">
+            SELECT currVal('opuscollege.sch_sponsorPayment_seq')
+        </selectKey>
+    </insert>
+    
+    <update id="updateSponsorPayment" parameterType="SponsorPayment">
+        update  opuscollege.sch_sponsorPayment
+        set     sponsorInvoiceId = #{sponsorInvoiceId}
+              , paymentReceivedDate = #{paymentReceivedDate}
+              , amount = #{amount}
+              , receiptNumber = #{receiptNumber}
+              , writeWho = #{writeWho}
+       where   id = #{id}
+    </update>
+
+    <select id="findSponsorPaymentById" parameterType="int" resultMap="SponsorPaymentResultMap">
+        select opuscollege.sch_sponsorPayment.*
+        from   opuscollege.sch_sponsorPayment
+        where  id = #{value}
+    </select>
+
+    <select id="findSponsorPayments" parameterType="map" resultMap="SponsorPaymentResultMap">
+        select sch_sponsorPayment.*
+        from   opuscollege.sch_sponsorPayment
+        inner join opuscollege.sch_sponsorInvoice ON sch_sponsorPayment.sponsorInvoiceId = sch_sponsorInvoice.id
+        inner join opuscollege.sch_scholarship ON sch_sponsorInvoice.scholarshipId = sch_scholarship.id
+        inner join opuscollege.sch_sponsor ON sch_scholarship.sponsorId = sch_sponsor.id
+        where  1=1
+        <if test='sponsorInvoiceId != null and sponsorInvoiceId != "0"'>
+            and sch_sponsorPayment.sponsorInvoiceId = #{sponsorInvoiceId}
+        </if>
+        <if test='scholarshipId != null and scholarshipId != "0"'>
+            and sch_sponsorInvoice.scholarshipId = #{scholarshipId}
+        </if>
+        <if test='sponsorId != null and sponsorId != "0"'>
+            and sch_scholarship.sponsorId = #{sponsorId}
+        </if>
+        <if test='academicYearId != null and academicYearId != "0"'>
+            and sch_sponsor.academicYearId = #{academicYearId}
+        </if>
+        ORDER BY sch_sponsorInvoice.invoiceNumber, sch_sponsorPayment.receiptNumber
+    </select>
+ 
+    <delete id="deleteSponsorPayment" parameterType="int">
+        delete from opuscollege.sch_sponsorPayment
+        where  id = #{value}
+    </delete>
+
+    <select id="doesSponsorPaymentExist" parameterType="map" resultType="boolean">
+        
+        SELECT (COUNT(*) != 0)
+        FROM opuscollege.sch_sponsorPayment
+        WHERE id != #{id}
+        <if test="receiptNumber != null">
+            AND lower(receiptNumber) = lower(#{receiptNumber})
+        </if>
+        <if test="active != null">
+            AND active = #{active}
+        </if>
+    </select>
+
+
+    <insert id="insertSponsorPaymentHistory">
+
+        INSERT INTO audit.sch_sponsorPayment_hist(
+            operation
+            , id
+            , sponsorInvoiceId
+            , paymentReceivedDate
+            , amount
+            , receiptNumber
+            , writeWho
+            )
+            VALUES (
+              #{operation}
+            , #{sponsorPayment.id}
+            , #{sponsorPayment.sponsorInvoiceId}
+            , #{sponsorPayment.paymentReceivedDate}
+            , #{sponsorPayment.amount}
+            , #{sponsorPayment.receiptNumber}
+            , #{sponsorPayment.writeWho}
+
+            )
+    </insert>
+    
+    <!-- referenced by collection attribute in ScholarshipApplicationMapper -->
+    <select id="findScholarshipApplicationSponsorPayments" parameterType="int" resultType="SponsorPayment">
+        select  opuscollege.sch_sponsorPayment.*
+        from    opuscollege.sch_sponsorPayment
+        where   scholarshipApplicationId = #{value}
+        order by academicYearId
+    </select> 
+
+</mapper>

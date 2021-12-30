@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ***** BEGIN LICENSE BLOCK *****
+  Version: MPL 1.1/GPL 2.0/LGPL 2.1
+  
+  The contents of this file are subject to the Mozilla Public License Version
+  1.1 (the "License"); you may not use this file except in compliance with
+  the License. You may obtain a copy of the License at
+  http://www.mozilla.org/MPL/
+  
+  Software distributed under the License is distributed on an "AS IS" basis,
+  WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+  for the specific language governing rights and limitations under the
+  License.
+  
+  The Original Code is Opus-College cbu module code.
+  
+  The Initial Developer of the Original Code is
+  Center for Information Services, Radboud University Nijmegen.
+  Portions created by the Initial Developer are Copyright (C) 2008
+  the Initial Developer. All Rights Reserved.
+  
+  Contributor(s):
+    For Java files, see Javadoc @author tags.
+  
+  Alternatively, the contents of this file may be used under the terms of
+  either the GNU General Public License Version 2 or later (the "GPL"), or
+  the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+  in which case the provisions of the GPL or the LGPL are applicable instead
+  of those above. If you wish to allow use of your version of this file only
+  under the terms of either the GPL or the LGPL, and not to allow others to
+  use your version of this file under the terms of the MPL, indicate your
+  decision by deleting the provisions above and replace them with the notice
+  and other provisions required by the GPL or the LGPL. If you do not delete
+  the provisions above, a recipient may use your version of this file under
+  the terms of any one of the MPL, the GPL or the LGPL.
+  
+  ***** END LICENSE BLOCK *****
+-->
+
+<!-- This dataset comprises a study grade type with 3 associated subjects -->
+<dataset>
+  <opuscollege.academicyear id="1" description="2009" active="Y" writewho="opuscollege" writewhen="2009-02-03 01:53:46.661258" startdate="1970-01-01" enddate="2999-12-31" nextacademicyearid="0"/>
+
+  <opuscollege.study id="1210" studydescription="Business Finance" active="Y" organizationalunitid="149" academicfieldcode="10" dateofestablishment="2013-01-01" startdate="2013-09-01" registrationdate="2013-06-10" writewho="opuscollege" writewhen="2013-06-10 16:33:00.373878"/>
+  <opuscollege.studygradetype id="254" studyid="1210" gradetypecode="BSC" active="Y" contactid="527" registrationdate="2013-06-10" writewho="opuscollege" writewhen="2013-08-20 16:59:37.722" currentacademicyearid="1" cardinaltimeunitcode="2" numberofcardinaltimeunits="2" maxnumberofcardinaltimeunits="3" numberofsubjectspercardinaltimeunit="2" maxnumberofsubjectspercardinaltimeunit="2" studytimecode="1" studyformcode="1" maxnumberoffailedsubjectspercardinaltimeunit="1" studyintensitycode="" maxnumberofstudents="0"/>
+
+  <opuscollege.person id="558" personcode="P14920082013182343" active="Y" surnamefull="10271008" firstnamesfull="10271008" firstnamesalias="" nationalregistrationnumber="" civiltitlecode="0" gradetypecode="0" gendercode="2" birthdate="1972-09-01" districtofbirthcode="" provinceofbirthcode="0" districtoforigincode="" provinceoforigincode="0" civilstatuscode="0" identificationtypecode="4" identificationnumber="207992/45/1" healthissues="" registrationdate="2013-08-20" writewho="opuscollege" writewhen="2013-08-20 18:23:43.733" publichomepage="N" motivation=""/>
+  <opuscollege.student studentid="339" studentcode="10271008" personid="558" dateofenrolment="2013-08-20" primarystudyid="1210" previousinstitutionid="0" previousinstitutionprovincecode="0" scholarship="N" writewho="opuscollege" writewhen="2013-08-20 18:23:43.733" subscriptionrequirementsfulfilled="Y" secondarystudyid="0" foreignstudent="N" relativeofstaffmember="N" ruralareaorigin="N"/>
+  <opuscollege.studyplan id="277" studentid="339" studyplandescription="Business Finance - Bacharelato" active="Y" writewho="opuscollege" writewhen="2013-08-20 18:23:44.102" studyplanstatuscode="1" studyid="1210" gradetypecode="BSC" minor1id="0" major2id="0" minor2id="0" applicationnumber="0" firstchoiceonwardstudyid="0" secondchoiceonwardstudyid="0" thirdchoiceonwardstudyid="0"/>
+  <opuscollege.studyplancardinaltimeunit id="460" studyplanid="277" cardinaltimeunitnumber="1" active="Y" writewho="opuscollege" writewhen="2013-08-20 18:23:44.148" studygradetypeid="254" cardinaltimeunitstatuscode="7" tuitionwaiver="N" studyintensitycode="F"/>
+  <opuscollege.studyplandetail id="1082" studyplanid="277" subjectid="1693" subjectblockid="0" active="Y" writewho="opuscollege" writewhen="2013-08-20 18:23:44.349" studyplancardinaltimeunitid="460" studygradetypeid="254"/>
+
+  <opuscollege.person id="559" personcode="P14920082013182344" active="Y" surnamefull="10271008" firstnamesfull="10271008" firstnamesalias="" nationalregistrationnumber="" civiltitlecode="0" gradetypecode="0" gendercode="2" birthdate="1972-09-01" districtofbirthcode="" provinceofbirthcode="0" districtoforigincode="" provinceoforigincode="0" civilstatuscode="0" identificationtypecode="4" identificationnumber="769796/11/1" healthissues="" registrationdate="2013-08-20" writewho="opuscollege" writewhen="2013-08-20 18:23:43.733" publichomepage="N" motivation=""/>
+  <opuscollege.student studentid="340" studentcode="07044083" personid="559" dateofenrolment="2013-08-20" primarystudyid="1210" previousinstitutionid="0" previousinstitutionprovincecode="0" scholarship="N" writewho="opuscollege" writewhen="2013-08-20 18:23:43.733" subscriptionrequirementsfulfilled="Y" secondarystudyid="0" foreignstudent="N" relativeofstaffmember="N" ruralareaorigin="N"/>
+  <opuscollege.studyplan id="278" studentid="340" studyplandescription="Business Finance - Bacharelato" active="Y" writewho="opuscollege" writewhen="2013-08-20 18:23:44.102" studyplanstatuscode="1" studyid="1210" gradetypecode="BSC" minor1id="0" major2id="0" minor2id="0" applicationnumber="0" firstchoiceonwardstudyid="0" secondchoiceonwardstudyid="0" thirdchoiceonwardstudyid="0"/>
+  <opuscollege.studyplancardinaltimeunit id="461" studyplanid="278" cardinaltimeunitnumber="1" active="Y" writewho="opuscollege" writewhen="2013-08-20 18:23:44.148" studygradetypeid="254" cardinaltimeunitstatuscode="7" tuitionwaiver="N" studyintensitycode="F"/>
+  <opuscollege.studyplandetail id="1083" studyplanid="278" subjectid="1693" subjectblockid="0" active="Y" writewho="opuscollege" writewhen="2013-08-20 18:23:44.349" studyplancardinaltimeunitid="461" studygradetypeid="254"/>
+
+  <opuscollege.person id="560" personcode="P14920082013182345" active="Y" surnamefull="10271008" firstnamesfull="10271008" firstnamesalias="" nationalregistrationnumber="" civiltitlecode="0" gradetypecode="0" gendercode="2" birthdate="1972-09-01" districtofbirthcode="" provinceofbirthcode="0" districtoforigincode="" provinceoforigincode="0" civilstatuscode="0" identificationtypecode="4" identificationnumber="1232133" healthissues="" registrationdate="2013-08-20" writewho="opuscollege" writewhen="2013-08-20 18:23:43.733" publichomepage="N" motivation=""/>
+  <opuscollege.student studentid="341" studentcode="07078698" personid="560" dateofenrolment="2013-08-20" primarystudyid="1210" previousinstitutionid="0" previousinstitutionprovincecode="0" scholarship="N" writewho="opuscollege" writewhen="2013-08-20 18:23:43.733" subscriptionrequirementsfulfilled="Y" secondarystudyid="0" foreignstudent="N" relativeofstaffmember="N" ruralareaorigin="N"/>
+  <opuscollege.studyplan id="279" studentid="341" studyplandescription="Business Finance - Bacharelato" active="Y" writewho="opuscollege" writewhen="2013-08-20 18:23:44.102" studyplanstatuscode="1" studyid="1210" gradetypecode="BSC" minor1id="0" major2id="0" minor2id="0" applicationnumber="0" firstchoiceonwardstudyid="0" secondchoiceonwardstudyid="0" thirdchoiceonwardstudyid="0"/>
+  <opuscollege.studyplancardinaltimeunit id="462" studyplanid="279" cardinaltimeunitnumber="1" active="Y" writewho="opuscollege" writewhen="2013-08-20 18:23:44.148" studygradetypeid="254" cardinaltimeunitstatuscode="7" tuitionwaiver="N" studyintensitycode="F"/>
+  <opuscollege.studyplandetail id="1084" studyplanid="279" subjectid="1693" subjectblockid="0" active="Y" writewho="opuscollege" writewhen="2013-08-20 18:23:44.349" studyplancardinaltimeunitid="462" studygradetypeid="254"/>
+
+</dataset>

@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+  ***** BEGIN LICENSE BLOCK *****
+  Version: MPL 1.1/GPL 2.0/LGPL 2.1
+  
+  The contents of this file are subject to the Mozilla Public License Version
+  1.1 (the "License"); you may not use this file except in compliance with
+  the License. You may obtain a copy of the License at
+  http://www.mozilla.org/MPL/
+  
+  Software distributed under the License is distributed on an "AS IS" basis,
+  WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+  for the specific language governing rights and limitations under the
+  License.
+  
+  The Original Code is Opus-College fee module code.
+  
+  The Initial Developer of the Original Code is
+  Center for Information Services, Radboud University Nijmegen.
+  Portions created by the Initial Developer are Copyright (C) 2008
+  the Initial Developer. All Rights Reserved.
+  
+  Contributor(s):
+    For Java files, see Javadoc @author tags.
+  
+  Alternatively, the contents of this file may be used under the terms of
+  either the GNU General Public License Version 2 or later (the "GPL"), or
+  the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+  in which case the provisions of the GPL or the LGPL are applicable instead
+  of those above. If you wish to allow use of your version of this file only
+  under the terms of either the GPL or the LGPL, and not to allow others to
+  use your version of this file under the terms of the MPL, indicate your
+  decision by deleting the provisions above and replace them with the notice
+  and other provisions required by the GPL or the LGPL. If you do not delete
+  the provisions above, a recipient may use your version of this file under
+  the terms of any one of the MPL, the GPL or the LGPL.
+  
+  ***** END LICENSE BLOCK *****
+--><!--Converted at: Fri Feb 26 09:38:10 CET 2016-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.uci.opus.fee.persistence.FinancialTransactionMapper">
+
+    <select id="findFinancialTransaction" parameterType="String" resultType="FinancialTransaction">
+        select * FROM opuscollege.financialTransaction
+        where financialRequestId = #{value}
+        and statusCode != 4
+    </select>
+
+    <select id="findFinancialTransactions" resultType="FinancialTransaction">
+        select * FROM opuscollege.financialTransaction
+        where statusCode != 4 order by academicYearId ASC
+    </select>
+
+    <select id="findFinancialTransactionsByStudentId" parameterType="int" resultType="FinancialTransaction">
+        select * FROM opuscollege.financialTransaction
+        where statusCode != 4 and studentCode = #{value} order by academicYearId ASC
+    </select>
+    
+    <select id="findFinancialTransactionsBySelection" parameterType="map" resultType="FinancialTransaction"> 
+        select * FROM opuscollege.financialtransaction
+        where statusCode = statusCode 
+        <if test='statusCode != null and statusCode != "-1"'>
+            and   statusCode = #{statusCode}
+        </if>
+        <if test='errorCode != null and errorCode != "-1"'>
+            and errorCode = #{errorCode}
+        </if>
+        <if test="studentCode != null">
+            and studentCode = #{studentCode}
+        </if>        
+       <if test="fromReceivedDate != null">
+            and timestampProcessed &gt; #{fromReceivedDate}
+         </if>
+        <if test="untilReceivedDate != null">
+            and timestampProcessed  &lt; #{untilReceivedDate}
+         </if> 
+        <if test="financialRequestId != null">
+            and financialRequestId = #{financialRequestId}
+         </if>           
+       order by timestampProcessed
+    </select>     
+    
+    <insert id="addFinancialTransaction" parameterType="FinancialTransaction">
+        INSERT INTO
+        	opuscollege.financialTransaction (
+            transactionTypeId      
+            ,financialRequestId     
+            ,requestId          
+            ,statusCode         
+            ,errorCode          
+            ,studentCode      
+            ,nationalRegistrationNumber  
+            ,academicYearId 
+            ,timestampProcessed
+            ,amount      
+            ,name 
+            ,cell 
+            ,requestString   
+            ,processedToStudentbalance 
+            ,errorReportedToFinancialBankrequest	
+		        ) values (
+            #{transactionTypeId}      
+            ,#{financialRequestId}     
+            ,#{requestId}          
+            ,#{statusCode}         
+            ,#{errorCode}          
+            ,#{studentCode}      
+            ,#{nationalRegistrationNumber}  
+            ,#{academicYearId} 
+            ,#{timestampProcessed}
+            ,#{amount}      
+            ,#{name} 
+            ,#{cell} 
+            ,#{requestString}   
+            ,#{processedToStudentbalance} 
+            ,#{errorReportedToFinancialBankrequest}    
+        	)
+        <selectKey keyProperty="id" resultType="int">
+                SELECT currVal('opuscollege.financialTransactionSeq')
+        </selectKey> 
+    </insert>
+
+   <insert id="addFinancialTransactionHistory" parameterType="FinancialTransaction">
+        INSERT INTO
+            audit.financialTransaction_hist (
+            operation
+            ,writeWho
+        <!--  , writeWhen: is written automatically-->
+            ,id
+            ,transactionTypeId      
+            ,financialRequestId     
+            ,requestId          
+            ,statusCode         
+            ,errorCode          
+            ,studentCode      
+            ,nationalRegistrationNumber  
+            ,academicYearId 
+            ,timestampProcessed
+            ,amount      
+            ,name 
+            ,cell 
+            ,requestString   
+            ,processedToStudentbalance 
+            ,errorReportedToFinancialBankrequest    
+         ) values (
+            'I'
+            ,#{writeWho}
+            ,#{id}
+            ,#{transactionTypeId}      
+            ,#{financialRequestId}     
+            ,#{requestId}          
+            ,#{statusCode}         
+            ,#{errorCode}          
+            ,#{studentCode}      
+            ,#{nationalRegistrationNumber}  
+            ,#{academicYearId} 
+            ,#{timestampProcessed}
+            ,#{amount}      
+            ,#{name} 
+            ,#{cell} 
+            ,#{requestString}   
+            ,#{processedToStudentbalance} 
+            ,#{errorReportedToFinancialBankrequest}    
+            )
+    </insert>
+
+    <update id="updateFinancialTransaction" parameterType="FinancialTransaction">
+        UPDATE	opuscollege.financialTransaction
+	    SET		transactionTypeId			= #{transactionTypeId}
+	        	,financialRequestId    	      = #{financialRequestId}
+                ,requestId                   = #{requestId}
+                ,statusCode                 = #{statusCode}
+                ,errorCode                  = #{errorCode}
+	        	,studentCode      	         = #{studentCode}
+	        	,nationalRegistrationNumber  = #{nationalRegistrationNumber}
+	        	,academicYearId              = #{academicYearId}
+	        	,timestampProcessed          = #{timestampProcessed}
+	        	,amount                       = #{amount}
+	        	,name                         = #{name}
+	        	,cell                         = #{cell}
+	        	,requestString                = #{requestString}
+	        	,processedToStudentbalance    = #{processedToStudentbalance}
+	        	,errorReportedToFinancialBankrequest = #{errorReportedToFinancialBankrequest}
+	    WHERE	id = #{id}
+    </update>
+
+   <insert id="updateFinancialTransactionHistory" parameterType="FinancialTransaction">
+        INSERT INTO
+            audit.financialTransaction_hist (
+            operation
+            ,writeWho
+        <!--  , writeWhen: is written automatically-->
+            ,id
+            ,transactionTypeId      
+            ,financialRequestId     
+            ,requestId          
+            ,statusCode         
+            ,errorCode          
+            ,studentCode     
+            ,nationalRegistrationNumber  
+            ,academicYearId 
+            ,timestampProcessed
+            ,amount      
+            ,name 
+            ,cell 
+            ,requestString   
+            ,processedToStudentbalance 
+            ,errorReportedToFinancialBankrequest    
+         ) values (
+            'U'
+            ,#{writeWho}
+            ,#{id}
+            ,#{transactionTypeId}      
+            ,#{financialRequestId}     
+            ,#{requestId}          
+            ,#{statusCode}         
+            ,#{errorCode}          
+            ,#{studentCode}      
+            ,#{nationalRegistrationNumber}  
+            ,#{academicYearId} 
+            ,#{timestampProcessed}
+            ,#{amount}      
+            ,#{name} 
+            ,#{cell} 
+            ,#{requestString}   
+            ,#{processedToStudentbalance} 
+            ,#{errorReportedToFinancialBankrequest}    
+        )
+    </insert>
+
+</mapper>

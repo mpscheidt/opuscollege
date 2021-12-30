@@ -1,0 +1,81 @@
+-------------------
+Data Migration
+-------------------
+The Migration of data from SRS into opus has been split into three parts: Extraction, loading
+and Transformation. 
+PHASE I
+-----------
+During the Extraction phase the tool moves the data from the source system (Informix)
+into a temporary schema on the postgresql server called srsdatastage. A number of data cleansing
+ transformations are applied to the data to keep it concise and consistent. 
+
+PHASE II
+---------
+During the loading phase the data is then moves from the staging area into the live opuscollege
+database schema. During this stage a number of transformations are applied to the data being loaded 
+to make it compliant to the conventions adopted in opuscollege.
+
+PHASE III
+----------
+The transformation phase spans both the extraction and loading phases of the migration
+
+---------------
+CURRICULUM DATA
+---------------
+The curriculum data migration has a number of challenges. Of these the most outstanding is that 
+there is direct relationship between a course and the Major. This is because a course belongs to
+a school as opposed to belonging to a Study as the case in opuscollege. A work around this problem
+has been developed using the already existing data in the source system to establish a relationship 
+between a course and a major (study).
+
+PROBLEM DEFINITIONS:
+1.It is possible to relate a course (subject) to a school but not directly possible to relate it 
+to study.
+2. At creation, a course requires a primary study to be defined before the course is created
+3. The primary study needs to be related to an organizational unit
+
+SOLUTION:
+1.Create a primary study for each school to be used as a place holder for each course that belongs to
+that school. i.e for NS create NSPrimaryStudy. Then relate all courses belonging to school of NS 
+to the study NSPrimaryStudy, for HSS create HSSPrimaryStudy.
+2.Do this for all the schools
+3.migrate the courses
+	--load the course record
+	--extract the schcode
+	--use the schoolcode to identify which PrimaryStudy to attach the course to. i.e by
+	possible traversing a map of deafultPrimaryStudies for each school.
+4.Migrate the Majors as Studies. Create a version for part-time a version for full-time. In short, 
+create a version for each of the available categories of study.
+
+5.Create a subjectstudygradetype ***for each of the categories of study*** i.e. one for full-time, 
+one for part-time,one for distance.
+	--use the srsdatastage.credit table, srsdatastage.quota table and the srsdatastage.acadyr 
+	table to relate the course
+	to a major.
+	--try to check for duplicates in this process. i.e. if a course has already been tied to a 
+	major and quota this should not be duplicated for another student taking the same combination 
+	of course, major and quota.
+	
+----------------------
+STUDENT DATA
+-----------------
+The student data will be migrated as follows:
+	1.migrate basic student information as contained in the srsdatastage.student table
+	2.migrate student academic details by creating a studyplan for each student record
+		-load a student from srsdatastage student table
+			-use this student's id to load the student object from opuscollege schema
+				-verify that the object is not null
+			-use this opuscollege student object to create a studyplan for the student
+			-Use the srsdatastage.acadyr table to determine the student's Primary Study (mjrcode)
+			-Use the srsdatastage.acadyr table to determine the StudyGradeType for the student (qtacode)
+			-Use the srsdatastage.credit table to build the studyplancardinaltimeunitresult 
+			(end of semester comment from obtained from srsdatastage.acadyr comment column) and
+			the result for each individual subject.
+			
+	   -Nationality
+	   		-pick a record from the nation table in the stage schema
+	   		-Find a match in the country table
+	   			-search the List returned of opus countries using the nationality field from 
+	   			the nation table as a Key.
+	   			-when a match is found create a Map(nation.code,country.code)
+		

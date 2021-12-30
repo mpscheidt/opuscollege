@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ***** BEGIN LICENSE BLOCK *****
+  Version: MPL 1.1/GPL 2.0/LGPL 2.1
+  
+  The contents of this file are subject to the Mozilla Public License Version
+  1.1 (the "License"); you may not use this file except in compliance with
+  the License. You may obtain a copy of the License at
+  http://www.mozilla.org/MPL/
+  
+  Software distributed under the License is distributed on an "AS IS" basis,
+  WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+  for the specific language governing rights and limitations under the
+  License.
+  
+  The Original Code is Opus-College college module code.
+  
+  The Initial Developer of the Original Code is
+  Center for Information Services, Radboud University Nijmegen.
+  Portions created by the Initial Developer are Copyright (C) 2008
+  the Initial Developer. All Rights Reserved.
+  
+  Contributor(s):
+    For Java files, see Javadoc @author tags.
+  
+  Alternatively, the contents of this file may be used under the terms of
+  either the GNU General Public License Version 2 or later (the "GPL"), or
+  the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+  in which case the provisions of the GPL or the LGPL are applicable instead
+  of those above. If you wish to allow use of your version of this file only
+  under the terms of either the GPL or the LGPL, and not to allow others to
+  use your version of this file under the terms of the MPL, indicate your
+  decision by deleting the provisions above and replace them with the notice
+  and other provisions required by the GPL or the LGPL. If you do not delete
+  the provisions above, a recipient may use your version of this file under
+  the terms of any one of the MPL, the GPL or the LGPL.
+  
+  ***** END LICENSE BLOCK *****
+-->
+
+<dataset>
+
+  <opuscollege.appconfig id="1" appconfigattributename="maxFailedLoginAttempts" appconfigattributevalue="5" startdate="1970-01-01"/>
+
+  <opuscollege.academicyear id="44" />
+  <opuscollege.academicyear id="48" />
+
+  <opuscollege.institution id="107" institutioncode="UCM" institutionTypeCode="3"/>
+  <opuscollege.branch id="118" branchcode="05" branchdescription="Delegacao de Tete" institutionid="107" />
+  <opuscollege.organizationalunit id="18" organizationalunitcode="O1" organizationalunitdescription="Faculdade de Ciencias de Saude" branchid="118" />
+  <opuscollege.study id="38" organizationalunitid="18" />
+  <opuscollege.studygradetype id="58" studyid="38" gradetypecode="LIC" currentacademicyearid="44"  />
+
+  <opuscollege.organizationalunit id="19" organizationalunitcode="O2" organizationalunitdescription="A Department" branchid="118" />
+  <opuscollege.study id="39" organizationalunitid="19" />
+  <opuscollege.studygradetype id="59" studyid="39" gradetypecode="BSC" currentacademicyearid="44"  />
+
+  <opuscollege.person id="16" personcode="61" surnamefull="Juergens" firstnamesfull="Udo" />
+  <opuscollege.staffmember staffmemberid="1" staffmembercode="ju" personid="16" primaryunitofappointmentid="18" />
+  <!-- password: md5('test') = "098f6bcd4621d373cade4e832627b4f6" -->
+  <opuscollege.opususer id="11" personid="16" username="uju" pw="098f6bcd4621d373cade4e832627b4f6" lang="pt" preferredorganizationalunitid="18" failedloginattempts="0"/>
+  <opuscollege.opususerrole id="11" role="teacher" username="uju" validfrom="2012-01-05" organizationalunitid="18" active="Y"/>
+
+  <opuscollege.person id="17" personcode="62" surnamefull="Alexander" firstnamesfull="Peter" />
+  <opuscollege.staffmember staffmemberid="2" staffmembercode="ap" personid="17" primaryunitofappointmentid="19" />
+  <!-- password: md5('peter') = "51dc30ddc473d43a6011e9ebba6ca770" -->
+  <opuscollege.opususer id="12" personid="17" username="pal" pw="51dc30ddc473d43a6011e9ebba6ca770" lang="en" preferredorganizationalunitid="19" failedloginattempts="5"/>
+  <opuscollege.opususerrole id="12" role="teacher" username="pal" validfrom="2012-02-06" organizationalunitid="19" active="Y"/>
+
+  <opuscollege.person id="26" personcode="71" surnamefull="Hesse" firstnamesfull="Hermann" />
+  <opuscollege.student studentid="1" studentcode="hh" personid="26" />
+  <!-- password: md5('hhpass') = "d3b9323d79287d1813e281b5dd72ecc5" -->
+  <opuscollege.opususer id="21" personid="26" username="hhe" pw="d3b9323d79287d1813e281b5dd72ecc5" lang="en" preferredorganizationalunitid="18" failedloginattempts="0"/>
+  <opuscollege.opususerrole id="21" role="student" username="hhe" validfrom="2012-03-07" organizationalunitid="18" active="Y"/>
+
+  <opuscollege.role id="25" lang="en" active="Y" role="admin"   roledescription="Administrator" level="1"/>
+  <opuscollege.role id="40" lang="pt" active="Y" role="admin"   roledescription="Administrador" level="1"/>
+  <opuscollege.role id="29" lang="en" active="Y" role="teacher" roledescription="Lecturer"      level="6"/>
+  <opuscollege.role id="44" lang="pt" active="Y" role="teacher" roledescription="Professor"     level="6"/>
+  <opuscollege.role id="30" lang="en" active="Y" role="student" roledescription="Student"       level="7"/>
+  <opuscollege.role id="45" lang="pt" active="Y" role="student" roledescription="Estudante"     level="7"/>
+
+  <opuscollege.opusprivilege id="158" code="ADMINISTER_SYSTEM"                lang="en" active="Y" description="Perform changes on system configuration" />
+  <opuscollege.opusprivilege id="162" code="CREATE_ACADEMIC_YEARS"            lang="en" active="Y" description="Create academic years" />
+  <opuscollege.opusprivilege id="250" code="READ_STAFFMEMBERS"                lang="en" active="Y" description="View Staff members" />
+  <opuscollege.opusprivilege id="557" code="CREATE_RESULTS_ASSIGNED_SUBJECTS" lang="en" active="Y" description="Create subject results by assigned subject teachers" />
+  <opuscollege.opusprivilege id="159" code="ADMINISTER_SYSTEM"                lang="pt" active="Y" description="Administrador do sistema" />
+  <opuscollege.opusprivilege id="163" code="CREATE_ACADEMIC_YEARS"            lang="pt" active="Y" description="Criar anos academicos" />
+  <opuscollege.opusprivilege id="251" code="READ_STAFFMEMBERS"                lang="pt" active="Y" description="Ver funcionarios" />
+  <opuscollege.opusprivilege id="558" code="CREATE_RESULTS_ASSIGNED_SUBJECTS" lang="pt" active="Y" description="Criar resultados para cadeiras associados" />
+
+  <opuscollege.opusrole_privilege id="1103" privilegecode="ADMINISTER_SYSTEM"                role="admin"   active="Y"/>
+  <opuscollege.opusrole_privilege id="1105" privilegecode="CREATE_ACADEMIC_YEARS"            role="admin"   active="Y"/>
+  <opuscollege.opusrole_privilege id="1821" privilegecode="READ_STAFFMEMBERS"                role="admin"   active="Y"/>
+  <opuscollege.opusrole_privilege id="1822" privilegecode="CREATE_RESULTS_ASSIGNED_SUBJECTS" role="teacher" active="Y"/>
+  <opuscollege.opusrole_privilege id="1823" privilegecode="READ_STAFFMEMBERS"                role="teacher" active="Y"/>
+  <opuscollege.opusrole_privilege id="1824" privilegecode="READ_STAFFMEMBERS"                role="student" active="Y"/>
+
+
+</dataset>

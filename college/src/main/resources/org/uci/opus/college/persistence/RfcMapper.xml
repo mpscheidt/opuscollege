@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+  ***** BEGIN LICENSE BLOCK *****
+  Version: MPL 1.1/GPL 2.0/LGPL 2.1
+  
+  The contents of this file are subject to the Mozilla Public License Version
+  1.1 (the "License"); you may not use this file except in compliance with
+  the License. You may obtain a copy of the License at
+  http://www.mozilla.org/MPL/
+  
+  Software distributed under the License is distributed on an "AS IS" basis,
+  WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+  for the specific language governing rights and limitations under the
+  License.
+  
+  The Original Code is Opus-College college module code.
+  
+  The Initial Developer of the Original Code is
+  Center for Information Services, Radboud University Nijmegen.
+  Portions created by the Initial Developer are Copyright (C) 2008
+  the Initial Developer. All Rights Reserved.
+  
+  Contributor(s):
+    For Java files, see Javadoc @author tags.
+  
+  Alternatively, the contents of this file may be used under the terms of
+  either the GNU General Public License Version 2 or later (the "GPL"), or
+  the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+  in which case the provisions of the GPL or the LGPL are applicable instead
+  of those above. If you wish to allow use of your version of this file only
+  under the terms of either the GPL or the LGPL, and not to allow others to
+  use your version of this file under the terms of the MPL, indicate your
+  decision by deleting the provisions above and replace them with the notice
+  and other provisions required by the GPL or the LGPL. If you do not delete
+  the provisions above, a recipient may use your version of this file under
+  the terms of any one of the MPL, the GPL or the LGPL.
+  
+  ***** END LICENSE BLOCK *****
+--><!--Converted at: Mon Dec 08 20:25:40 CAT 2014-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.uci.opus.college.persistence.RfcMapper">
+
+    <!-- basic result map with 'full qualified' column names: <table_name>_<column_name> as needed to distinguish column names in selects with joins -->
+    <!-- For more info on  autoMapping="false" see the SubjectResultMapper -->
+    <resultMap id="BasicFQRfcResultMap" type="Rfc" autoMapping="false">
+        <id property="id" column="requestForChange_id"/>
+        <result property="requestingUserId" column="requestForChange_requestingUserId"/>
+        <result property="text" column="requestForChange_text"/>
+        <result property="comments" column="requestForChange_comments"/>
+        <result property="entityId" column="requestForChange_entityId"/>
+        <result property="entityType" column="requestForChange_entityType"/>
+        <result property="statusCode" column="requestForChange_statusCode"/>
+        <result property="expirationDate" column="requestForChange_expirationDate"/>
+        <result property="writeWho" column="requestForChange_writeWho"/>
+        <result property="writeWhen" column="requestForChange_writeWhen"/>
+    </resultMap>
+
+    <!-- find one rfc -->
+    <select id="findRfcs" parameterType="Rfc" resultType="Rfc"> 
+        select id AS id,
+               requestinguserid AS requestingUserId,
+               respondinguserid AS respondingUserId,
+               rfc AS text,
+               comments AS comments,
+               entityid AS entityId,
+               entitytypecode AS entityType,
+               rfcstatuscode AS statusCode,
+               expirationdate AS expirationDate,
+               active AS active,
+               writewho AS writeWho,
+               writewhen AS writeWhen
+        from   opuscollege.requestforchange
+        where  entityid = #{entityId}
+        and    entitytypecode = #{entityType}
+    </select>
+
+    <select id="findRfcsByParams" parameterType="map" resultType="Rfc"> 
+        select id AS id,
+               requestinguserid AS requestingUserId,
+               respondinguserid AS respondingUserId,
+               rfc AS text,
+               comments AS comments,
+               entityid AS entityId,
+               entitytypecode AS entityType,
+               rfcstatuscode AS statusCode,
+               expirationdate AS expirationDate,
+               active AS active,
+               writewho AS writeWho,
+               writewhen AS writeWhen
+        from   opuscollege.requestforchange
+        where  entityid = #{entityId}
+        and    entitytypecode = #{entityType}
+        <if test="latestRfc == &quot;Y&quot;">
+            and writewhen = (select max(rfc2.writewhen) 
+                             from opuscollege.requestforchange rfc2
+                             where rfc2.entityid = #{entityId}
+                             and   rfc2.entitytypecode = #{entityType}
+                             )
+        </if>
+    </select>
+
+    <insert id="addRfc" parameterType="Rfc"> 
+        insert into opuscollege.requestforchange
+        ( requestinguserid
+        , respondinguserid 
+        , rfc
+        , comments
+        , entityid
+        , entitytypecode
+        , rfcstatuscode
+        , expirationdate
+        , active
+        , writewho
+        , writewhen
+        ) values
+        ( #{requestingUserId}
+        , #{respondingUserId}
+        , #{text}
+        , #{comments}
+        , #{entityId}
+        , #{entityType}
+        , #{statusCode}
+        , #{expirationDate}
+        , #{active}
+        , #{writeWho}
+        , #{writeWhen}
+        )
+       <selectKey keyProperty="id" resultType="int">
+            SELECT currval('opuscollege.requestForChangeSeq')
+       </selectKey>
+    </insert>    
+    
+    <update id="updateRfc" parameterType="Rfc"> 
+        update opuscollege.requestforchange
+        set    requestinguserid  = #{requestingUserId}
+        ,      respondinguserid  = #{respondingUserId}
+        ,      rfc               = #{text}
+        ,      comments          = #{comments}
+        ,      entityid          = #{entityId}
+        ,      entitytypecode    = #{entityType}
+        ,      rfcstatuscode     = #{statusCode}
+        ,      expirationdate    = #{expirationDate}
+        ,      active            = #{active}
+        ,      writewho          = #{writeWho}
+        ,      writewhen         = #{writeWhen}
+        where  id                = #{id}
+    </update>    
+
+</mapper>

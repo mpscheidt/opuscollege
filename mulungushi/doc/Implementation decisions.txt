@@ -1,0 +1,6 @@
+Implementation decisions
+
+* 2014-08-21: Initial admission status = 2 (waiting for selection)
+Since there are no admission payments to be waited for, the initial status can be "waiting for selection".
+ 
+

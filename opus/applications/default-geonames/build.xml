@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+
+<project name="default_college_report_geonames" 
+        basedir="."
+        default="all">
+	
+	<!-- equal to "default_college_report plus geonames -->
+    <path id="modules">
+        <pathelement location="${basedir}/../../../college"/>
+        <pathelement location="${basedir}/../../../defaultcountry"/>
+        <pathelement location="${basedir}/../../../defaultuniversity"/>
+        <pathelement location="${basedir}/../../../report"/>
+        <pathelement location="${basedir}/../../../geonames"/>
+    </path>
+
+    <import file="${basedir}/../../common-build/application-targets.xml"/>
+
+</project>

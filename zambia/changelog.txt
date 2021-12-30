@@ -1,0 +1,5 @@
+Trunk
+- #778 For Zambia don't show the language selections - it distracts
+
+New in version 4.2
+- Calculate progress status: If <= maxFailedSubjects failed, always set to Proceed&Repeat, not to Repeat, even if failed course results are less than D+

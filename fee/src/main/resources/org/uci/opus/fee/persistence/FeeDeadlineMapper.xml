@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ***** BEGIN LICENSE BLOCK *****
+  Version: MPL 1.1/GPL 2.0/LGPL 2.1
+  
+  The contents of this file are subject to the Mozilla Public License Version
+  1.1 (the "License"); you may not use this file except in compliance with
+  the License. You may obtain a copy of the License at
+  http://www.mozilla.org/MPL/
+  
+  Software distributed under the License is distributed on an "AS IS" basis,
+  WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+  for the specific language governing rights and limitations under the
+  License.
+  
+  The Original Code is Opus-College college module code.
+  
+  The Initial Developer of the Original Code is
+  Center for Information Services, Radboud University Nijmegen.
+  Portions created by the Initial Developer are Copyright (C) 2008
+  the Initial Developer. All Rights Reserved.
+  
+  Contributor(s):
+    For Java files, see Javadoc @author tags.
+  
+  Alternatively, the contents of this file may be used under the terms of
+  either the GNU General Public License Version 2 or later (the "GPL"), or
+  the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+  in which case the provisions of the GPL or the LGPL are applicable instead
+  of those above. If you wish to allow use of your version of this file only
+  under the terms of either the GPL or the LGPL, and not to allow others to
+  use your version of this file under the terms of the MPL, indicate your
+  decision by deleting the provisions above and replace them with the notice
+  and other provisions required by the GPL or the LGPL. If you do not delete
+  the provisions above, a recipient may use your version of this file under
+  the terms of any one of the MPL, the GPL or the LGPL.
+  
+  ***** END LICENSE BLOCK *****
+--><!--Converted at: Mon Aug 24 16:12:41 CEST 2015-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.uci.opus.fee.persistence.FeeDeadlineMapper">
+
+    <insert id="transferStudyGradeTypeFeeDeadlines" parameterType="map">
+        insert into opuscollege.fee_feeDeadline
+                ( feeId
+                , deadline
+                , cardinalTimeUnitCode
+                , cardinalTimeUnitNumber
+                , active
+                ) select
+                  targetFee.id
+                , DATE(sourceFeeDeadline.deadline + interval '${interval}')
+                , sourceFeeDeadline.cardinaltimeunitcode
+                , sourceFeeDeadline.cardinaltimeunitnumber
+                , sourceFeeDeadline.active
+                from opuscollege.fee_feeDeadline sourceFeeDeadline
+                inner join opuscollege.fee_fee sourceFee
+                    on  sourceFeeDeadline.feeId = sourceFee.id
+                    and sourceFee.studygradetypeid = #{sourceStudyGradeTypeId}
+                inner join opuscollege.fee_fee targetFee
+                    on  targetFee.studygradetypeid = #{targetStudyGradeTypeId}
+                    and targetFee.branchid = sourceFee.branchid
+                    and targetFee.categorycode = sourceFee.categorycode
+                    and targetFee.feeunitcode = sourceFee.feeunitcode
+                    and targetFee.cardinaltimeunitnumber = sourceFee.cardinaltimeunitnumber
+                    and targetFee.studyIntensityCode = sourceFee.studyIntensityCode
+        
+                where not exists
+                ( select * from opuscollege.fee_feeDeadline targetFeeDeadline
+                  where targetFeeDeadline.feeId = targetFee.id
+                )
+        order by sourceFeeDeadline.id
+    </insert>
+
+    <insert id="transferAcademicYearFeeDeadlines" parameterType="map">
+        insert into opuscollege.fee_feeDeadline
+                ( feeId
+                , deadline
+                , cardinalTimeUnitCode
+                , cardinalTimeUnitNumber
+                , active
+                ) select
+                  targetFee.id
+                , DATE(sourceFeeDeadline.deadline + interval '${interval}')
+                , sourceFeeDeadline.cardinaltimeunitcode
+                , sourceFeeDeadline.cardinaltimeunitnumber
+                , sourceFeeDeadline.active
+                from opuscollege.fee_feeDeadline sourceFeeDeadline
+                inner join opuscollege.fee_fee sourceFee
+                    on  sourceFeeDeadline.feeId = sourceFee.id
+                    and sourceFee.academicYearId = #{sourceAcademicYearId}
+                inner join opuscollege.fee_fee targetFee
+                    on  targetFee.academicYearId = #{targetAcademicYearId}
+                    and targetFee.branchid = sourceFee.branchid
+                    and targetFee.categorycode = sourceFee.categorycode
+                    and targetFee.feeunitcode = sourceFee.feeunitcode
+                    and targetFee.cardinaltimeunitnumber = sourceFee.cardinaltimeunitnumber
+                    and targetFee.studyIntensityCode = sourceFee.studyIntensityCode
+        
+                where not exists
+                ( select * from opuscollege.fee_feeDeadline targetFeeDeadline
+                  where targetFeeDeadline.feeId = targetFee.id
+                )
+        order by sourceFeeDeadline.id
+    </insert>
+
+    <insert id="transferSubjectFeeDeadlines" parameterType="map">
+        insert into opuscollege.fee_feeDeadline
+                ( feeId
+                , deadline
+                , cardinalTimeUnitCode
+                , cardinalTimeUnitNumber
+                , active
+                ) select
+                  targetFee.id
+                , DATE(sourceFeeDeadline.deadline + interval '${interval}')
+                , sourceFeeDeadline.cardinaltimeunitcode
+                , sourceFeeDeadline.cardinaltimeunitnumber
+                , sourceFeeDeadline.active
+                from opuscollege.fee_feeDeadline sourceFeeDeadline
+                inner join opuscollege.fee_fee sourceFee
+                    on  sourceFeeDeadline.feeId = sourceFee.id
+                inner join opuscollege.subjectstudygradetype sourceSubjectStudyGradeType
+                    on  sourceFee.subjectstudygradetypeid = sourceSubjectStudyGradeType.id
+                inner join opuscollege.studygradetype sourceStudyGradeType
+                    on  sourceSubjectStudyGradeType.studygradetypeid = sourceStudyGradeType.id
+                    and sourceStudyGradeType.currentAcademicYearId = #{sourceAcademicYearId}
+                inner join opuscollege.subject sourceSubject
+                    on  sourceSubjectStudyGradeType.subjectid = sourceSubject.id
+                    and sourceSubject.currentAcademicYearId = #{sourceAcademicYearId}
+
+                inner join opuscollege.studygradetype targetstudygradetype
+                    on  targetstudygradetype.studyId = sourcestudygradetype.studyId
+                    and targetstudygradetype.gradeTypeCode = sourcestudygradetype.gradeTypeCode
+                    and targetstudygradetype.studyTimeCode = sourcestudygradetype.studyTimeCode
+                    and targetstudygradetype.studyFormCode = sourcestudygradetype.studyFormCode
+                    and targetstudygradetype.currentAcademicYearId = #{targetAcademicYearId}
+                inner join opuscollege.subject targetSubject
+                    on targetSubject.subjectcode = sourceSubject.subjectcode
+                    and targetSubject.subjectDescription = sourceSubject.subjectDescription
+                    and targetSubject.currentAcademicYearId = #{targetAcademicYearId}
+                inner join opuscollege.subjectstudygradetype targetSubjectStudyGradeType
+                    on  targetSubjectStudyGradeType.subjectid = targetSubject.id
+                    and targetSubjectStudyGradeType.studygradetypeid = targetStudyGradeType.id
+                inner join opuscollege.fee_fee targetFee
+                    on  targetFee.subjectstudygradetypeid = targetSubjectStudyGradeType.id
+
+                where not exists
+                ( select * from opuscollege.fee_feeDeadline targetFeeDeadline
+                  where targetFeeDeadline.feeId = targetFee.id
+                )
+        order by sourceFeeDeadline.id
+    </insert>
+
+    <insert id="transferSubjectBlockFeeDeadlines" parameterType="map">
+        insert into opuscollege.fee_feeDeadline
+                ( feeId
+                , deadline
+                , cardinalTimeUnitCode
+                , cardinalTimeUnitNumber
+                , active
+                ) select
+                  targetFee.id
+                , DATE(sourceFeeDeadline.deadline + interval '${interval}')
+                , sourceFeeDeadline.cardinaltimeunitcode
+                , sourceFeeDeadline.cardinaltimeunitnumber
+                , sourceFeeDeadline.active
+                from opuscollege.fee_feeDeadline sourceFeeDeadline
+                inner join opuscollege.fee_fee sourceFee
+                    on  sourceFeeDeadline.feeId = sourceFee.id
+                inner join opuscollege.subjectBlockStudyGradeType sourceSubjectBlockStudyGradeType
+                    on  sourceFee.subjectBlockStudyGradeTypeId = sourceSubjectBlockStudyGradeType.id
+                inner join opuscollege.studygradetype sourceStudyGradeType
+                    on  sourceSubjectBlockStudyGradeType.studygradetypeid = sourceStudyGradeType.id
+                    and sourceStudyGradeType.currentAcademicYearId = #{sourceAcademicYearId}
+                inner join opuscollege.subjectBlock sourceSubjectBlock
+                    on  sourceSubjectBlockStudyGradeType.subjectBlockid = sourceSubjectBlock.id
+                    and sourceSubjectBlock.currentAcademicYearId = #{sourceAcademicYearId}
+
+                inner join opuscollege.studygradetype targetstudygradetype
+                    on  targetstudygradetype.studyId = sourcestudygradetype.studyId
+                    and targetstudygradetype.gradeTypeCode = sourcestudygradetype.gradeTypeCode
+                    and targetstudygradetype.studyTimeCode = sourcestudygradetype.studyTimeCode
+                    and targetstudygradetype.studyFormCode = sourcestudygradetype.studyFormCode
+                    and targetstudygradetype.currentAcademicYearId = #{targetAcademicYearId}
+                inner join opuscollege.subjectBlock targetSubjectBlock
+                    on  targetSubjectBlock.subjectBlockcode = sourceSubjectBlock.subjectBlockCode
+                    and targetSubjectBlock.subjectBlockDescription = sourceSubjectBlock.subjectBlockDescription
+                    and targetSubjectBlock.currentAcademicYearId = #{targetAcademicYearId}
+                inner join opuscollege.subjectBlockstudygradetype targetSubjectBlockStudyGradeType
+                    on  targetSubjectBlockStudyGradeType.subjectBlockid = targetSubjectBlock.id
+                    and targetSubjectBlockStudyGradeType.studygradetypeid = targetStudyGradeType.id
+                inner join opuscollege.fee_fee targetFee
+                    on  targetFee.subjectBlockstudygradetypeid = targetSubjectBlockStudyGradeType.id
+        
+                where not exists
+                ( select * from opuscollege.fee_feeDeadline targetFeeDeadline
+                  where targetFeeDeadline.feeId = targetFee.id
+                )
+        order by sourceFeeDeadline.id
+    </insert>
+
+    <select id="findDeadlinesForFee" parameterType="int" resultType="FeeDeadline">
+        SELECT id
+            , feeid
+            , deadline
+            , active
+            , writewho
+            , cardinaltimeunitcode
+            , cardinaltimeunitnumber
+            FROM opuscollege.fee_feedeadline
+            WHERE feeId = #{value}
+            
+    </select>
+     
+    <select id="findFeeDeadline" parameterType="int" resultType="FeeDeadline">
+        SELECT *
+            FROM opuscollege.fee_feedeadline
+            WHERE id = #{id}
+    </select>
+
+    <select id="findFeeDeadlines" parameterType="map" resultType="FeeDeadline">
+        SELECT id
+            , feeid
+            , deadline
+            , active
+            , writewho
+            , cardinaltimeunitcode
+            , cardinaltimeunitnumber
+            
+            FROM opuscollege.fee_feedeadline
+            WHERE true
+
+            <if test="feeId != null">
+                AND feeId = #{feeId}
+            </if>
+            <if test="active != null">
+                AND active = #{active}
+            </if>
+            <if test="deadline != null">
+                AND deadline = #{deadline}
+            </if>
+            <if test="cardinalTimeUnitCode != null">
+                AND cardinalTimeUnitCode = #{cardinalTimeUnitCode}
+            </if>
+            <if test="cardinalTimeUnitNumber != null">
+                AND cardinalTimeUnitNumber = #{cardinalTimeUnitNumber}
+            </if>
+            
+    </select>
+
+    <select id="findFeeDeadlinesAsMaps" parameterType="map" resultType="java.util.HashMap">
+        
+        SELECT fee_FeeDeadline.id
+            , fee_FeeDeadline.feeid as "feeId"
+            , fee_FeeDeadline.deadline
+            , fee_FeeDeadline.active
+            , fee_FeeDeadline.writeWho AS "writeWho"
+            , fee_FeeDeadline.cardinaltimeunitcode AS "cardinalTimeUnitCode"
+            , fee_FeeDeadline.cardinaltimeunitnumber AS "cardinalTimeUnitNumber"
+            , CardinalTimeUnit.description AS "cardinalTimeUnit"
+            , CardinalTimeUnit.nrOfUnitsPerYear AS "nrOfUnitsPerYear"
+
+            FROM opuscollege.fee_FeeDeadline
+
+            LEFT OUTER JOIN opuscollege.CardinalTimeUnit ON (fee_FeeDeadline.cardinalTimeUnitCode = CardinalTimeUnit.code)
+            AND (CardinalTimeUnit.lang = #{lang})
+
+            WHERE true
+            
+            <if test="id != null">
+                AND id = #{id}
+            </if>
+            <if test="feeId != null">
+                AND feeId = #{feeId}
+            </if>
+            <if test="active != null">
+                AND active = #{active}
+            </if>
+            <if test="deadline != null">
+                AND deadline = #{deadline}
+            </if>
+            <if test="cardinalTimeUnitCode != null">
+                AND cardinalTimeUnitCode = #{cardinalTimeUnitCode}
+            </if>
+            <if test="cardinalTimeUnitNumber != null">
+                AND cardinalTimeUnitNumber = #{cardinalTimeUnitNumber}
+            </if>
+    </select>
+
+    <insert id="addFeeDeadline" parameterType="FeeDeadline">
+        INSERT INTO opuscollege.fee_feedeadline(
+              feeid
+            , deadline
+            , active
+            , writewho
+            , cardinaltimeunitcode
+            , cardinaltimeunitnumber
+            )
+        VALUES (
+             #{feeId}
+            , #{deadline}
+            , #{active}
+            , #{writeWho}
+            , #{cardinalTimeUnitCode}
+            , #{cardinalTimeUnitNumber}
+            )
+        
+        <selectKey keyProperty="id" resultType="int">
+            SELECT currVal('opuscollege.fee_feeDeadlineSeq')
+        </selectKey>     
+    </insert>
+     
+    <insert id="updateFeeDeadlineHistory" parameterType="map">
+        INSERT INTO audit.fee_feedeadline_hist(
+              operation
+            , id
+            , feeid
+            , deadline
+            , active
+            , writewho
+            , cardinaltimeunitcode
+            , cardinaltimeunitnumber
+            )
+        VALUES (
+              #{operation}
+            , #{FeeDeadline.id}
+            , #{FeeDeadline.feeId}
+            , #{FeeDeadline.deadline}
+            , #{FeeDeadline.active}
+            , #{FeeDeadline.writeWho}
+            , #{FeeDeadline.cardinalTimeUnitCode}
+            , #{FeeDeadline.cardinalTimeUnitNumber}
+            )
+        
+     </insert>
+     
+     <update id="updateFeeDeadline" parameterType="FeeDeadline">
+    
+        UPDATE opuscollege.fee_feedeadline
+        
+        SET id = #{id}
+        , feeid = #{feeId}
+        , deadline = #{deadline}
+        , active = #{active}
+        , writewho = #{writeWho}        
+        , cardinaltimeunitcode = #{cardinalTimeUnitCode}
+        , cardinaltimeunitnumber = #{cardinalTimeUnitNumber}
+        
+        WHERE id = #{id};
+     
+     </update>
+
+    <delete id="deleteFeeDeadline" parameterType="int">
+        DELETE FROM opuscollege.fee_feedeadline
+        WHERE id = #{id}
+    </delete>
+    
+    <select id="isRepeatedDeadline" parameterType="FeeDeadline" resultType="boolean">
+
+        SELECT COUNT(*) != 0 FROM opuscollege.fee_feedeadline 
+        
+        WHERE id != #{id}
+        
+        AND feeId = #{feeId}
+        AND cardinalTimeUnitCode = #{cardinalTimeUnitCode}
+        AND cardinalTimeUnitNumber =  #{cardinalTimeUnitNumber}     
+        
+    </select>
+
+</mapper>

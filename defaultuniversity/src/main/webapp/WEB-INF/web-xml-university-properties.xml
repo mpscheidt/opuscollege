@@ -1,0 +1,15 @@
+
+    <context-param>
+        <param-name>initMenuLogo</param-name>
+        <!-- The logo shown in the left upper corner of the menu
+         -->
+        <param-value>/images/logo_182x50.gif</param-value>
+    </context-param> 
+
+    <context-param>
+        <param-name>initFooterScreen</param-name>
+        <!-- The custom footer 
+             Note: need for absolute path because footer is imported from different locations -->
+        <param-value>/WEB-INF/views/defaultuniversity/footer.jsp</param-value>
+    </context-param> 
+

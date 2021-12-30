@@ -1,0 +1,14 @@
+Distribution issues for Opus
+
+- If commercial modules shall be included, these modules would have to be provided as jar files and declared as dependencies.
+  This would be possible with the current build structure, publishing modules to a local Maven repository.
+  It might be more convenient for 
+  
+- Possible commercial modules would be e.g. timetabling, advanced fee/scholarship modules
+
+- For a license using a virtual machine, it would be necessary to put a licensing infrastructure in place,
+  e.g. installing a license file with certain validity, or checking online at a license server.
+
+  
+
+

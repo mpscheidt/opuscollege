@@ -1,0 +1,2 @@
+String courseCode="BS 429";
+System.out.println(courseCode.substring(courseCode.length()-3,courseCode.length()-2))

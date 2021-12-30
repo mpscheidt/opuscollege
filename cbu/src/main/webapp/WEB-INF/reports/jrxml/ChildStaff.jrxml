@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
+<!-- 2015-06-30T18:26:10 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ChildStaff" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="925dddda-a890-4366-97d9-5b3c03415c42">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<style name="Row" mode="Transparent">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style backcolor="#E6DAC3"/>
+		</conditionalStyle>
+	</style>
+	<queryString language="SQL">
+		<![CDATA[SELECT
+     person."id" AS person_id,
+     person."personcode" AS person_personcode,
+     person."active" AS person_active,
+     person."surnamefull" AS person_surnamefull,
+     person."surnamealias" AS person_surnamealias,
+     person."firstnamesfull" AS person_firstnamesfull,
+     person."firstnamesalias" AS person_firstnamesalias,
+     person."nationalregistrationnumber" AS person_nationalregistrationnumber,
+     person."civiltitlecode" AS person_civiltitlecode,
+     person."gradetypecode" AS person_gradetypecode,
+     person."gendercode" AS person_gendercode,
+     person."birthdate" AS person_birthdate,
+     person."nationalitycode" AS person_nationalitycode,
+     person."placeofbirth" AS person_placeofbirth,
+     person."districtofbirthcode" AS person_districtofbirthcode,
+     person."provinceofbirthcode" AS person_provinceofbirthcode,
+     person."countryofbirthcode" AS person_countryofbirthcode,
+     person."cityoforigin" AS person_cityoforigin,
+     person."administrativepostoforigincode" AS person_administrativepostoforigincode,
+     person."districtoforigincode" AS person_districtoforigincode,
+     person."provinceoforigincode" AS person_provinceoforigincode,
+     person."countryoforigincode" AS person_countryoforigincode,
+     person."civilstatuscode" AS person_civilstatuscode,
+     person."housingoncampus" AS person_housingoncampus,
+     person."identificationtypecode" AS person_identificationtypecode,
+     person."identificationnumber" AS person_identificationnumber,
+     person."identificationplaceofissue" AS person_identificationplaceofissue,
+     person."identificationdateofissue" AS person_identificationdateofissue,
+     person."identificationdateofexpiration" AS person_identificationdateofexpiration,
+     person."professioncode" AS person_professioncode,
+     person."professiondescription" AS person_professiondescription,
+     person."languagefirstcode" AS person_languagefirstcode,
+     person."languagefirstmasteringlevelcode" AS person_languagefirstmasteringlevelcode,
+     person."languagesecondcode" AS person_languagesecondcode,
+     person."languagesecondmasteringlevelcode" AS person_languagesecondmasteringlevelcode,
+     person."languagethirdcode" AS person_languagethirdcode,
+     person."languagethirdmasteringlevelcode" AS person_languagethirdmasteringlevelcode,
+     person."contactpersonemergenciesname" AS person_contactpersonemergenciesname,
+     person."contactpersonemergenciestelephonenumber" AS person_contactpersonemergenciestelephonenumber,
+     person."bloodtypecode" AS person_bloodtypecode,
+     person."healthissues" AS person_healthissues,
+     person."photograph" AS person_photograph,
+     person."remarks" AS person_remarks,
+     person."registrationdate" AS person_registrationdate,
+     person."writewho" AS person_writewho,
+     person."writewhen" AS person_writewhen,
+     person."photographname" AS person_photographname,
+     person."photographmimetype" AS person_photographmimetype,
+     person."publichomepage" AS person_publichomepage,
+     person."socialnetworks" AS person_socialnetworks,
+     person."hobbies" AS person_hobbies,
+     person."motivation" AS person_motivation,
+     student."studentid" AS student_studentid,
+     student."studentcode" AS student_studentcode,
+     student."personid" AS student_personid,
+     student."dateofenrolment" AS student_dateofenrolment,
+     student."primarystudyid" AS student_primarystudyid,
+     student."statuscode" AS student_statuscode,
+     student."expellationdate" AS student_expellationdate,
+     student."reasonforexpellation" AS student_reasonforexpellation,
+     student."previousinstitutionid" AS student_previousinstitutionid,
+     student."previousinstitutionname" AS student_previousinstitutionname,
+     student."previousinstitutiondistrictcode" AS student_previousinstitutiondistrictcode,
+     student."previousinstitutionprovincecode" AS student_previousinstitutionprovincecode,
+     student."previousinstitutioncountrycode" AS student_previousinstitutioncountrycode,
+     student."previousinstitutiontypecode" AS student_previousinstitutiontypecode,
+     student."previousinstitutionfinalgradetypecode" AS student_previousinstitutionfinalgradetypecode,
+     student."previousinstitutionfinalmark" AS student_previousinstitutionfinalmark,
+     student."previousinstitutiondiplomaphotograph" AS student_previousinstitutiondiplomaphotograph,
+     student."scholarship" AS student_scholarship,
+     student."fatherfullname" AS student_fatherfullname,
+     student."fathereducationcode" AS student_fathereducationcode,
+     student."fatherprofessioncode" AS student_fatherprofessioncode,
+     student."fatherprofessiondescription" AS student_fatherprofessiondescription,
+     student."motherfullname" AS student_motherfullname,
+     student."mothereducationcode" AS student_mothereducationcode,
+     student."motherprofessioncode" AS student_motherprofessioncode,
+     student."motherprofessiondescription" AS student_motherprofessiondescription,
+     student."financialguardianfullname" AS student_financialguardianfullname,
+     student."financialguardianrelation" AS student_financialguardianrelation,
+     student."financialguardianprofession" AS student_financialguardianprofession,
+     student."writewho" AS student_writewho,
+     student."writewhen" AS student_writewhen,
+     student."expellationenddate" AS student_expellationenddate,
+     student."expellationtypecode" AS student_expellationtypecode,
+     student."previousinstitutiondiplomaphotographremarks" AS student_previousinstitutiondiplomaphotographremarks,
+     student."previousinstitutiondiplomaphotographname" AS student_previousinstitutiondiplomaphotographname,
+     student."previousinstitutiondiplomaphotographmimetype" AS student_previousinstitutiondiplomaphotographmimetype,
+     student."subscriptionrequirementsfulfilled" AS student_subscriptionrequirementsfulfilled,
+     student."secondarystudyid" AS student_secondarystudyid,
+     student."foreignstudent" AS student_foreignstudent,
+     student."nationalitygroupcode" AS student_nationalitygroupcode,
+     student."fathertelephone" AS student_fathertelephone,
+     student."mothertelephone" AS student_mothertelephone,
+     student."relativeofstaffmember" AS student_relativeofstaffmember,
+     student."relativestaffmemberid" AS student_relativestaffmemberid,
+     student."ruralareaorigin" AS student_ruralareaorigin,
+     person_A."id" AS person_A_id,
+     person_A."personcode" AS person_A_personcode,
+     person_A."active" AS person_A_active,
+     person_A."surnamefull" AS person_A_surnamefull,
+     person_A."surnamealias" AS person_A_surnamealias,
+     person_A."firstnamesfull" AS person_A_firstnamesfull,
+     person_A."firstnamesalias" AS person_A_firstnamesalias,
+     person_A."nationalregistrationnumber" AS person_A_nationalregistrationnumber,
+     person_A."civiltitlecode" AS person_A_civiltitlecode,
+     person_A."gradetypecode" AS person_A_gradetypecode,
+     person_A."gendercode" AS person_A_gendercode,
+     person_A."birthdate" AS person_A_birthdate,
+     person_A."nationalitycode" AS person_A_nationalitycode,
+     person_A."placeofbirth" AS person_A_placeofbirth,
+     person_A."districtofbirthcode" AS person_A_districtofbirthcode,
+     person_A."provinceofbirthcode" AS person_A_provinceofbirthcode,
+     person_A."countryofbirthcode" AS person_A_countryofbirthcode,
+     person_A."cityoforigin" AS person_A_cityoforigin,
+     person_A."administrativepostoforigincode" AS person_A_administrativepostoforigincode,
+     person_A."districtoforigincode" AS person_A_districtoforigincode,
+     person_A."provinceoforigincode" AS person_A_provinceoforigincode,
+     person_A."countryoforigincode" AS person_A_countryoforigincode,
+     person_A."civilstatuscode" AS person_A_civilstatuscode,
+     person_A."housingoncampus" AS person_A_housingoncampus,
+     person_A."identificationtypecode" AS person_A_identificationtypecode,
+     person_A."identificationnumber" AS person_A_identificationnumber,
+     person_A."identificationplaceofissue" AS person_A_identificationplaceofissue,
+     person_A."identificationdateofissue" AS person_A_identificationdateofissue,
+     person_A."identificationdateofexpiration" AS person_A_identificationdateofexpiration,
+     person_A."professioncode" AS person_A_professioncode,
+     person_A."professiondescription" AS person_A_professiondescription,
+     person_A."languagefirstcode" AS person_A_languagefirstcode,
+     person_A."languagefirstmasteringlevelcode" AS person_A_languagefirstmasteringlevelcode,
+     person_A."languagesecondcode" AS person_A_languagesecondcode,
+     person_A."languagesecondmasteringlevelcode" AS person_A_languagesecondmasteringlevelcode,
+     person_A."languagethirdcode" AS person_A_languagethirdcode,
+     person_A."languagethirdmasteringlevelcode" AS person_A_languagethirdmasteringlevelcode,
+     person_A."contactpersonemergenciesname" AS person_A_contactpersonemergenciesname,
+     person_A."contactpersonemergenciestelephonenumber" AS person_A_contactpersonemergenciestelephonenumber,
+     person_A."bloodtypecode" AS person_A_bloodtypecode,
+     person_A."healthissues" AS person_A_healthissues,
+     person_A."photograph" AS person_A_photograph,
+     person_A."remarks" AS person_A_remarks,
+     person_A."registrationdate" AS person_A_registrationdate,
+     person_A."writewho" AS person_A_writewho,
+     person_A."writewhen" AS person_A_writewhen,
+     person_A."photographname" AS person_A_photographname,
+     person_A."photographmimetype" AS person_A_photographmimetype,
+     person_A."publichomepage" AS person_A_publichomepage,
+     person_A."socialnetworks" AS person_A_socialnetworks,
+     person_A."hobbies" AS person_A_hobbies,
+     person_A."motivation" AS person_A_motivation,
+     staffmember."staffmemberid" AS staffmember_staffmemberid,
+     staffmember."staffmembercode" AS staffmember_staffmembercode,
+     staffmember."personid" AS staffmember_personid,
+     staffmember."dateofappointment" AS staffmember_dateofappointment,
+     staffmember."appointmenttypecode" AS staffmember_appointmenttypecode,
+     staffmember."stafftypecode" AS staffmember_stafftypecode,
+     staffmember."primaryunitofappointmentid" AS staffmember_primaryunitofappointmentid,
+     staffmember."educationtypecode" AS staffmember_educationtypecode,
+     staffmember."writewho" AS staffmember_writewho,
+     staffmember."writewhen" AS staffmember_writewhen,
+     staffmember."startworkday" AS staffmember_startworkday,
+     staffmember."endworkday" AS staffmember_endworkday,
+     staffmember."teachingdaypartcode" AS staffmember_teachingdaypartcode,
+     staffmember."supervisingdaypartcode" AS staffmember_supervisingdaypartcode
+FROM
+     "opuscollege"."person" person INNER JOIN "opuscollege"."student" student ON person."id" = student."personid"
+     LEFT OUTER JOIN "opuscollege"."staffmember" staffmember ON student."relativestaffmemberid" = staffmember."staffmemberid"
+     INNER JOIN "opuscollege"."person" person_A ON staffmember."personid" = person_A."id"]]>
+	</queryString>
+	<field name="person_surnamefull" class="java.lang.String"/>
+	<field name="person_firstnamesfull" class="java.lang.String"/>
+	<field name="person_firstnamesalias" class="java.lang.String"/>
+	<field name="person_a_surnamefull" class="java.lang.String"/>
+	<field name="person_a_firstnamesfull" class="java.lang.String"/>
+	<field name="person_a_firstnamesalias" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="136" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="0" width="164" height="126" uuid="f87ba0aa-b2fb-483a-9b5c-52d616074a5a"/>
+				<imageExpression><![CDATA["C:\\Users\\pastor.hampande\\Downloads\\logo.gif"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement style="Title" x="169" y="0" width="263" height="62" uuid="a0f967cd-6967-4455-9f46-2c3a4eb8f780"/>
+				<textElement verticalAlignment="Middle">
+					<font size="22" isBold="true" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[Child of Staff Member]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="16" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="15" width="555" height="1" uuid="a2e21783-b4e5-40fb-9406-fdaf9393dad0"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement style="Column header" x="0" y="0" width="92" height="15" forecolor="#736343" uuid="c8a9e344-3535-4253-a1b2-d307042d0bb3"/>
+				<text><![CDATA[person_surnamefull]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="92" y="0" width="92" height="15" forecolor="#736343" uuid="b3fcec5a-0de5-4066-95dd-c3cd2519a67a"/>
+				<text><![CDATA[person_firstnamesfull]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="184" y="0" width="92" height="15" forecolor="#736343" uuid="a1eee12b-9dfc-4800-bb55-3df55ec8952d"/>
+				<text><![CDATA[person_firstnamesalias]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="276" y="0" width="92" height="15" forecolor="#736343" uuid="17fffcc5-22bb-48e2-9c9c-e3b4c519e8eb"/>
+				<text><![CDATA[person_a_surnamefull]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="368" y="0" width="92" height="15" forecolor="#736343" uuid="f32a29fa-db1c-41a4-90d3-2a0e326156f8"/>
+				<text><![CDATA[person_a_firstnamesfull]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="460" y="0" width="92" height="15" forecolor="#736343" uuid="2e70bf96-2f26-4f5a-80d1-bf77b4b6785b"/>
+				<text><![CDATA[person_a_firstnamesalias]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<frame>
+				<reportElement style="Row" mode="Opaque" x="0" y="0" width="555" height="15" uuid="f542227a-e988-4f63-b920-4fac74a15541"/>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="0" y="0" width="92" height="15" uuid="d2be7f13-1e87-4b14-99cc-6a305c1d24e7"/>
+					<textFieldExpression><![CDATA[$F{person_surnamefull}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="92" y="0" width="92" height="15" uuid="3896c879-5362-44be-a5a9-6bc48e709dff"/>
+					<textFieldExpression><![CDATA[$F{person_firstnamesfull}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="184" y="0" width="92" height="15" uuid="6fe0c6e8-eb38-4532-aebe-d3f4e23ca90c"/>
+					<textFieldExpression><![CDATA[$F{person_firstnamesalias}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="276" y="0" width="92" height="15" uuid="ae7ef5a3-2045-4e56-b6ab-961944d7e010"/>
+					<textFieldExpression><![CDATA[$F{person_a_surnamefull}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="368" y="0" width="92" height="15" uuid="a041b948-8313-4303-8511-3898106ede10"/>
+					<textFieldExpression><![CDATA[$F{person_a_firstnamesfull}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="460" y="0" width="92" height="15" uuid="70bcd8d3-d475-48f1-a8e4-425c50808ecf"/>
+					<textFieldExpression><![CDATA[$F{person_a_firstnamesalias}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1" uuid="d7c47294-4dc9-4588-8cc9-c76dd7bc519a"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="25" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="-21" y="1" width="597" height="24" forecolor="#D0B48E" backcolor="#F2EBDF" uuid="1ce6a851-ce91-4c93-91d3-62ca3f0c97d0"/>
+				<textField evaluationTime="Report">
+					<reportElement style="Column header" x="533" y="0" width="40" height="20" forecolor="#736343" uuid="73751379-1301-4bdf-9072-fe290e2677f4"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Column header" x="453" y="0" width="80" height="20" forecolor="#736343" uuid="7c63425e-0326-40bf-a97f-e4a7b4dcead7"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+				</textField>
+				<textField pattern="EEEEE dd MMMMM yyyy">
+					<reportElement style="Column header" x="22" y="1" width="197" height="20" forecolor="#736343" uuid="82b0967e-3387-457e-9026-2b9b0715bc38"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

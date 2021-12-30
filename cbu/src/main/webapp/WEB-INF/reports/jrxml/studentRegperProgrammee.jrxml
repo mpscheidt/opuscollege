@@ -1,0 +1,428 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="student" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+    <!--
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="182"/>
+	<property name="ireport.y" value="118"/>
+	<parameter name="school" class="java.lang.String">
+		<parameterDescription><![CDATA[i.e Type in the School of your choice]]></parameterDescription>
+		<defaultValueExpression><![CDATA["School of Natural Resources"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="programme" class="java.lang.String">
+		<parameterDescription><![CDATA[i.e Type the programme e.g "Real Estate - Bachelor of science"]]></parameterDescription>
+		<defaultValueExpression><![CDATA["Agro Forestry - Bachelor of science"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="YearStudy" class="java.lang.Integer">
+		<parameterDescription><![CDATA[i.e Type in the Year of study]]></parameterDescription>
+		<defaultValueExpression><![CDATA[1]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT DISTINCT
+     student."studentid" AS student_studentid,
+     student."studentcode" AS student_studentcode,
+     student."dateofenrolment" AS student_dateofenrolment,
+     student."statuscode" AS student_statuscode,
+     person."id" AS person_id,
+     person."personcode" AS person_personcode,
+     person."active" AS person_active,
+     person."surnamefull" AS person_surnamefull,
+     person."surnamealias" AS person_surnamealias,
+     person."firstnamesfull" AS person_firstnamesfull,
+     person."firstnamesalias" AS person_firstnamesalias,
+     person."nationalregistrationnumber" AS person_nationalregistrationnumber,
+     person."civiltitlecode" AS person_civiltitlecode,
+     person."gradetypecode" AS person_gradetypecode,
+     person."gendercode" AS person_gendercode,
+     person."birthdate" AS person_birthdate,
+     person."nationalitycode" AS person_nationalitycode,
+     person."placeofbirth" AS person_placeofbirth,
+     person."districtofbirthcode" AS person_districtofbirthcode,
+     person."provinceofbirthcode" AS person_provinceofbirthcode,
+     person."countryofbirthcode" AS person_countryofbirthcode,
+     person."cityoforigin" AS person_cityoforigin,
+     person."districtoforigincode" AS person_districtoforigincode,
+     person."provinceoforigincode" AS person_provinceoforigincode,
+     person."countryoforigincode" AS person_countryoforigincode,
+     person."civilstatuscode" AS person_civilstatuscode,
+     person."housingoncampus" AS person_housingoncampus,
+     person."registrationdate" AS person_registrationdate,
+     gender."code" AS gender_code,
+     gender."description" AS gender_description,
+     studyplan."studentid" AS studyplan_studentid,
+     studyplan."active" AS studyplan_active,
+     studyplan."studyplanstatuscode" AS studyplan_studyplanstatuscode,
+     studyplan."studyid" AS studyplan_studyid,
+     studyplan."studyplandescription" AS studyplan_studyplandescription,
+     study."id" AS study_id,
+     organizationalunit."organizationalunitcode" AS organizationalunit_organizationalunitcode,
+     organizationalunit."branchid" AS organizationalunit_branchid,
+     organizationalunit."id" AS organizationalunit_id,
+     study."organizationalunitid" AS study_organizationalunitid,
+     branch."id" AS branch_id,
+     branch."branchcode" AS branch_branchcode,
+     branch."institutionid" AS branch_institutionid,
+     branch."branchdescription" AS branch_branchdescription,
+     studyplancardinaltimeunit."studyplanid" AS studyplancardinaltimeunit_studyplanid,
+     studyplancardinaltimeunit."cardinaltimeunitnumber" AS studyplancardinaltimeunit_cardinaltimeunitnumber,
+     studygradetype."currentacademicyearid" AS studygradetype_currentacademicyearid,
+     academicyear."id" AS academicyear_id,
+     academicyear."description" AS academicyear_description,
+     organizationalunit."organizationalunitdescription" AS organizationalunit_organizationalunitdescription
+FROM
+     "opuscollege"."person" person INNER JOIN "opuscollege"."student" student ON person."id" = student."personid"
+     INNER JOIN "opuscollege"."gender" gender ON person."gendercode" = gender."code"
+     INNER JOIN "opuscollege"."studyplan" studyplan ON student."studentid" = studyplan."studentid"
+     INNER JOIN "opuscollege"."study" study ON studyplan."studyid" = study."id"
+     INNER JOIN "opuscollege"."studyplancardinaltimeunit" studyplancardinaltimeunit ON studyplan."id" = studyplancardinaltimeunit."studyplanid"
+     INNER JOIN "opuscollege"."studygradetype" studygradetype ON studyplancardinaltimeunit."studygradetypeid" = studygradetype."id"
+     INNER JOIN "opuscollege"."academicyear" academicyear ON studygradetype."currentacademicyearid" = academicyear."id"
+     INNER JOIN "opuscollege"."organizationalunit" organizationalunit ON study."organizationalunitid" = organizationalunit."id"
+     AND study."organizationalunitid" = organizationalunit."id"
+     INNER JOIN "opuscollege"."branch" branch ON organizationalunit."branchid" = branch."id"
+     AND organizationalunit."branchid" = branch."id"
+     AND organizationalunit."branchid" = branch."id"
+     AND branch."id" = organizationalunit."branchid"
+WHERE
+     academicyear."id" = 195
+ AND branch."branchdescription" = $P{school}
+ AND studyplancardinaltimeunit."cardinaltimeunitnumber" = $P{YearStudy}
+ AND studyplan."studyplandescription" = $P{programme}
+ORDER BY
+     branch."branchdescription" ASC,
+     person."surnamefull" ASC,
+     organizationalunit."organizationalunitdescription" ASC,
+     studyplancardinaltimeunit."cardinaltimeunitnumber" ASC]]>
+	</queryString>
+	<field name="student_studentid" class="java.lang.Integer"/>
+	<field name="student_studentcode" class="java.lang.String"/>
+	<field name="student_dateofenrolment" class="java.sql.Date"/>
+	<field name="student_statuscode" class="java.lang.String"/>
+	<field name="person_id" class="java.lang.Integer"/>
+	<field name="person_personcode" class="java.lang.String"/>
+	<field name="person_active" class="java.lang.String"/>
+	<field name="person_surnamefull" class="java.lang.String"/>
+	<field name="person_surnamealias" class="java.lang.String"/>
+	<field name="person_firstnamesfull" class="java.lang.String"/>
+	<field name="person_firstnamesalias" class="java.lang.String"/>
+	<field name="person_nationalregistrationnumber" class="java.lang.String"/>
+	<field name="person_civiltitlecode" class="java.lang.String"/>
+	<field name="person_gradetypecode" class="java.lang.String"/>
+	<field name="person_gendercode" class="java.lang.String"/>
+	<field name="person_birthdate" class="java.sql.Date"/>
+	<field name="person_nationalitycode" class="java.lang.String"/>
+	<field name="person_placeofbirth" class="java.lang.String"/>
+	<field name="person_districtofbirthcode" class="java.lang.String"/>
+	<field name="person_provinceofbirthcode" class="java.lang.String"/>
+	<field name="person_countryofbirthcode" class="java.lang.String"/>
+	<field name="person_cityoforigin" class="java.lang.String"/>
+	<field name="person_districtoforigincode" class="java.lang.String"/>
+	<field name="person_provinceoforigincode" class="java.lang.String"/>
+	<field name="person_countryoforigincode" class="java.lang.String"/>
+	<field name="person_civilstatuscode" class="java.lang.String"/>
+	<field name="person_housingoncampus" class="java.lang.String"/>
+	<field name="person_registrationdate" class="java.sql.Date"/>
+	<field name="gender_code" class="java.lang.String"/>
+	<field name="gender_description" class="java.lang.String"/>
+	<field name="studyplan_studentid" class="java.lang.Integer"/>
+	<field name="studyplan_active" class="java.lang.String"/>
+	<field name="studyplan_studyplanstatuscode" class="java.lang.String"/>
+	<field name="studyplan_studyid" class="java.lang.Integer"/>
+	<field name="studyplan_studyplandescription" class="java.lang.String"/>
+	<field name="study_id" class="java.lang.Integer"/>
+	<field name="organizationalunit_organizationalunitcode" class="java.lang.String"/>
+	<field name="organizationalunit_branchid" class="java.lang.Integer"/>
+	<field name="organizationalunit_id" class="java.lang.Integer"/>
+	<field name="study_organizationalunitid" class="java.lang.Integer"/>
+	<field name="branch_id" class="java.lang.Integer"/>
+	<field name="branch_branchcode" class="java.lang.String"/>
+	<field name="branch_institutionid" class="java.lang.Integer"/>
+	<field name="branch_branchdescription" class="java.lang.String"/>
+	<field name="studyplancardinaltimeunit_studyplanid" class="java.lang.Integer"/>
+	<field name="studyplancardinaltimeunit_cardinaltimeunitnumber" class="java.lang.Integer"/>
+	<field name="studygradetype_currentacademicyearid" class="java.lang.Integer"/>
+	<field name="academicyear_id" class="java.lang.Integer"/>
+	<field name="academicyear_description" class="java.lang.String"/>
+	<field name="organizationalunit_organizationalunitdescription" class="java.lang.String"/>
+	<variable name="male_count" class="java.lang.Long" resetType="Group" resetGroup="programme">
+		<variableExpression><![CDATA[$F{gender_description}.toLowerCase().equals( "male" )?$V{male_count}+1 :$V{male_count}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="female_count" class="java.lang.Long" resetType="Group" resetGroup="programme">
+		<variableExpression><![CDATA[$F{gender_description}.toLowerCase().equals( "female" )?$V{female_count}+1 :$V{female_count}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="total_num" class="java.lang.Integer">
+		<variableExpression><![CDATA[$V{female_count}+$V{male_count}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<group name="school">
+		<groupExpression><![CDATA[$F{branch_branchdescription}]]></groupExpression>
+	</group>
+	<group name="sch">
+		<groupExpression><![CDATA[$F{branch_branchdescription}]]></groupExpression>
+		<groupHeader>
+			<band height="54">
+				<textField>
+					<reportElement x="276" y="16" width="506" height="26" forecolor="#3366FF"/>
+					<textElement>
+						<font fontName="Arial Black" size="16" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{branch_branchdescription}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="52"/>
+		</groupFooter>
+	</group>
+	<group name="programme">
+		<groupExpression><![CDATA[$F{studyplan_studyplandescription}]]></groupExpression>
+		<groupHeader>
+			<band height="64">
+				<textField>
+					<reportElement x="288" y="0" width="597" height="32"/>
+					<textElement>
+						<font fontName="Arial Black" size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{studyplan_studyplandescription}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="287" y="34" width="471" height="30" forecolor="#0033CC"/>
+					<textElement>
+						<font fontName="Arial Black" size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{academicyear_description}+"   " +"ACADEMIC   YEAR"]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="52">
+				<staticText>
+					<reportElement x="7" y="0" width="127" height="20" forecolor="#0033FF"/>
+					<textElement>
+						<font fontName="Arial Black" isBold="true"/>
+					</textElement>
+					<text><![CDATA[No of Females :]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="431" y="0" width="121" height="20" forecolor="#0033FF"/>
+					<textElement>
+						<font fontName="Arial Black" isBold="true"/>
+					</textElement>
+					<text><![CDATA[No of Males :]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="562" y="0" width="100" height="20"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$V{male_count}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="143" y="0" width="100" height="20"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$V{female_count}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="7" y="30" width="182" height="20" forecolor="#0033FF"/>
+					<textElement>
+						<font fontName="Arial Black" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Total number of Students :]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="189" y="30" width="100" height="20"/>
+					<textElement>
+						<font fontName="Arial Black"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{total_num}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="YOS" minHeightToStartNewPage="50">
+		<groupExpression><![CDATA[$F{studyplancardinaltimeunit_cardinaltimeunitnumber}]]></groupExpression>
+		<groupHeader>
+			<band height="75">
+				<staticText>
+					<reportElement x="255" y="53" width="100" height="20" forecolor="#0033FF"/>
+					<textElement>
+						<font fontName="Arial Black" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Family_Name]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="381" y="53" width="131" height="20" forecolor="#0033FF"/>
+					<textElement>
+						<font fontName="Arial Black" isBold="true"/>
+					</textElement>
+					<text><![CDATA[First_name]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="526" y="53" width="128" height="20" forecolor="#0033FF"/>
+					<textElement>
+						<font fontName="Arial Black" isBold="true"/>
+					</textElement>
+					<text><![CDATA[NRC_No]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="671" y="50" width="131" height="20" forecolor="#0033FF"/>
+					<textElement>
+						<font fontName="Arial Black" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Gender]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="315" y="0" width="167" height="32" forecolor="#0033FF"/>
+					<textElement>
+						<font fontName="Arial Black" size="14" isBold="true"/>
+					</textElement>
+					<text><![CDATA[YEAR OF STUDY   :]]></text>
+				</staticText>
+				<line>
+					<reportElement x="7" y="32" width="802" height="4"/>
+				</line>
+				<textField>
+					<reportElement x="494" y="0" width="345" height="32"/>
+					<textElement>
+						<font fontName="Arial Black" size="14" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{studyplancardinaltimeunit_cardinaltimeunitnumber}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="7" y="50" width="44" height="20" forecolor="#0033FF"/>
+					<textElement>
+						<font fontName="Arial Black" isBold="true"/>
+					</textElement>
+					<text><![CDATA[No.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="114" y="53" width="99" height="20" forecolor="#0033FF"/>
+					<textElement>
+						<font fontName="Arial Black" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Studentnumber]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<image>
+				<reportElement x="382" y="-11" width="58" height="58"/>
+			</image>
+			<staticText>
+				<reportElement x="243" y="47" width="337" height="32" forecolor="#0033FF"/>
+				<textElement textAlignment="Justified">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[THE COPPERBELT UNIVERSITY]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="42" splitType="Stretch">
+			<staticText>
+				<reportElement x="271" y="4" width="255" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Aharoni" size="14"/>
+				</textElement>
+				<text><![CDATA[STUDENTS PER PROGRAMME]]></text>
+			</staticText>
+			<line>
+				<reportElement x="7" y="24" width="802" height="4"/>
+			</line>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="27" splitType="Stretch">
+			<textField>
+				<reportElement x="114" y="0" width="89" height="20"/>
+				<textElement>
+					<font fontName="Arial Narrow" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{student_studentcode}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="255" y="0" width="100" height="20"/>
+				<textElement>
+					<font fontName="Arial Narrow" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{person_surnamefull}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="381" y="0" width="131" height="20"/>
+				<textElement>
+					<font fontName="Arial Narrow" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{person_firstnamesfull}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="7" y="0" width="44" height="20"/>
+				<textElement>
+					<font fontName="Arial Narrow" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}+"."]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="657" y="0" width="144" height="20"/>
+				<textElement>
+					<font fontName="Arial Narrow" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{gender_description}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="526" y="0" width="123" height="20"/>
+				<textElement>
+					<font fontName="Arial Narrow" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{person_nationalregistrationnumber}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="50">
+			<textField>
+				<reportElement x="88" y="0" width="324" height="20"/>
+				<textElement>
+					<font fontName="Arial Black" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{studyplan_studyplandescription}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="0" width="84" height="20" forecolor="#0033FF"/>
+				<textElement>
+					<font fontName="Arial Black" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Programme:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="591" y="0" width="107" height="20" forecolor="#0033FF"/>
+				<textElement>
+					<font fontName="Arial Black" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Year of Study  :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="703" y="0" width="47" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{studyplancardinaltimeunit_cardinaltimeunitnumber}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="412" y="0" width="100" height="20"/>
+				<textElement>
+					<font fontName="Arial Black"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="6" splitType="Stretch"/>
+	</summary>
+	-->
+</jasperReport>

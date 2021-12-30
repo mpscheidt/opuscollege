@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ***** BEGIN LICENSE BLOCK *****
+  Version: MPL 1.1/GPL 2.0/LGPL 2.1
+  
+  The contents of this file are subject to the Mozilla Public License Version
+  1.1 (the "License"); you may not use this file except in compliance with
+  the License. You may obtain a copy of the License at
+  http://www.mozilla.org/MPL/
+  
+  Software distributed under the License is distributed on an "AS IS" basis,
+  WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+  for the specific language governing rights and limitations under the
+  License.
+  
+  The Original Code is Opus-College college module code.
+  
+  The Initial Developer of the Original Code is
+  Center for Information Services, Radboud University Nijmegen.
+  Portions created by the Initial Developer are Copyright (C) 2008
+  the Initial Developer. All Rights Reserved.
+  
+  Contributor(s):
+    For Java files, see Javadoc @author tags.
+  
+  Alternatively, the contents of this file may be used under the terms of
+  either the GNU General Public License Version 2 or later (the "GPL"), or
+  the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+  in which case the provisions of the GPL or the LGPL are applicable instead
+  of those above. If you wish to allow use of your version of this file only
+  under the terms of either the GPL or the LGPL, and not to allow others to
+  use your version of this file under the terms of the MPL, indicate your
+  decision by deleting the provisions above and replace them with the notice
+  and other provisions required by the GPL or the LGPL. If you do not delete
+  the provisions above, a recipient may use your version of this file under
+  the terms of any one of the MPL, the GPL or the LGPL.
+  
+  ***** END LICENSE BLOCK *****
+-->
+
+<dataset>
+  <opuscollege.subject id="989" subjectcode="S01711200990347" subjectdescription="Teste de Progresso 1&#186; ano" subjectcontentdescription="" primarystudyid="12" active="Y" targetgroupcode="" freechoiceoption="N" creditamount="4" hourstoinvest="40" frequencycode="0" studytimecode="0" examtypecode="" maximumparticipants="0" brspassingsubject="0" registrationdate="2009-11-17" writewho="opuscollege" writewhen="2009-11-17 09:03:47.973629" currentacademicyearid="0" resultType="1" />
+  <opuscollege.test id="7" testcode="T9891705201055307" testdescription="2nd level test" examinationId="20" examinationtypecode="1" numberofattempts="2" weighingfactor="33" minimummark="3" maximummark="6" brspassingtest="abc" active="Y" writewho="opuscollege" writewhen="2010-05-17 05:54:25.913193"/>
+  <opuscollege.studyplandetail id="8541" studyplanid="6922" subjectid="0" subjectblockid="0" active="Y" studyplancardinaltimeunitid="19" studygradetypeid="77" writewho="opuscollege" writewhen="2010-03-16 03:10:18.050872" />
+  <opuscollege.testresult />
+  <audit.testresult_hist operation="I" writewho="insuser" id="" mark="12.99" writewhen="" testid="7" examinationid="20" studyplandetailid="8541" testresultdate="2010-05-24" attemptnr="1" passed="Y" staffmemberid="19" active="Y" testresultcommentid="" examinationresultid="0" />
+  <audit.testresult_hist operation="U" writewho="upduser" id="" mark="15.03" writewhen="" testid="7" examinationid="20" studyplandetailid="8541" testresultdate="2010-05-24" attemptnr="1" passed="Y" staffmemberid="19" active="Y" testresultcommentid="" examinationresultid="0" />
+  <audit.testresult_hist operation="D" writewho="deluser" id="" mark="15.03" writewhen="" testid="7" examinationid="20" studyplandetailid="8541" testresultdate="2010-05-24" attemptnr="1" passed="Y" staffmemberid="19" active="Y" testresultcommentid="" examinationresultid="0" />
+</dataset>

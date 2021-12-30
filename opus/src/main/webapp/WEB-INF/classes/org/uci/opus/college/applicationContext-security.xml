@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ***** BEGIN LICENSE BLOCK *****
+  Version: MPL 1.1/GPL 2.0/LGPL 2.1
+  
+  The contents of this file are subject to the Mozilla Public License Version
+  1.1 (the "License"); you may not use this file except in compliance with
+  the License. You may obtain a copy of the License at
+  http://www.mozilla.org/MPL/
+  
+  Software distributed under the License is distributed on an "AS IS" basis,
+  WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+  for the specific language governing rights and limitations under the
+  License.
+  
+  The Original Code is Opus-College college module code.
+  
+  The Initial Developer of the Original Code is
+  Center for Information Services, Radboud University Nijmegen.
+  Portions created by the Initial Developer are Copyright (C) 2008
+  the Initial Developer. All Rights Reserved.
+  
+  Contributor(s):
+    For Java files, see Javadoc @author tags.
+  
+  Alternatively, the contents of this file may be used under the terms of
+  either the GNU General Public License Version 2 or later (the "GPL"), or
+  the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+  in which case the provisions of the GPL or the LGPL are applicable instead
+  of those above. If you wish to allow use of your version of this file only
+  under the terms of either the GPL or the LGPL, and not to allow others to
+  use your version of this file under the terms of the MPL, indicate your
+  decision by deleting the provisions above and replace them with the notice
+  and other provisions required by the GPL or the LGPL. If you do not delete
+  the provisions above, a recipient may use your version of this file under
+  the terms of any one of the MPL, the GPL or the LGPL.
+  
+  ***** END LICENSE BLOCK *****
+-->
+
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+    xmlns:beans="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+                        http://www.springframework.org/schema/beans/spring-beans.xsd
+                        http://www.springframework.org/schema/security
+                        http://www.springframework.org/schema/security/spring-security.xsd">	
+
+    <!-- The application event listener needs to be in the "normal" application context, not web app context -->
+    <beans:bean class="org.uci.opus.college.security.LoginFailureEventListener"/>
+
+    <beans:bean id="authenticationFailureHandler"
+        class="org.springframework.security.web.authentication.ExceptionMappingAuthenticationFailureHandler">
+        <beans:property name="exceptionMappings">
+            <beans:props>
+                <beans:prop key="org.springframework.security.authentication.BadCredentialsException">/login?loginError=badCredentials</beans:prop>
+                <beans:prop key="org.springframework.security.authentication.CredentialsExpiredException">/login?loginError=credentialsExpired</beans:prop>
+                <beans:prop key="org.springframework.security.authentication.LockedException">/login?loginError=accountLocked</beans:prop>
+                <beans:prop key="org.springframework.security.authentication.DisabledException">/login?loginError=accountDisabled</beans:prop>
+            </beans:props>
+        </beans:property>
+    </beans:bean>
+
+    <beans:bean class="org.uci.opus.college.security.DefaultRolesPrefixPostProcessor"/>
+
+    <http use-expressions="true" auto-config="false">
+
+        <!-- Enabling Cross Site Request Forgery (CSRF) protection would require adding a csrf token to every form submission,
+             which is done automatically for <form:form>s, but not for the <form>s where it has to be added manually 
+             CSRF is enabled by default in Spring Security 4.0 -->
+        <csrf disabled="true"/>
+
+        <intercept-url pattern="/login*" access="permitAll"/>
+        <intercept-url pattern="/register*" access="permitAll"/>
+        <intercept-url pattern="/sessionExpired*" access="permitAll"/>
+        <intercept-url pattern="/college/student/personal.view*" access="hasAnyRole('UPDATE_STUDENTS', 'READ_STUDENTS') or (principal.personId == @studentManager.findPersonId(request.getParameter('studentId')))" />
+        <intercept-url pattern="/college/student-opususer.view*" access="hasAnyRole('UPDATE_STUDENTS', 'READ_STUDENTS') or (principal.personId == @studentManager.findPersonId(request.getParameter('studentId')))" />
+        <intercept-url pattern="/college/student/subscription.view*" access="hasAnyRole('UPDATE_STUDENTS', 'READ_STUDENTS') or (principal.personId == @studentManager.findPersonId(request.getParameter('studentId')))" />
+        <intercept-url pattern="/college/student-absences.view*" access="hasAnyRole('UPDATE_STUDENTS', 'READ_STUDENTS') or (principal.personId == @studentManager.findPersonId(request.getParameter('studentId')))" />
+        <intercept-url pattern="/college/student-addresses.view*" access="hasAnyRole('UPDATE_STUDENTS', 'READ_STUDENTS') or (principal.personId == @studentManager.findPersonId(request.getParameter('studentId')))" />
+        <intercept-url pattern="/college/student_delete.view*" access="hasRole('DELETE_STUDENTS') and (principal.personId != @studentManager.findPersonId(request.getParameter('studentId')))" />
+        <intercept-url pattern="/college/staffmember.view*" access="hasAnyRole('UPDATE_STAFFMEMBERS', 'READ_STAFFMEMBERS') or (principal.personId == @staffMemberManager.findPersonId(request.getParameter('staffMemberId')))" />
+        <intercept-url pattern="/college/staffmember_delete.view*" access="hasRole('DELETE_STAFFMEMBERS') or (principal.personId == @staffMemberManager.findPersonId(request.getParameter('staffMemberId')))" />
+        <intercept-url pattern="/college/teachersubject_delete.view*" access="hasRole('DELETE_SUBJECT_TEACHERS')" />
+        <intercept-url pattern="/college/teacherssubject.view*" access="hasRole('CREATE_SUBJECT_TEACHERS')" />     <!-- teacherssubject.view: no edit, only add -->
+        <intercept-url pattern="/college/**" access="isAuthenticated()" />
+
+        <!-- always-use-default-target='true': loggedInController needs to load opusUser -->
+        <form-login login-page="/login"
+                    authentication-failure-handler-ref="authenticationFailureHandler"
+                    default-target-url="/college/loggedIn.view"
+                    always-use-default-target='true'
+                    username-parameter="j_username" 
+                    password-parameter="j_password" 
+                    login-processing-url="/j_spring_security_check" />
+
+        <!-- Cannot use invalidate-session="true" together with logut success handler:
+             The logout success handler URL would be ignored and invalid-session-url would always be used
+             See: http://stackoverflow.com/a/14131584/606662 -->
+    	<logout invalidate-session="false" delete-cookies="JSESSIONID"
+                logout-url="/logout"
+                success-handler-ref="opusLogoutSuccessHandler"
+        />
+ 
+        <!-- define what to do on end of session -->
+        <!-- invalid-session-url intenationally not specified because upon opening the browser and going to the login URL it would detect no session and go to that invalid-session-url -->
+        <session-management>
+            <!-- allow each user to login only once-->
+            <!-- NB: expired-url seems to always result in too-many-redirects, would need to debug
+                     therefore workaround by activating error-if-maximum-exceeded -->
+            <concurrency-control max-sessions="1" error-if-maximum-exceeded="true" expired-url="/sessionExpired" />
+        </session-management>
+
+    </http>
+
+    <authentication-manager>
+        <authentication-provider user-service-ref="opusUserManager" >
+        	<password-encoder hash="md5">
+            </password-encoder>
+        </authentication-provider>
+    </authentication-manager>
+  
+    <global-method-security pre-post-annotations="enabled"/>
+    
+    <beans:bean id="opusLogoutSuccessHandler" class="org.uci.opus.college.service.auth.OpusLogoutSuccessHandler"></beans:bean>
+
+</beans:beans>

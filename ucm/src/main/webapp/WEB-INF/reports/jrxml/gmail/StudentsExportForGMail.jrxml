@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
+<!-- 2016-10-10T09:54:08 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="StudentsExportForMoodle" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ef4646a2-6b24-49c6-8c8f-ad465ac5a314">
+	<property name="ireport.zoom" value="0.75"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="opuscollege-Ucm"/>
+	<parameter name="lang" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["en"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="whereClause" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="format" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["pdf"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="orderClause" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[" ,person.firstNamesFull, person.surnameFull "]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT DISTINCT
+
+         trim(student.studentcode) AS "username",
+         '123456' AS "password",
+         person.firstNamesFull AS "firstnames",
+         person.surnameFull AS "lastname",
+         trim(student.studentcode) || '@ucm.ac.mz' AS "email",
+         coalesce(province.description, 'N/A') AS "city"
+    FROM
+     opuscollege.person person
+     INNER JOIN opuscollege.student student ON person.id = student.personid
+     LEFT OUTER JOIN opuscollege.studyplan studyplan ON student.studentid = studyplan.studentid
+     LEFT OUTER JOIN opuscollege.studyPlanCardinalTimeUnit ON studyplan.id = studyplancardinaltimeunit.studyPlanId
+     LEFT OUTER JOIN opuscollege.studyGradeType on studyPlanCardinalTimeUnit.studyGradeTypeId = studyGradeType.id
+     LEFT OUTER JOIN opuscollege.academicyear ON academicyear.id = studygradetype.currentacademicyearid
+     LEFT OUTER JOIN opuscollege.studyplandetail studyplandetail ON studyplan.id = studyplandetail.studyplanid
+     LEFT OUTER JOIN opuscollege.study study ON studygradetype.studyid = study.id
+         OR study.id = student.primarystudyid
+     LEFT OUTER JOIN opuscollege.organizationalunit ON study.organizationalunitid = organizationalunit.id
+     LEFT OUTER JOIN opuscollege.branch branch ON organizationalunit.branchid = branch.id
+     LEFT OUTER JOIN opuscollege.institution institution ON branch.institutionid = institution.id
+     LEFT OUTER JOIN opuscollege.province ON (person.provinceofbirthcode = province.code and province.lang = $P{lang})
+
+    WHERE person.active = 'Y'
+	$P!{whereClause}
+
+ORDER BY  "password" $P!{orderClause}]]>
+	</queryString>
+	<field name="username" class="java.lang.String"/>
+	<field name="password" class="java.lang.String"/>
+	<field name="firstnames" class="java.lang.String"/>
+	<field name="lastname" class="java.lang.String"/>
+	<field name="email" class="java.lang.String"/>
+	<field name="city" class="java.lang.String"/>
+	<columnHeader>
+		<band height="27" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="20" uuid="bcb463f8-035f-444a-b1ef-95e0964f92d9"/>
+				<text><![CDATA[First Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="0" width="55" height="20" uuid="5919ca3d-642b-458b-bc1d-34bdecaa6f46"/>
+				<text><![CDATA[Last Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="155" y="0" width="191" height="20" uuid="6b35f1cc-8040-4ef5-9aa2-81ed79249c1d"/>
+				<text><![CDATA[Email Address]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="346" y="0" width="148" height="20" uuid="b7dd2385-c61d-4c45-84c5-7074afd29753"/>
+				<text><![CDATA[Password]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="100" height="20" uuid="1d7a2798-0f13-4fe5-a171-c4900283c022"/>
+				<textFieldExpression><![CDATA[$F{firstnames}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="0" width="55" height="20" uuid="9c8077de-5551-4df3-9d15-acc7d73d2bcc"/>
+				<textFieldExpression><![CDATA[$F{lastname}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="155" y="0" width="191" height="20" uuid="85582e75-686f-417a-8225-420be7f2ea1c"/>
+				<textFieldExpression><![CDATA[$F{email}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="346" y="0" width="148" height="20" uuid="d70aae36-06b1-421c-a0f7-88b8859db7d5"/>
+				<textFieldExpression><![CDATA[$F{username}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

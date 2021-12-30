@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="SingleTranscript" language="groovy" printOrder="Horizontal" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="reportLogo" class="net.sf.jasperreports.engine.JRRenderable" isForPrompting="false">
+		<defaultValueExpression><![CDATA[net.sf.jasperreports.engine.RenderableUtil.getInstance($P{JASPER_REPORTS_CONTEXT}).getRenderable($P{image_dir}.toString() + "/cbu-report-logo.gif")]]></defaultValueExpression>
+	</parameter>
+	<parameter name="image_dir" class="java.io.File" isForPrompting="false">
+		<parameterDescription><![CDATA[The base directory of images used in this report]]></parameterDescription>
+		<defaultValueExpression><![CDATA[new java.io.File(net.sf.jasperreports.engine.util.JRResourcesUtil.findClassLoaderResource("/images/report",null,null).getFile())]]></defaultValueExpression>
+	</parameter>
+	<parameter name="StudentNumber" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="whereClause" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT DISTINCT
+     person."surnamefull" AS person_surnamefull,
+     person."firstnamesfull" AS person_firstnamesfull,
+     student."studentid" AS student_studentid,
+     student."studentcode" AS student_studentcode,
+     studyplan."studyplandescription" AS studyplan_studyplandescription,
+     studyplandetail."studyplanid" AS studyplandetail_studyplanid,
+     studyplandetail."subjectid" AS studyplandetail_subjectid,
+     studyplandetail."subjectblockid" AS studyplandetail_subjectblockid,
+     studyplandetail."studyplancardinaltimeunitid" AS studyplandetail_studyplancardinaltimeunitid,
+     studyplandetail."studygradetypeid" AS studyplandetail_studygradetypeid,
+     subject."subjectcode" AS subject_subjectcode,
+     subject."subjectdescription" AS subject_subjectdescription,
+     subject."subjectcontentdescription" AS subject_subjectcontentdescription,
+     institution."institutiondescription" AS institution_institutiondescription,
+     study."studydescription" AS study_studydescription,
+     organizationalunit."organizationalunitdescription" AS organizationalunit_organizationalunitdescription,
+     gradetype."description" AS gradetype_description,
+     subjectresult."mark" AS subjectresult_mark,
+     subjectresult."endgradecomment" AS subjectresult_endgradecomment
+     ,academicyear."description" AS academicyear_description,
+     branch."branchdescription" AS branch_branchdescription,
+     studygradetype."cardinaltimeunitcode" AS studygradetype_cardinaltimeunitcode,
+     cardinaltimeunitresult."endgradecomment" AS cardinaltimeunitresult_endgradecomment,
+     studyplancardinaltimeunit."cardinaltimeunitnumber" AS studyplancardinaltimeunit_cardinaltimeunitnumber,
+academicyear."description" AS academicyear_description
+FROM
+      opuscollege.person person INNER JOIN opuscollege.student student ON person.id = student.personid
+     INNER JOIN opuscollege.studyplan studyplan ON student.studentid = studyplan.studentid
+     INNER JOIN opuscollege.studyplandetail studyplandetail ON studyplan.id = studyplandetail.studyplanid
+     INNER JOIN opuscollege.studyGradeType ON studyPlanDetail.studyGradeTypeId = studyGradeType.id
+     INNER JOIN opuscollege.studyPlanCardinalTimeUnit ON studyplandetail.studyplancardinaltimeunitid = studyplancardinaltimeunit.id
+     INNER JOIN "opuscollege"."cardinaltimeunitresult" cardinaltimeunitresult ON studyplancardinaltimeunit."id" = cardinaltimeunitresult."studyplancardinaltimeunitid"
+
+     INNER JOIN opuscollege.study study ON studygradetype.studyid = study.id
+     INNER JOIN opuscollege.gradetype gradetype ON studygradetype.gradetypecode = gradetype.code AND gradetype.lang = 'en'
+     INNER JOIN opuscollege.organizationalunit organizationalunit ON study.organizationalunitid = organizationalunit.id
+     INNER JOIN opuscollege.branch ON branch.id = organizationalunit.branchId
+     INNER JOIN opuscollege.institution institution ON institution.id = branch.institutionid
+
+     LEFT OUTER JOIN opuscollege.subjectblock subjectblock ON studyplandetail.subjectblockid = subjectblock.id
+     LEFT OUTER JOIN opuscollege.subjectsubjectblock subjectsubjectblock ON subjectblock.id = subjectsubjectblock.subjectblockid
+     INNER JOIN opuscollege.subject subject ON subjectsubjectblock.subjectid = subject.id
+         OR subject.id = studyplandetail.subjectid
+
+     INNER JOIN opuscollege.subjectresult subjectresult ON subjectresult.studyplandetailid = studyplandetail.id
+         AND subjectresult.subjectid = subject.id
+     INNER JOIN opuscollege.academicyear ON  StudyGradeType.currentacademicyearid = academicyear.id
+
+WHERE true
+
+$P!{whereClause}
+ORDER BY studyplancardinaltimeunit."cardinaltimeunitnumber"]]>
+	</queryString>
+	<field name="person_surnamefull" class="java.lang.String"/>
+	<field name="person_firstnamesfull" class="java.lang.String"/>
+	<field name="student_studentid" class="java.lang.Integer"/>
+	<field name="student_studentcode" class="java.lang.String"/>
+	<field name="studyplan_studyplandescription" class="java.lang.String"/>
+	<field name="studyplandetail_studyplanid" class="java.lang.Integer"/>
+	<field name="studyplandetail_subjectid" class="java.lang.Integer"/>
+	<field name="studyplandetail_subjectblockid" class="java.lang.Integer"/>
+	<field name="studyplandetail_studyplancardinaltimeunitid" class="java.lang.Integer"/>
+	<field name="studyplandetail_studygradetypeid" class="java.lang.Integer"/>
+	<field name="subject_subjectcode" class="java.lang.String"/>
+	<field name="subject_subjectdescription" class="java.lang.String"/>
+	<field name="subject_subjectcontentdescription" class="java.lang.String"/>
+	<field name="institution_institutiondescription" class="java.lang.String"/>
+	<field name="study_studydescription" class="java.lang.String"/>
+	<field name="organizationalunit_organizationalunitdescription" class="java.lang.String"/>
+	<field name="gradetype_description" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="subjectresult_endgradecomment" class="java.lang.String"/>
+	<field name="branch_branchdescription" class="java.lang.String"/>
+	<field name="cardinaltimeunitresult_endgradecomment" class="java.lang.String"/>
+	<field name="studyplancardinaltimeunit_cardinaltimeunitnumber" class="java.lang.String"/>
+	<field name="academicyear_description" class="java.lang.String"/>
+	<group name="StudentCourses">
+		<groupExpression><![CDATA[$F{student_studentcode}]]></groupExpression>
+		<groupHeader>
+			<band height="64">
+				<staticText>
+					<reportElement x="108" y="5" width="67" height="20"/>
+					<textElement/>
+					<text><![CDATA[Family Name:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="295" y="6" width="41" height="20"/>
+					<textElement/>
+					<text><![CDATA[Names:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="56" y="6" width="52" height="20"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{student_studentcode}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="175" y="6" width="120" height="20"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{person_surnamefull}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="336" y="5" width="118" height="20"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{person_firstnamesfull}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="3" y="6" width="53" height="20"/>
+					<textElement/>
+					<text><![CDATA[Student ID:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="-1" y="-28" width="553" height="20"/>
+					<textElement textAlignment="Center">
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[OFFICIAL TRANSCRIPT]]></text>
+				</staticText>
+				<line>
+					<reportElement x="0" y="55" width="552" height="1"/>
+					<graphicElement>
+						<pen lineStyle="Dashed"/>
+					</graphicElement>
+				</line>
+				<textField>
+					<reportElement x="3" y="32" width="234" height="20"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{branch_branchdescription}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="237" y="32" width="316" height="20"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{studyplan_studyplandescription}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="0" y="3" width="552" height="1"/>
+					<graphicElement>
+						<pen lineStyle="Double"/>
+					</graphicElement>
+				</line>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="41"/>
+		</groupFooter>
+	</group>
+	<group name="YearOfStudy">
+		<groupExpression><![CDATA[$F{studyplancardinaltimeunit_cardinaltimeunitnumber}]]></groupExpression>
+		<groupHeader>
+			<band height="27">
+				<staticText>
+					<reportElement x="342" y="7" width="71" height="20"/>
+					<textElement/>
+					<text><![CDATA[Year Of Study:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="415" y="7" width="17" height="20"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{studyplancardinaltimeunit_cardinaltimeunitnumber}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="1" y="7" width="80" height="20"/>
+					<textElement/>
+					<text><![CDATA[Academic Year:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="81" y="7" width="37" height="20"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{academicyear_description}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="37">
+				<staticText>
+					<reportElement x="3" y="5" width="53" height="20"/>
+					<textElement/>
+					<text><![CDATA[Comment:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="56" y="4" width="256" height="20"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{cardinaltimeunitresult_endgradecomment}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="2" y="26" width="552" height="1"/>
+					<graphicElement>
+						<pen lineStyle="Dashed"/>
+					</graphicElement>
+				</line>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="77" splitType="Stretch">
+			<textField>
+				<reportElement x="3" y="35" width="552" height="42"/>
+				<textElement textAlignment="Center" markup="none">
+					<font size="18" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{institution_institutiondescription}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="237" y="-23" width="58" height="58"/>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="31" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="3" y="0" width="53" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{subject_subjectcode}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="531" y="0" width="21" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{subjectresult_endgradecomment}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="56" y="0" width="475" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{subject_subjectdescription}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

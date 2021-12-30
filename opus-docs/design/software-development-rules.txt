@@ -1,0 +1,3 @@
+Rules for Opus software development
+
+* no database IDs hard-coded in the source code (neither in Java nor in JSPs)

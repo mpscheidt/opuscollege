@@ -1,0 +1,1176 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+  ***** BEGIN LICENSE BLOCK *****
+  Version: MPL 1.1/GPL 2.0/LGPL 2.1
+  
+  The contents of this file are subject to the Mozilla Public License Version
+  1.1 (the "License"); you may not use this file except in compliance with
+  the License. You may obtain a copy of the License at
+  http://www.mozilla.org/MPL/
+  
+  Software distributed under the License is distributed on an "AS IS" basis,
+  WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+  for the specific language governing rights and limitations under the
+  License.
+  
+  The Original Code is Opus-College fee module code.
+  
+  The Initial Developer of the Original Code is
+  Center for Information Services, Radboud University Nijmegen.
+  Portions created by the Initial Developer are Copyright (C) 2008
+  the Initial Developer. All Rights Reserved.
+  
+  Contributor(s):
+    For Java files, see Javadoc @author tags.
+  
+  Alternatively, the contents of this file may be used under the terms of
+  either the GNU General Public License Version 2 or later (the "GPL"), or
+  the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+  in which case the provisions of the GPL or the LGPL are applicable instead
+  of those above. If you wish to allow use of your version of this file only
+  under the terms of either the GPL or the LGPL, and not to allow others to
+  use your version of this file under the terms of the MPL, indicate your
+  decision by deleting the provisions above and replace them with the notice
+  and other provisions required by the GPL or the LGPL. If you do not delete
+  the provisions above, a recipient may use your version of this file under
+  the terms of any one of the MPL, the GPL or the LGPL.
+  
+  ***** END LICENSE BLOCK *****
+--><!--Converted at: Wed Feb 24 11:43:08 CET 2016-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.uci.opus.fee.persistence.FeeMapper">
+
+    <!-- resultmap to define complete SubjectStudyGradeType -->
+    <resultMap id="FeeSubjectBlockStudyGradeTypeResultMap" type="SubjectBlockStudyGradeType">
+        <id property="id" column="id"/>
+        <result property="cardinalTimeUnitNumber" column="cardinalTimeUnitNumber"/>
+        <result property="rigidityTypeCode" column="rigidityTypeCode"/>
+        <result property="active" column="active"/>
+        <result property="studyGradeType.id" column="studyGradeType.id"/>
+        <result property="studyGradeType.studyId" column="studyGradeType.studyId"/>
+        <result property="studyGradeType.studyDescription" column="studyGradeType.studyDescription"/> 
+        <result property="studyGradeType.gradeTypeCode" column="studyGradeType.gradeTypeCode"/>
+        <result property="studyGradeType.gradeTypeDescription" column="studyGradeType.gradeTypeDescription"/>
+        <result property="studyGradeType.numberOfCardinalTimeUnits" column="studyGradeType.numberOfCardinalTimeUnits"/>
+        <result property="studyGradeType.maxNumberOfCardinalTimeUnits" column="studyGradeType.maxNumberOfCardinalTimeUnits"/>
+        <result property="studyGradeType.currentAcademicYearId" column="studyGradeType.currentAcademicYearId"/>
+        <result property="studyGradeType.cardinalTimeUnitCode" column="studyGradeType.cardinalTimeUnitCode"/>
+       <result property="studyGradeType.studyFormCode" column="studyGradeType.studyFormCode"/>
+       <result property="studyGradeType.studyTimeCode" column="studyGradeType.studyTimeCode"/>               
+        <result property="subjectBlock.id" column="subjectBlock.id"/>
+        <result property="subjectBlock.subjectBlockCode" column="subjectBlock.subjectBlockCode"/>
+        <result property="subjectBlock.subjectBlockDescription" column="subjectBlock.subjectBlockDescription"/>
+        <result property="subjectBlock.primaryStudyId" column="subjectBlock.primaryStudyId"/>
+        <result property="subjectBlock.currentAcademicYearId" column="subjectBlock.currentAcademicYearId"/>
+        <collection property="subjectBlockPrerequisites" select="org.uci.opus.college.persistence.SubjectBlockMapper.findSubjectBlockPrerequisites" column="id"/>
+    </resultMap>
+
+    <!-- resultmap to define complete SubjectStudyGradeType -->
+    <resultMap id="SubjectStudyGradeTypeResultMap" type="SubjectStudyGradeType">
+        <id property="id" column="id"/>
+        <result property="subjectId" column="subject.id"/>
+        <result property="studyGradeTypeId" column="studyGradeType.id"/>
+        <result property="cardinalTimeUnitNumber" column="cardinalTimeUnitNumber"/>
+        <result property="rigidityTypeCode" column="rigidityTypeCode"/>
+        <result property="active" column="active"/>
+        <result property="studyGradeType.id" column="studyGradeType.id"/>
+        <result property="studyGradeType.studyId" column="studyGradeType.studyId"/>
+        <result property="studyGradeType.studyDescription" column="studyGradeType.studyDescription"/> 
+        <result property="studyGradeType.gradeTypeCode" column="studyGradeType.gradeTypeCode"/>
+        <result property="studyGradeType.gradeTypeDescription" column="studyGradeType.gradeTypeDescription"/>
+        <result property="studyGradeType.numberOfCardinalTimeUnits" column="studyGradeType.numberOfCardinalTimeUnits"/>
+        <result property="studyGradeType.maxNumberOfCardinalTimeUnits" column="studyGradeType.maxNumberOfCardinalTimeUnits"/>
+        <result property="studyGradeType.currentAcademicYearId" column="studyGradeType.currentAcademicYearId"/>
+        <result property="studyGradeType.cardinalTimeUnitCode" column="studyGradeType.cardinalTimeUnitCode"/>
+       <result property="studyGradeType.studyFormCode" column="studyGradeType.studyFormCode"/>
+       <result property="studyGradeType.studyTimeCode" column="studyGradeType.studyTimeCode"/>               
+        <result property="subject.id" column="subject.id"/>
+        <result property="subject.subjectCode" column="subject.subjectCode"/>
+        <result property="subject.subjectDescription" column="subject.subjectDescription"/>
+        <result property="subject.primaryStudyId" column="subject.primaryStudyId"/>
+        <result property="subject.currentAcademicYearId" column="subject.currentAcademicYearId"/>
+        <collection property="subjectPrerequisites" select="org.uci.opus.college.persistence.SubjectMapper.findSubjectPrerequisites" column="id"/>
+    </resultMap>
+
+    <!-- resultmap to define complete SubjectBlockStudyGradeType -->
+    <resultMap id="StudyGradeType_fragment_ResultMap" type="StudyGradeType">
+        <id property="id" column="id"/>
+        <result property="studyId" column="studyId"/>
+        <result property="studyDescription" column="studyDescription"/> 
+        <result property="gradeTypeCode" column="gradeTypeCode"/>
+        <result property="gradeTypeDescription" column="gradeTypeDescription"/>
+        <result property="numberOfCardinalTimeUnits" column="numberOfCardinalTimeUnits"/>
+        <result property="maxNumberOfCardinalTimeUnits" column="maxNumberOfCardinalTimeUnits"/>
+        <result property="currentAcademicYearId" column="currentAcademicYearId"/>
+        <result property="cardinalTimeUnitCode" column="cardinalTimeUnitCode"/>
+        <result property="studyFormCode" column="studyFormCode"/>
+        <result property="studyTimeCode" column="studyTimeCode"/>                
+    </resultMap>
+
+	<resultMap id="FeeResultMap" type="Fee">
+
+		<id property="id" column="id"/>
+		<result property="feeDue" column="feeDue"/>
+		<!-- <result property="subjectBlockId" column="subjectBlockId" />-->
+		<!-- <result property="subjectId" column="subjectId" />-->
+		<result property="active" column="active"/>
+		<result property="categoryCode" column="categoryCode"/>
+    	<result property="subjectBlockStudyGradeTypeId" column="subjectBlockStudyGradeTypeId"/>
+    	<result property="subjectStudyGradeTypeId" column="subjectStudyGradeTypeId"/>
+    	<result property="studyGradeTypeId" column="studyGradeTypeId"/>
+    	<result property="academicYearId" column="academicYearId"/>
+    	<result property="branchId" column="branchId"/>
+    	<result property="numberOfInstallments" column="numberOfInstallments"/>
+        <result property="feeUnitCode" column="feeUnitCode"/>
+        <result property="studyIntensityCode" column="studyIntensityCode"/>
+        <result property="studyTimeCode" column="studyTimeCode"/>
+        <result property="studyFormCode" column="studyFormCode"/>
+        <result property="educationLevelCode" column="educationLevelCode"/>
+        <result property="educationAreaCode" column="educationAreaCode"/>
+        <result property="nationalityGroupCode" column="nationalityGroupCode"/>
+        <result property="cardinalTimeUnitNumber" column="cardinalTimeUnitNumber"/>
+        <result property="applicationMode" column="applicationMode"/>
+    	<result property="writeWho" column="writeWho"/>
+		<collection property="deadlines" select="org.uci.opus.fee.persistence.FeeDeadlineMapper.findDeadlinesForFee" column="id"/>
+	</resultMap>
+
+    <sql id="selectSubjectBlockStudyGradeType_fragment">
+        select  subjectBlockStudyGradeType.id               as id
+        ,       cardinalTimeUnitNumber                      as cardinalTimeUnitNumber
+        ,       rigidityTypeCode                            as rigidityTypeCode
+        ,       subjectBlockStudyGradeType.active			as active
+        ,       subjectBlockStudyGradeType.studyGradeTypeId as "studyGradeType.id"
+        ,       subjectBlock.id                             as "subjectBlock.id"
+        ,       subjectBlock.subjectBlockCode               as "subjectBlock.subjectBlockCode"
+        ,       subjectBlock.subjectBlockDescription        as "subjectBlock.subjectBlockDescription"
+        ,       subjectBlock.primaryStudyId                 as "subjectBlock.primaryStudyId"
+        ,       subjectBlock.currentAcademicYearId          as "subjectBlock.currentAcademicYearId"
+        ,       study.id                                    as "studyGradeType.studyId"
+        ,       study.studyDescription                      as "studyGradeType.studyDescription"
+        ,       gradeType.code                              as "studyGradeType.gradeTypeCode"
+        ,       gradeType.description                       as "studyGradeType.gradeTypeDescription"
+        ,       studyGradeType.numberOfCardinalTimeUnits    as "studyGradeType.numberOfCardinalTimeUnits"
+        ,       studyGradeType.maxNumberOfCardinalTimeUnits as "studyGradeType.maxNumberOfCardinalTimeUnits"
+        ,       studyGradeType.currentAcademicYearId        as "studyGradeType.currentAcademicYearId"
+        ,       studyGradeType.cardinalTimeUnitCode         as "studyGradeType.cardinalTimeUnitCode"
+       ,        studyGradeType.studyFormCode                as "studyGradeType.studyFormCode"
+        ,       studyGradeType.studyTimeCode                as "studyGradeType.studyTimeCode"        
+        from    opusCollege.subjectBlockStudyGradeType
+        inner   join opusCollege.subjectBlock on subjectBlock.id = subjectBlockStudyGradeType.subjectBlockId
+        inner   join opusCollege.studyGradeType on studyGradeType.id = subjectBlockStudyGradeType.studyGradeTypeId
+        inner   join opusCollege.study on study.id = studyGradeType.studyId
+        inner   join opusCollege.gradeType on gradeType.code = studyGradeType.gradeTypeCode
+        inner   join opusCollege.organizationalunit on opuscollege.study.organizationalUnitId = organizationalunit.id
+	    inner   join opusCollege.branch on opuscollege.branch.id = organizationalunit.branchId
+	    inner   join opusCollege.institution on opuscollege.institution.id = branch.institutionId
+    </sql>
+
+    <sql id="selectSubjectStudyGradeType_fragment">
+        select  subjectStudyGradeType.id                    as id
+        ,       cardinalTimeUnitNumber                      as cardinalTimeUnitNumber
+        ,       rigidityTypeCode                            as rigidityTypeCode
+        ,       subjectStudyGradeType.active                as active
+        ,       subjectStudyGradeType.studyGradeTypeId      as "studyGradeType.id"
+        ,       subject.id                                  as "subject.id"
+        ,       subject.subjectCode                         as "subject.subjectCode"
+        ,       subject.subjectDescription                  as "subject.subjectDescription"
+        ,       subject.primaryStudyId                      as "subject.primaryStudyId"
+        ,       subject.currentAcademicYearId               as "subject.currentAcademicYearId"
+        ,       study.id                                    as "studyGradeType.studyId"
+        ,       study.studyDescription                      as "studyGradeType.studyDescription"
+        ,       gradeType.code                              as "studyGradeType.gradeTypeCode"
+        ,       gradeType.description                       as "studyGradeType.gradeTypeDescription"
+        ,       studyGradeType.numberOfCardinalTimeUnits    as "studyGradeType.numberOfCardinalTimeUnits"
+        ,       studyGradeType.maxNumberOfCardinalTimeUnits as "studyGradeType.maxNumberOfCardinalTimeUnits"
+        ,       studyGradeType.currentAcademicYearId        as "studyGradeType.currentAcademicYearId"
+        ,       studyGradeType.cardinalTimeUnitCode         as "studyGradeType.cardinalTimeUnitCode"
+       ,        studyGradeType.studyFormCode                as "studyGradeType.studyFormCode"
+        ,       studyGradeType.studyTimeCode                as "studyGradeType.studyTimeCode"        
+        from    opusCollege.subjectStudyGradeType
+        inner   join opusCollege.subject on subject.id = subjectStudyGradeType.subjectId
+        inner   join opusCollege.studyGradeType on studyGradeType.id = subjectStudyGradeType.studyGradeTypeId
+        inner   join opusCollege.study on study.id = studyGradeType.studyId
+        inner   join opusCollege.gradeType on gradeType.code = studyGradeType.gradeTypeCode
+        inner   join opusCollege.organizationalunit on opuscollege.study.organizationalUnitId = organizationalunit.id
+	    inner   join opusCollege.branch on opuscollege.branch.id = organizationalunit.branchId
+	    inner   join opusCollege.institution on opuscollege.institution.id = branch.institutionId
+    </sql>
+
+    <select id="findFeesForSubjectBlockStudyGradeTypes" parameterType="int" resultMap="FeeResultMap">
+	        SELECT  fee_fee.*
+	        FROM	opuscollege.fee_fee,
+	                opuscollege.subjectBlockStudyGradeType,
+	        		opuscollege.subjectBlock
+	        WHERE 	fee_fee.subjectBlockStudyGradeTypeId = subjectBlockStudyGradeType.id
+			AND     subjectBlockStudyGradeType.subjectBlockId = subjectBlock.id
+	        AND		subjectBlock.primaryStudyId = #{value}
+    </select>
+
+    <select id="findFeesForSubjectStudyGradeTypes" parameterType="int" resultMap="FeeResultMap">
+
+	        SELECT  fee_fee.*
+	        FROM	opuscollege.fee_fee,
+	                opuscollege.subjectStudyGradeType,
+	        		opuscollege.subject
+	        WHERE 	fee_fee.subjectStudyGradeTypeId = subjectStudyGradeType.id
+			AND     subjectStudyGradeType.subjectId = subject.id
+	        AND		subject.primaryStudyId = #{value}
+    </select>
+
+    <select id="findFeesForStudyGradeTypes" parameterType="int" resultMap="FeeResultMap">
+	        SELECT  fee_fee.*
+	        FROM    opuscollege.fee_fee
+                   ,opuscollege.studyGradeType
+                   ,opuscollege.academicYear
+	        WHERE 	fee_fee.studyGradeTypeId = studyGradeType.id
+            AND     studygradetype.currentAcademicYearId = academicYear.id
+			AND     studyGradeType.studyId = #{value}
+            ORDER BY  studygradetype.gradetypecode
+                    , academicYear.description DESC
+                    , fee_fee.categoryCode
+                    , fee_fee.cardinaltimeunitnumber
+                    , fee_fee.studyIntensityCode
+    </select>
+
+    <select id="findFeesForBranch" parameterType="int" resultMap="FeeResultMap">
+        select  *
+        from        opuscollege.fee_fee
+        inner join  opuscollege.academicYear on fee_fee.academicYearId = academicYear.id
+        where   branchId = #{value}
+        and     academicYearId != 0
+        ORDER BY  academicYear.description DESC
+                , fee_fee.categoryCode
+                , fee_fee.cardinaltimeunitnumber
+                , fee_fee.studyIntensityCode
+    </select>
+    
+    <select id="findFeesForEducationAreas" parameterType="map" resultMap="FeeResultMap">
+        select     	fee_fee.*
+        from       	opuscollege.fee_fee
+        inner join 	opuscollege.academicYear on academicYear.id = fee_fee.academicYearId
+        where     	academicYearId != 0
+        order by   	academicYear.description DESC
+        , 			cardinaltimeunitnumber DESC
+        , 			categoryCode
+        , 			studyIntensityCode
+        , 			studyTimeCode
+        , 			studyFormCode
+    </select>
+    
+    
+
+<!-- unused
+    <select id="findFeesForAcademicYears" resultMap="FeeResultMap">
+	        SELECT  fee_fee.*
+	        FROM	opuscollege.fee_fee
+	        WHERE 	fee_fee.academicYearId != 0
+    </select> -->
+    
+    <select id="findFeeIdsForAcademicYear" resultType="Integer">
+            SELECT  fee_fee.id
+            FROM    opuscollege.fee_fee
+            WHERE   fee_fee.academicYearId = #{academicYearId}
+    </select>
+
+    <select id="findFee" parameterType="int" resultMap="FeeResultMap">
+		SELECT  opuscollege.fee_fee.*
+		FROM	opuscollege.fee_fee
+		WHERE	fee_fee.id = #{value}
+    </select>
+
+    <select id="findFeeIdByCategoryCode" parameterType="map" resultType="int">
+        select  fee_fee.id
+        from    opuscollege.fee_fee
+        ,       opuscollege.fee_feeCategory
+        where   fee_fee.categoryCode = fee_feeCategory.code
+        and     lang = #{language}
+        and     fee_feeCategory.code = #{categoryCode}
+    </select>
+    
+    <select id="findAllFees" resultType="Fee">
+		SELECT  opuscollege.fee_fee.*
+		FROM	opuscollege.fee_fee
+    </select>
+    
+    <select id="findFeeByStudyIds" parameterType="map" resultType="Fee">
+		SELECT  opuscollege.fee_fee.*
+		FROM	opuscollege.fee_fee
+		WHERE	(fee_fee.subjectStudyGradeTypeId = #{subjectStudyGradeTypeId}
+				AND fee_fee.subjectBlockStudyGradeTypeId = #{subjectBlockStudyGradeTypeId}
+				)
+    </select>
+
+    <select id="findFeesByParams" resultType="Fee">
+        SELECT  fee_fee.*
+        FROM    opuscollege.fee_fee
+        WHERE true
+        <if test="categoryCode != null">
+            AND categoryCode = #{categoryCode}
+        </if>
+        <if test="studyGradeTypeId != null">
+            AND studyGradeTypeId = #{studyGradeTypeId}
+        </if>
+        <if test="cardinalTimeUnitNumber != null">
+            AND (cardinalTimeUnitNumber = #{cardinalTimeUnitNumber} or cardinalTimeUnitNumber = 0)
+        </if>
+        <if test="studyIntensityCode != null">
+            AND (studyIntensityCode = #{studyIntensityCode} or studyIntensityCode ='0')
+        </if>
+        <if test="studyFormCode != null">
+            AND (studyFormCode = #{studyFormCode} or studyFormCode ='0')
+        </if>
+        <if test="studyTimeCode != null">
+            AND (studyTimeCode = #{studyTimeCode} or studyTimeCode ='0')
+        </if>
+        <if test="educationAreaCode != null">
+            AND (educationAreaCode = #{educationAreaCode} or educationAreaCode ='0' or educationAreaCode is null)
+        </if>
+        <if test="educationLevelCode != null">
+            AND (educationLevelCode = #{educationLevelCode} or educationLevelCode ='0' or educationLevelCode is null)
+        </if>
+        <if test="nationalityGroupCode != null">
+            AND (nationalityGroupCode = #{nationalityGroupCode} or nationalityGroupCode ='0')
+        </if>
+        <if test="applicationMode != null">
+            AND applicationMode = #{applicationMode}
+        </if>
+        <if test="feeUnitCode != null">
+            AND feeUnitCode = #{feeUnitCode}
+        </if>
+        <if test='feeUnitCodes != null and feeUnitCodes.size() > 0'>
+            and feeUnitCode in
+             <foreach collection="feeUnitCodes" item="item" separator="," close=")" open="(">
+              #{item}
+            </foreach>
+        </if>
+        <if test="academicYearId != null">
+            AND academicYearId = #{academicYearId}
+        </if>
+        <if test="branchId != null">
+            AND branchId = #{branchId}
+        </if>
+        <if test="branchIdOr0 != null">
+            AND branchId IN (0, #{branchId}) 
+        </if>
+        <if test="active != null">
+            AND active = #{active}
+        </if>
+    </select>
+    
+    <!-- used in validator -->
+    <select id="findFeeByAcademicYearAndCategoryCode" parameterType="map" resultType="Fee">
+		select *
+		from   opuscollege.fee_fee
+		where  branchId = #{branchId}
+        and    academicYearId = #{academicYearId}
+	    and    categoryCode = #{categoryCode}
+        and    id != #{id}
+    </select>
+
+    <select id="findFeeByStudyGradeTypeIdAndCategoryCode" parameterType="map" resultType="Fee">
+		SELECT  opuscollege.fee_fee.*
+		FROM	opuscollege.fee_fee
+		WHERE	(fee_fee.studyGradeTypeId = #{studyGradeTypeId}
+				 AND fee_fee.categoryCode = #{categoryCode}
+				 )
+    </select>
+
+    <select id="findSubjectStudyGradeTypesWithoutFee" parameterType="map" resultMap="SubjectStudyGradeTypeResultMap">
+       <include refid="selectSubjectStudyGradeType_fragment"/>
+        WHERE opuscollege.institution.institutionTypeCode = #{institutionTypeCode}
+        <if test='institutionId != null and institutionId != "0"'>
+            and opuscollege.institution.id = #{institutionId}
+        </if>
+        <if test='branchId != null and branchId != "0"'>
+            and   opuscollege.branch.id = #{branchId}
+        </if>
+        <if test='organizationalUnitId != null and organizationalUnitId != "0"'>
+            and opuscollege.organizationalunit.id in (select id from opuscollege.crawl_tree(#{organizationalUnitId}, 0))       
+        </if>
+        <if test='studyId != null and studyId != "0"'>
+           	and   opuscollege.study.id = #{studyId}
+       	</if>
+		AND		subjectStudyGradeType.id NOT in (SELECT subjectStudyGradeTypeId from opuscollege.fee_fee)
+        order   by lower(subject.subjectDescription), lower(gradeType.description)
+    </select>
+
+    <select id="findSubjectBlockStudyGradeTypesWithoutFee" parameterType="map" resultMap="FeeSubjectBlockStudyGradeTypeResultMap">
+        <include refid="selectSubjectBlockStudyGradeType_fragment"/>
+        WHERE opuscollege.institution.institutionTypeCode = #{institutionTypeCode}
+        <if test='institutionId != null and institutionId != "0"'>
+            and opuscollege.institution.id = #{institutionId}
+        </if>
+        <if test='branchId != null and branchId != "0"'>
+            and   opuscollege.branch.id = #{branchId}
+        </if>
+        <if test='organizationalUnitId != null and organizationalUnitId != "0"'>
+            and opuscollege.organizationalunit.id in (select id from opuscollege.crawl_tree(#{organizationalUnitId}, 0))       
+        </if>
+        <if test='studyId != null and studyId != "0"'>
+           	and   opuscollege.study.id = #{studyId}
+       	</if>
+		AND		subjectBlockStudyGradeType.id NOT in (SELECT subjectBlockStudyGradeTypeId from opuscollege.fee_fee)
+        order   by lower(subjectBlock.subjectBlockDescription), lower(gradeType.description)
+    </select>
+
+   <select id="findStudyGradeTypesForFee" parameterType="map" resultMap="StudyGradeType_fragment_ResultMap">
+        select  studyGradeType.id                           as id
+        ,       study.id                                    as studyId
+        ,       study.studyDescription                      as studyDescription
+        ,       gradeType.code                              as gradeTypeCode
+        ,       gradeType.description                       as gradeTypeDescription
+        ,       studyGradeType.numberOfCardinalTimeUnits    as numberOfCardinalTimeUnits
+        ,       studyGradeType.maxNumberOfCardinalTimeUnits as maxNumberOfCardinalTimeUnits
+        ,       studyGradeType.currentAcademicYearId        as currentAcademicYearId
+        ,       studyGradeType.cardinalTimeUnitCode         as cardinalTimeUnitCode
+        ,       studyGradeType.studyFormCode                as studyFormCode
+        ,       studyGradeType.studyTimeCode               as studyTimeCode
+        from    opusCollege.studyGradeType
+        inner   join opusCollege.study on study.id = studyGradeType.studyId
+        inner   join opusCollege.gradeType on gradeType.code = studyGradeType.gradeTypeCode
+        <if test='studyId != null and studyId != "0"'>
+           	and   opuscollege.study.id = #{studyId}
+       	</if>
+		<if test="categoryCode != null">
+		      	AND	(
+                    studyGradeType.id = #{studyGradeTypeId} 
+                    OR studyGradeType.id NOT in 
+    		      	(SELECT studyGradeTypeId from opuscollege.fee_fee
+                	where fee_fee.categoryCode = #{categoryCode})
+                    )
+        </if>
+        <if test="preferredLanguage != null">
+        and gradeType.lang = #{preferredLanguage}
+        </if>
+        order  by lower(gradeType.description), currentAcademicYearId desc
+    </select>
+
+
+    <select id="findStudentFeesForSubjectBlockStudyGradeTypes" parameterType="int" resultMap="FeeResultMap">
+	        SELECT  fee_fee.*
+	        FROM	opuscollege.fee_fee,
+	        		opuscollege.studentBalance,
+                    opuscollege.subjectBlockStudyGradeType   	        		
+	        WHERE 	fee_fee.id = studentBalance.feeId
+            AND     fee_fee.subjectBlockStudyGradeTypeId = subjectblockstudygradetype.id 
+			AND		studentBalance.studentId = #{value}
+			AND     fee_fee.subjectBlockStudyGradeTypeId != 0
+            ORDER BY subjectblockstudygradetype.studyGradeTypeId, fee_fee.id
+    </select>
+
+    <select id="findStudentFeesForSubjectStudyGradeTypes" parameterType="int" resultMap="FeeResultMap">
+	        SELECT  fee_fee.*
+	        FROM	opuscollege.fee_fee,
+	        		opuscollege.studentBalance,
+                    opuscollege.subjectstudygradetype	        		
+	        WHERE 	fee_fee.id = studentBalance.feeId
+            AND     fee_fee.subjectStudyGradeTypeId  = subjectstudygradetype.id	        
+			AND		studentBalance.studentId = #{value}
+			AND     fee_fee.subjectStudyGradeTypeId != 0			
+            ORDER BY subjectstudygradetype.studyGradeTypeId, fee_fee.id
+    </select>
+    <select id="findStudentFeesForStudyGradeTypes" parameterType="int" resultMap="FeeResultMap">
+	        SELECT  fee_fee.*
+	        FROM	opuscollege.fee_fee,
+	        		opuscollege.studentBalance
+	        WHERE 	fee_fee.id = studentBalance.feeId
+			AND		studentBalance.studentId = #{value}
+			AND     fee_fee.studyGradeTypeId != 0
+            ORDER BY fee_fee.studyGradeTypeId, fee_fee.id
+    </select>
+    <select id="findStudentFeesForAcademicYears" parameterType="int" resultMap="FeeResultMap">
+	        SELECT  fee_fee.*
+	        FROM	opuscollege.fee_fee,
+	        		opuscollege.studentBalance
+	        WHERE 	fee_fee.id = studentBalance.feeId
+			AND		studentBalance.studentId = #{value}
+			AND     fee_fee.academicYearId != 0
+            ORDER BY fee_fee.academicYearId, fee_fee.id
+    </select>
+    
+    <select id="findExistingFeesForStudent" parameterType="int" resultMap="FeeResultMap">
+	    SELECT  fee_fee.*
+	    FROM    opuscollege.fee_fee,
+	            opuscollege.studentBalance
+	    WHERE   fee_fee.id = studentBalance.feeId
+	    AND     studentBalance.studentId = #{value}
+	    ORDER BY fee_fee.studyGradeTypeId, fee_fee.id
+    </select>
+
+    <select id="findPossibleSubjectFeesForStudyPlan" parameterType="int" resultType="Fee">
+            SELECT  subjectStudyGradeType.subjectId
+            ,       subjectStudyGradeType.studyGradeTypeId
+            ,       fee_fee.*
+            FROM    opusCollege.fee_fee
+            ,       opusCollege.subjectStudyGradeType
+            ,       opusCollege.studyPlanDetail
+            ,       opusCollege.studyPlanCardinalTimeUnit
+            ,       opusCollege.studyPlan
+            WHERE   studyPlan.id = studyPlanCardinalTimeUnit.studyPlanId
+            and     studyPlanCardinalTimeUnit.id = studyPlanDetail.studyPlanCardinalTimeUnitId
+            and     studyPlanDetail.subjectId = subjectStudyGradeType.subjectId
+            and     studyPlanDetail.studyGradeTypeId = subjectStudyGradeType.studyGradeTypeId
+            and     subjectStudyGradeType.id = fee_fee.subjectStudyGradeTypeId
+            AND     studyPlan.id = #{value}           
+            union
+            SELECT  subjectStudyGradeType.subjectId
+            ,       subjectStudyGradeType.studyGradeTypeId
+            ,       fee_fee.*
+            FROM    opusCollege.fee_fee
+            ,       opusCollege.subjectStudyGradeType
+            ,       opusCollege.studyPlanDetail
+            ,       opusCollege.studyPlan
+            WHERE   studyPlan.id = studyPlanDetail.studyPlanId
+            and     studyPlanDetail.subjectId = subjectStudyGradeType.subjectId
+            and     studyPlanDetail.studyGradeTypeId = subjectStudyGradeType.studyGradeTypeId
+            and     subjectStudyGradeType.id = fee_fee.subjectStudyGradeTypeId
+            AND     studyPlan.id = #{value}
+    </select>
+    
+    <select id="findPossibleSubjectBlockFeesForStudyPlan" parameterType="int" resultType="Fee">
+            SELECT  subjectBlockStudyGradeType.subjectBlockId
+            ,       subjectBlockStudyGradeType.studyGradeTypeId
+            ,       fee_fee.*
+            FROM    opusCollege.fee_fee
+            ,       opusCollege.subjectBlockStudyGradeType
+            ,       opusCollege.studyPlanDetail
+            ,       opusCollege.studyPlanCardinalTimeUnit
+            ,       opusCollege.studyPlan
+            WHERE   studyPlan.id = studyPlanCardinalTimeUnit.studyPlanId
+            and     studyPlanCardinalTimeUnit.id = studyPlanDetail.studyPlanCardinalTimeUnitId
+            and     studyPlanDetail.subjectBlockId = subjectBlockStudyGradeType.subjectBlockId
+            and     studyPlanDetail.studyGradeTypeId = subjectBlockStudyGradeType.studyGradeTypeId
+            and     subjectBlockStudyGradeType.id = fee_fee.subjectBlockStudyGradeTypeId
+            AND     studyPlan.id = #{value}
+            union
+            SELECT  subjectBlockStudyGradeType.subjectBlockId
+            ,       subjectBlockStudyGradeType.studyGradeTypeId
+            ,       fee_fee.*
+            FROM    opusCollege.fee_fee
+            ,       opusCollege.subjectBlockStudyGradeType
+            ,       opusCollege.studyPlanDetail
+            ,       opusCollege.studyPlan
+            WHERE   1 = 1
+            and     studyPlan.id = studyPlanDetail.studyPlanId
+            and     studyPlanDetail.subjectBlockId = subjectBlockStudyGradeType.subjectBlockId
+            and     studyPlanDetail.studyGradeTypeId = subjectBlockStudyGradeType.studyGradeTypeId
+            and     subjectBlockStudyGradeType.id = fee_fee.subjectBlockStudyGradeTypeId
+            AND     studyPlan.id = #{value}
+    </select>
+    
+    <!--select id="findPossibleStudyGradeTypeFeesForStudyPlan" parameterClass="int" resultClass="Fee">
+            SELECT  fee_fee.*
+             ,       gradeType.description as gradeTypeDescription 
+            FROM    opusCollege.gradeType
+            ,       opusCollege.studyGradeType
+            ,       opuscollege.fee_fee
+            ,       opusCollege.studyPlanCardinalTimeUnit
+            ,       opusCollege.studyPlan
+            WHERE   studyPlan.id = studyPlanCardinalTimeUnit.studyPlanId
+            and     studyPlanCardinalTimeUnit.studyGradeTypeId = fee_fee.studyGradeTypeId
+            and     fee_fee.studyGradeTypeId = studyGradeType.id
+            and     studyGradeType.gradeTypeCode = gradeType.code
+            AND     studyPlan.id = #{value}                
+ 
+    </select -->
+    
+    <select id="findPossibleStudyGradeTypeFeesForStudyPlan" parameterType="int" resultType="Fee">
+            SELECT  fee_fee.* 
+            FROM    opusCollege.studyGradeType
+            ,       opuscollege.fee_fee
+            ,       opusCollege.studyPlanCardinalTimeUnit
+            ,       opusCollege.studyPlan
+            WHERE   studyPlan.id = studyPlanCardinalTimeUnit.studyPlanId
+            and     studyPlanCardinalTimeUnit.studyGradeTypeId = fee_fee.studyGradeTypeId
+            and     fee_fee.studyGradeTypeId = studyGradeType.id
+            AND     studyPlan.id = #{value}                
+    </select>
+    
+    
+    <select id="findPossibleEducationAreaFeesForStudyPlan" parameterType="map" resultType="Fee">
+    	select  fee_fee.*
+		from    opusCollege.gradeType
+		,       opuscollege.fee_fee
+		,       opusCollege.studyPlan
+		,       opusCollege.academicYear
+		where   studyPlan.gradeTypeCode = gradeType.code
+		and     fee_fee.academicYearId = academicYear.id
+		and     ((fee_fee.educationAreaCode = gradeType.educationAreaCode or fee_fee.educationAreaCode is null or fee_fee.educationAreaCode = '0')
+		and     (fee_fee.educationLevelCode = gradeType.educationLevelCode or fee_fee.educationLevelCode is null or fee_fee.educationLevelCode = '0')
+		and     fee_fee.academicYearId != 0)
+		AND     studyPlan.id = #{studyPlanId}
+		and     lang = #{language}
+		and     academicYear.description  &lt;=  #{maxAcademicYear}
+    </select>
+
+    <insert id="addFee" parameterType="Fee">
+        INSERT INTO
+        	opuscollege.fee_fee (
+        		feeDue
+		        ,categoryCode
+		        ,active
+	        	,subjectBlockStudyGradeTypeId 
+	        	,subjectStudyGradeTypeId
+	        	,studyGradeTypeId
+	        	,academicYearId
+                ,branchId
+	        	,numberOfInstallments
+                ,studyIntensityCode
+                ,studyTimeCode
+                ,studyFormCode
+                ,educationAreaCode
+                ,educationLevelCode
+                ,nationalityGroupCode
+                ,feeUnitCode
+                ,applicationMode
+                ,cardinalTimeUnitNumber
+		        ) values (
+		        #{feeDue}
+		        ,#{categoryCode}
+		        ,#{active}
+		        ,#{subjectBlockStudyGradeTypeId}
+		        ,#{subjectStudyGradeTypeId}
+		        ,#{studyGradeTypeId}
+		        ,#{academicYearId}
+                ,#{branchId}
+		        ,#{numberOfInstallments}
+                ,#{studyIntensityCode}
+                ,#{studyTimeCode}
+                ,#{studyFormCode}
+                ,#{educationAreaCode}
+                ,#{educationLevelCode}
+                ,#{nationalityGroupCode}
+                ,#{feeUnitCode}
+                ,#{applicationMode}
+                ,#{cardinalTimeUnitNumber}
+        	)
+        <selectKey keyProperty="id" resultType="int">
+            SELECT currVal('opuscollege.fee_feeSeq')
+        </selectKey> 
+    </insert>
+
+    <insert id="addFeeHistory" parameterType="Fee">
+        INSERT INTO
+            audit.fee_fee_hist (
+                operation
+                ,writeWho
+        <!--  , writeWhen: is written automatically-->
+                ,id
+                ,feeDue
+                ,categoryCode
+                ,active
+                ,subjectBlockStudyGradeTypeId 
+                ,subjectStudyGradeTypeId
+                ,studyGradeTypeId
+                ,academicYearId
+                ,branchId
+                ,numberOfInstallments
+                ,studyIntensityCode
+                ,studyTimeCode
+                ,studyFormCode
+                ,educationAreaCode
+                ,educationLevelCode
+                ,nationalityGroupCode
+                ,feeUnitCode
+                ,applicationMode
+                ,cardinalTimeUnitNumber
+                ) values (
+                'I'
+                ,#{writeWho}
+                ,#{id}
+                ,#{feeDue}
+                ,#{categoryCode}
+                ,#{active}
+                ,#{subjectBlockStudyGradeTypeId}
+                ,#{subjectStudyGradeTypeId}
+                ,#{studyGradeTypeId}
+                ,#{academicYearId}
+                ,#{branchId}
+                ,#{numberOfInstallments}
+                ,#{studyIntensityCode}
+                ,#{studyTimeCode}
+                ,#{studyFormCode}
+                ,#{educationAreaCode}
+                ,#{educationLevelCode}
+                ,#{nationalityGroupCode}
+                ,#{feeUnitCode}
+                ,#{applicationMode}
+                ,#{cardinalTimeUnitNumber}
+            )
+    </insert>
+
+    <update id="updateFee" parameterType="Fee">
+        UPDATE	opuscollege.fee_fee
+	    SET		
+	    		feeDue			= #{feeDue}
+	        	,categoryCode = #{categoryCode}
+	        	,active        	= #{active}
+	        	,subjectBlockStudyGradeTypeId = #{subjectBlockStudyGradeTypeId}
+	        	,subjectStudyGradeTypeId = #{subjectStudyGradeTypeId}
+	        	,studyGradeTypeId = #{studyGradeTypeId}
+	        	,academicYearId = #{academicYearId}
+	        	,numberOfInstallments = #{numberOfInstallments}
+                ,studyIntensityCode = #{studyIntensityCode}
+                ,studyTimeCode = #{studyTimeCode}
+                ,studyFormCode = #{studyFormCode}
+                ,educationAreaCode = #{educationAreaCode}
+                ,educationLevelCode = #{educationLevelCode}
+                ,nationalityGroupCode = #{nationalityGroupCode}
+                ,feeUnitCode = #{feeUnitCode}
+                ,applicationMode = #{applicationMode}
+                ,cardinalTimeUnitNumber = #{cardinalTimeUnitNumber}
+	    WHERE	id = #{id}
+    </update>
+
+    <insert id="updateFeeHistory" parameterType="Fee">
+        INSERT INTO
+            audit.fee_fee_hist (
+                operation
+                ,writeWho
+        <!--  , writeWhen: is written automatically-->
+                ,id
+                ,feeDue
+                ,categoryCode
+                ,active
+                ,subjectBlockStudyGradeTypeId 
+                ,subjectStudyGradeTypeId
+                ,studyGradeTypeId
+                ,academicYearId
+                ,branchId
+                ,numberOfInstallments
+                ,studyIntensityCode
+                ,studyTimeCode
+                ,studyFormCode
+                ,educationAreaCode
+                ,educationLevelCode
+                ,nationalityGroupCode
+                ,feeUnitCode
+                ,applicationMode
+                ,cardinalTimeUnitNumber
+                ) values (
+                'U'
+                ,#{writeWho}
+                ,#{id}
+                ,#{feeDue}
+                ,#{categoryCode}
+                ,#{active}
+                ,#{subjectBlockStudyGradeTypeId}
+                ,#{subjectStudyGradeTypeId}
+                ,#{studyGradeTypeId}
+                ,#{academicYearId}
+                ,#{branchId}
+                ,#{numberOfInstallments}
+                ,#{studyIntensityCode}
+                ,#{studyTimeCode}
+                ,#{studyFormCode}
+                ,#{educationAreaCode}
+                ,#{educationLevelCode}
+                ,#{nationalityGroupCode}
+                ,#{feeUnitCode}
+                ,#{applicationMode}
+                ,#{cardinalTimeUnitNumber}
+            )
+    </insert>
+
+    <delete id="deleteFee" parameterType="int">
+        DELETE 
+        FROM	opuscollege.fee_fee
+        WHERE	id  = #{value}
+    </delete>
+
+
+    <insert id="transferFeesWithStudyGradeTypeId" parameterType="map">
+        insert into opuscollege.fee_fee (
+                feeDue
+                ,categoryCode
+                ,active
+                ,subjectBlockStudyGradeTypeId 
+                ,subjectStudyGradeTypeId
+                ,studyGradeTypeId
+                ,academicYearId
+                ,branchId
+                ,numberOfInstallments
+                ,studyIntensityCode
+                ,nationalityGroupCode
+                ,feeUnitCode
+                ,applicationMode
+                ,cardinalTimeUnitNumber
+                ,studyTimeCode
+                ,studyFormCode
+                ,educationAreaCode
+                ,educationLevelCode
+                ,transferId
+        ) select 
+                feeDue
+                ,categoryCode
+                ,active
+                ,subjectBlockStudyGradeTypeId 
+                ,subjectStudyGradeTypeId
+                , #{targetStudyGradeTypeId}
+                ,academicYearId
+                ,branchId
+                ,numberOfInstallments
+                ,studyIntensityCode
+                ,nationalityGroupCode
+                ,feeUnitCode
+                ,applicationMode
+                ,cardinalTimeUnitNumber
+                ,studyTimeCode
+                ,studyFormCode
+                ,educationAreaCode
+                ,educationLevelCode
+                ,transferId
+        from opuscollege.fee_fee sourceFee
+        where sourceFee.studyGradeTypeid = #{sourceStudyGradeTypeId}
+                and not exists (
+                    select * from opuscollege.fee_fee targetFee
+                    where targetFee.studyGradeTypeid = #{targetStudyGradeTypeId}
+                      and targetFee.transferId = sourceFee.transferId
+<!--                     where targetFee.branchid = sourceFee.branchid -->
+<!--                       and targetFee.categorycode = sourceFee.categorycode -->
+<!--                       and targetFee.feeunitcode = sourceFee.feeunitcode -->
+<!--                       and targetFee.cardinaltimeunitnumber = sourceFee.cardinaltimeunitnumber -->
+<!--                       and targetFee.studyIntensityCode = sourceFee.studyIntensityCode -->
+<!--                       and targetFee.studyGradeTypeid = #{targetStudyGradeTypeId} -->
+                )
+        order by sourceFee.id
+    </insert>
+
+    <!-- Transfer one academicYear fee to the given target academic year (if it does not yet exist there) -->
+    <insert id="transferAcademicYearFee" parameterType="map">
+        insert into opuscollege.fee_fee (
+                feeDue
+                ,categoryCode
+                ,active
+                ,subjectBlockStudyGradeTypeId
+                ,subjectStudyGradeTypeId
+                ,studyGradeTypeId
+                ,academicYearId
+                ,branchId
+                ,numberOfInstallments
+                ,studyIntensityCode
+                ,studyTimeCode
+                ,studyFormCode
+                ,educationAreaCode
+                ,educationLevelCode
+                ,nationalityGroupCode
+                ,feeUnitCode
+                ,applicationMode
+                ,cardinalTimeUnitNumber
+                ,transferId
+        ) select 
+                feeDue
+                ,categoryCode
+                ,active
+                ,subjectBlockStudyGradeTypeId 
+                ,subjectStudyGradeTypeId
+                ,studyGradeTypeId
+                ,#{targetAcademicYearId}
+                ,branchId
+                ,numberOfInstallments
+                ,studyIntensityCode
+                ,studyTimeCode
+                ,studyFormCode
+                ,educationAreaCode
+                ,educationLevelCode
+                ,nationalityGroupCode
+                ,feeUnitCode
+                ,applicationMode
+                ,cardinalTimeUnitNumber
+                ,transferId
+        from opuscollege.fee_fee sourceFee
+        where sourceFee.id = #{sourceFeeId}
+                and not exists (
+                    select * from opuscollege.fee_fee targetFee
+                    where targetFee.transferId = sourceFee.transferId
+                      and targetFee.academicYearId = #{targetAcademicYearId}
+                )
+        order by sourceFee.id
+
+        <!-- TODO After upgrading to myBatis 3 use either useGeneratedKeys on insert 
+             or read currval in seperate SQL only if insert() returns 1 as the number of inserted rows -->
+        <selectKey keyProperty="id" resultType="int">
+            SELECT currVal('opuscollege.fee_feeSeq')
+        </selectKey>     
+    </insert>
+    
+    <insert id="transferSubjectFees" parameterType="map">
+        insert into opuscollege.fee_fee (
+                feeDue
+                ,categoryCode
+                ,active
+                ,subjectBlockStudyGradeTypeId 
+                ,subjectStudyGradeTypeId
+                ,studyGradeTypeId
+                ,academicYearId
+                ,numberOfInstallments
+                ,studyIntensityCode
+                ,studyTimeCode
+                ,studyFormCode
+                ,nationalityGroupCode
+                ,feeUnitCode
+                ,applicationMode
+                ,cardinalTimeUnitNumber
+                ,educationAreaCode
+                ,educationLevelCode
+                ,transferId
+        ) select
+                sourceFee.feeDue
+                ,sourceFee.categoryCode
+                ,sourceFee.active
+                ,sourceFee.subjectBlockStudyGradeTypeId 
+                ,targetsubjectstudygradetype.id
+                ,sourceFee.studyGradeTypeId
+                ,sourceFee.academicYearId
+                ,sourceFee.numberOfInstallments
+                ,sourceFee.studyIntensityCode
+                ,sourceFee.studyTimeCode
+                ,sourceFee.studyFormCode
+                ,sourceFee.nationalityGroupCode
+                ,sourceFee.feeUnitCode
+                ,sourceFee.applicationMode
+                ,sourceFee.cardinalTimeUnitNumber
+                ,sourceFee.educationAreaCode
+                ,sourceFee.educationLevelCode
+                ,sourceFee.transferId
+        from opuscollege.fee_fee sourceFee
+        inner join opuscollege.subjectstudygradetype sourceSubjectStudyGradeType
+            on  sourceFee.subjectstudygradetypeid = sourceSubjectStudyGradeType.id
+        inner join opuscollege.studygradetype sourcestudygradetype
+            on  sourceSubjectStudyGradeType.studygradetypeid = sourcestudygradetype.id
+            and sourcestudygradetype.currentAcademicYearId = #{sourceAcademicYearId}
+        inner join opuscollege.subject sourceSubject
+            on  sourceSubjectStudyGradeType.subjectid = sourceSubject.id
+            and sourceSubject.currentAcademicYearId = #{sourceAcademicYearId}
+
+        inner join opuscollege.studygradetype targetstudygradetype
+            on  targetstudygradetype.studyId = sourcestudygradetype.studyId
+            and targetstudygradetype.gradeTypeCode = sourcestudygradetype.gradeTypeCode
+            and targetstudygradetype.studyTimeCode = sourcestudygradetype.studyTimeCode
+            and targetstudygradetype.studyFormCode = sourcestudygradetype.studyFormCode
+            and targetstudygradetype.currentAcademicYearId = #{targetAcademicYearId}
+        inner join opuscollege.subject targetSubject
+            on  targetSubject.subjectcode = sourceSubject.subjectcode
+            and targetSubject.subjectDescription = sourceSubject.subjectDescription
+            and targetSubject.currentAcademicYearId = #{targetAcademicYearId}
+        inner join opuscollege.subjectstudygradetype targetsubjectstudygradetype
+            on  targetsubjectstudygradetype.studygradetypeid = targetstudygradetype.id
+            and targetsubjectstudygradetype.subjectid = targetSubject.id
+
+        where not exists (
+                    select * from opuscollege.fee_fee targetFee
+                    where targetFee.subjectstudygradetypeid = targetsubjectstudygradetype.id
+                )
+        order by sourceFee.id
+
+    </insert>
+
+    <insert id="transferSubjectBlockFees" parameterType="map">
+        insert into opuscollege.fee_fee (
+                feeDue
+                ,categoryCode
+                ,active
+                ,subjectBlockStudyGradeTypeId 
+                ,subjectStudyGradeTypeId
+                ,studyGradeTypeId
+                ,academicYearId
+                ,numberOfInstallments
+                ,studyIntensityCode
+                ,nationalityGroupCode
+                ,feeUnitCode
+                ,applicationMode
+                ,cardinalTimeUnitNumber
+                ,studyTimeCode
+                ,studyFormCode
+                ,educationAreaCode
+                ,educationLevelCode
+                ,transferId
+        ) select
+                sourceFee.feeDue
+                ,sourceFee.categoryCode
+                ,sourceFee.active
+                ,targetsubjectblockstudygradetype.id 
+                ,sourceFee.subjectStudyGradeTypeId
+                ,sourceFee.studyGradeTypeId
+                ,sourceFee.academicYearId
+                ,sourceFee.numberOfInstallments
+                ,sourceFee.studyIntensityCode
+                ,sourceFee.nationalityGroupCode
+                ,sourceFee.feeUnitCode
+                ,sourceFee.applicationMode
+                ,sourceFee.cardinalTimeUnitNumber
+                ,sourceFee.studyTimeCode
+                ,sourceFee.studyFormCode
+                ,sourceFee.educationAreaCode
+                ,sourceFee.educationLevelCode
+                ,sourceFee.transferId
+        from opuscollege.fee_fee sourceFee
+        inner join opuscollege.subjectblockstudygradetype sourcesubjectblockstudygradetype
+            on  sourceFee.subjectblockstudygradetypeid = sourcesubjectblockstudygradetype.id
+        inner join opuscollege.studygradetype sourcestudygradetype
+            on  sourcesubjectblockstudygradetype.studygradetypeid = sourcestudygradetype.id
+            and sourcestudygradetype.currentAcademicYearId = #{sourceAcademicYearId}
+        inner join opuscollege.subjectBlock sourceSubjectBlock
+            on  sourcesubjectblockstudygradetype.subjectblockid = sourceSubjectBlock.id
+            and sourceSubjectBlock.currentAcademicYearId = #{sourceAcademicYearId}
+
+        inner join opuscollege.studygradetype targetstudygradetype
+            on  targetstudygradetype.studyId = sourcestudygradetype.studyId
+            and targetstudygradetype.gradeTypeCode = sourcestudygradetype.gradeTypeCode
+            and targetstudygradetype.studyTimeCode = sourcestudygradetype.studyTimeCode
+            and targetstudygradetype.studyFormCode = sourcestudygradetype.studyFormCode
+            and targetstudygradetype.currentAcademicYearId = #{targetAcademicYearId}
+        inner join opuscollege.subjectBlock targetSubjectBlock
+            on  targetSubjectBlock.subjectBlockcode = sourceSubjectBlock.subjectBlockcode
+            and targetSubjectBlock.subjectBlockDescription = sourceSubjectBlock.subjectBlockDescription
+            and targetSubjectBlock.currentAcademicYearId = #{targetAcademicYearId}
+        inner join opuscollege.subjectblockstudygradetype targetsubjectblockstudygradetype
+            on  targetsubjectblockstudygradetype.studygradetypeid = targetstudygradetype.id
+            and targetsubjectblockstudygradetype.subjectblockid = targetSubjectBlock.id
+
+        where not exists
+        ( select * from opuscollege.fee_fee targetFee
+          where targetFee.subjectblockstudygradetypeid = targetsubjectblockstudygradetype.id
+        )
+        order by sourceFee.id
+    </insert>
+
+    <insert id="deleteFeeHistory" parameterType="Fee">
+        INSERT INTO
+            audit.fee_fee_hist (
+                operation
+                ,writeWho
+        <!--  , writeWhen: is written automatically-->
+                ,id
+                ,feeDue
+                ,categoryCode
+                ,active
+                ,subjectBlockStudyGradeTypeId 
+                ,subjectStudyGradeTypeId
+                ,studyGradeTypeId
+                ,academicYearId
+                ,branchId
+                ,numberOfInstallments
+                ,studyIntensityCode
+                ,studyTimeCode
+                ,studyFormCode
+                ,educationAreaCode
+                ,educationLevelCode
+                ,nationalityGroupCode
+                ,feeUnitCode
+                ,applicationMode
+                ,cardinalTimeUnitNumber
+                ) values (
+                'D'
+                ,#{writeWho}
+                ,#{id}
+                ,#{feeDue}
+                ,#{categoryCode}
+                ,#{active}
+                ,#{subjectBlockStudyGradeTypeId}
+                ,#{subjectStudyGradeTypeId}
+                ,#{studyGradeTypeId}
+                ,#{academicYearId}
+                ,#{branchId}
+                ,#{numberOfInstallments}
+                ,#{studyIntensityCode}
+                ,#{studyTimeCode}
+                ,#{studyFormCode}
+                ,#{educationAreaCode}
+                ,#{educationLevelCode}
+                ,#{nationalityGroupCode}
+                ,#{feeUnitCode}
+                ,#{applicationMode}
+                ,#{cardinalTimeUnitNumber}
+            )
+    </insert>
+ 
+    <select id="findFeesForStudyGradeType" parameterType="int" resultType="Fee">
+            SELECT  fee_fee.*
+            FROM    opuscollege.fee_fee
+            WHERE   fee_fee.studyGradeTypeId = #{value}
+    </select>
+
+    <delete id="deleteFeesForStudyGradeType" parameterType="int">
+        DELETE 
+        FROM    opuscollege.fee_fee
+        WHERE   fee_fee.studyGradeTypeId = #{value}
+    </delete>
+
+    <select id="findFeesForSubjectStudyGradeType" parameterType="int" resultType="Fee">
+            SELECT  fee_fee.*
+            FROM    opuscollege.fee_fee
+            WHERE   fee_fee.subjectStudyGradeTypeId = #{value}
+    </select>
+
+    <delete id="deleteFeesForSubjectStudyGradeType" parameterType="int">
+        DELETE 
+        FROM    opuscollege.fee_fee
+        WHERE   fee_fee.subjectStudyGradeTypeId = #{value}
+    </delete>
+
+    <select id="findFeesForSubjectBlockStudyGradeType" parameterType="int" resultType="Fee">
+            SELECT  fee_fee.*
+            FROM    opuscollege.fee_fee
+            WHERE   fee_fee.subjectBlockStudyGradeTypeId = #{value}
+    </select>
+
+    <delete id="deleteFeesForSubjectBlockStudyGradeType" parameterType="int">
+        DELETE 
+        FROM    opuscollege.fee_fee
+        WHERE   fee_fee.subjectBlockStudyGradeTypeId = #{value}
+    </delete>
+
+    <!-- In contrast to findFeesByParams the exact values of cardinalTimeUnitNumber and studyIntensityCode are used -->
+    <select id="existsFee" resultType="boolean">
+        SELECT TRUE
+        WHERE EXISTS(
+            SELECT  *
+            FROM    opuscollege.fee_fee
+            WHERE true
+            <if test="categoryCode != null">
+                AND categoryCode = #{categoryCode}
+            </if>
+            <if test="studyGradeTypeId != null">
+                AND studyGradeTypeId = #{studyGradeTypeId}
+            </if>
+            <if test="subjectStudyGradeTypeId != null">
+                AND subjectStudyGradeTypeId = #{subjectStudyGradeTypeId}
+            </if>
+            <if test="subjectBlockStudyGradeTypeId != null">
+                AND subjectBlockStudyGradeTypeId = #{subjectBlockStudyGradeTypeId}
+            </if>
+            <if test="academicYearId != null">
+                AND academicYearId = #{academicYearId}
+            </if>
+            <if test="branchId != null">
+                AND branchId = #{branchId}
+            </if>
+            <if test="studyIntensityCode != null">
+                AND (studyIntensityCode = #{studyIntensityCode})
+            </if>
+            <if test="studyFormCode != null">
+                AND (studyFormCode = #{studyFormCode})
+            </if>
+            <if test="studyTimeCode != null">
+                AND (studyTimeCode = #{studyTimeCode})
+            </if>
+            <if test="educationAreaCode != null">
+                AND (educationAreaCode = #{educationAreaCode})
+            </if>
+            <if test="educationLevelCode != null">
+                AND (educationLevelCode = #{educationLevelCode})
+            </if>
+            <if test="feeUnitCode != null">
+                AND feeUnitCode = #{feeUnitCode}
+            </if>
+            <if test="cardinalTimeUnitNumber != null">
+                AND (cardinalTimeUnitNumber = #{cardinalTimeUnitNumber})
+            </if>
+            <if test="applicationMode != null">
+                AND applicationMode = #{applicationMode}
+            </if>
+        )
+    </select>
+    
+
+</mapper>

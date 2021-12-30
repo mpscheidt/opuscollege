@@ -1,0 +1,623 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ***** BEGIN LICENSE BLOCK *****
+  Version: MPL 1.1/GPL 2.0/LGPL 2.1
+  
+  The contents of this file are subject to the Mozilla Public License Version
+  1.1 (the "License"); you may not use this file except in compliance with
+  the License. You may obtain a copy of the License at
+  http://www.mozilla.org/MPL/
+  
+  Software distributed under the License is distributed on an "AS IS" basis,
+  WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+  for the specific language governing rights and limitations under the
+  License.
+  
+  The Original Code is Opus-College opus module code.
+  
+  The Initial Developer of the Original Code is
+  Center for Information Services, Radboud University Nijmegen.
+  Portions created by the Initial Developer are Copyright (C) 2008
+  the Initial Developer. All Rights Reserved.
+  
+  Contributor(s):
+    For Java files, see Javadoc @author tags.
+  
+  Alternatively, the contents of this file may be used under the terms of
+  either the GNU General Public License Version 2 or later (the "GPL"), or
+  the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+  in which case the provisions of the GPL or the LGPL are applicable instead
+  of those above. If you wish to allow use of your version of this file only
+  under the terms of either the GPL or the LGPL, and not to allow others to
+  use your version of this file under the terms of the MPL, indicate your
+  decision by deleting the provisions above and replace them with the notice
+  and other provisions required by the GPL or the LGPL. If you do not delete
+  the provisions above, a recipient may use your version of this file under
+  the terms of any one of the MPL, the GPL or the LGPL.
+  
+  ***** END LICENSE BLOCK *****
+-->
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+      version="3.0">
+
+    <!-- DYNAMICALLY BUILT WEB.XML -->
+    
+    <session-config>
+        <session-timeout>30</session-timeout>
+    </session-config>    
+
+    <context-param>
+        <param-name>spring.profiles.active</param-name>
+        <param-value>production</param-value>
+    </context-param>
+
+    <!-- Beans in these files will makeup the configuration of the root web application context -->
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>
+            classpath*:org/uci/opus/*/application.xml
+        </param-value>
+    </context-param>
+
+
+    <!-- gain access to messages.properties files without having to be logged in -->
+    <context-param>
+        <param-name>javax.servlet.jsp.jstl.fmt.localizationContext</param-name>
+        <param-value>messages</param-value>
+    </context-param>    
+<!--
+  ***** BEGIN LICENSE BLOCK *****
+  Version: MPL 1.1/GPL 2.0/LGPL 2.1
+  
+  The contents of this file are subject to the Mozilla Public License Version
+  1.1 (the "License"); you may not use this file except in compliance with
+  the License. You may obtain a copy of the License at
+  http://www.mozilla.org/MPL/
+  
+  Software distributed under the License is distributed on an "AS IS" basis,
+  WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+  for the specific language governing rights and limitations under the
+  License.
+  
+  The Original Code is Opus-College mozambique module code.
+  
+  The Initial Developer of the Original Code is
+  Center for Information Services, Radboud University Nijmegen.
+  Portions created by the Initial Developer are Copyright (C) 2008
+  the Initial Developer. All Rights Reserved.
+  
+  Contributor(s):
+    For Java files, see Javadoc @author tags.
+  
+  Alternatively, the contents of this file may be used under the terms of
+  either the GNU General Public License Version 2 or later (the "GPL"), or
+  the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+  in which case the provisions of the GPL or the LGPL are applicable instead
+  of those above. If you wish to allow use of your version of this file only
+  under the terms of either the GPL or the LGPL, and not to allow others to
+  use your version of this file under the terms of the MPL, indicate your
+  decision by deleting the provisions above and replace them with the notice
+  and other provisions required by the GPL or the LGPL. If you do not delete
+  the provisions above, a recipient may use your version of this file under
+  the terms of any one of the MPL, the GPL or the LGPL.
+  
+  ***** END LICENSE BLOCK *****
+-->
+    <display-name>eSURA</display-name>
+
+    <!-- load locale default value:
+         this is chosen if there is no language equal to
+         the one in the Accept-Language header value - for instance at login
+     -->
+    <context-param>
+        <param-name>javax.servlet.jsp.jstl.fmt.fallbackLocale</param-name>
+        <!--    
+                en_ZM: Zambia 
+                pt: Mozambique 
+                nl: Netherlands
+         -->
+        <param-value>pt</param-value>
+    </context-param> 
+
+    <!-- load nationality default values: -->
+    <context-param>
+        <param-name>iNationality</param-name>
+        <!--    
+                130: Zambia 
+                132: Mozambique 
+                36: Netherlands
+         -->
+        <param-value>132</param-value>
+    </context-param> 
+
+    <!-- set default value number of rows on overviews for paging: -->
+    <context-param>
+        <param-name>iPaging</param-name>
+        <param-value>20</param-value>
+    </context-param> 
+    
+    <!-- set default value number of rows turnoverpoint one page more or less for paging: -->
+    <context-param>
+        <param-name>iPagingTurnover</param-name>
+        <param-value>11</param-value>
+    </context-param> 
+
+    <!-- set default value length of titles to avoid overflow: -->
+    <context-param>
+        <param-name>iTitleLength</param-name>
+        <param-value>45</param-value>
+    </context-param> 
+
+    <!-- set max value for number of cardinal time units : -->
+    <context-param>
+        <param-name>init.maxcardinaltimeunits</param-name>
+        <param-value>14</param-value>
+    </context-param> 
+    
+    <!-- set max value for number of subjects per cardinal time unit : -->
+    <context-param>
+        <param-name>init.maxsubjectspercardinaltimeunit</param-name>
+        <param-value>30</param-value>
+    </context-param>
+    
+    <!-- set max value for number of failed subjects per cardinal time unit : -->
+    <context-param>
+        <param-name>init.maxfailedsubjectspercardinaltimeunit</param-name>
+        <param-value>10</param-value>
+    </context-param>
+    
+    <!-- set default value target application: -->
+    <context-param>
+        <param-name>iAppname</param-name>
+        <!--    
+                opus: Zambia, Netherlands 
+                eSURA: Mozambique 
+         -->
+        <param-value>eSURA</param-value>
+    </context-param> 
+
+    <context-param>
+        <param-name>iSecondStudy</param-name>
+        <!--    
+                Y: Zambia, Netherlands  
+                N: Mozambique 
+         -->
+        <param-value>N</param-value>
+    </context-param> 
+
+    <!-- <context-param>
+        <param-name>init.healthissuesvisible</param-name>
+           
+                Y: Mozambique, Netherlands  
+                N: Zambia 
+         
+        <param-value>Y</param-value>
+    </context-param> -->
+
+    <context-param>
+        <param-name>iMajorMinor</param-name>
+        <!--    
+                Y: Zambia, Netherlands  
+                N: Mozambique 
+         -->
+        <param-value>N</param-value>
+    </context-param> 
+
+    <context-param>
+        <param-name>iCreditAmountVisible</param-name>
+        <!--    
+                N: UNZA (Zambia), Netherlands  
+                Y: CBU (Zambia), Mozambique 
+         -->
+          <param-value>Y</param-value>
+    </context-param> 
+
+    <context-param>
+        <param-name>iApplicationNumber</param-name>
+        <!--    
+                N: UNZA (Zambia), Netherlands, Mozambique
+                Y: CBU (Zambia) 
+         -->
+          <param-value>N</param-value>
+    </context-param> 
+
+    <context-param>
+        <param-name>iMobilePhoneRequired</param-name>
+        <!--    
+                true: Zambia 
+                false: Mozambique, Netherlands 
+         -->
+        <param-value>false</param-value>
+    </context-param> 
+
+    <context-param>
+        <param-name>iEmailAddressRequired</param-name>
+        <!--    
+                true: Zambia 
+                false: Mozambique, Netherlands 
+         -->
+        <param-value>false</param-value>
+    </context-param> 
+
+    <context-param>
+        <param-name>init.feediscountpercentages</param-name>
+        <!--    
+                N: Mozambique, Netherlands 
+                Y: Zambia 
+         -->
+        <param-value>N</param-value>
+    </context-param> 
+
+    <context-param>
+        <param-name>init.useofparttimestudygradetypes</param-name>
+        <!--    
+                N: Mozambique, Netherlands 
+                Y: Zambia 
+         -->
+        <param-value>N</param-value>
+    </context-param> 
+
+    <context-param>
+        <param-name>init.preferredPersonSorting</param-name>
+        <!--    
+                firstnamesFull: Mozambique 
+                surnameFull: Zambia, Netherlands
+         -->
+        <param-value>firstnamesFull</param-value>
+    </context-param> 
+
+    <!-- MoVe - modular structure: name of dispatcher servlet is the name of the target project -->
+    <servlet>
+        <servlet-name>eSURA</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>
+                /WEB-INF/modules/*/web-context.xml
+            </param-value>
+        </init-param>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+
+    <!-- MoVe - modular structure: name of dispatcher servlet is the name of the target project -->
+    <servlet-mapping>
+        <servlet-name>eSURA</servlet-name>
+        <url-pattern>/</url-pattern> 
+    </servlet-mapping>
+<!--
+  ***** BEGIN LICENSE BLOCK *****
+  Version: MPL 1.1/GPL 2.0/LGPL 2.1
+  
+  The contents of this file are subject to the Mozilla Public License Version
+  1.1 (the "License"); you may not use this file except in compliance with
+  the License. You may obtain a copy of the License at
+  http://www.mozilla.org/MPL/
+  
+  Software distributed under the License is distributed on an "AS IS" basis,
+  WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+  for the specific language governing rights and limitations under the
+  License.
+  
+  The Original Code is Opus-College ucm module code.
+  
+  The Initial Developer of the Original Code is
+  Center for Information Services, Radboud University Nijmegen.
+  Portions created by the Initial Developer are Copyright (C) 2008
+  the Initial Developer. All Rights Reserved.
+  
+  Contributor(s):
+    For Java files, see Javadoc @author tags.
+  
+  Alternatively, the contents of this file may be used under the terms of
+  either the GNU General Public License Version 2 or later (the "GPL"), or
+  the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+  in which case the provisions of the GPL or the LGPL are applicable instead
+  of those above. If you wish to allow use of your version of this file only
+  under the terms of either the GPL or the LGPL, and not to allow others to
+  use your version of this file under the terms of the MPL, indicate your
+  decision by deleting the provisions above and replace them with the notice
+  and other provisions required by the GPL or the LGPL. If you do not delete
+  the provisions above, a recipient may use your version of this file under
+  the terms of any one of the MPL, the GPL or the LGPL.
+  
+  ***** END LICENSE BLOCK *****
+-->
+
+    <context-param>
+        <param-name>initMenuLogo</param-name>
+        <!-- The logo shown in the left upper corner of the menu
+         -->
+        <param-value>/images/ucm-menu-logo.gif</param-value>
+    </context-param> 
+
+    <context-param>
+        <param-name>initWelcomeScreen</param-name>
+        <!-- The university specific welcome screen -->
+        <param-value>/WEB-INF/views/ucm/ucmWelcome.jsp</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>initFooterScreen</param-name>
+        <!-- The custom footer 
+             Note: need for absolute path because footer is imported from different locations -->
+        <!-- Left empty to use defualt footer -->
+        <param-value></param-value>
+    </context-param> 
+
+<!--
+  ***** BEGIN LICENSE BLOCK *****
+  Version: MPL 1.1/GPL 2.0/LGPL 2.1
+  
+  The contents of this file are subject to the Mozilla Public License Version
+  1.1 (the "License"); you may not use this file except in compliance with
+  the License. You may obtain a copy of the License at
+  http://www.mozilla.org/MPL/
+  
+  Software distributed under the License is distributed on an "AS IS" basis,
+  WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+  for the specific language governing rights and limitations under the
+  License.
+  
+  The Original Code is Opus-College opus module code.
+  
+  The Initial Developer of the Original Code is
+  Center for Information Services, Radboud University Nijmegen.
+  Portions created by the Initial Developer are Copyright (C) 2008
+  the Initial Developer. All Rights Reserved.
+  
+  Contributor(s):
+    For Java files, see Javadoc @author tags.
+  
+  Alternatively, the contents of this file may be used under the terms of
+  either the GNU General Public License Version 2 or later (the "GPL"), or
+  the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+  in which case the provisions of the GPL or the LGPL are applicable instead
+  of those above. If you wish to allow use of your version of this file only
+  under the terms of either the GPL or the LGPL, and not to allow others to
+  use your version of this file under the terms of the MPL, indicate your
+  decision by deleting the provisions above and replace them with the notice
+  and other provisions required by the GPL or the LGPL. If you do not delete
+  the provisions above, a recipient may use your version of this file under
+  the terms of any one of the MPL, the GPL or the LGPL.
+  
+  ***** END LICENSE BLOCK *****
+-->
+    <!-- image upload restricted to: -->
+    <context-param>
+        <param-name>image_mime</param-name>
+        <param-value>image/gif, image/png, image/pjpeg, image/jpeg,image/svg+xml</param-value>
+    </context-param>
+    
+    <!-- doc upload restricted to: -->
+    <context-param>
+        <param-name>doc_mime</param-name>
+        <param-value>image/pjpeg, image/jpeg, application/pdf, application/msword</param-value>
+    </context-param>        
+        
+    <!-- Bootstraps the root web application context before servlet initialization -->
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+
+    <!-- Make the HTTP request available in a thread local in RequestContextHolder.
+         This enables autowiring HttpServletRequest -->
+    <listener>
+        <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+    </listener>
+
+    <!-- The listener to notify Spring of new sessions (and avoid multiple logins per user) -->
+    <listener>
+        <listener-class>
+            org.springframework.security.web.session.HttpSessionEventPublisher
+        </listener-class>
+    </listener>
+
+    <!--  BEGIN JAWR Javascript and css bundling and optimization: -->
+        
+    <!--  Javascript JAWR servlet: -->
+    <servlet>
+        <servlet-name>JavascriptServlet</servlet-name>
+        <servlet-class>net.jawr.web.servlet.JawrServlet</servlet-class>
+        
+        <!-- Location in classpath of the config file -->
+        <init-param>
+            <param-name>configLocation</param-name>
+            <param-value>jawr.properties</param-value>
+        </init-param>
+        <load-on-startup>3</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>JavascriptServlet</servlet-name>
+        <url-pattern>*.js</url-pattern>
+    </servlet-mapping> 
+
+    <!--  CSS servlet: -->
+    <servlet>
+        <servlet-name>CSSServlet</servlet-name>
+        <servlet-class>net.jawr.web.servlet.JawrServlet</servlet-class>
+        
+        <!-- Location in classpath of the config file -->
+        <init-param>
+            <param-name>configLocation</param-name>
+            <param-value>jawr.properties</param-value>
+        </init-param>
+        <init-param>
+             <param-name>type</param-name>
+             <param-value>css</param-value>
+        </init-param>
+        <load-on-startup>4</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>CSSServlet</servlet-name>
+        <url-pattern>*.css</url-pattern>
+    </servlet-mapping> 
+  
+    <!--  END JAWR -->
+
+    <!-- START AJAX-SERVLETS - test for ajax with jquery
+    
+     <servlet>
+        <description>Study provider</description>
+        <display-name>Study provider</display-name>
+        <servlet-name>AjaxServletStudy</servlet-name>
+        <servlet-class>ajaxify.AjaxServletStudy</servlet-class>
+    </servlet>
+
+      <servlet-mapping>
+        <servlet-name>AjaxServletStudy</servlet-name>
+        <url-pattern>/AjaxServletStudy</url-pattern>
+      </servlet-mapping>
+ 
+    END AJAX-SERVLETS - test for ajax with jquery -->
+
+    <!-- 
+    <security-constraint>
+        <display-name>Opus College Security Constraints</display-name>
+        <web-resource-collection>
+            <web-resource-name>Protected Pages</web-resource-name>
+            start of core module 
+            <url-pattern>/college/address/*</url-pattern>
+            <url-pattern>/college/exam/*</url-pattern>
+            <url-pattern>/college/organization/*</url-pattern>
+            <url-pattern>/college/person/*</url-pattern>
+            <url-pattern>/college/report/*</url-pattern>
+            <url-pattern>/college/study/*</url-pattern>
+            <url-pattern>/college/subject/*</url-pattern>
+            <url-pattern>/college/start.view</url-pattern>
+             start of other modules 
+            <url-pattern>/fee/*</url-pattern>
+            <url-pattern>/report/*</url-pattern>
+            <url-pattern>/scholarship/*</url-pattern>
+            <http-method>GET</http-method>
+            <http-method>POST</http-method> 
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>admin</role-name>
+            <role-name>admin-C</role-name>
+            <role-name>admin-B</role-name>
+            <role-name>admin-S</role-name>
+            <role-name>admin-D</role-name>
+            <role-name>staff</role-name>
+            <role-name>teacher</role-name>
+            <role-name>student</role-name>
+            <role-name>guest</role-name>
+        </auth-constraint>
+        <user-data-constraint>
+            <transport-guarantee>NONE</transport-guarantee>
+        </user-data-constraint>
+   </security-constraint>
+
+    <login-config>
+        <auth-method>FORM</auth-method>
+        <realm-name>opuscollege-realm</realm-name>
+        <form-login-config>
+            <form-login-page>/login.jsp</form-login-page>
+            <form-error-page>/loginError.jsp</form-error-page>
+        </form-login-config>
+    </login-config>  
+  
+    <security-role>
+        <role-name>admin</role-name>
+    </security-role>
+    <security-role>
+        <role-name>admin-C</role-name>
+    </security-role>
+    <security-role>
+        <role-name>admin-B</role-name>
+    </security-role>
+   <security-role>
+        <role-name>admin-S</role-name>
+    </security-role>
+    <security-role>
+        <role-name>admin-D</role-name>
+    </security-role>
+    <security-role>
+        <role-name>staff</role-name>
+    </security-role>
+    <security-role>
+        <role-name>teacher</role-name>
+    </security-role>
+    <security-role>
+        <role-name>student</role-name>
+    </security-role>
+    <security-role>
+        <role-name>guest</role-name>
+    </security-role>
+    -->
+
+    <servlet>
+       <servlet-name>image</servlet-name>
+       <servlet-class>net.sf.jasperreports.j2ee.servlets.ImageServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+       <servlet-name>image</servlet-name>
+       <url-pattern>/report/image</url-pattern>
+    </servlet-mapping>
+
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list> 
+
+    <!-- JNDI data source may work without the resource-ref tag, but not always.
+         Omitting this may result in 'Name jdbc is not bound in this Context' errors.
+     -->
+    <resource-ref>
+        <description>opusCollege Datasource</description>
+        <res-ref-name>jdbc/opusCollege</res-ref-name>
+        <res-type>javax.sql.DataSource</res-type>
+        <res-auth>Container</res-auth>
+    </resource-ref>
+    
+    <filter>
+       <filter-name>trimFilter</filter-name>
+       <filter-class>com.cj.trim.trimFilter</filter-class>
+       <init-param>
+           <param-name>removeComments</param-name>
+           <param-value>true</param-value>
+       </init-param> 
+    </filter>
+
+    <filter-mapping>
+       <filter-name>trimFilter</filter-name>
+       <url-pattern>*.view</url-pattern>
+    </filter-mapping>
+    
+    <!-- Expect utf-8 request params in POST requests:
+         Browsers do not usually send the encoding information, but we know we want everything in UTF-8
+         see: http://stackoverflow.com/a/5928162/606662
+          -->
+    <filter>
+        <filter-name>encodingFilter</filter-name>
+        <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+        <init-param>
+           <param-name>encoding</param-name>
+           <param-value>UTF-8</param-value>
+        </init-param>
+        <init-param>
+           <param-name>forceEncoding</param-name>
+           <param-value>true</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>encodingFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <!-- Spring Security settings  -->
+
+	<filter>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+</web-app>

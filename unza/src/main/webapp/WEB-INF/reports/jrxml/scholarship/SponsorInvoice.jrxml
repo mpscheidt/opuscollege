@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version last-->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="SponsorInvoice" pageWidth="595" pageHeight="842" whenNoDataType="NoDataSection" columnWidth="535" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20" resourceBundle="org/uci/opus/unza/messages" uuid="846f8965-bd17-4d7d-bd66-b06b5ea0c50f">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="10"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<parameter name="whereClause" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[" AND studygradetype.id < 450"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="image_dir" class="java.io.File" isForPrompting="false">
+		<defaultValueExpression><![CDATA[new java.io.File(net.sf.jasperreports.engine.util.JRResourcesUtil.findClassLoaderResource("/images/report",null,null).getFile())]]></defaultValueExpression>
+	</parameter>
+	<parameter name="lang" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["en"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="orderClause" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="format" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["pdf"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="nameFormat" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[The format to display a student's name.
+This needs to be a key in the reportmessages.properties file]]></parameterDescription>
+		<defaultValueExpression><![CDATA["jasper.nameformat.surname_firstnames"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="reportLogo" class="net.sf.jasperreports.engine.JRRenderable" isForPrompting="false">
+		<defaultValueExpression><![CDATA[net.sf.jasperreports.engine.JRImageRenderer.getInstance($P{image_dir} + "\\report-logo.gif")]]></defaultValueExpression>
+	</parameter>
+	<parameter name="original" class="java.lang.Boolean" isForPrompting="false">
+		<defaultValueExpression><![CDATA[Boolean.FALSE]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     sch_sponsorinvoice."invoicenumber" AS sch_sponsorinvoice_invoicenumber,
+     sch_sponsorinvoice."invoicedate" AS sch_sponsorinvoice_invoicedate,
+     sch_sponsorinvoice."amount" AS sch_sponsorinvoice_amount,
+     sch_sponsorinvoice."active" AS sch_sponsorinvoice_active,
+     sch_sponsorinvoice."writewho" AS sch_sponsorinvoice_writewho,
+     sch_sponsorinvoice."writewhen" AS sch_sponsorinvoice_writewhen,
+     sch_sponsorinvoice."scholarshipid" AS sch_sponsorinvoice_scholarshipid,
+     sch_sponsorinvoice."nroftimesprinted" AS sch_sponsorinvoice_nrOfTimesPrinted,
+     sch_sponsorinvoice."cleared" AS sch_sponsorinvoice_cleared,
+     sch_scholarship."id" AS sch_scholarship_id,
+     sch_scholarship."scholarshiptypecode" AS sch_scholarship_scholarshiptypecode,
+     sch_scholarship."sponsorid" AS sch_scholarship_sponsorid,
+     sch_scholarship."active" AS sch_scholarship_active,
+     sch_scholarship."writewho" AS sch_scholarship_writewho,
+     sch_scholarship."writewhen" AS sch_scholarship_writewhen,
+     sch_scholarship."transferid" AS sch_scholarship_transferid,
+     sch_scholarship."description" AS sch_scholarship_description,
+     sch_sponsor."id" AS sch_sponsor_id,
+     sch_sponsor."code" AS sch_sponsor_code,
+     sch_sponsor."name" AS sch_sponsor_name,
+     sch_sponsor."active" AS sch_sponsor_active,
+     sch_sponsor."writewho" AS sch_sponsor_writewho,
+     sch_sponsor."writewhen" AS sch_sponsor_writewhen,
+     sch_sponsor."sponsortypecode" AS sch_sponsor_sponsortypecode,
+     sch_sponsor."academicyearid" AS sch_sponsor_academicyearid,
+     sch_sponsor."transferid" AS sch_sponsor_transferid
+FROM
+     "opuscollege"."sch_scholarship" sch_scholarship INNER JOIN "opuscollege"."sch_sponsorinvoice" sch_sponsorinvoice ON sch_scholarship."id" = sch_sponsorinvoice."scholarshipid"
+     INNER JOIN "opuscollege"."sch_sponsor" sch_sponsor ON sch_scholarship."sponsorid" = sch_sponsor."id"
+	WHERE true
+$P!{whereClause}]]>
+	</queryString>
+	<field name="sch_sponsorinvoice_invoicenumber" class="java.lang.String"/>
+	<field name="sch_sponsorinvoice_invoicedate" class="java.sql.Date"/>
+	<field name="sch_sponsorinvoice_amount" class="java.math.BigDecimal"/>
+	<field name="sch_sponsorinvoice_active" class="java.lang.String"/>
+	<field name="sch_sponsorinvoice_writewho" class="java.lang.String"/>
+	<field name="sch_sponsorinvoice_writewhen" class="java.sql.Timestamp"/>
+	<field name="sch_sponsorinvoice_scholarshipid" class="java.lang.Integer"/>
+	<field name="sch_sponsorinvoice_cleared" class="java.lang.Boolean"/>
+	<field name="sch_scholarship_id" class="java.lang.Integer"/>
+	<field name="sch_scholarship_scholarshiptypecode" class="java.lang.String"/>
+	<field name="sch_scholarship_sponsorid" class="java.lang.Integer"/>
+	<field name="sch_scholarship_active" class="java.lang.String"/>
+	<field name="sch_scholarship_writewho" class="java.lang.String"/>
+	<field name="sch_scholarship_writewhen" class="java.sql.Timestamp"/>
+	<field name="sch_scholarship_transferid" class="java.lang.Integer"/>
+	<field name="sch_scholarship_description" class="java.lang.String"/>
+	<field name="sch_sponsor_id" class="java.lang.Integer"/>
+	<field name="sch_sponsor_code" class="java.lang.String"/>
+	<field name="sch_sponsor_name" class="java.lang.String"/>
+	<field name="sch_sponsor_active" class="java.lang.String"/>
+	<field name="sch_sponsor_writewho" class="java.lang.String"/>
+	<field name="sch_sponsor_writewhen" class="java.sql.Timestamp"/>
+	<field name="sch_sponsor_sponsortypecode" class="java.lang.String"/>
+	<field name="sch_sponsor_academicyearid" class="java.lang.Integer"/>
+	<field name="sch_sponsor_transferid" class="java.lang.Integer"/>
+	<field name="sch_sponsorinvoice_nrOfTimesPrinted" class="java.lang.Integer"/>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band/>
+	</title>
+	<pageHeader>
+		<band>
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band/>
+	</columnHeader>
+	<detail>
+		<band height="500">
+			<image scaleImage="RetainShape" isUsingCache="false">
+				<reportElement uuid="1aaa39a8-8257-4b11-b260-c2d43c172171" key="image-1" x="0" y="0" width="65" height="47"/>
+				<imageExpression><![CDATA[$P{reportLogo}]]></imageExpression>
+			</image>
+			<textField isBlankWhenNull="false">
+				<reportElement uuid="0ce40b9f-714f-49ce-94d6-848685b241c2" key="header" x="0" y="47" width="535" height="53"/>
+				<textElement verticalAlignment="Middle">
+					<font size="18" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{scholarship.sponsorinvoice}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="7deb909e-80da-4c98-92ec-68069a5411b1" x="79" y="0" width="351" height="47"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[University of Zambia
+Bursar's department]]></text>
+			</staticText>
+			<textField isBlankWhenNull="false">
+				<reportElement uuid="71ff8aad-4b07-446a-8b56-213ef9083722" key="subject_name" mode="Opaque" x="430" y="0" width="105" height="47"/>
+				<box leftPadding="2">
+					<leftPen lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{sch_sponsorinvoice_nrOfTimesPrinted}  <= 1
+? $R{unza.sponsorinvoice.original}
+: $R{unza.sponsorinvoice.reprint}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement uuid="71ca58f2-6f2e-4e93-acec-2eaff2f16a4c" key="studygrade_name" mode="Opaque" x="0" y="140" width="110" height="20"/>
+				<box leftPadding="2">
+					<leftPen lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{scholarship.sponsor} + ":"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement uuid="3536b2cd-1bc5-4bca-9298-bc856352c519" key="studydescription_value" mode="Opaque" x="110" y="140" width="116" height="20"/>
+				<box leftPadding="2">
+					<leftPen lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{sch_sponsor_code}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement uuid="3536b2cd-1bc5-4bca-9298-bc856352c519" key="studydescription_value" mode="Opaque" x="226" y="140" width="309" height="20"/>
+				<box leftPadding="2">
+					<leftPen lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{sch_sponsor_name}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement uuid="742558a0-d548-463d-908d-ec4691dca86d" key="academicyear_name" mode="Opaque" x="0" y="160" width="110" height="20"/>
+				<box leftPadding="2">
+					<leftPen lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{jsp.general.scholarship} + ":"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement uuid="fd74caf9-1de5-4588-91e9-53fb5596798c" key="academicyear_value" mode="Opaque" x="110" y="160" width="425" height="20"/>
+				<box leftPadding="2">
+					<leftPen lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{sch_scholarship_description}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement uuid="1e2eaab2-b9a7-4829-bd58-5316918b0af1" key="studygrade_name" mode="Opaque" x="0" y="180" width="110" height="20"/>
+				<box leftPadding="2">
+					<leftPen lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{scholarship.invoicenumber} + ":"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement uuid="e06f71c0-3d0c-427a-b3fe-8d7506ac8e8b" key="studydescription_value" mode="Opaque" x="110" y="180" width="425" height="20"/>
+				<box leftPadding="2">
+					<leftPen lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{sch_sponsorinvoice_invoicenumber}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement uuid="71ff8aad-4b07-446a-8b56-213ef9083722" key="subject_name" mode="Opaque" x="0" y="200" width="110" height="20"/>
+				<box leftPadding="2">
+					<leftPen lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{scholarship.invoicedate} + ":"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement uuid="70f16c4f-38f1-4b71-9a17-1238f86a989e" key="subject_value" mode="Opaque" x="110" y="200" width="425" height="20"/>
+				<box leftPadding="2">
+					<leftPen lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[DateFormat.getDateInstance(DateFormat.MEDIUM, $P{REPORT_LOCALE}).format($F{sch_sponsorinvoice_invoicedate})]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement uuid="8c76f5ff-e29d-4fb9-8e1d-2b2a7578840d" key="studygrade_name" mode="Opaque" x="0" y="220" width="110" height="20"/>
+				<box leftPadding="2">
+					<leftPen lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{jsp.general.amount} + ":"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement uuid="11d74e0c-c5d0-4658-9873-305297ea15f5" key="studydescription_value" mode="Opaque" x="110" y="220" width="425" height="20"/>
+				<box leftPadding="2">
+					<leftPen lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{sch_sponsorinvoice_amount}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band height="16">
+			<printWhenExpression><![CDATA[new Boolean("pdf".equals($P{format}))]]></printWhenExpression>
+		</band>
+	</pageFooter>
+	<summary>
+		<band/>
+	</summary>
+	<noData>
+		<band height="50">
+			<textField isBlankWhenNull="false">
+				<reportElement uuid="eb5c7931-4094-4c31-a879-3a1ef20ee084" key="nodata" x="0" y="0" width="535" height="50"/>
+				<textElement textAlignment="Center">
+					<font size="28"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{general.nodata}]]></textFieldExpression>
+			</textField>
+		</band>
+	</noData>
+</jasperReport>

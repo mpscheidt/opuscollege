@@ -1,0 +1,179 @@
+
+    <display-name>Opus-College</display-name>
+
+    <!-- load locale default value:
+         this is chosen if there is no language equal to
+         the one in the Accept-Language header value - for instance at login
+     -->
+    <context-param>
+        <param-name>javax.servlet.jsp.jstl.fmt.fallbackLocale</param-name>
+        <param-value>en</param-value>
+    </context-param> 
+
+    <!-- nationality default values: -->
+    <context-param>
+        <param-name>iNationality</param-name>
+        <!--    
+                130: Zambia 
+                132: Mozambique 
+                36: Netherlands
+         -->
+        <param-value>132</param-value>
+    </context-param>
+
+    <!-- set default value number of rows on overviews for paging: -->
+    <context-param>
+        <param-name>iPaging</param-name>
+        <param-value>20</param-value>
+    </context-param> 
+    
+    <!-- set default value number of rows turnoverpoint one page more or less for paging: -->
+    <context-param>
+        <param-name>iPagingTurnover</param-name>
+        <param-value>11</param-value>
+    </context-param> 
+
+    <!-- set default value length of titles to avoid overflow: -->
+    <context-param>
+        <param-name>iTitleLength</param-name>
+        <param-value>45</param-value>
+    </context-param> 
+
+    <!-- set max value for number of cardinal time units : -->
+    <context-param>
+        <param-name>init.maxcardinaltimeunits</param-name>
+        <param-value>14</param-value>
+    </context-param> 
+    
+    <!-- set max value for number of subjects per cardinal time unit : -->
+    <context-param>
+        <param-name>init.maxsubjectspercardinaltimeunit</param-name>
+        <param-value>20</param-value>
+    </context-param>
+    
+    <!-- set max value for number of failed subjects per cardinal time unit : -->
+    <context-param>
+        <param-name>init.maxfailedsubjectspercardinaltimeunit</param-name>
+        <param-value>10</param-value>
+    </context-param>
+    
+    <!-- set default value target application: -->
+    <context-param>
+        <param-name>iAppname</param-name>
+        <!--    
+                opus: Zambia, Netherlands 
+                eSURA: Mozambique 
+         -->
+        <param-value>Opus</param-value>
+    </context-param> 
+
+    <context-param>
+        <param-name>iSecondStudy</param-name>
+        <!--    
+                Y: Zambia, Netherlands  
+                N: Mozambique 
+         -->
+        <param-value>N</param-value>
+    </context-param> 
+
+    <!-- <context-param>
+        <param-name>init.healthissuesvisible</param-name>
+           
+                Y: Mozambique, Netherlands  
+                N: Zambia 
+         
+        <param-value>Y</param-value>
+    </context-param> -->
+
+    <context-param>
+        <param-name>iMajorMinor</param-name>
+        <!--    
+                Y: Zambia, Netherlands  
+                N: Mozambique 
+         -->
+        <param-value>N</param-value>
+    </context-param> 
+
+    <context-param>
+        <param-name>iCreditAmountVisible</param-name>
+        <!--    
+                N: UNZA (Zambia), Netherlands  
+                Y: CBU (Zambia), Mozambique 
+         -->
+          <param-value>Y</param-value>
+    </context-param> 
+
+    <context-param>
+        <param-name>iApplicationNumber</param-name>
+        <!--    
+                N: UNZA (Zambia), Netherlands, Mozambique
+                Y: CBU (Zambia) 
+         -->
+          <param-value>N</param-value>
+    </context-param> 
+
+    <context-param>
+        <param-name>iMobilePhoneRequired</param-name>
+        <!--    
+                true: Zambia 
+                false: Mozambique, Netherlands 
+         -->
+        <param-value>false</param-value>
+    </context-param> 
+
+    <context-param>
+        <param-name>iEmailAddressRequired</param-name>
+        <!--    
+                true: Zambia 
+                false: Mozambique, Netherlands 
+         -->
+        <param-value>false</param-value>
+    </context-param> 
+
+    <context-param>
+        <param-name>init.feediscountpercentages</param-name>
+        <!--    
+                N: Mozambique, Netherlands 
+                Y: Zambia 
+         -->
+        <param-value>N</param-value>
+    </context-param> 
+
+    <context-param>
+        <param-name>init.useofparttimestudygradetypes</param-name>
+        <!--    
+                N: Mozambique, Netherlands 
+                Y: Zambia 
+         -->
+        <param-value>N</param-value>
+    </context-param> 
+
+    <context-param>
+        <param-name>init.preferredPersonSorting</param-name>
+        <!--    
+                firstnamesFull: Mozambique 
+                surnameFull: Zambia, Netherlands
+         -->
+        <param-value>firstnamesFull</param-value>
+    </context-param> 
+
+    <!-- Deploys the 'accounts' dispatcher servlet whose configuration resides in /WEB-INF/accounts-servlet-config.xml 
+        MoVe: instead of old frontcontroller-servlet.xml -->
+    <!-- MoVe - modular structure: name of dispatcher servlet is the name of the target project -->
+    <servlet>
+        <servlet-name>opus</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>
+                /WEB-INF/modules/*/web-context.xml
+            </param-value>
+        </init-param>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+
+    <!-- MoVe - modular structure: name of dispatcher servlet is the name of the target project -->
+    <servlet-mapping>
+        <servlet-name>opus</servlet-name>
+         <url-pattern>/</url-pattern> 
+    </servlet-mapping>

@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+  ***** BEGIN LICENSE BLOCK *****
+  Version: MPL 1.1/GPL 2.0/LGPL 2.1
+  
+  The contents of this file are subject to the Mozilla Public License Version
+  1.1 (the "License"); you may not use this file except in compliance with
+  the License. You may obtain a copy of the License at
+  http://www.mozilla.org/MPL/
+  
+  Software distributed under the License is distributed on an "AS IS" basis,
+  WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+  for the specific language governing rights and limitations under the
+  License.
+  
+  The Original Code is Opus-College scholarship module code.
+  
+  The Initial Developer of the Original Code is
+  Center for Information Services, Radboud University Nijmegen.
+  Portions created by the Initial Developer are Copyright (C) 2008
+  the Initial Developer. All Rights Reserved.
+  
+  Contributor(s):
+    For Java files, see Javadoc @author tags.
+  
+  Alternatively, the contents of this file may be used under the terms of
+  either the GNU General Public License Version 2 or later (the "GPL"), or
+  the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+  in which case the provisions of the GPL or the LGPL are applicable instead
+  of those above. If you wish to allow use of your version of this file only
+  under the terms of either the GPL or the LGPL, and not to allow others to
+  use your version of this file under the terms of the MPL, indicate your
+  decision by deleting the provisions above and replace them with the notice
+  and other provisions required by the GPL or the LGPL. If you do not delete
+  the provisions above, a recipient may use your version of this file under
+  the terms of any one of the MPL, the GPL or the LGPL.
+  
+  ***** END LICENSE BLOCK *****
+-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.uci.opus.scholarship.persistence.ScholarshipApplicationMapper">
+
+    <resultMap id="ScholarshipApplicationResultMap" type="ScholarshipApplication">
+        <result property="id" column="id"/>
+        <result property="scholarshipStudentId" column="scholarshipStudentId"/>
+        <result property="scholarshipAppliedForId" column="scholarshipAppliedForId"/>
+        <result property="scholarshipGrantedId" column="scholarshipGrantedId"/>
+        <result property="decisionCriteriaCode" column="decisionCriteriaCode"/>
+        <result property="observation" column="observation"/>
+        <result property="active" column="active"/>
+        <result property="studyPlanCardinalTimeUnitId" column="studyPlanCardinalTimeUnitId"/>
+        <collection property="complaints" select="org.uci.opus.scholarship.persistence.ComplaintMapper.findScholarshipApplicationComplaints" column="id"/>
+        <collection property="sponsorPayments" select="org.uci.opus.scholarship.persistence.SponsorPaymentMapper.findScholarshipApplicationSponsorPayments" column="id"/>
+    </resultMap>
+
+    <resultMap id="ScholarshipApplicationResultMap2" type="java.util.HashMap">
+        <result property="studentId" column="studentId"/>
+        <result property="scholarshipApplicationId" column="scholarshipApplicationId"/>
+        <result property="studentCode" column="studentCode"/>
+        <result property="civilTitleCode" column="civilTitleCode"/>
+        <result property="firstNamesFull" column="firstNamesFull"/>
+        <result property="surnameFull" column="surnameFull"/>
+        <result property="birthdate" column="birthdate" javaType="java.util.Date"/>
+        <result property="academicYearId" column="academicYearId"/>
+        <result property="sponsorId" column="sponsorId"/>
+        <result property="sponsorName" column="sponsorName"/>
+        <result property="studyDescription" column="studyDescription"/>
+        <result property="studyPlanDescription" column="studyPlanDescription"/>
+        <result property="cardinalTimeUnitDescription" column="cardinalTimeUnitDescription"/>
+        <result property="cardinalTimeUnitNumber" column="cardinalTimeUnitNumber"/>
+    </resultMap>
+
+    <select id="countScholarshipApplications" parameterType="map" resultType="int">
+        select  count(*) as counted
+        from    opuscollege.sch_scholarshipApplication 
+        inner   join opuscollege.sch_scholarship on 
+                (  sch_scholarship.id = scholarshipappliedforid
+                or sch_scholarship.id = scholarshipgrantedid
+                )
+        and     sch_scholarship.id = #{scholarshipId}
+    </select>
+    
+    <select id="findScholarshipApplications2" parameterType="map" resultMap="ScholarshipApplicationResultMap2">
+        select  sch_scholarshipApplication.id as scholarshipApplicationId
+        ,       student.studentId
+        ,       student.studentCode
+        ,       person.civilTitleCode
+        ,       person.firstNamesFull
+        ,       person.surnameFull
+        ,       person.birthdate
+        ,       sch_sponsor.academicYearId
+        ,       sch_sponsor.id as sponsorId
+        ,       sch_sponsor.name as sponsorName
+        ,       study.studyDescription
+        ,       studyplan.studyPlanDescription
+        ,       cardinalTimeUnit.description as cardinalTimeUnitDescription
+        ,       studyplancardinaltimeunit.cardinalTimeUnitNumber
+        from    opuscollege.sch_scholarshipApplication
+        <if test="processStatusCode == &quot;G&quot;">
+            inner   join opuscollege.sch_scholarship on sch_scholarship.id = scholarshipgrantedid
+        </if>
+        <if test='processStatusCode != "G"'>
+            inner   join opuscollege.sch_scholarship on sch_scholarship.id = scholarshipappliedforid
+        </if>
+        inner   join opuscollege.sch_scholarshipType on sch_scholarship.scholarshipTypeCode = sch_scholarshipType.code
+        inner   join opuscollege.sch_sponsor on sch_scholarship.sponsorId = sch_sponsor.id
+        inner   join opuscollege.sch_student on sch_student.scholarshipStudentId = sch_scholarshipApplication.scholarshipStudentId
+        inner   join opuscollege.studyplancardinaltimeunit on sch_scholarshipApplication.studyPlanCardinalTimeUnitId = studyplancardinaltimeunit.id
+        inner   join opuscollege.studyplan on studyplancardinaltimeunit.studyPlanId = studyplan.id
+        inner   join opuscollege.studygradetype on studyplancardinaltimeunit.studyGradeTypeId = studyGradeType.id
+        inner   join opuscollege.cardinalTimeUnit on studygradetype.cardinalTimeUnitCode = cardinalTimeUnit.code and cardinalTimeUnit.lang = #{preferredLanguage}
+        inner   join opuscollege.student on sch_student.studentId = student.studentId
+        inner   join opuscollege.study on student.primaryStudyId = study.id
+        inner   join opuscollege.person on student.personId = person.id 
+        inner   join opuscollege.organizationalUnit on study.organizationalUnitId = organizationalUnit.id
+        inner   join opuscollege.branch on organizationalUnit.branchId = branch.id
+        inner   join opuscollege.institution on branch.institutionId = institution.id
+        where   sch_scholarshipType.lang = #{preferredLanguage}
+        <if test='scholarshipId != null and scholarshipId != "0"'>
+            and sch_scholarship.id = #{scholarshipId}
+        </if>
+        <if test='institutionId != null and institutionId != "0"'>
+            and opuscollege.institution.id = #{institutionId}
+        </if>
+        <if test='branchId != null and branchId != "0"'>
+            and opuscollege.branch.id = #{branchId}
+        </if>
+        <if test='organizationalUnitId != null and organizationalUnitId != "0"'>
+            and organizationalUnit.id in
+                (select id from opuscollege.crawl_tree(#{organizationalUnitId}, 0))
+        </if>
+        <if test='sponsorId != null and sponsorId != "0"'>
+            and sch_scholarship.sponsorId = #{sponsorId}
+        </if>
+        <if test='selectedAcademicYearId != null and selectedAcademicYearId != "0"'>
+            and sch_sponsor.academicYearId = #{selectedAcademicYearId}
+        </if>
+        ORDER BY lower(person.surnameFull),sch_scholarshipApplication.studyPlanCardinalTimeUnitId
+    </select>
+
+    <!-- TODO review: still relevant? -->
+    <select id="findScholarshipApplications" parameterType="map" resultMap="ScholarshipApplicationResultMap">
+        select  sch_scholarshipApplication.*
+        from    opuscollege.sch_scholarshipApplication
+        <if test="processStatusCode != null">
+            <choose>
+                <when test="processStatusCode == &quot;A&quot;">
+                    inner   join opuscollege.sch_scholarship on sch_scholarship.id = scholarshipappliedforid
+                    inner   join opuscollege.sch_sponsor on sch_scholarship.sponsorId = sch_sponsor.id
+                </when>
+                <when test="processStatusCode == &quot;G&quot;">
+                    inner   join opuscollege.sch_scholarship on sch_scholarship.id = scholarshipgrantedid
+                    inner   join opuscollege.sch_sponsor on sch_scholarship.sponsorId = sch_sponsor.id
+                </when>
+                <otherwise>
+                    inner   join opuscollege.sch_scholarship on 
+                        (  sch_scholarship.id = scholarshipappliedforid
+                        or sch_scholarship.id = scholarshipgrantedid
+                        )
+                    inner   join opuscollege.sch_sponsor on sch_scholarship.sponsorId = sch_sponsor.id
+                </otherwise>
+            </choose>
+        </if>
+        <if test="processStatusCode == null">
+            inner   join opuscollege.sch_scholarship on 
+                (  sch_scholarship.id = scholarshipappliedforid
+                or sch_scholarship.id = scholarshipgrantedid
+                )
+            inner   join opuscollege.sch_sponsor on sch_scholarship.sponsorId = sch_sponsor.id
+        </if>
+        <if test="complaints != null">
+            <if test="complaints == &quot;Y&quot;">
+                inner   join opuscollege.sch_complaint on sch_complaint.scholarshipapplicationid = sch_scholarshipApplication.id
+            </if>
+        </if>
+        inner   join opuscollege.sch_student on sch_student.scholarshipStudentId = sch_scholarshipApplication.scholarshipStudentId
+        inner   join opuscollege.student on sch_student.studentId = student.studentId
+        inner   join opuscollege.study on student.primaryStudyId = study.id
+        inner   join opuscollege.person on student.personId = person.id 
+        inner   join opuscollege.organizationalUnit on study.organizationalUnitId = organizationalUnit.id
+        inner   join opuscollege.branch on organizationalUnit.branchId = branch.id
+        inner   join opuscollege.institution on branch.institutionId = institution.id
+        WHERE 1=1
+        <if test='institutionId != null and institutionId != "0"'>
+            and opuscollege.institution.id = #{institutionId}
+        </if>
+        <if test='branchId != null and branchId != "0"'>
+            and opuscollege.branch.id = #{branchId}
+        </if>
+        <if test='organizationalUnitId != null and organizationalUnitId != "0"'>
+            and organizationalUnit.id in
+                (select id from opuscollege.crawl_tree(#{organizationalUnitId}, 0))
+        </if>
+        <if test='sponsorId != null and sponsorId != "0"'>
+            and sch_scholarship.sponsorId = #{sponsorId}
+        </if>
+        <if test='selectedAcademicYearId != null and selectedAcademicYearId != "0"'>
+            and sch_sponsor.academicYearId = #{selectedAcademicYearId}
+        </if>
+    </select>
+    
+    <select id="findScholarshipApplicationsByParams" parameterType="map" resultMap="ScholarshipApplicationResultMap">
+        select  sch_scholarshipApplication.*
+        from    opuscollege.sch_scholarshipApplication
+        where 1=1
+        <if test='scholarshipStudentId != null and scholarshipStudentId != "0"'>
+            and scholarshipStudentId = #{scholarshipStudentId}
+        </if>
+        <if test='granted == "Y"'>
+            and scholarshipGrantedId is not null
+        </if>
+        <if test='studyPlanCardinalTimeUnitId != null'>
+            and studyPlanCardinalTimeUnitId = #{studyPlanCardinalTimeUnitId}
+        </if>
+        <if test='active != null'>
+            and active = #{active}
+        </if>
+    </select> 
+     
+    <delete id="deleteScholarshipsForStudent" parameterType="int">
+        DELETE  from opuscollege.sch_scholarshipApplication
+        where   scholarshipStudentId = #{value}
+    </delete>
+
+    <select id="findStudentScholarships" parameterType="int" resultMap="ScholarshipApplicationResultMap">
+        select *
+        from    opuscollege.sch_scholarshipApplication
+        where   scholarshipStudentid = #{value}
+        ORDER BY studyPlanCardinalTimeUnitId DESC
+    </select>
+    
+    <select id="findScholarshipApplication" parameterType="int" resultMap="ScholarshipApplicationResultMap">
+        select opuscollege.sch_scholarshipApplication.*
+        from   opuscollege.sch_scholarshipApplication
+        where  id = #{value}
+    </select>
+
+    <insert id="addScholarshipApplication" parameterType="ScholarshipApplication"> 
+        insert into opuscollege.sch_scholarshipApplication
+        ( scholarshipStudentId
+        , scholarshipAppliedForId
+        , scholarshipGrantedId
+        , decisionCriteriaCode
+        , observation
+        , active
+        , studyPlanCardinalTimeUnitId
+        ) values
+        ( #{scholarshipStudentId}
+        , #{scholarshipAppliedForId}
+        , #{scholarshipGrantedId}
+        , #{decisionCriteriaCode}
+        , #{observation}
+        , #{active}
+        , #{studyPlanCardinalTimeUnitId}
+        )
+        <!-- http://opensource.atlassian.com/confluence/oss/pages/viewpage.action?pageId=407 -->
+        <selectKey keyProperty="id" resultType="int">
+            SELECT currVal('opuscollege.sch_scholarshipApplicationSeq')
+        </selectKey>
+    </insert>
+    
+    <update id="updateScholarshipApplication" parameterType="ScholarshipApplication"> 
+        update  opuscollege.sch_scholarshipApplication
+        set     scholarshipStudentId = #{scholarshipStudentId}
+        ,       scholarshipAppliedForId = #{scholarshipAppliedForId}
+        ,       scholarshipGrantedId = #{scholarshipGrantedId}
+        ,       decisionCriteriaCode  = #{decisionCriteriaCode}
+        ,       observation = #{observation}
+        ,       active = #{active}
+        ,       studyPlanCardinalTimeUnitId = #{studyPlanCardinalTimeUnitId}
+        where   id = #{id}
+    </update>
+
+    <delete id="deleteScholarshipApplication" parameterType="int">
+        delete from opuscollege.sch_scholarshipApplication
+        where  id = #{value}
+    </delete>
+    
+    <select id="findScholarshipApplicationObservation" parameterType="int" resultType="String">
+        select  sch_scholarshipapplication.observation 
+        from    opuscollege.sch_scholarshipapplication
+        WHERE   id = #{value}
+    </select>
+    
+</mapper>

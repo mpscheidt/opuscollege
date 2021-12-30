@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ***** BEGIN LICENSE BLOCK *****
+  Version: MPL 1.1/GPL 2.0/LGPL 2.1
+  
+  The contents of this file are subject to the Mozilla Public License Version
+  1.1 (the "License"); you may not use this file except in compliance with
+  the License. You may obtain a copy of the License at
+  http://www.mozilla.org/MPL/
+  
+  Software distributed under the License is distributed on an "AS IS" basis,
+  WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+  for the specific language governing rights and limitations under the
+  License.
+  
+  The Original Code is Opus-College scholarship module code.
+  
+  The Initial Developer of the Original Code is
+  Center for Information Services, Radboud University Nijmegen.
+  Portions created by the Initial Developer are Copyright (C) 2008
+  the Initial Developer. All Rights Reserved.
+  
+  Contributor(s):
+    For Java files, see Javadoc @author tags.
+  
+  Alternatively, the contents of this file may be used under the terms of
+  either the GNU General Public License Version 2 or later (the "GPL"), or
+  the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+  in which case the provisions of the GPL or the LGPL are applicable instead
+  of those above. If you wish to allow use of your version of this file only
+  under the terms of either the GPL or the LGPL, and not to allow others to
+  use your version of this file under the terms of the MPL, indicate your
+  decision by deleting the provisions above and replace them with the notice
+  and other provisions required by the GPL or the LGPL. If you do not delete
+  the provisions above, a recipient may use your version of this file under
+  the terms of any one of the MPL, the GPL or the LGPL.
+  
+  ***** END LICENSE BLOCK *****
+-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.uci.opus.scholarship.persistence.ScholarshipFeePercentageMapper">
+
+    <!-- added during migration -->
+    <select id="findOne" parameterType="map" resultType="ScholarshipFeePercentage">
+        SELECT id
+        , feecategorycode
+        , percentage
+        , writewho
+        , scholarshipid
+        , active
+        FROM opuscollege.sch_scholarshipFeePercentage
+        WHERE id = #{id}   
+    </select>
+
+    <select id="findScholarshipFeePercentages" parameterType="map" resultType="ScholarshipFeePercentage">
+
+        SELECT id
+        , feecategorycode
+        , percentage
+        , writewho
+        , scholarshipid
+        , active
+        FROM opuscollege.sch_scholarshipFeePercentage
+        WHERE true   
+    
+        <if test="id != null">
+            AND id = #{id} 
+        </if>
+        
+        <if test="scholarshipId != null">
+            AND scholarshipId = #{scholarshipId} 
+        </if>
+        
+        <if test="feeCategoryCode != null">
+            AND feeCategoryCode = #{feeCategoryCode} 
+        </if>
+        
+        <if test="percentage != null">
+            AND percentage = #{percentage} 
+        </if>   
+          
+        <if test="writeWho != null">
+            AND writeWho = #{writeWho} 
+        </if>       
+                  
+        <if test="active != null">
+            AND active = #{active} 
+        </if>
+    </select>
+  
+    <delete id="deleteScholarshipFeePercentagesForScholarshipId" parameterType="int">
+        delete from opuscollege.sch_scholarshipFeePercentage
+        where scholarshipId = #{scholarshipId}
+    </delete>
+    
+    <insert id="addScholarshipFeePercentage" parameterType="ScholarshipFeePercentage">
+        INSERT INTO opuscollege.sch_scholarshipFeePercentage (
+                   scholarshipid
+                 , feecategorycode
+                 , percentage
+                 , active
+                 , writewho 
+        ) VALUES (
+                #{scholarshipId}
+              , #{feeCategoryCode}
+              , #{percentage}
+              , #{active}
+              , #{writeWho} 
+        );
+        <selectKey keyProperty="id" resultType="int">
+            SELECT currVal('opuscollege.sch_scholarshipFeePercentage_seq')
+        </selectKey>
+   </insert>
+
+    <update id="updateScholarshipFeePercentage" parameterType="ScholarshipFeePercentage">
+        
+        UPDATE opuscollege.sch_scholarshipFeePercentage
+        SET  feecategorycode = #{feeCategoryCode}
+        , percentage = #{percentage} 
+        , writewho = #{writeWho}
+        , scholarshipId = #{scholarshipId}
+        , active = #{active}
+    
+        WHERE id = #{id}
+        
+    </update>
+
+    <delete id="deleteScholarshipFeePercentage" parameterType="int">
+        DELETE FROM opuscollege.sch_scholarshipFeePercentage
+        WHERE id = #{id}
+    </delete>
+    
+    <insert id="updateScholarshipFeePercentageHistory">
+     
+        INSERT INTO audit.sch_scholarshipFeePercentage_hist(
+            operation
+            , id
+            , feecategorycode
+            , percentage
+            , writewho
+            , scholarshipId
+            , active
+        ) VALUES (
+              #{operation}
+            , #{scholarshipFeePercentage.id}
+            , #{scholarshipFeePercentage.feeCategoryCode}
+            , #{scholarshipFeePercentage.percentage}
+            , #{scholarshipFeePercentage.writeWho}
+            , #{scholarshipFeePercentage.scholarshipId}
+            , #{scholarshipFeePercentage.active}
+        );
+    </insert>
+
+    <select id="findExistingFeeCategoriesForScholarship" parameterType="int" resultType="string">
+        SELECT feeCategoryCode FROM opuscollege.sch_scholarshipFeePercentage WHERE scholarshipId = #{value}
+    </select>   
+
+    <!-- referenced by collection property -->
+    <select id="findFeesPercentagesByScholarshipId" parameterType="int" resultType="ScholarshipFeePercentage">
+    
+        SELECT id
+        , feecategorycode
+        , percentage
+        , writewho
+        , scholarshipId
+        , active
+        FROM opuscollege.sch_scholarshipFeePercentage
+        WHERE scholarshipId = #{value}
+         
+    </select>
+
+    <insert id="transferScholarshipFeePercentages" parameterType="map">
+        insert into opuscollege.sch_scholarshipFeePercentage (
+                  scholarshipid
+                , feecategorycode
+                , percentage
+                , active
+                , transferId
+        ) select
+                  targetScholarship.id
+                , sourceScholarshipFeePercentage.feecategorycode
+                , sourceScholarshipFeePercentage.percentage
+                , sourceScholarshipFeePercentage.active
+                , sourceScholarshipFeePercentage.transferId
+        from opuscollege.sch_scholarshipFeePercentage sourceScholarshipFeePercentage
+                inner join opuscollege.sch_scholarship sourceScholarship
+                    on  sourceScholarshipFeePercentage.scholarshipId = sourceScholarship.id
+                inner join opuscollege.sch_sponsor sourceSponsor
+                    on  sourceScholarship.sponsorId = sourceSponsor.id
+                    and sourceSponsor.academicYearId = #{sourceAcademicYearId}
+                inner join opuscollege.sch_scholarship targetScholarship
+                    on  targetScholarship.transferId = sourceScholarship.transferId
+                    and targetScholarship.transferId = sourceScholarship.transferId
+                inner join opuscollege.sch_sponsor targetSponsor
+                    on  targetScholarship.sponsorId = targetSponsor.id
+                    and targetSponsor.academicYearId = #{targetAcademicYearId}
+        where not exists (
+                    select * from opuscollege.sch_scholarshipFeePercentage targetScholarshipFeePercentage
+                    where targetScholarshipFeePercentage.scholarshipId = targetScholarship.id
+                      and targetScholarshipFeePercentage.transferId = sourceScholarshipFeePercentage.transferId
+        )
+
+    </insert>
+
+
+    <!-- migration: apparently unused
+    <select id="findScholarshipFeePercentageAsMaps" parameterType="map" resultType="java.util.HashMap">
+    
+        SELECT id
+        , feecategorycode
+        , percentage
+        , writewho
+        , scholarshipId
+        , active
+        FROM opuscollege.sch_scholarshipFeePercentage
+        WHERE true   
+
+        <if test="id != null">
+            AND id = #{id} 
+        </if>
+        <if test="scholarshipId != null">
+            AND scholarshipId = #{scholarshipId} 
+        </if>
+        <if test="feeCategoryCode != null">
+            AND feeCategoryCode = #{feeCategoryCode} 
+        </if>
+        <if test="percentage != null">
+            AND percentage = #{percentage} 
+        </if>   
+        <if test="writeWho != null">
+            AND writeWho = #{writeWho} 
+        </if>       
+        <if test="active != null">
+            AND active = #{active} 
+        </if>
+    </select>
+    -->
+
+</mapper>

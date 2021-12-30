@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ***** BEGIN LICENSE BLOCK *****
+  Version: MPL 1.1/GPL 2.0/LGPL 2.1
+  
+  The contents of this file are subject to the Mozilla Public License Version
+  1.1 (the "License"); you may not use this file except in compliance with
+  the License. You may obtain a copy of the License at
+  http://www.mozilla.org/MPL/
+  
+  Software distributed under the License is distributed on an "AS IS" basis,
+  WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+  for the specific language governing rights and limitations under the
+  License.
+  
+  The Original Code is Opus-College college module code.
+  
+  The Initial Developer of the Original Code is
+  Center for Information Services, Radboud University Nijmegen.
+  Portions created by the Initial Developer are Copyright (C) 2008
+  the Initial Developer. All Rights Reserved.
+  
+  Contributor(s):
+    For Java files, see Javadoc @author tags.
+  
+  Alternatively, the contents of this file may be used under the terms of
+  either the GNU General Public License Version 2 or later (the "GPL"), or
+  the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+  in which case the provisions of the GPL or the LGPL are applicable instead
+  of those above. If you wish to allow use of your version of this file only
+  under the terms of either the GPL or the LGPL, and not to allow others to
+  use your version of this file under the terms of the MPL, indicate your
+  decision by deleting the provisions above and replace them with the notice
+  and other provisions required by the GPL or the LGPL. If you do not delete
+  the provisions above, a recipient may use your version of this file under
+  the terms of any one of the MPL, the GPL or the LGPL.
+  
+  ***** END LICENSE BLOCK *****
+-->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:security="http://www.springframework.org/schema/security"
+    xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+              http://www.springframework.org/schema/beans/spring-beans.xsd
+              http://www.springframework.org/schema/context
+              http://www.springframework.org/schema/context/spring-context.xsd
+              http://www.springframework.org/schema/security
+              http://www.springframework.org/schema/security/spring-security.xsd
+              http://www.springframework.org/schema/mvc
+              http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <!-- Indicate where to retrieve files for certain URIs -->
+    <mvc:resources mapping="/css/**" location="/css/"/>
+    <mvc:resources mapping="/help/**" location="/help/"/>
+    <mvc:resources mapping="/images/**" location="/images/"/>
+    <mvc:resources mapping="/lib/**" location="/lib/"/>
+    <mvc:resources mapping="/static/**" location="/static/"/>
+
+	<!-- WEB IMPORTS -->
+    <import resource="classpath:org/uci/opus/college/applicationContext-web-extensions.xml" />
+	<import resource="classpath:org/uci/opus/college/applicationContext-web-flow.xml" />
+	<import resource="classpath:org/uci/opus/college/applicationContext-web-user.xml" />
+	<import resource="classpath:org/uci/opus/college/applicationContext-web-util.xml" />
+	
+    <bean id="moduleInterceptor" class="org.uci.opus.college.module.ModuleInterceptor" />    
+    
+	<bean id="localeChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+		<property name="paramName" value ="preferredLanguage" />
+	</bean>
+    
+	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
+        <!-- 
+            Examples:
+            en: English
+            en_ZM: Zambian variation of English 
+            pt: Portuguese (used in Mozambique)
+        -->
+	   <property name="defaultLocale" value="en" />
+	</bean>
+ 
+    <bean id="roleChangeInterceptor" class="org.uci.opus.college.web.user.RoleChangeInterceptor">
+        <property name="paramName" value ="opusUserRoleId" />
+    </bean>
+    
+	<!-- use the Commons-based implementation of the MultipartResolver interface -->
+    <bean id="multipartResolver"
+        class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+      
+		<!-- MP: better than using 'maxUploadSize' check on each upload for max file size 
+             -> easier to validate than the exception thrown when maxUploadSize set -->
+<!-- 		<property name="maxUploadSize" value="300000"/> -->
+    </bean>
+
+	<bean id="opusExceptionResolver" class="org.uci.opus.college.exceptionhandler.OpusExceptionResolver" />
+	
+    <!-- mvc:annotation-driven enables a.o. conversion to Json for @RequestBody annotated methods -->
+    <mvc:annotation-driven/>
+
+    <!-- With mvc:annotation-driven interceptors need to be defined in mvc:interceptors -->
+    <mvc:interceptors>
+        <!-- Interceptors need to be defined on both handler mappings
+         (mvc:interceptors and SimpleUrlHandlerMapping) 
+         if they shall be executed for both web requests,
+         either annotation based and xml based configuration.
+         -->
+        <!-- ModuleInterceptor handles insertion of the modules into the ModelAndView -->
+        <ref bean="moduleInterceptor" />
+        <!-- localeChangeInterceptor handles switching of user interface language -->
+        <ref bean="localeChangeInterceptor"/>
+        <!-- roleChangeInterceptor handles switching opus user role -->
+        <ref bean="roleChangeInterceptor"/>
+    </mvc:interceptors>
+
+    <!--  interceptors with the default annotation handler mapping -->
+<!--  deprecated in spring 3.1   <bean id="webAnnotationHandler" class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping"> -->
+    <bean id="handlerMapping" class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping">
+    </bean>
+    
+    <!-- perform initbinding for all controllers through special defined bean -->
+<!-- deprecated in spring 3.1   < bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter"> -->
+<!--  With <mvc:annotation-driven /> there is automatically a RequestMappingHandlerAdapter defined, so defining our own would only create a second one,
+      and we cannot be sure which one will be used. Instead, the default binding in OpusBindingInitializer is configured via "org.uci.opus.config.MVCConfigurationPostProcessor"
+      Idea taken from: http://vard-lokkur.blogspot.co.at/2010/11/spring-mvc-pitfall-overriding-default.html -->
+<!--     <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter"> -->
+<!--         <property name="cacheSeconds" value="0" /> -->
+<!--         <property name="webBindingInitializer"> -->
+<!--             <bean class="org.uci.opus.config.OpusBindingInitializer" /> -->
+<!--         </property>  -->
+<!--     </bean> -->
+    <bean class="org.uci.opus.config.MVCConfigurationPostProcessor">
+        <property name="webBindingInitializer">
+            <bean class="org.uci.opus.config.OpusBindingInitializer" />
+        </property> 
+    </bean>
+
+    <!--  Once you use a sort of AnnotationMethodHandlerAdapter (see above),
+        it overrides the 4 default handlers, that are necessary to use the 'old' simpleFormControllers
+        So if you use one or more of these in your application, name them here explicitly
+        (Note 2013-05-10: deprecated AnnotationMethodHandlerAdapter replaced by RequestMappingHandlerAdapter) -->
+    <bean class="org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter" />  
+
+	<!-- View url mapping -->
+	<bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">        
+		<!-- Interceptors need to be defined on both handler mappings
+             (DefaultAnnotationHandlerMapping and SimpleUrlHandlerMapping) 
+             if they shall be executed for both web requests,
+             either annotation based and xml based configuration.
+             -->
+		<property name="mappings">            
+			<props>
+
+                <prop key="/college/institutions.view">institutionsController</prop>
+<!--                 <prop key="/college/institution.view">institutionEditController</prop> -->
+                <prop key="/college/institution_delete.view">institutionDeleteController</prop>
+
+                <prop key="/college/branches.view">branchesController</prop>
+                <prop key="/college/branch_delete.view">branchDeleteController</prop>
+
+                <prop key="/college/organizationalunits.view">organizationalUnitsController</prop>
+                <prop key="/college/organizationalunit_delete.view">organizationalUnitDeleteController</prop>
+                
+                <prop key="/college/staffmembers.view">staffMembersController</prop>
+                <prop key="/college/staffmember_delete.view">staffMemberDeleteController</prop>
+                
+                <prop key="/college/contract.view">contractEditController</prop>
+                <prop key="/college/contract_delete.view">contractDeleteController</prop>
+                <prop key="/college/examinationteacher_delete.view">examinationTeacherDeleteController</prop>
+
+                <prop key="/college/student_delete.view">studentDeleteController</prop>
+
+                <prop key="/college/studentabsence_delete.view">studentAbsenceDeleteController</prop>
+                
+                <prop key="/college/studygradetypeprerequisite_delete.view">studyGradeTypePrerequisiteDeleteController</prop>
+
+                <prop key="/college/subjectblockstudygradetype_delete.view">subjectBlockStudyGradeTypeDeleteController</prop>
+                <prop key="/college/studygradetypesubjectblock_delete.view">studyGradeTypeSubjectBlockDeleteController</prop>
+
+              
+                <prop key="/college/subjectblocksubject_delete.view">subjectBlockSubjectDeleteController</prop>
+                
+                <prop key="/college/studygradetypesubject_delete.view">studyGradeTypeSubjectDeleteController</prop>
+                
+                <prop key="/college/subjectblockprerequisite.view">subjectBlockPrerequisiteEditController</prop>
+                <prop key="/college/subjectblockprerequisite_delete.view">subjectBlockPrerequisiteDeleteController</prop>
+
+                <prop key="/college/examination_delete.view">examinationDeleteController</prop>
+
+                <prop key="/college/subjectsresults.view">subjectsResultsController</prop>
+
+                <prop key="/college/test_delete.view">testDeleteController</prop>
+                <prop key="/college/testresult_delete.view">testResultDeleteController</prop>
+                <prop key="/college/testteacher_delete.view">testTeacherDeleteController</prop>
+
+
+				<prop key="/college/reports.view">reportController</prop>
+				
+				<prop key="/college/studentsstatuses.view">studentsStatusesController</prop>
+
+                
+                <prop key="/college/thesis_delete.view">thesisDeleteController</prop> 
+				
+				<prop key="/college/userrole_delete.view">opusUserRoleDeleteController</prop>    
+				
+
+                <!-- ADMIN -->
+                
+                <prop key="/college/lookuptables.view">lookupTablesController</prop>                
+                
+<!--                 <prop key="/college/exports.view">exportsController</prop> -->
+<!--                 <prop key="/college/imports.view">importsController</prop> -->
+<!--                 <prop key="/college/studentsexports.view">studentsExportsController</prop> -->
+<!--                 <prop key="/college/studentsimports.view">studentsImportsController</prop> -->
+
+                <prop key="/college/roles.view">rolesController</prop>
+                <prop key="/college/role_delete.view">roleDeleteController</prop>
+                <prop key="/college/roleprivileges_delete.view">rolePrivilegesDeleteController</prop>                
+                <prop key="/college/privileges.view">privilegesController</prop>
+
+        	</props>
+		</property>    
+	</bean>
+
+	<!-- 
+		We put JSP files that just serve as views under '/WEB-INF/jsp/', to hide them from direct access. 
+		Using the viewResolver below, when a view is resolved, the prefix '/WEB-INF/views/' is added, 
+		as well as the '.jsp' suffix. So in order to dispatch '/WEB-INF/views/hello.jsp' we can simply 
+		use '/hello.view'.
+	-->
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="viewClass"><value>org.springframework.web.servlet.view.JstlView</value></property>    
+		<property name="prefix" value="/WEB-INF/views/" />
+		<property name="suffix" value=".jsp" />
+		<!-- turn cache off: makes sense not only for debugging/development, but in general, because pages have dynamic content -->
+		<property name="cache" value="false" />
+        <property name="exposedContextBeanNames">
+            <list>
+                <value>appConfigManager</value>
+                <value>collegeWebExtensions</value>
+                <value>reportWebExtensions</value>
+                <value>accommodationWebExtensions</value>
+                <value>scholarshipWebExtensions</value>
+                <value>booleanToYesNoMap</value>
+                <value>stringToYesNoMap</value>
+                <value>webLookups</value>
+            </list>
+        </property>
+	</bean>
+
+</beans>

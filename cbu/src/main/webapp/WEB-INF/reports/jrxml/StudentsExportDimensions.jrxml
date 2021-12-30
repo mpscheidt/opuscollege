@@ -1,0 +1,1671 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="StudentsPerStudyGradeAcadyear" pageWidth="3000" pageHeight="842" orientation="Landscape" whenNoDataType="NoDataSection" columnWidth="3000" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" resourceBundle="org/uci/opus/report/messages">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="591"/>
+	<property name="ireport.y" value="0"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<parameter name="lang" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["en"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="whereClause" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="orderClause" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[", person_surnamefull"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT DISTINCT     institution.institutiondescription AS institution_description
+   , branch.branchdescription
+   , branch.branchcode AS branchcode
+   , organizationalunit.organizationalunitdescription
+   , study.studydescription
+   , studygradetype.gradetypecode
+   , studyplan.studyplandescription
+   , academicyear.id AS academicyear_id
+   , academicyear.description as academicyear_description
+   , cardinaltimeunit.description AS cardinaltimeunit_description
+   , studyPlanCardinalTimeUnit.cardinaltimeunitnumber AS studyPlanCardinalTimeUnit_cardinaltimeunitnumber
+   , student.studentcode AS student_studentcode
+   , person.firstnamesfull AS person_firstnamesfull
+   , person.surnamefull AS person_surnamefull
+   , person.birthdate AS person_birthdate
+   , UPPER(SUBSTRING(gender.description,1,1)) AS gender_description
+   , cardinaltimeunitstatus.description AS cardinaltimeunitstatus_description
+   , primarystudy.studydescription AS primarystudy_studydescription
+   , address.street AS address_street
+   , address.number AS address_number
+   , address.zipcode AS address_zipcode
+   , address.city AS address_city
+   , country.description AS country_description
+   , address.telephone AS address_telephone
+   , address.mobilephone AS address_mobilephone
+   , address.faxnumber AS address_faxnumber
+   , address.emailaddress AS address_emailaddress
+   , civilTitle.description AS civilTitle_description
+FROM
+     opuscollege.person person INNER JOIN opuscollege.student student ON person.id = student.personid
+     LEFT OUTER JOIN opuscollege.gender gender ON person.gendercode = gender.code AND gender.lang = $P{lang}
+     INNER JOIN opuscollege.studyplan studyplan ON student.studentid = studyplan.studentid
+     INNER JOIN opuscollege.studyPlanCardinalTimeUnit ON studyplan.id = studyplancardinaltimeunit.studyPlanId
+     LEFT OUTER JOIN opuscollege.cardinaltimeunitstatus ON studyPlanCardinalTimeUnit.cardinaltimeunitstatuscode = cardinaltimeunitstatus.code AND cardinaltimeunitstatus.lang = $P{lang}
+     LEFT OUTER JOIN opuscollege.address ON address.personId = person.id AND address.addressTypeCode = '2'
+     LEFT OUTER JOIN opuscollege.country ON address.countryCode = country.code AND country.lang = $P{lang}
+     LEFT OUTER JOIN opuscollege.civilTitle ON person.civilTitleCode = civilTitle.code AND civilTitle.lang = $P{lang}
+     INNER JOIN opuscollege.studyGradeType on studyPlanCardinalTimeUnit.studyGradeTypeId = studyGradeType.id
+     INNER JOIN opuscollege.cardinalTimeUnit ON studyGradeType.cardinaltimeunitcode = cardinaltimeunit.code AND cardinaltimeunit.lang = $P{lang}
+     INNER JOIN opuscollege.academicyear ON academicyear.id = studygradetype.currentacademicyearid
+     INNER JOIN opuscollege.study study ON studygradetype.studyid = study.id
+     INNER JOIN opuscollege.gradetype gradetype ON studygradetype.gradetypecode = gradetype.code AND gradetype.lang = $P{lang}
+     INNER JOIN opuscollege.organizationalunit organizationalunit ON study.organizationalunitid = organizationalunit.id
+     INNER JOIN opuscollege.branch on branch.id = organizationalunit.branchId
+     INNER JOIN opuscollege.institution institution ON institution.id = branch.institutionid
+     INNER JOIN opuscollege.study primarystudy ON student.primarystudyid = primarystudy.id
+
+WHERE person.active = 'Y'
+and studyplan.studyplanstatuscode = '3'
+--and not exists (
+--  select     innerSpctu.id
+--  from       opuscollege.studyPlanCardinalTimeUnit innerSpctu
+--  inner join opuscollege.studygradetype innerSgt on innerSpctu.studygradetypeid = innerSgt.id
+--  where      innerSpctu.studyPlanId = studyPlanCardinalTimeUnit.studyPlanId
+--  and        innerSgt.currentacademicyearid <> studyGradeType.currentacademicyearid
+--)
+$P!{whereClause}
+
+ORDER BY branchdescription
+    , organizationalunitdescription
+    , academicyear_id DESC
+    , studydescription
+    , gradetypecode
+    , cardinaltimeunit_description
+    , studyPlanCardinalTimeUnit_cardinaltimeunitnumber
+    $P!{orderClause}
+
+limit 100]]>
+	</queryString>
+	<field name="institution_description" class="java.lang.String"/>
+	<field name="branchdescription" class="java.lang.String"/>
+	<field name="branchcode" class="java.lang.String"/>
+	<field name="organizationalunitdescription" class="java.lang.String"/>
+	<field name="studydescription" class="java.lang.String"/>
+	<field name="gradetypecode" class="java.lang.String"/>
+	<field name="studyplandescription" class="java.lang.String"/>
+	<field name="academicyear_id" class="java.lang.Integer"/>
+	<field name="academicyear_description" class="java.lang.String"/>
+	<field name="cardinaltimeunit_description" class="java.lang.String"/>
+	<field name="studyplancardinaltimeunit_cardinaltimeunitnumber" class="java.lang.Integer"/>
+	<field name="student_studentcode" class="java.lang.String"/>
+	<field name="person_firstnamesfull" class="java.lang.String"/>
+	<field name="person_surnamefull" class="java.lang.String"/>
+	<field name="person_birthdate" class="java.sql.Date"/>
+	<field name="gender_description" class="java.lang.String"/>
+	<field name="cardinaltimeunitstatus_description" class="java.lang.String"/>
+	<field name="primarystudy_studydescription" class="java.lang.String"/>
+	<field name="address_street" class="java.lang.String"/>
+	<field name="address_number" class="java.lang.Integer"/>
+	<field name="address_zipcode" class="java.lang.String"/>
+	<field name="address_city" class="java.lang.String"/>
+	<field name="country_description" class="java.lang.String"/>
+	<field name="address_telephone" class="java.lang.String"/>
+	<field name="address_mobilephone" class="java.lang.String"/>
+	<field name="address_faxnumber" class="java.lang.String"/>
+	<field name="address_emailaddress" class="java.lang.String"/>
+	<field name="civiltitle_description" class="java.lang.String"/>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band/>
+	</title>
+	<pageHeader>
+		<band height="17">
+			<staticText>
+				<reportElement key="studentcode_header" mode="Opaque" x="0" y="0" width="105" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[1_Code]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="fullname_header" mode="Opaque" x="105" y="0" width="181" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[2_Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="286" y="0" width="60" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[3_Address1]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="346" y="0" width="60" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[4_Address2]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="406" y="0" width="60" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[5_Address3]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="466" y="0" width="60" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[6_Address4]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="526" y="0" width="60" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[7_PostCode]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="586" y="0" width="60" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[8_PhoneNumber]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="646" y="0" width="60" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[9_FaxNumber]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="706" y="0" width="60" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[10_CompanyType]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="766" y="0" width="60" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[11_ContactTitle]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="826" y="0" width="60" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[12_ContactSalute]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="886" y="0" width="60" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[13_ContactInitials]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="946" y="0" width="60" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[14_ContactSurname]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="1006" y="0" width="60" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[15_Contact Position]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="1066" y="0" width="60" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[16_SortKey]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="1126" y="0" width="60" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[17_UserSort1]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="1186" y="0" width="60" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[18_UserSort2]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="1246" y="0" width="60" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[19_UserSort3]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="1306" y="0" width="15" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[20]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="1321" y="0" width="15" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[21]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="1336" y="0" width="15" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[22]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="1351" y="0" width="15" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[23]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="1366" y="0" width="15" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[24]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="1381" y="0" width="15" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[25]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="1396" y="0" width="15" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[26]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="1411" y="0" width="15" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[27]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="1426" y="0" width="15" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[28]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="1441" y="0" width="15" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[29]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="1456" y="0" width="15" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[30]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="1471" y="0" width="15" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[31]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="1486" y="0" width="15" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[32]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="1531" y="0" width="15" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[35]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="1561" y="0" width="15" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[37]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="1516" y="0" width="15" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[34]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="1591" y="0" width="15" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[39]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="1576" y="0" width="15" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[38]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="1501" y="0" width="15" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[33]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="1546" y="0" width="15" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[36]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="1681" y="0" width="15" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[45]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="1606" y="0" width="15" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[40]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="1696" y="0" width="15" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[46]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="1621" y="0" width="15" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[41]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="1666" y="0" width="15" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[44]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="1636" y="0" width="15" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[42]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="1651" y="0" width="15" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[43]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="1831" y="0" width="15" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[55]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="1981" y="0" width="15" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[65]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="1891" y="0" width="15" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[59]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="2176" y="0" width="15" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[72]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="2026" y="0" width="60" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[68_MobilePhone]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="1966" y="0" width="15" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[64]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="1936" y="0" width="15" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[62]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="1726" y="0" width="15" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[48]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="1951" y="0" width="15" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[63]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="1816" y="0" width="15" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[54]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="1996" y="0" width="15" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[66]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="1921" y="0" width="15" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[61]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="2011" y="0" width="15" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[67]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="1861" y="0" width="15" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[57]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="2191" y="0" width="15" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[73]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="2161" y="0" width="15" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[71]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="1876" y="0" width="15" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[58]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="1906" y="0" width="15" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[60]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="2086" y="0" width="60" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[69_Email]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="1771" y="0" width="15" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[51]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="1741" y="0" width="15" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[49]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="1711" y="0" width="15" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[47]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="1756" y="0" width="15" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[50]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="1786" y="0" width="15" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[52]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="2146" y="0" width="15" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[70]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="1801" y="0" width="15" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[53]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="1846" y="0" width="15" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[56]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="2311" y="0" width="15" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[81]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="2371" y="0" width="15" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[85]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="2506" y="0" width="15" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[94]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="2206" y="0" width="15" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[74]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="2296" y="0" width="15" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[80]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="2401" y="0" width="15" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[87]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="2756" y="0" width="60" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[111_CustType]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="2341" y="0" width="15" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[83]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="2356" y="0" width="15" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[84]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="2386" y="0" width="15" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[86]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="2251" y="0" width="15" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[77]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="2221" y="0" width="15" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[75]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="2236" y="0" width="15" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[76]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="2536" y="0" width="20" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[100]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="2676" y="0" width="20" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[107]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="2616" y="0" width="20" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[104]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="2716" y="0" width="20" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[109]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="2461" y="0" width="15" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[91]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="2576" y="0" width="20" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[102]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="2696" y="0" width="20" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[108]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="2636" y="0" width="20" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[105]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="2416" y="0" width="15" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[88]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="2446" y="0" width="15" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[90]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="2431" y="0" width="15" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[89]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="2476" y="0" width="15" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[92]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="2491" y="0" width="15" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[93]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="2596" y="0" width="20" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[103]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="2556" y="0" width="20" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[101]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="2521" y="0" width="15" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[95]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="2656" y="0" width="20" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[106]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="2266" y="0" width="15" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[78]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="2736" y="0" width="20" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[110]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="2281" y="0" width="15" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[79]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="birthdate_header" mode="Opaque" x="2326" y="0" width="15" height="17" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[82]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band/>
+	</columnHeader>
+	<detail>
+		<band height="16">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="studentcode_value" stretchType="RelativeToTallestObject" x="0" y="0" width="105" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{student_studentcode}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="105" y="0" width="181" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{person_surnamefull} + " " + $F{person_firstnamesfull}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="286" y="0" width="60" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{address_street} == null ? "" : $F{address_street} + " ")
++ ($F{address_number} == null ? "" : $F{address_number} + ", ")
++ ($F{address_city} == null ? "" : $F{address_city} + ", ")
++ ($F{country_description} == null ? "" : $F{country_description})]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="346" y="0" width="60" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="406" y="0" width="60" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="466" y="0" width="60" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="526" y="0" width="60" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{address_zipcode}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="586" y="0" width="60" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{address_telephone}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="646" y="0" width="60" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{address_faxnumber}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="706" y="0" width="60" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["2"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="766" y="0" width="60" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="826" y="0" width="60" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="886" y="0" width="60" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="946" y="0" width="60" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{person_surnamefull}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="1006" y="0" width="60" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="1066" y="0" width="60" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{gradetypecode} + "-"
++ ($F{studydescription}.length() <= 12 ? $F{studydescription} : $F{studydescription}.substring(0, 11 ))]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="1126" y="0" width="60" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["FAMILY"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="1186" y="0" width="60" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{branchcode}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="1246" y="0" width="60" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{studyplancardinaltimeunit_cardinaltimeunitnumber}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="1306" y="0" width="15" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="1321" y="0" width="15" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="1336" y="0" width="15" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="1351" y="0" width="15" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="1366" y="0" width="15" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="1381" y="0" width="15" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="1396" y="0" width="15" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="1411" y="0" width="15" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="1426" y="0" width="15" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="1441" y="0" width="15" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="1456" y="0" width="15" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="1471" y="0" width="15" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="1606" y="0" width="15" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="1621" y="0" width="15" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="1486" y="0" width="15" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="1501" y="0" width="15" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="1561" y="0" width="15" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="1546" y="0" width="15" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="1516" y="0" width="15" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="1591" y="0" width="15" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="1576" y="0" width="15" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="1651" y="0" width="15" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="1636" y="0" width="15" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="1531" y="0" width="15" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="1666" y="0" width="15" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="1681" y="0" width="15" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="1696" y="0" width="15" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="1816" y="0" width="15" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="1831" y="0" width="15" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="1726" y="0" width="15" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="1981" y="0" width="15" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="1921" y="0" width="15" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="1726" y="0" width="15" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="1996" y="0" width="15" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="1876" y="0" width="15" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="2146" y="0" width="15" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="1801" y="0" width="15" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="1786" y="0" width="15" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="1861" y="0" width="15" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="1846" y="0" width="15" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="2176" y="0" width="15" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="1741" y="0" width="15" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="1966" y="0" width="15" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="1711" y="0" width="15" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="1771" y="0" width="15" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="2026" y="0" width="60" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{address_mobilephone}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="1756" y="0" width="15" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="1891" y="0" width="15" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="1906" y="0" width="15" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="2086" y="0" width="60" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{address_emailaddress}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="1951" y="0" width="15" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="2161" y="0" width="15" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="1936" y="0" width="15" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="2011" y="0" width="15" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="2191" y="0" width="15" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="2251" y="0" width="15" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="2401" y="0" width="15" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="2756" y="0" width="60" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["C"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="2341" y="0" width="15" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="2716" y="0" width="20" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="2576" y="0" width="20" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="2736" y="0" width="20" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="2476" y="0" width="15" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="2206" y="0" width="15" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="2281" y="0" width="15" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="2266" y="0" width="15" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="2596" y="0" width="20" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="2636" y="0" width="20" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="2386" y="0" width="15" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="2446" y="0" width="15" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="2536" y="0" width="20" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="2311" y="0" width="15" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="2461" y="0" width="15" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="2616" y="0" width="20" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="2491" y="0" width="15" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="2356" y="0" width="15" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="2431" y="0" width="15" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="2236" y="0" width="15" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="2656" y="0" width="20" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="2676" y="0" width="20" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="2416" y="0" width="15" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="2521" y="0" width="15" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="2296" y="0" width="15" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="2696" y="0" width="20" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="2536" y="0" width="20" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="2221" y="0" width="15" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="2506" y="0" width="15" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="2326" y="0" width="15" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="2556" y="0" width="20" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="2371" y="0" width="15" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band/>
+	</pageFooter>
+	<summary>
+		<band/>
+	</summary>
+	<noData>
+		<band height="50">
+			<textField isBlankWhenNull="false">
+				<reportElement key="nodata" x="0" y="0" width="535" height="50"/>
+				<textElement textAlignment="Center">
+					<font size="28"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{general.nodata}]]></textFieldExpression>
+			</textField>
+		</band>
+	</noData>
+</jasperReport>

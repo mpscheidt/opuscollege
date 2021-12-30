@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.0.0.final using JasperReports Library version 6.0.0  -->
+<!-- 2015-01-14T10:53:50 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="testResult" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="97b69b91-2730-42b2-b186-54768555e9e2">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Postgres Data Adapter "/>
+	<parameter name="studNum" class="java.lang.Integer">
+		<parameterDescription><![CDATA[studentID]]></parameterDescription>
+	</parameter>
+	<queryString>
+		<![CDATA[select  (SELECT opuscollege.subject.subjectcode 
+					FROM opuscollege.subject
+					WHERE opuscollege.subject.id = opuscollege.subjectresult.subjectid
+				) AS "subject",				
+				opuscollege.subjectResult.endgradecomment,
+				opuscollege.subjectresult.mark
+        from    opuscollege.subjectResult
+        inner join opuscollege.studyplandetail on subjectResult.studyPlanDetailId = studyPlanDetail.id
+        inner join opuscollege.studyplan on studyplandetail.studyplanid = studyplan.id
+				where studentid = $P!{studNum}]]>
+	</queryString>
+	<field name="subject" class="java.lang.String"/>
+	<field name="endgradecomment" class="java.lang.String"/>
+	<field name="mark" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="32" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="43" splitType="Stretch">
+			<staticText>
+				<reportElement x="210" y="5" width="95" height="30" uuid="3fb13d06-536b-4d76-b005-8b6831e022a9"/>
+				<text><![CDATA[endgradecomment]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="305" y="5" width="65" height="30" uuid="13c25924-654a-4b66-9f30-7d02a3a57731"/>
+				<text><![CDATA[mark]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="110" y="5" width="100" height="30" uuid="563d3a09-a341-4fcc-904d-b63f3cad2e61"/>
+				<text><![CDATA[subject]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="39" splitType="Stretch">
+			<textField>
+				<reportElement x="210" y="7" width="95" height="30" uuid="57de4ffa-9f85-45cf-8cfc-0265342bdeac"/>
+				<textFieldExpression><![CDATA[$F{endgradecomment}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="110" y="7" width="100" height="30" uuid="b56307ab-897a-4b1f-9511-40fe3eafee04"/>
+				<textFieldExpression><![CDATA[$F{subject}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="305" y="9" width="65" height="30" uuid="576c6c57-b9a7-44d3-ad25-44cecb5ee886"/>
+				<textFieldExpression><![CDATA[$F{mark}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

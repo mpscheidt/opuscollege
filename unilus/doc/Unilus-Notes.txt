@@ -1,0 +1,18 @@
+
+Logo ok?
+
+Server.xml: datasource anpassen
+
+Still to be decided:
+- How to calculate studyplan result
+  For now using the CBU version (including courses from all senior years)
+
+- In which format are grades/marks usually written?
+  unza style: mark (grade)          example: 88 (A)
+
+- Student number format?
+  currently: YYNNNNN
+
+- Ranges for grades, e.g. from 80-90: A; 90-100: A+
+  (to make database script)
+

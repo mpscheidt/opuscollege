@@ -1,0 +1,305 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.2  (Linux)">
+	<META NAME="AUTHOR" CONTENT="Markus Pscheidt">
+	<META NAME="CREATED" CONTENT="20080204;11273400">
+	<META NAME="CHANGEDBY" CONTENT="Markus Pscheidt">
+	<META NAME="CHANGED" CONTENT="20080205;18495300">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { size: 8.5in 11in }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" DIR="LTR">
+<P>Whitepaper Automatic Updates</P>
+<P>This is an outline of the aspects related to managing “module”
+updates. Module is a general name equivalent to plug-ins or bundles,
+depending on the technology and terminology used. This implies that a
+module structure is a prerequisite for automatic updates done in the
+manner described here.</P>
+<P>The mechanism described here is independent of the technology used
+and should be applicable e. g. to OSGi as well as to a build based
+version management system. With OSGi several aspects would be taken
+care of. OSGi and build tool are shown as example applications.</P>
+<P STYLE="margin-top: 0.17in; page-break-after: avoid"><FONT FACE="Albany, sans-serif"><FONT SIZE=4>Goal</FONT></FONT></P>
+<P>The goal is to make updates as easy as as possible for the system
+administrator. The main difficulty is expected to be with DB
+statements that have to be executed when a new module is installed
+and when a module is updated to a new version. This process should be
+automated.</P>
+<P STYLE="margin-top: 0.17in; page-break-after: avoid"><FONT FACE="Albany, sans-serif"><FONT SIZE=4>Prerequisites</FONT></FONT></P>
+<P>For automatic updates of modules to work, each module needs to be
+identified within the OPUS College system by certain characteristics:</P>
+<TABLE WIDTH=642 BORDER=1 CELLPADDING=4 CELLSPACING=3>
+	<COL WIDTH=262>
+	<COL WIDTH=184>
+	<COL WIDTH=158>
+	<TR VALIGN=TOP>
+		<TD WIDTH=262>
+			<P><BR>
+			</P>
+		</TD>
+		<TD WIDTH=184>
+			<P>OSGi</P>
+		</TD>
+		<TD WIDTH=158>
+			<P>build tool (ant)</P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=262>
+			<P>module name</P>
+		</TD>
+		<TD WIDTH=184>
+			<P><BR>
+			</P>
+		</TD>
+		<TD WIDTH=158>
+			<P><BR>
+			</P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=262>
+			<P>module version number</P>
+		</TD>
+		<TD WIDTH=184>
+			<P>automatically managed</P>
+		</TD>
+		<TD WIDTH=158>
+			<P>database table</P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=262>
+			<P>state (installed, activated, ..)</P>
+		</TD>
+		<TD WIDTH=184>
+			<P>automatically managed</P>
+		</TD>
+		<TD WIDTH=158>
+			<P>database table</P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=262>
+			<P>dependencies on other modules</P>
+		</TD>
+		<TD WIDTH=184>
+			<P>automatically managed</P>
+		</TD>
+		<TD WIDTH=158>
+			<P>manual</P>
+		</TD>
+	</TR>
+</TABLE>
+<P><BR><BR>
+</P>
+<P>With this information, when a new version of a module is installed
+in the system, changes to the module's database tables can be done
+relative to the currently installed version.</P>
+<P>How this information about installed modules is managed, depends
+on the underlying technology: 
+</P>
+<UL>
+	<LI><P>An OSGi container manages this information because this is
+	one of the main features of OSGi and the information can be
+	retrieved from the OSGi container <SPAN STYLE="background: #ffff00">[!TODO!:
+	Check if interaction with container is possible to provide this
+	information]</SPAN>.</P>
+	<LI><P>For a build based management of modules (with “ant” or
+	“maven”) it will be necessary to create DB tables in the core
+	system to store and update this information.</P>
+</UL>
+<P STYLE="margin-top: 0.17in; page-break-after: avoid"><FONT FACE="Albany, sans-serif"><FONT SIZE=4>What
+needs to be shipped with a new version?</FONT></FONT></P>
+<P>When a version of a module is released, the following has to be
+provided by the module developer:</P>
+<UL>
+	<LI><P>the new module code 
+	</P>
+	<LI><P>the version number of the new code (with every change –
+	however small – the version number should be increased, at least
+	behind the comma). 
+	</P>
+	<LI><P>If there have been any DB changes:</P>
+	<UL>
+		<LI><P>correct the CREATE statements (in case somebody is
+		installing this module without having an old version installed)</P>
+		<LI><P>change scripts relative to the previous version. Important:
+		No data must be lost by executing the scripts.</P>
+		<LI><P>&lt;optional&gt; DB scripts to remove tables in case the
+		module is uninstalled.</P>
+	</UL>
+</UL>
+<P>In which way this is packaged depends on the implementing
+technology.</P>
+<P>The database change scripts could be defined in a simple text
+file.</P>
+<P STYLE="margin-top: 0.17in; page-break-after: avoid"><FONT FACE="Albany, sans-serif"><FONT SIZE=4>Which
+situations can occur?</FONT></FONT></P>
+<P>To prevent malfunctioning, all possible situations shall be
+analyzed:</P>
+<UL>
+	<LI><P>New installation of OPUS College</P>
+	<LI><P>New installation of module in already existing OPUS College
+	installation</P>
+	<LI><P>Update module from older version without DB changes</P>
+	<LI><P>Update module from older version with DB changes (from
+	predecessor version or from older version)</P>
+	<LI><P>Uninstall module (removing data and database tables)</P>
+	<LI><P><FONT SIZE=2><FONT SIZE=2>&lt;optional&gt; </FONT>Remove data
+	of a module</FONT></P>
+	<LI><P><FONT SIZE=2><FONT SIZE=2>&lt;optional&gt; </FONT>Deactivate
+	module (not removing data) </FONT>
+	</P>
+	<LI><P><FONT SIZE=2><FONT SIZE=2>&lt;optional&gt; </FONT>Activate
+	module</FONT></P>
+</UL>
+<P STYLE="margin-top: 0.17in; page-break-after: avoid"><FONT FACE="Albany, sans-serif"><FONT SIZE=4>Update
+module from older version (with DB changes)</FONT></FONT></P>
+<P>This is the most general update situation including DB changes.</P>
+<P>Procedure:</P>
+<P>On any failure during the update, ask the user to go back to the
+previous version.</P>
+<TABLE WIDTH=100% BORDER=1 CELLPADDING=4 CELLSPACING=3>
+	<COL WIDTH=85*>
+	<COL WIDTH=85*>
+	<COL WIDTH=85*>
+	<TR VALIGN=TOP>
+		<TD WIDTH=33%>
+			<P><BR>
+			</P>
+		</TD>
+		<TD WIDTH=33%>
+			<P>with OSGi</P>
+		</TD>
+		<TD WIDTH=33%>
+			<P>with a build tool (ant or maven)</P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=33%>
+			<P>Install the new module</P>
+		</TD>
+		<TD WIDTH=33%>
+			<P>Use OSGi interface to install bundle (can be done for example
+			on command line or in a web interface integrated with
+			OpusCollege).</P>
+			<P>The installation shall only be successful if the whole update
+			procedure (see next steps) is executed successfully.</P>
+		</TD>
+		<TD WIDTH=33%>
+			<P>build the whole war file and deploy into tomcat</P>
+			<P>In the OPUS College web interface: Notify the user that a new
+			version is available and has to be updated, either after login
+			and/or in a dedicated module/plug-in manager.</P>
+			<P>If the user is the administrative user, ask to execute the
+			update.</P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=33%>
+			<P>Check if all dependencies are satisfied, i. e. first update or
+			install other modules that the module in question depends on. Note
+			that dependencies can change between versions.</P>
+		</TD>
+		<TD WIDTH=33%>
+			<P>implicitly done by OSGi</P>
+		</TD>
+		<TD WIDTH=33%>
+			<P>do manual resolution of dependencies</P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=33%>
+			<P>Execute DB change scripts with a single commit to prevent
+			destruction of DB.</P>
+		</TD>
+		<TD WIDTH=33%>
+			<P><BR>
+			</P>
+		</TD>
+		<TD WIDTH=33%>
+			<P><BR>
+			</P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=33%>
+			<P>Manage version numbers. 
+			</P>
+		</TD>
+		<TD WIDTH=33%>
+			<P>implicitly done by OSGi</P>
+		</TD>
+		<TD WIDTH=33%>
+			<P>If DB change scripts executed successfully, update module
+			version information in DB</P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=33%>
+			<P>If the update was not successful, the administrator has to
+			install the previous working version.</P>
+			<P>This should be possible since the DB change scripts are
+			executed in one single commit.</P>
+		</TD>
+		<TD WIDTH=33%>
+			<P><BR>
+			</P>
+		</TD>
+		<TD WIDTH=33%>
+			<P><BR>
+			</P>
+		</TD>
+	</TR>
+</TABLE>
+<P><BR><BR>
+</P>
+<OL>
+	<LI><P>Install the new module into the OPUS-College server. This
+	step depends on the technology used (e. g. put a OSGi bundle jar
+	file into the OSGi container, or build the system including the new
+	version with ant and deploy).</P>
+	<LI><P>In the OPUS College web interface: Notify the user that a new
+	version is available and has to be updated, either after login
+	and/or in a dedicated module/plug-in manager.</P>
+	<LI><P>If the user is the administrative user, ask to execute the
+	update (notify the user that an extra backup of the database should
+	be done).<BR>If the user does not have the privileges to execute the
+	update, the module in question should not be usable until the update
+	has been executed by the administrator.</P>
+	<LI><P>Check if all dependencies to other modules are satisfied, i.
+	e. first update or install other modules that the module in question
+	depends on. Note that dependencies can change between versions.
+	(This step can possibly be done by the OSGi container.)</P>
+	<LI><P>Execute DB change scripts with a single commit to prevent
+	destruction of DB.</P>
+	<LI><P>If DB change scripts executed successfully, update version
+	information (if managed manually).<BR>If DB change scripts have not
+	been executed successfully, ask the administrator to install the
+	previous version again. This should be possible since the DB change
+	scripts are executed in one single commit.</P>
+</OL>
+<P>If the update is done from an older version than the immediate
+predecessor version then all updates have to executed incrementally.
+Example:</P>
+<P>Currently installed: v1.0</P>
+<P>To be installed v1.2</P>
+<P>If there have been versions in between (v1.1) then first execute
+update to v1.1, and after that update to v1.2.</P>
+<P><BR><BR>
+</P>
+<P><BR><BR>
+</P>
+<P><BR><BR>
+</P>
+<P><BR><BR>
+</P>
+</BODY>
+</HTML>

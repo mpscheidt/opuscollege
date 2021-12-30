@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<project name="accommodationfee" basedir="." default="all-but-clean">
+	
+	<path id="module-dependencies">
+		<pathelement location="${basedir}/../college/build/classes"/>
+        <pathelement location="${basedir}/../accommodation/build/classes"/>
+        <pathelement location="${basedir}/../fee/build/classes"/>
+	</path>
+	
+	<import file="${basedir}/../college/common-build/module-targets.xml"/>
+
+</project>
+
+

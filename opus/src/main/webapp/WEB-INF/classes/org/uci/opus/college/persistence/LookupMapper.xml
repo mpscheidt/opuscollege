@@ -1,0 +1,1262 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+  ***** BEGIN LICENSE BLOCK *****
+  Version: MPL 1.1/GPL 2.0/LGPL 2.1
+  
+  The contents of this file are subject to the Mozilla Public License Version
+  1.1 (the "License"); you may not use this file except in compliance with
+  the License. You may obtain a copy of the License at
+  http://www.mozilla.org/MPL/
+  
+  Software distributed under the License is distributed on an "AS IS" basis,
+  WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+  for the specific language governing rights and limitations under the
+  License.
+  
+  The Original Code is Opus-College college module code.
+  
+  The Initial Developer of the Original Code is
+  Center for Information Services, Radboud University Nijmegen.
+  Portions created by the Initial Developer are Copyright (C) 2008
+  the Initial Developer. All Rights Reserved.
+  
+  Contributor(s):
+    For Java files, see Javadoc @author tags.
+  
+  Alternatively, the contents of this file may be used under the terms of
+  either the GNU General Public License Version 2 or later (the "GPL"), or
+  the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+  in which case the provisions of the GPL or the LGPL are applicable instead
+  of those above. If you wish to allow use of your version of this file only
+  under the terms of either the GPL or the LGPL, and not to allow others to
+  use your version of this file under the terms of the MPL, indicate your
+  decision by deleting the provisions above and replace them with the notice
+  and other provisions required by the GPL or the LGPL. If you do not delete
+  the provisions above, a recipient may use your version of this file under
+  the terms of any one of the MPL, the GPL or the LGPL.
+  
+  ***** END LICENSE BLOCK *****
+--><!--Converted at: Mon May 11 21:34:50 CEST 2015-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.uci.opus.college.persistence.LookupMapper">
+
+    <resultMap id="LookupTableResultMap" type="LookupTable">
+        <id property="id" column="lookupTable_id"/>
+        <result property="tableName" column="tableName"/>
+        <result property="lookupType" column="lookupType"/>
+        <result property="active" column="active"/>
+        <collection property="dependencies" select="findTableDependenciesForTable" column="lookupTable_id"/>
+    </resultMap>
+    
+    <!-- find all Lookup rows for this lookup-table -->
+    <select id="findAllRows" parameterType="map" resultType="Lookup">
+        select * from opuscollege.${tableName} 
+        WHERE  true
+        <if test="preferredLanguage != null">
+          AND  ${tableName}.lang = #{preferredLanguage}
+        </if>
+        order by ${order}
+    </select>
+
+    <select id="findAllRows1" parameterType="map" resultType="Lookup1">
+        select * from opuscollege.${tableName} 
+        WHERE lower(opuscollege.${tableName}.lang) = lower(#{preferredLanguage})
+        order by lower(description)
+    </select>
+    <select id="findAllRows2" parameterType="map" resultType="Lookup2">
+        select * from opuscollege.${tableName} 
+        WHERE lower(opuscollege.${tableName}.lang) = lower(#{preferredLanguage})
+        order by lower(description)
+    </select>
+    <select id="findAllRows3" parameterType="map" resultType="Lookup3">
+        select * from opuscollege.${tableName} 
+        WHERE lower(opuscollege.${tableName}.lang) = lower(#{preferredLanguage})
+        order by lower(description)
+    </select>
+    <select id="findAllRows4" parameterType="map" resultType="Lookup4">
+        select * from opuscollege.${tableName} 
+        WHERE lower(opuscollege.${tableName}.lang) = lower(#{preferredLanguage})
+        order by lower(description)
+    </select>
+    <select id="findAllRows5" parameterType="map" resultType="Lookup5">
+        select * from opuscollege.${tableName} 
+        WHERE lower(opuscollege.${tableName}.lang) = lower(#{preferredLanguage})
+        order by lower(description)
+    </select>
+    <select id="findAllRows6" parameterType="map" resultType="Lookup6">
+        select * from opuscollege.${tableName} 
+        WHERE lower(opuscollege.${tableName}.lang) = lower(#{preferredLanguage})
+        order by lower(description)
+    </select>
+    <select id="findAllRows7" parameterType="map" resultType="Lookup7">
+        select * from opuscollege.${tableName} 
+        WHERE lower(opuscollege.${tableName}.lang) = lower(#{preferredLanguage})
+        order by lower(description)
+    </select>
+    <select id="findAllRows8" parameterType="map" resultType="Lookup8">
+        select * from opuscollege.${tableName}
+        WHERE lower(opuscollege.${tableName}.lang) = lower(#{preferredLanguage})
+        order by lower(description)
+    </select>
+    <select id="findAllRows9" parameterType="map" resultType="Lookup9">
+        select * from opuscollege.${tableName} 
+        WHERE lower(opuscollege.${tableName}.lang) = lower(#{preferredLanguage})
+        order by lower(description)
+    </select>
+    <select id="findAllRows10" parameterType="map" resultType="Lookup10">
+        select * from opuscollege.${tableName} 
+        WHERE lower(opuscollege.${tableName}.lang) = lower(#{preferredLanguage})
+        order by lower(description)
+    </select>
+
+    <!-- find all Lookup rows for one parent-id in this lookup-table -->
+    <select id="findAllRowsForCode" parameterType="map" resultType="Lookup">
+        select * from opuscollege.${tableName}
+        WHERE true
+        
+         <if test="preferredLanguage != null">
+              AND  lower(opuscollege.${tableName}.lang) = lower(#{preferredLanguage})
+        </if>
+            
+        AND opuscollege.${tableName}.${codeName} = #{code}
+        order by lower(description)
+    </select>
+    <select id="findAllRowsForCode1" parameterType="map" resultType="Lookup1">
+        select * from opuscollege.${tableName}
+        WHERE true 
+        
+        <if test="preferredLanguage != null">
+              AND  lower(opuscollege.${tableName}.lang) = lower(#{preferredLanguage})
+        </if>
+        
+        AND opuscollege.${tableName}.${codeName} = #{code}
+        order by lower(description)
+    </select>
+    <select id="findAllRowsForCode2" parameterType="map" resultType="Lookup2">
+        select * from opuscollege.${tableName}
+        WHERE true  
+        
+        <if test="preferredLanguage != null">
+              AND  lower(opuscollege.${tableName}.lang) = lower(#{preferredLanguage})
+        </if>
+        AND opuscollege.${tableName}.${codeName} = #{code}
+        order by lower(description)
+    </select>
+    <select id="findAllRowsForCode3" parameterType="map" resultType="Lookup3">
+        select * from opuscollege.${tableName}
+        WHERE true 
+        
+        <if test="preferredLanguage != null">
+              AND  lower(opuscollege.${tableName}.lang) = lower(#{preferredLanguage})
+        </if>
+        AND opuscollege.${tableName}.${codeName} = #{code}
+        order by lower(description)
+    </select>
+    <select id="findAllRowsForCode4" parameterType="map" resultType="Lookup4">
+        select * from opuscollege.${tableName}
+        WHERE true 
+        <if test="preferredLanguage != null">
+              AND  lower(opuscollege.${tableName}.lang) = lower(#{preferredLanguage})
+        </if>
+         AND opuscollege.${tableName}.${codeName} = #{code}
+        order by lower(description)
+   </select>
+    <select id="findAllRowsForCode5" parameterType="map" resultType="Lookup5">
+        select * from opuscollege.${tableName}
+        WHERE true 
+        <if test="preferredLanguage != null">
+              AND  lower(opuscollege.${tableName}.lang) = lower(#{preferredLanguage})
+        </if>
+        AND opuscollege.${tableName}.${codeName} = #{code}
+        order by lower(description)
+    </select>
+    <select id="findAllRowsForCode6" parameterType="map" resultType="Lookup6">
+        select * from opuscollege.${tableName} 
+        WHERE true
+        <if test="preferredLanguage != null">
+              AND  lower(opuscollege.${tableName}.lang) = lower(#{preferredLanguage})
+        </if>
+        AND opuscollege.${tableName}.${codeName} = #{code}
+        order by lower(description)
+    </select>
+    <select id="findAllRowsForCode7" parameterType="map" resultType="Lookup7">
+        select * from opuscollege.${tableName} 
+        WHERE true
+        <if test="preferredLanguage != null">
+              AND  lower(opuscollege.${tableName}.lang) = lower(#{preferredLanguage})
+        </if>
+        AND opuscollege.${tableName}.${codeName} = #{code}
+        order by lower(description)
+    </select>
+    <select id="findAllRowsForCode8" parameterType="map" resultType="Lookup8">
+        select * from opuscollege.${tableName} 
+        WHERE true
+        <if test="preferredLanguage != null">
+              AND  lower(opuscollege.${tableName}.lang) = lower(#{preferredLanguage})
+        </if>
+        AND opuscollege.${tableName}.${codeName} = #{code}
+        order by lower(description)
+    </select>
+    <select id="findAllRowsForCode9" parameterType="map" resultType="Lookup9">
+        select * from opuscollege.${tableName} 
+        WHERE true
+        <if test="preferredLanguage != null">
+              AND  lower(opuscollege.${tableName}.lang) = lower(#{preferredLanguage})
+        </if>
+        AND opuscollege.${tableName}.${codeName} = #{code}
+        order by lower(description)
+    </select>
+    <select id="findAllRowsForCode10" parameterType="map" resultType="Lookup10">
+        select * from opuscollege.${tableName} 
+        WHERE true
+        <if test="preferredLanguage != null">
+              AND  lower(opuscollege.${tableName}.lang) = lower(#{preferredLanguage})
+        </if>
+        AND opuscollege.${tableName}.${codeName} = #{code}
+        order by lower(description)
+    </select>
+
+
+<!-- find lookups which the description contains the specified description-->
+<select id="findRowsByDescription" parameterType="map" resultType="Lookup">
+         SELECT id
+               ,code
+               ,description
+               ,active
+               ,lang
+               FROM  opuscollege.${tableName}
+        WHERE description ILIKE '%' || #{description} || '%'
+        
+         <if test="preferredLanguage != null">
+              AND  lower(opuscollege.${tableName}.lang) = lower(#{preferredLanguage})
+        </if>
+            
+        order by lower(description)
+    </select>
+    
+    <select id="findRowsByDescription1" parameterType="map" resultType="Lookup1">
+         SELECT *
+               FROM  opuscollege.${tableName}
+        WHERE description ILIKE '%' || #{description} || '%'
+        
+         <if test="preferredLanguage != null">
+              AND  lower(opuscollege.${tableName}.lang) = lower(#{preferredLanguage})
+        </if>
+            
+        order by lower(description)
+    </select>
+    
+    <select id="findRowsByDescription2" parameterType="map" resultType="Lookup2">
+         SELECT *
+               FROM  opuscollege.${tableName}
+        WHERE description ILIKE '%' || #{description} || '%'
+        
+         <if test="preferredLanguage != null">
+              AND  lower(opuscollege.${tableName}.lang) = lower(#{preferredLanguage})
+        </if>
+            
+        order by lower(description)
+    </select>
+    
+    <select id="findRowsByDescription3" parameterType="map" resultType="Lookup3">
+         SELECT *
+               FROM  opuscollege.${tableName}
+        WHERE description ILIKE '%' || #{description} || '%'
+        
+         <if test="preferredLanguage != null">
+              AND  lower(opuscollege.${tableName}.lang) = lower(#{preferredLanguage})
+        </if>
+            
+        order by lower(description)
+    </select>
+    
+    <select id="findRowsByDescription4" parameterType="map" resultType="Lookup4">
+         SELECT *
+               FROM  opuscollege.${tableName}
+        WHERE description ILIKE '%' || #{description} || '%'
+        
+         <if test="preferredLanguage != null">
+              AND  lower(opuscollege.${tableName}.lang) = lower(#{preferredLanguage})
+        </if>
+            
+        order by lower(description)
+    </select>
+    
+    <select id="findRowsByDescription5" parameterType="map" resultType="Lookup5">
+         SELECT *
+               FROM  opuscollege.${tableName}
+        WHERE description ILIKE '%' || #{description} || '%'
+        
+         <if test="preferredLanguage != null">
+              AND  lower(opuscollege.${tableName}.lang) = lower(#{preferredLanguage})
+        </if>
+            
+        order by lower(description)
+    </select>
+    
+    <select id="findRowsByDescription6" parameterType="map" resultType="Lookup6">
+         SELECT *
+               FROM  opuscollege.${tableName}
+        WHERE description ILIKE '%' || #{description} || '%'
+        
+         <if test="preferredLanguage != null">
+              AND  lower(opuscollege.${tableName}.lang) = lower(#{preferredLanguage})
+        </if>
+            
+        order by lower(description)
+    </select>
+
+    <select id="findRowsByDescription7" parameterType="map" resultType="Lookup7">
+         SELECT *
+               FROM  opuscollege.${tableName}
+        WHERE description ILIKE '%' || #{description} || '%'
+        
+         <if test="preferredLanguage != null">
+              AND  lower(opuscollege.${tableName}.lang) = lower(#{preferredLanguage})
+        </if>
+            
+        order by lower(description)
+    </select>
+   
+   	<select id="findRowsByDescription8" parameterType="map" resultType="Lookup8">
+         SELECT *
+               FROM  opuscollege.${tableName}
+        WHERE description ILIKE '%' || #{description} || '%'
+        
+         <if test="preferredLanguage != null">
+              AND  lower(opuscollege.${tableName}.lang) = lower(#{preferredLanguage})
+        </if>
+            
+        order by lower(description)
+    </select>
+    
+    <select id="findRowsByDescription9" parameterType="map" resultType="Lookup9">
+         SELECT *
+               FROM  opuscollege.${tableName}
+        WHERE description ILIKE '%' || #{description} || '%'
+        
+         <if test="preferredLanguage != null">
+              AND  lower(opuscollege.${tableName}.lang) = lower(#{preferredLanguage})
+        </if>
+            
+        order by lower(description)
+    </select>
+    
+    <!-- MP 2014-12-29: not used anywhere -->    
+    <!-- find lookups with the exactly specified description-->
+<!--     <select id="findRowsForDescription" parameterType="map" resultType="Lookup"> -->
+<!--          SELECT id -->
+<!--                ,code -->
+<!--                ,description -->
+<!--                ,active -->
+<!--                ,lang -->
+<!--                FROM  opuscollege.${tableName} -->
+<!--         WHERE description = #{description} -->
+        
+<!--          <if test="preferredLanguage != null"> -->
+<!--               AND  lower(opuscollege.${tableName}.lang) = lower(#{preferredLanguage}) -->
+<!--         </if> -->
+            
+<!--         order by lower(description) -->
+<!--     </select> -->
+    
+    
+<!--     <select id="findRowsForDescription1" parameterType="map" resultType="Lookup1"> -->
+<!--          SELECT * -->
+<!--                FROM  opuscollege.${tableName} -->
+<!--         WHERE description = #{description} -->
+        
+<!--          <if test="preferredLanguage != null"> -->
+<!--               AND  lower(opuscollege.${tableName}.lang) = lower(#{preferredLanguage}) -->
+<!--         </if> -->
+            
+<!--         order by lower(description) -->
+<!--     </select> -->
+    
+<!--     <select id="findRowsForDescription2" parameterType="map" resultType="Lookup2"> -->
+<!--          SELECT * -->
+<!--                FROM  opuscollege.${tableName} -->
+<!--         WHERE description = #{description} -->
+        
+<!--          <if test="preferredLanguage != null"> -->
+<!--               AND  lower(opuscollege.${tableName}.lang) = lower(#{preferredLanguage}) -->
+<!--         </if> -->
+            
+<!--         order by lower(description) -->
+<!--     </select> -->
+    
+<!--     <select id="findRowsForDescription3" parameterType="map" resultType="Lookup3"> -->
+<!--          SELECT * -->
+<!--                FROM  opuscollege.${tableName} -->
+<!--         WHERE description = #{description} -->
+        
+<!--          <if test="preferredLanguage != null"> -->
+<!--               AND  lower(opuscollege.${tableName}.lang) = lower(#{preferredLanguage}) -->
+<!--         </if> -->
+            
+<!--         order by lower(description) -->
+<!--     </select> -->
+    
+<!--     <select id="findRowsForDescription4" parameterType="map" resultType="Lookup4"> -->
+<!--          SELECT * -->
+<!--                FROM  opuscollege.${tableName} -->
+<!--         WHERE description = #{description} -->
+        
+<!--          <if test="preferredLanguage != null"> -->
+<!--               AND  lower(opuscollege.${tableName}.lang) = lower(#{preferredLanguage}) -->
+<!--         </if> -->
+            
+<!--         order by lower(description) -->
+<!--     </select> -->
+    
+<!--     <select id="findRowsForDescription5" parameterType="map" resultType="Lookup5"> -->
+<!--          SELECT * -->
+<!--                FROM  opuscollege.${tableName} -->
+<!--         WHERE description = #{description} -->
+        
+<!--          <if test="preferredLanguage != null"> -->
+<!--               AND  lower(opuscollege.${tableName}.lang) = lower(#{preferredLanguage}) -->
+<!--         </if> -->
+            
+<!--         order by lower(description) -->
+<!--     </select> -->
+    
+<!--     <select id="findRowsForDescription6" parameterType="map" resultType="Lookup6"> -->
+<!--          SELECT * -->
+<!--                FROM  opuscollege.${tableName} -->
+<!--         WHERE description = #{description} -->
+        
+<!--          <if test="preferredLanguage != null"> -->
+<!--               AND  lower(opuscollege.${tableName}.lang) = lower(#{preferredLanguage}) -->
+<!--         </if> -->
+            
+<!--         order by lower(description) -->
+<!--     </select> -->
+
+<!--     <select id="findRowsForDescription7" parameterType="map" resultType="Lookup7"> -->
+<!--          SELECT * -->
+<!--                FROM  opuscollege.${tableName} -->
+<!--         WHERE description = #{description} -->
+        
+<!--          <if test="preferredLanguage != null"> -->
+<!--               AND  lower(opuscollege.${tableName}.lang) = lower(#{preferredLanguage}) -->
+<!--         </if> -->
+            
+<!--         order by lower(description) -->
+<!--     </select> -->
+    
+<!--     <select id="findRowsForDescription8" parameterType="map" resultType="Lookup8"> -->
+<!--          SELECT * -->
+<!--                FROM  opuscollege.${tableName} -->
+<!--         WHERE description = #{description} -->
+        
+<!--          <if test="preferredLanguage != null"> -->
+<!--               AND  lower(opuscollege.${tableName}.lang) = lower(#{preferredLanguage}) -->
+<!--         </if> -->
+            
+<!--         order by lower(description) -->
+<!--     </select> -->
+
+<!-- 	<select id="findRowsForDescription9" parameterType="map" resultType="Lookup9"> -->
+<!--          SELECT * -->
+<!--                FROM  opuscollege.${tableName} -->
+<!--         WHERE description = #{description} -->
+        
+<!--          <if test="preferredLanguage != null"> -->
+<!--               AND  lower(opuscollege.${tableName}.lang) = lower(#{preferredLanguage}) -->
+<!--         </if> -->
+            
+<!--         order by lower(description) -->
+<!--     </select> -->
+
+    <!-- find one Lookup object for this lookup-table -->
+    
+    <select id="findLookup" parameterType="map" resultType="Lookup">
+        SELECT 
+                 ${tableName}.active AS active
+                ,${tableName}.code AS code
+                ,${tableName}.description AS description
+                ,${tableName}.id AS id
+                ,${tableName}.lang AS lang
+
+     FROM opuscollege.${tableName}
+
+     WHERE true
+        <if test="active != null">
+             AND ${tableName}.active = #{active}
+        </if>
+        <if test="code != null">
+             AND ${tableName}.code = #{code}
+        </if>
+        <if test="description != null">
+             AND ${tableName}.description = #{description}
+<!--                 <isNotEmpty property="id"> AND ${tableName}.id = #{id}</isNotEmpty> -->
+        </if>
+        <if test="preferredLanguage != null">
+             AND lower(${tableName}.lang) = lower(#{preferredLanguage})
+        </if>
+        <if test="id != null and id != 0">
+            AND ${tableName}.id = #{id}
+        </if>
+    </select>
+
+<select id="findLookup1" parameterType="map" resultType="Lookup1">
+        SELECT ${tableName}.*
+        FROM opuscollege.${tableName}
+
+        WHERE true
+        <if test="active != null">
+                 AND ${tableName}.active = #{active}
+        </if>
+        <if test="code != null">
+                 AND ${tableName}.code = #{code}
+        </if>
+        <if test="description != null">
+                 AND ${tableName}.description = #{description}
+        </if>
+        <if test="preferredLanguage != null">
+                 AND lower(${tableName}.lang) = lower(#{preferredLanguage})
+        </if>
+        <if test="descriptionShort != null">
+                 AND ${tableName}.descriptionShort = #{descriptionShort}
+        </if>
+        <if test="id != null and id != 0">
+                    AND ${tableName}.id = #{id}
+        </if>
+
+    </select>
+
+    <select id="findLookup2" parameterType="map" resultType="Lookup2">
+        SELECT ${tableName}.*
+        FROM opuscollege.${tableName}
+
+        WHERE true
+        <if test="active != null">
+                 AND ${tableName}.active = #{active}
+        </if>
+        <if test="code != null">
+                 AND ${tableName}.code = #{code}
+        </if>
+        <if test="description != null">
+                 AND ${tableName}.description = #{description}
+        </if>
+        <if test="preferredLanguage != null">
+                 AND lower(${tableName}.lang) = lower(#{preferredLanguage})
+        </if>
+        <if test="provinceCode != null">
+                 AND ${tableName}.provinceCode = #{provinceCode}
+        </if>
+        <if test="id != null and id != 0">
+                    AND ${tableName}.id = #{id}
+        </if>
+        <if test="geonameId != null">
+                AND ${tableName}.geonameId = #{geonameId}
+        </if>
+
+    </select>
+
+    <select id="findLookup3" parameterType="map" resultType="Lookup3">
+        SELECT ${tableName}.*
+        FROM opuscollege.${tableName}
+
+        WHERE true
+        <if test="active != null">
+                 AND ${tableName}.active = #{active}
+        </if>
+        <if test="code != null">
+                 AND ${tableName}.code = #{code}
+        </if>
+        <if test="description != null">
+                 AND ${tableName}.description = #{description}
+        </if>
+        <if test="preferredLanguage != null">
+                 AND lower(${tableName}.lang) = lower(#{preferredLanguage})
+        </if>
+        <if test="short2 != null">
+                 AND ${tableName}.short2 = #{short2}
+        </if>
+        <if test="short3 != null">
+                 AND ${tableName}.short3 = #{short3}
+        </if>
+        <if test="id != null and id != 0">
+                    AND ${tableName}.id = #{id}
+        </if>
+        <if test="geonameId != null">
+                AND ${tableName}.geonameId = #{geonameId}
+        </if>
+                
+    </select>
+
+    <select id="findLookup4" parameterType="map" resultType="Lookup4">
+        SELECT ${tableName}.*
+        
+        FROM opuscollege.${tableName}
+
+        WHERE true
+        <if test="active != null">
+                AND ${tableName}.active = #{active}
+        </if>
+        <if test="code != null">
+                AND ${tableName}.code = #{code}
+        </if>
+        <if test="description != null">
+                AND ${tableName}.description = #{description}
+        </if>
+        <if test="preferredLanguage != null">
+                AND lower(${tableName}.lang) = lower(#{preferredLanguage})
+        </if>
+        <if test="districtCode != null">
+                AND ${tableName}.districtCode = #{districtCode}
+        </if>
+        <if test="id != null and id != 0">
+                AND ${tableName}.id = #{id}
+        </if>
+        <if test="geonameId != null">
+                AND ${tableName}.geonameId = #{geonameId}
+        </if>
+
+    </select>
+
+    <select id="findLookup5" parameterType="map" resultType="Lookup5">
+        SELECT ${tableName}.*
+        FROM opuscollege.${tableName}
+
+        WHERE true
+        <if test="active != null">
+                AND ${tableName}.active = #{active}
+        </if>
+        <if test="code != null">
+                AND ${tableName}.code = #{code}
+        </if>
+        <if test="description != null">
+                AND ${tableName}.description = #{description}
+        </if>
+        <if test="preferredLanguage != null">
+                AND lower(${tableName}.lang) = lower(#{preferredLanguage})
+        </if>
+        <if test="countryCode != null">
+                AND ${tableName}.countryCode = #{countryCode}
+        </if>
+        <if test="id != null and id != 0">
+                AND ${tableName}.id = #{id}
+        </if>
+        <if test="geonameId != null">
+                AND ${tableName}.geonameId = #{geonameId}
+        </if>
+
+    </select>
+
+<select id="findLookup6" parameterType="map" resultType="Lookup6">
+        SELECT 
+                 ${tableName}.active AS active
+                ,${tableName}.code AS code
+                ,${tableName}.description AS description
+                ,${tableName}.id AS id
+                ,${tableName}.lang AS lang
+                ,${tableName}.title AS title
+                ,${tableName}.titleShort AS titleShort
+                
+        
+     FROM opuscollege.${tableName}
+
+     WHERE true
+        <if test="active != null">
+                AND ${tableName}.active = #{active}
+        </if>
+        <if test="code != null">
+                AND ${tableName}.code = #{code}
+        </if>
+        <if test="description != null">
+                AND ${tableName}.description = #{description}
+        </if>
+        <if test="preferredLanguage != null">
+                AND lower(${tableName}.lang) = lower(#{preferredLanguage})
+        </if>
+        <if test="title != null">
+                AND ${tableName}.title = #{title}
+        </if>
+        <if test="id != null and id != 0">
+                AND ${tableName}.id = #{id}
+        </if>
+
+</select>
+
+<select id="findLookup7" parameterType="map" resultType="Lookup7">
+        SELECT 
+                 ${tableName}.active AS active
+                ,${tableName}.code AS code
+                ,${tableName}.description AS description
+                ,${tableName}.id AS id
+                ,${tableName}.lang AS lang
+                ,${tableName}.carrying AS carrying
+                ,${tableName}.continuing AS continuing
+                ,${tableName}.graduating AS graduating
+                ,${tableName}.increment AS increment
+        
+     FROM opuscollege.${tableName}
+
+     WHERE true
+        <if test="active != null">
+                AND ${tableName}.active = #{active}
+        </if>
+        <if test="code != null">
+                AND ${tableName}.code = #{code}
+        </if>
+        <if test="description != null">
+                AND ${tableName}.description = #{description}
+        </if>
+        <if test="preferredLanguage != null">
+                AND lower(${tableName}.lang) = lower(#{preferredLanguage})
+        </if>
+        <if test="carrying != null">
+                AND ${tableName}.carrying = #{carrying}
+        </if>
+        <if test="continuing != null">
+                AND ${tableName}.continuing = #{continuing}
+        </if>
+        <if test="graduating != null">
+                AND ${tableName}.graduating = #{graduating}
+        </if>
+        <if test="increment != null">
+                AND ${tableName}.increment = #{increment}
+        </if>
+        <if test="id != null and id != 0">
+                AND ${tableName}.id = #{id}
+        </if>
+                
+</select>
+
+<select id="findLookup8" parameterType="map" resultType="Lookup8">
+        SELECT 
+                 ${tableName}.active AS active
+                ,${tableName}.code AS code
+                ,${tableName}.description AS description
+                ,${tableName}.id AS id
+                ,${tableName}.lang AS lang
+                ,${tableName}.nrOfUnitsPerYear AS nrOfUnitsPerYear
+         
+     FROM opuscollege.${tableName}
+
+     WHERE true
+        <if test="active != null">
+                AND ${tableName}.active = #{active}
+        </if>
+        <if test="code != null">
+                AND ${tableName}.code = #{code}
+        </if>
+        <if test="description != null">
+                AND ${tableName}.description = #{description}
+        </if>
+        <if test="preferredLanguage != null">
+                AND lower(${tableName}.lang) = lower(#{preferredLanguage})
+        </if>
+        <if test="nrOfUnitsPerYear != null">
+                AND ${tableName}.nrOfUnitsPerYear = #{nrOfUnitsPerYear}
+        </if>
+        <if test="id != null and id != 0">
+                AND ${tableName}.id = #{id}
+        </if>
+
+</select>
+
+<select id="findLookup9" parameterType="map" resultType="Lookup9">
+        SELECT 
+                 ${tableName}.active AS active
+                ,${tableName}.code AS code
+                ,${tableName}.description AS description
+                ,${tableName}.id AS id
+                ,${tableName}.lang AS lang
+                ,${tableName}.title AS title
+                ,${tableName}.educationAreaCode AS educationAreaCode
+                ,${tableName}.educationLevelCode AS educationLevelCode
+        
+     FROM opuscollege.${tableName}
+
+     WHERE true
+        <if test="active != null">
+                AND ${tableName}.active = #{active}
+        </if>
+        <if test="code != null">
+                AND ${tableName}.code = #{code}
+        </if>
+        <if test="description != null">
+                AND ${tableName}.description = #{description}
+        </if>
+        <if test="preferredLanguage != null">
+                AND lower(${tableName}.lang) = lower(#{preferredLanguage})
+        </if>
+        <if test="educationAreaCode != null">
+                AND ${tableName}.educationAreaCode = #{educationAreaCode}
+        </if>
+        <if test="educationLevelCode != null">
+                AND ${tableName}.educationLevelCode = #{educationLevelCode}
+        </if>
+        <if test="id != null and id != 0">
+                AND ${tableName}.id = #{id}
+        </if>
+                
+</select>
+    
+<select id="findLookup10" parameterType="map" resultType="Lookup10">
+        SELECT 
+                 ${tableName}.*
+     FROM opuscollege.${tableName}
+
+     WHERE true
+        <if test="active != null">
+                AND ${tableName}.active = #{active}
+        </if>
+        <if test="code != null">
+                AND ${tableName}.code = #{code}
+        </if>
+        <if test="description != null">
+                AND ${tableName}.description = #{description}
+        </if>
+        <if test="preferredLanguage != null">
+                AND lower(${tableName}.lang) = lower(#{preferredLanguage})
+        </if>
+                
+</select>
+    
+    <!-- currently ununsed (findLookupsByParams) -->
+    <select id="findLookupsByParams" parameterType="map" resultType="Lookup">
+        select * from opuscollege.${tableName} 
+        WHERE true 
+        
+        <if test="preferredLanguage != null">
+            AND lower(opuscollege.${tableName}.lang) = lower(#{preferredLanguage})
+        </if>
+        <if test="code != null">
+            AND ${tableName}.code = #{code}
+        </if>
+        
+        <if test="description != null">
+            AND ${tableName}.description = #{description}
+        </if>
+    </select>
+    
+    <!-- finds all lookup tables which the name is more less the specified -->
+    <select id="findLookupTablesByName" parameterType="string" resultMap="LookupTableResultMap">
+       SELECT id AS lookupTable_id
+               ,tableName
+               ,lookupType
+               ,active
+      FROM opuscollege.lookupTable
+      WHERE tableName ILIKE '%' || #{value} || '%' 
+        AND active = 'Y'
+    </select>
+    
+    <!-- finds the lookup table which the name is the one specified -->
+    <select id="findLookupTableByName" parameterType="string" resultMap="LookupTableResultMap">
+       SELECT id AS lookupTable_id
+               ,tableName
+               ,lookupType
+               ,active
+      FROM opuscollege.lookupTable WHERE lower(tableName) = lower(#{value}) 
+    </select>
+    
+     <select id="findAllLookupTables" resultType="LookupTable">
+       SELECT id AS lookupTable_id
+               ,tableName
+               ,lookupType
+               ,active
+      FROM opuscollege.lookupTable
+      WHERE active = 'Y'; 
+    </select>
+    
+    <select id="findTableDependenciesForTable" parameterType="int" resultType="TableDependency">
+        SELECT * FROM opuscollege.tableDependency WHERE lookupTableId = #{value}
+    </select>
+    
+    <!-- MP 2014-12-29: not used anywhere -->    
+<!--     <select id="findDependencyValues" parameterType="map" resultType="String"> -->
+<!--         SELECT ${dependentColumn} FROM opuscollege.${dependentTable} WHERE  -->
+<!--         opuscollege.${dependentTable}.${dependentColumn} = opuscollege.${lookupTable}.code  -->
+<!--     </select> -->
+    
+    <select id="hasDependentValues" parameterType="map" resultType="Boolean">
+        
+        SELECT EXISTS (
+        	SELECT 1 FROM opuscollege.${dependentTable}
+        	WHERE opuscollege.${dependentTable}.${dependentColumn} = #{lookupCode}
+        )
+    </select>
+    
+    <!-- insert id="addLookupToEntity" parameterClass="map">
+        insert into opuscollege.${entityName}${tableName}
+        (   
+            ${entityName}Id
+            ,${tableName}Code
+        ) values (
+            #{entityId}
+            ,#{lookupCode}
+        )
+    </insert -->
+
+    <delete id="deleteLookupFromEntity" parameterType="map">
+        delete  from opuscollege.${entityName}${tableName}
+        where   ${entityName}Id   = #{entityId}
+        AND     ${tableName}Code   = #{lookupCode}
+    </delete>
+    
+     <delete id="deleteLookupByCode" parameterType="map">
+        DELETE  FROM opuscollege.${tableName}
+        WHERE code =  #{code} 
+        
+        <if test="lang != null">
+         AND  lang = #{lang}
+        </if>
+    </delete>
+    <select id="getCoreModule" resultType="AppVersion">
+        SELECT opuscollege.appVersions.*
+        FROM opuscollege.appVersions
+        WHERE module = 'college'
+    </select>
+
+    <select id="getAppVersions" resultType="AppVersion">
+        SELECT opuscollege.appVersions.*
+        FROM opuscollege.appVersions
+    </select>
+
+    <select id="getAppVersion" resultType="AppVersion">
+        SELECT *
+        FROM opuscollege.appVersions
+        WHERE module = #{module}
+    </select>
+
+    <!-- Retrieves the next sequence number available
+        This is usefull when adding new lookups
+     -->
+    <select id="getNextId" parameterType="map" resultType="int">
+        SELECT nextVal('opuscollege.${tableName}seq')
+    </select>
+    
+    <!-- Insert lookups queries -->
+    <insert id="addLookup" parameterType="map">
+        INSERT INTO opuscollege.${tableName}(
+                lang
+                ,active
+                ,code
+                ,description
+        ) VALUES (
+                #{lookup.lang}
+                ,#{lookup.active}
+                ,#{lookup.code}
+                ,#{lookup.description}                
+        )
+        
+    </insert>
+    
+	<insert id="addLookup1" parameterType="map">
+        INSERT INTO opuscollege.${tableName}(
+                descriptionShort
+                ,lang
+                ,active
+                ,code
+                ,description
+        ) VALUES (
+                #{lookup.descriptionShort}
+                ,#{lookup.lang}
+                ,#{lookup.active}
+                ,#{lookup.code}
+                ,#{lookup.description}
+                
+        )
+    </insert>
+
+<insert id="addLookup2" parameterType="map">
+        INSERT INTO opuscollege.${tableName}(
+                provinceCode
+                ,lang
+                ,active
+                ,code
+                ,description
+                ,geonameid
+        ) VALUES (
+                #{lookup.provinceCode}
+                , #{lookup.lang}
+                , #{lookup.active}                
+                , #{lookup.code}
+                , #{lookup.description}
+                , #{lookup.geonameId}
+        )
+    </insert>
+
+<insert id="addLookup3" parameterType="map">
+        INSERT INTO opuscollege.${tableName}(
+                short2
+                ,short3
+                ,lang
+                ,active
+                ,code
+                ,description
+                ,geonameid
+        ) VALUES (
+                #{lookup.short2}
+                , #{lookup.short3}
+                , #{lookup.lang}
+                , #{lookup.active}
+                , #{lookup.code}
+                , #{lookup.description}
+                , #{lookup.geonameId}
+        )
+    </insert>
+
+<insert id="addLookup4" parameterType="map">
+        INSERT INTO opuscollege.${tableName}(
+                districtCode
+                ,lang
+                ,active
+                ,code
+                ,description
+                ,geonameid
+        ) VALUES (
+                #{lookup.districtCode}
+                , #{lookup.lang}
+                , #{lookup.active}
+                , #{lookup.code}
+                , #{lookup.description}
+                , #{lookup.geonameId}
+        )
+    </insert>
+
+    <insert id="addLookup5" parameterType="map">
+        INSERT INTO opuscollege.${tableName}(
+                countryCode
+                ,lang
+                ,active
+                ,code
+                ,description
+                ,geonameid
+        ) VALUES (
+                #{lookup.countryCode}
+                , #{lookup.lang}
+                , #{lookup.active}
+                , #{lookup.code}
+                , #{lookup.description}
+                , #{lookup.geonameId}
+        )
+    </insert>
+
+<insert id="addLookup6" parameterType="map">
+        INSERT INTO opuscollege.${tableName}(
+                code
+                , lang
+                , active
+                , description
+                , title
+                , titleshort
+        ) VALUES (
+                #{lookup.code}
+                ,#{lookup.lang}
+                , #{lookup.active}
+                , #{lookup.description}
+                , #{lookup.title}
+                , #{lookup.titleShort}                
+        )
+    </insert>
+
+<insert id="addLookup7" parameterType="map">
+        INSERT INTO opuscollege.${tableName}(
+                continuing
+                ,increment
+                ,graduating
+                ,carrying
+                ,lang
+                ,active
+                ,code
+                ,description
+        ) VALUES (
+                #{lookup.continuing}
+                , #{lookup.increment}
+                , #{lookup.graduating}
+                , #{lookup.carrying}
+                , #{lookup.lang}
+                , #{lookup.active}
+                , #{lookup.code}
+                , #{lookup.description}
+                
+        )
+    </insert>
+
+<insert id="addLookup8" parameterType="map">
+        INSERT INTO opuscollege.${tableName}(
+                nrOfUnitsPerYear
+                ,lang
+                ,active
+                ,code
+                ,description
+        ) VALUES (
+                #{lookup.nrOfUnitsPerYear}
+                , #{lookup.lang}
+                , #{lookup.active}
+                , #{lookup.code}
+                , #{lookup.description}
+                
+        )
+    </insert>
+    
+    <insert id="addLookup9" parameterType="map">
+        INSERT INTO opuscollege.${tableName}(
+                code
+                , lang
+                , active
+                , description
+                , title
+                , educationAreaCode
+                , educationLevelCode
+        ) VALUES (
+                #{lookup.code}
+                , #{lookup.lang}
+                , #{lookup.active}
+                , #{lookup.description}
+                , #{lookup.title}
+                , #{lookup.educationAreaCode}
+                , #{lookup.educationLevelCode}                
+        )
+    </insert>
+
+    <insert id="addLookup10" parameterType="map">
+        INSERT INTO opuscollege.${tableName}(
+                code
+                , lang
+                , active
+                , description
+                , passSubjectThreshold
+                , thresholdSubjectResultCommentId
+                , failSubject
+                , failSubjectResultCommentid
+                , dependsOnPassedExaminationTypeCode
+        ) VALUES (
+                #{lookup.code}
+                , #{lookup.lang}
+                , #{lookup.active}
+                , #{lookup.description}
+                , #{lookup.passSubjectThreshold}
+                , #{lookup.thresholdSubjectResultCommentId}
+                , #{lookup.failSubject}
+                , #{lookup.failSubjectResultCommentid}
+                , #{lookup.dependsOnPassedExaminationTypeCode}                
+        )
+    </insert>
+
+    <!-- Update lookup queries -->
+    <update id="updateLookup" parameterType="map">
+        UPDATE opuscollege.${tableName} SET 
+                lang = #{lookup.lang}
+                ,active = #{lookup.active}
+                ,code = #{lookup.code}
+                ,description = #{lookup.description}
+             WHERE id = #{lookup.id}
+    </update>
+<update id="updateLookup1" parameterType="map">
+        UPDATE opuscollege.${tableName} SET 
+                descriptionShort = #{lookup.descriptionShort}
+                ,lang = #{lookup.lang}
+                ,active = #{lookup.active}
+                ,code = #{lookup.code}
+                ,description = #{lookup.description}
+             WHERE id = #{lookup.id}
+    </update>
+
+<update id="updateLookup2" parameterType="map">
+        UPDATE opuscollege.${tableName} SET 
+                provinceCode = #{lookup.provinceCode}
+                ,lang = #{lookup.lang}
+                ,active = #{lookup.active}
+                ,code = #{lookup.code}
+                ,description = #{lookup.description}
+             WHERE id = #{lookup.id}
+    </update>
+
+<update id="updateLookup3" parameterType="map">
+        UPDATE opuscollege.${tableName} SET 
+                short2 = #{lookup.short2}
+                ,short3 = #{lookup.short3}
+                ,lang = #{lookup.lang}
+                ,active = #{lookup.active}
+                ,code = #{lookup.code}
+                ,description = #{lookup.description}
+             WHERE id = #{lookup.id}
+    </update>
+
+<update id="updateLookup4" parameterType="map">
+        UPDATE opuscollege.${tableName} SET 
+                districtCode = #{lookup.districtCode}
+                ,lang = #{lookup.lang}
+                ,active = #{lookup.active}
+                ,code = #{lookup.code}
+                ,description = #{lookup.description}
+             WHERE id = #{lookup.id}
+    </update>
+
+<update id="updateLookup5" parameterType="map">
+        UPDATE opuscollege.${tableName} SET 
+                countryCode = #{lookup.countryCode}
+                ,lang = #{lookup.lang}
+                ,active = #{lookup.active}
+                ,code = #{lookup.code}
+                ,description = #{lookup.description}
+             WHERE id = #{lookup.id}
+    </update>
+
+<update id="updateLookup6" parameterType="map">
+        UPDATE opuscollege.${tableName} SET 
+                title = #{lookup.title}
+                ,titleShort = #{lookup.titleShort}
+                ,lang = #{lookup.lang}
+                ,active = #{lookup.active}
+                ,code = #{lookup.code}
+                ,description = #{lookup.description}
+             WHERE id = #{lookup.id}
+    </update>
+
+	<update id="updateLookup7" parameterType="map">
+        UPDATE opuscollege.${tableName} SET 
+                continuing = #{lookup.continuing}
+                ,increment = #{lookup.increment}
+                ,graduating = #{lookup.graduating}
+                ,carrying = #{lookup.carrying}
+                ,lang = #{lookup.lang}
+                ,active = #{lookup.active}
+                ,code = #{lookup.code}
+                ,description = #{lookup.description}
+             WHERE id = #{lookup.id}
+    </update>
+ 
+ 	<update id="updateLookup8" parameterType="map">
+        UPDATE opuscollege.${tableName} SET 
+                nrOfUnitsPerYear = #{lookup.nrOfUnitsPerYear}
+                ,lang = #{lookup.lang}
+                ,active = #{lookup.active}
+                ,code = #{lookup.code}
+                ,description = #{lookup.description}
+             WHERE id = #{lookup.id}
+    </update>
+    
+    <update id="updateLookup9" parameterType="map">
+        UPDATE opuscollege.${tableName} SET 
+                educationAreaCode = #{lookup.educationAreaCode}
+                ,educationLevelCode = #{lookup.educationLevelCode}
+                ,title = #{lookup.title}
+                ,lang = #{lookup.lang}
+                ,active = #{lookup.active}
+                ,code = #{lookup.code}
+                ,description = #{lookup.description}
+             WHERE id = #{lookup.id}
+    </update>
+
+    <update id="updateLookup10" parameterType="map">
+        UPDATE opuscollege.${tableName} SET 
+                passSubjectThreshold = #{lookup.passSubjectThreshold}
+                , thresholdSubjectResultCommentId = #{lookup.thresholdSubjectResultCommentId}
+                , failSubject = #{lookup.failSubject}
+                ,failSubjectResultCommentid = #{lookup.failSubjectResultCommentid}
+                ,dependsOnPassedExaminationTypeCode = #{lookup.dependsOnPassedExaminationTypeCode}
+                ,lang = #{lookup.lang}
+                ,active = #{lookup.active}
+                ,code = #{lookup.code}
+                ,description = #{lookup.description}
+             WHERE id = #{lookup.id}
+    </update>
+   
+</mapper>

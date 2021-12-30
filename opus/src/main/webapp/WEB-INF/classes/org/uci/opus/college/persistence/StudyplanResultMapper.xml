@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ***** BEGIN LICENSE BLOCK *****
+  Version: MPL 1.1/GPL 2.0/LGPL 2.1
+  
+  The contents of this file are subject to the Mozilla Public License Version
+  1.1 (the "License"); you may not use this file except in compliance with
+  the License. You may obtain a copy of the License at
+  http://www.mozilla.org/MPL/
+  
+  Software distributed under the License is distributed on an "AS IS" basis,
+  WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+  for the specific language governing rights and limitations under the
+  License.
+  
+  The Original Code is Opus-College college module code.
+  
+  The Initial Developer of the Original Code is
+  Center for Information Services, Radboud University Nijmegen.
+  Portions created by the Initial Developer are Copyright (C) 2008
+  the Initial Developer. All Rights Reserved.
+  
+  Contributor(s):
+    For Java files, see Javadoc @author tags.
+  
+  Alternatively, the contents of this file may be used under the terms of
+  either the GNU General Public License Version 2 or later (the "GPL"), or
+  the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+  in which case the provisions of the GPL or the LGPL are applicable instead
+  of those above. If you wish to allow use of your version of this file only
+  under the terms of either the GPL or the LGPL, and not to allow others to
+  use your version of this file under the terms of the MPL, indicate your
+  decision by deleting the provisions above and replace them with the notice
+  and other provisions required by the GPL or the LGPL. If you do not delete
+  the provisions above, a recipient may use your version of this file under
+  the terms of any one of the MPL, the GPL or the LGPL.
+  
+  ***** END LICENSE BLOCK *****
+-->
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.uci.opus.college.persistence.StudyplanResultMapper"> 
+
+    <resultMap id="BasicStudyPlanResultResultMap" type="StudyPlanResult">
+        <result property="id" column="studyPlanResult_id"/>
+        <result property="studyPlanId" column="studyPlanResult_studyPlanId"/>
+        <result property="examDate" column="studyPlanResult_examDate" javaType="java.util.Date"/>
+        <result property="finalMark" column="studyPlanResult_finalMark"/>
+        <result property="mark" column="studyPlanResult_mark"/>
+        <result property="markDecimal" column="studyPlanResult_markDecimal"/>
+        <result property="active" column="studyPlanResult_active"/>
+        <result property="passed" column="studyPlanResult_passed"/>
+    </resultMap>
+
+    <resultMap id="StudyPlanResultResultMap" type="StudyPlanResult" extends="BasicStudyPlanResultResultMap">
+        <association property="thesisResult" select="org.uci.opus.college.persistence.ThesisResultMapper.findThesisResultForStudyPlan" column="studyPlanResult_studyPlanId"/>
+        <association property="subjectResults" select="org.uci.opus.college.persistence.SubjectResultMapper.findSubjectResultsForStudyPlanResult" column="studyPlanResult_id"/>
+    </resultMap>
+
+    <select id="findAllStudyPlanResultsForStudyPlan" parameterType="int" resultType="StudyPlanResult">
+        SELECT  opuscollege.studyPlanResult.*
+        from opuscollege.studyPlanResult
+        WHERE opuscollege.studyPlanResult.studyPlanId = #{value}
+    </select>
+
+    <select id="findStudyPlanResult" parameterType="int" resultMap="StudyPlanResultResultMap">
+        select
+            studyPlanResult.id AS studyPlanResult_id
+            , studyPlanResult.studyPlanId AS studyPlanResult_studyPlanId
+            , studyPlanResult.examDate AS studyPlanResult_examDate
+            , studyPlanResult.finalMark AS studyPlanResult_finalMark
+            , studyPlanResult.mark AS studyPlanResult_mark
+            , studyPlanResult.markDecimal AS studyPlanResult_markDecimal
+            , studyPlanResult.active AS studyPlanResult_active
+            , studyPlanResult.passed AS studyPlanResult_passed
+        from    opuscollege.studyPlanResult
+        where   id = #{studyPlanResultId}
+    </select>
+
+    <select id="findStudyPlanResultByParams" parameterType="map" resultType="StudyPlanResult">
+        select  opuscollege.studyPlanResult.*
+        from    opuscollege.studyPlanResult
+        where   studyPlanId = #{studyPlanId}
+        <if test='examDate != null and examDate != ""'>
+            AND     examDate = #{examDate}
+        </if>
+        <if test='finalMark != null and finalMark != ""'>
+            AND     finalMark = #{finalMark}
+        </if>
+        <if test='mark != null and mark != ""'>
+            AND     mark = #{mark}
+        </if>
+    </select>
+
+    <select id="findStudyPlanResultByStudyPlanId" parameterType="int" resultMap="StudyPlanResultResultMap">
+        select
+            studyPlanResult.id AS studyPlanResult_id
+            , studyPlanResult.studyPlanId AS studyPlanResult_studyPlanId
+            , studyPlanResult.examDate AS studyPlanResult_examDate
+            , studyPlanResult.finalMark AS studyPlanResult_finalMark
+            , studyPlanResult.mark AS studyPlanResult_mark
+            , studyPlanResult.markDecimal AS studyPlanResult_markDecimal
+            , studyPlanResult.active AS studyPlanResult_active
+            , studyPlanResult.passed AS studyPlanResult_passed
+            from    opuscollege.studyPlanResult
+        where   studyPlanId = #{value}
+    </select>
+
+    <insert id="addStudyPlanResult" parameterType="StudyPlanResult">
+        insert into opuscollege.studyPlanResult
+        ( studyPlanId
+        , examDate
+        , finalMark
+        , mark
+        , markDecimal
+        , active
+        , passed
+        , writeWho
+        ) values ( 
+          #{studyPlanId}
+        , #{examDate}
+        , #{finalMark}
+        , #{mark}
+        , #{markDecimal}
+        , #{active}
+        , #{passed}
+        , #{writeWho}
+        )
+         <!-- http://opensource.atlassian.com/confluence/oss/pages/viewpage.action?pageId=407 -->
+        <selectKey keyProperty="id" resultType="int">
+            SELECT currVal('opuscollege.examSeq')
+        </selectKey>
+         <!--<selectKey keyProperty="id" resultClass="int" >
+            SELECT cast(last_value as int) AS value
+            FROM opuscollege.examSeq
+        </selectKey> -->
+    </insert> 
+    
+    <insert id="addStudyPlanResultHistory" parameterType="StudyPlanResult">
+        insert into audit.studyPlanResult_hist
+        ( operation
+        , writeWho
+        <!--  , writeWhen: is written automatically-->
+        , id
+        , studyPlanId
+        , examDate
+        , finalMark
+        , mark
+        , markDecimal
+        , active
+        , passed
+        ) values (
+          'I'
+        , #{writeWho}
+        , #{id}
+        , #{studyPlanId}
+        , #{examDate}
+        , #{finalMark}
+        , #{mark}
+        , #{markDecimal}
+        , #{active}
+        , #{passed}
+        )
+    </insert>
+
+    <update id="updateStudyPlanResult" parameterType="StudyPlanResult">
+        update  opuscollege.studyPlanResult
+        set     studyPlanId     = #{studyPlanId}
+        ,       examDate        = #{examDate}
+        ,       finalMark       = #{finalMark}
+        ,       mark            = #{mark}
+        ,       markDecimal     = #{markDecimal}
+        ,       active          = #{active}
+        ,       passed          = #{passed}
+        ,       writeWho        = #{writeWho}
+        where   id = #{id}
+    </update>
+
+    <insert id="updateStudyPlanResultHistory" parameterType="StudyPlanResult">
+        insert into audit.studyPlanResult_hist
+        ( operation
+        , writeWho
+        <!--  , writeWhen: is written automatically-->
+        , id
+        , studyPlanId
+        , examDate
+        , finalMark
+        , mark
+        , markDecimal
+        , active
+        , passed
+        ) values (
+          'U'
+        , #{writeWho}
+        , #{id}
+        , #{studyPlanId}
+        , #{examDate}
+        , #{finalMark}
+        , #{mark}
+        , #{markDecimal}
+        , #{active}
+        , #{passed}
+        )
+    </insert>
+    
+    <delete id="deleteStudyPlanResult" parameterType="int">
+        delete from opuscollege.studyPlanResult
+        where  id = #{value}
+    </delete>
+
+    <insert id="deleteStudyPlanResultHistory" parameterType="StudyPlanResult">
+        insert into audit.studyPlanResult_hist
+        ( operation
+        , writeWho
+        <!--  , writeWhen: is written automatically-->
+        , id
+        , studyPlanId
+        , examDate
+        , finalMark
+        , mark
+        , markDecimal
+        , active
+        , passed
+        ) values ( 
+          'D'
+        , #{writeWho}
+        , #{id}
+        , #{studyPlanId}
+        , #{examDate}
+        , #{finalMark}
+        , #{mark}
+        , #{markDecimal}
+        , #{active}
+        , #{passed}
+        )
+    </insert>
+
+</mapper>

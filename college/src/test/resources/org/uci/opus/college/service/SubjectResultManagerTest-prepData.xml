@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ***** BEGIN LICENSE BLOCK *****
+  Version: MPL 1.1/GPL 2.0/LGPL 2.1
+  
+  The contents of this file are subject to the Mozilla Public License Version
+  1.1 (the "License"); you may not use this file except in compliance with
+  the License. You may obtain a copy of the License at
+  http://www.mozilla.org/MPL/
+  
+  Software distributed under the License is distributed on an "AS IS" basis,
+  WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+  for the specific language governing rights and limitations under the
+  License.
+  
+  The Original Code is Opus-College college module code.
+  
+  The Initial Developer of the Original Code is
+  Center for Information Services, Radboud University Nijmegen.
+  Portions created by the Initial Developer are Copyright (C) 2008
+  the Initial Developer. All Rights Reserved.
+  
+  Contributor(s):
+    For Java files, see Javadoc @author tags.
+  
+  Alternatively, the contents of this file may be used under the terms of
+  either the GNU General Public License Version 2 or later (the "GPL"), or
+  the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+  in which case the provisions of the GPL or the LGPL are applicable instead
+  of those above. If you wish to allow use of your version of this file only
+  under the terms of either the GPL or the LGPL, and not to allow others to
+  use your version of this file under the terms of the MPL, indicate your
+  decision by deleting the provisions above and replace them with the notice
+  and other provisions required by the GPL or the LGPL. If you do not delete
+  the provisions above, a recipient may use your version of this file under
+  the terms of any one of the MPL, the GPL or the LGPL.
+  
+  ***** END LICENSE BLOCK *****
+-->
+
+<dataset>
+
+  <opuscollege.lookuptable id="15" tablename="examinationtype" lookuptype="Lookup10" active="Y" writewho="opuscollege" writewhen="2009-02-03 01:45:27.511305"/>
+
+  <opuscollege.academicyear id="1" />
+  <opuscollege.academicyear id="2" />
+  <opuscollege.academicyear id="3" />
+
+  <opuscollege.institution id="107" institutioncode="UCM" institutionTypeCode="3"/>
+  <opuscollege.branch id="118" branchcode="05" institutionid="107" />
+  <opuscollege.branch id="129" branchcode="08" institutionid="107" />
+
+<!-- Fail cascade replaced by examinationtype.failsubject(resultcommentid): 
+         Type 100/101 equal to examinationFailCascade = true:
+             however a bit more advanced now: type 100: failsubject (=same meaning as failcascade) + set subjectresultcommentId on generated subjectResult
+                 type 101: if threshold isn't met (threshold is lower than BR to pass examination) then another comment is set on generated subjectResult
+         Type 200/201 equal to examinationFailCascade = false:
+             This means that subjec tresult can be calculated in any case, independent if examination results have not been passed and how low the score was
+ -->
+<!--   <opuscollege.appconfig id="1" appconfigattributename="examinationFailCascade" appconfigattributevalue="N" branchId="129" startdate="1970-01-01"/> -->
+<!--   <opuscollege.appconfig id="2" appconfigattributename="examinationFailCascade" appconfigattributevalue="Y" startdate="1970-01-01"/> -->
+
+  <opuscollege.appconfig id="6" appconfigattributename="autoGenerateSubjectResult" appconfigattributevalue="Y" startdate="1970-01-01"/>
+
+  <opuscollege.subjectresultcomment id="1" sort="10" commentkey="subjectresultcomment.excluded" active="true" />
+  <opuscollege.subjectresultcomment id="2" sort="10" commentkey="subjectresultcomment.missed.threshold" active="true" />
+
+  <opuscollege.examinationtype id="0" code="0" lang="en" active="Y" description="DbUnit dummy to declare all fields - ignore" passsubjectthreshold="100" thresholdsubjectresultcommentid="2" failsubject="false" failsubjectresultcommentid="1" dependsonpassedexaminationtypecode=""/>
+
+  <opuscollege.examinationtype id="100" code="100" lang="en" active="Y" description="Combined tests (Nota frequencia)" failsubject="true" failsubjectresultcommentid="1" dependsonpassedexaminationtypecode="" />
+  <opuscollege.examinationtype id="101" code="101" lang="en" active="Y" description="Final exam" passsubjectthreshold="8" thresholdsubjectresultcommentid="2" dependsonpassedexaminationtypecode="100" />
+
+  <opuscollege.examinationtype id="200" code="200" lang="en" active="Y" description="Use fail cascade default - Combined tests (Nota frequencia)" />
+  <opuscollege.examinationtype id="201" code="201" lang="en" active="Y" description="Use fail cascade default - Final exam" />
+
+<!--   <opuscollege.subject id="77" currentacademicyearid="1" subjectcode="BIOL001" subjectdescription="Biology 1" primarystudyid="1213" brspassingsubject="10" active="Y" creditamount="1.0" studytimecode="1" /> -->
+<!--   <opuscollege.examination id="77" examinationcode="E77" examinationdescription="NF" subjectid="77" examinationtypecode="100" numberofattempts="1" weighingfactor="60" active="Y" /> -->
+<!--   <opuscollege.examination id="78" examinationcode="E78" examinationdescription="EM" subjectid="77" examinationtypecode="101" numberofattempts="1" weighingfactor="40" active="Y" /> -->
+
+<!--   <opuscollege.subject id="88" currentacademicyearid="1" subjectcode="PHYS001" subjectdescription="Physics 1" primarystudyid="1213" brspassingsubject="10" active="Y" creditamount="1.0" studytimecode="1" /> -->
+<!--   <opuscollege.examination id="88" examinationcode="E88" examinationdescription="NF" subjectid="88" examinationtypecode="100" numberofattempts="1" weighingfactor="60" active="Y" /> -->
+<!--   <opuscollege.examination id="89" examinationcode="E89" examinationdescription="EM" subjectid="88" examinationtypecode="101" numberofattempts="1" weighingfactor="40" active="Y" /> -->
+
+
+  <!-- Org.unit at branch with default examinationFailCascade (=true) -->
+  <opuscollege.organizationalunit id="18" organizationalunitcode="O1" organizationalunitdescription="Faculdade de Ciencias de Saude" branchid="118" />
+
+  <!-- Teacher -->
+  <opuscollege.person id="16" personcode="61" surnamefull="Juergens" firstnamesfull="Udo" />
+  <opuscollege.staffmember staffmemberid="1" staffmembercode="ju" personid="16" primaryunitofappointmentid="18" />
+
+  <opuscollege.study id="1213" organizationalunitid="18" />
+  <opuscollege.subject id="77" currentacademicyearid="1" subjectcode="BIOL001" subjectdescription="Biology 1" primarystudyid="1213" brspassingsubject="10" active="Y" creditamount="1.0" studytimecode="1" />
+  <opuscollege.examination id="77" examinationcode="E77" examinationdescription="NF" subjectid="77" examinationtypecode="100" numberofattempts="1" weighingfactor="60" active="Y" />
+  <opuscollege.examination id="78" examinationcode="E78" examinationdescription="EM" subjectid="77" examinationtypecode="101" numberofattempts="1" weighingfactor="40" active="Y" />
+
+  <opuscollege.subject id="88" currentacademicyearid="1" subjectcode="PHYS001" subjectdescription="Physics 1" primarystudyid="1213" brspassingsubject="10" active="Y" creditamount="1.0" studytimecode="1" />
+  <opuscollege.examination id="88" examinationcode="E88" examinationdescription="NF" subjectid="88" examinationtypecode="100" numberofattempts="1" weighingfactor="60" active="Y" />
+  <opuscollege.examination id="89" examinationcode="E89" examinationdescription="EM" subjectid="88" examinationtypecode="101" numberofattempts="1" weighingfactor="40" active="Y" />
+
+
+  <opuscollege.studygradetype id="256" studyid="1213" gradetypecode="B" active="Y" currentacademicyearid="1" cardinaltimeunitcode="2" numberofcardinaltimeunits="6" maxnumberofcardinaltimeunits="0" numberofsubjectspercardinaltimeunit="2" maxnumberofsubjectspercardinaltimeunit="4" studytimecode="1" studyformcode="1" maxnumberoffailedsubjectspercardinaltimeunit="1" studyintensitycode="F" maxnumberofstudents="0" />
+  <opuscollege.subjectstudygradetype id="256" subjectid="77" studygradetypeid="256" active="Y" cardinaltimeunitnumber="1" rigiditytypecode="1"/>
+
+  <opuscollege.person id="36" personcode="81" surnamefull="Adams" firstnamesfull="Mary" />
+  <opuscollege.student studentid="317" studentcode="am" personid="36" />
+  <opuscollege.studyplan id="255" studentid="317" studyplandescription="Physics - Bachelor" active="Y" studyplanstatuscode="3" studyid="1213" gradetypecode="B" />
+  <opuscollege.studyplancardinaltimeunit id="485" studyplanid="255" cardinaltimeunitnumber="2" progressstatuscode="01" active="Y" studygradetypeid="256" cardinaltimeunitstatuscode="10" studyintensitycode="F"/>
+  <opuscollege.studyplandetail id="485" subjectid="77" exempted="false" studyplanid="255" subjectblockid="0" active="Y" studyplancardinaltimeunitid="485" studygradetypeid="256"/>
+  <opuscollege.studyplandetail id="499" subjectid="88" exempted="false" studyplanid="255" subjectblockid="0" active="Y" studyplancardinaltimeunitid="485" studygradetypeid="256"/>
+
+  <!-- subject result for subjectId=77 averages to a positive mark and examinationFailCascade = true, so that the subject result is expected to be failed, subjectresultcommendid set and no mark calculated -->
+  <opuscollege.examinationresult id="485" examinationid="77" subjectid="77" studyplandetailid="485" examinationresultdate="2015-09-05" attemptnr="1" mark="7" passed="N" staffmemberid="1" active="Y" />
+  <opuscollege.examinationresult id="486" examinationid="78" subjectid="77" studyplandetailid="485" examinationresultdate="2015-09-05" attemptnr="1" mark="17" passed="Y" staffmemberid="1" active="Y" />
+
+
+
+  <!-- Org.unit at branch with different examinationFailCascade (=false) -->
+  <opuscollege.organizationalunit id="19" organizationalunitcode="O2" organizationalunitdescription="A Department" branchid="129" />
+  <opuscollege.study id="39" organizationalunitid="19" />
+  <opuscollege.studygradetype id="59" studyid="39" gradetypecode="BSC" active="Y" currentacademicyearid="1" cardinaltimeunitcode="2" numberofcardinaltimeunits="6" maxnumberofcardinaltimeunits="0" numberofsubjectspercardinaltimeunit="2" maxnumberofsubjectspercardinaltimeunit="4" studytimecode="1" studyformcode="1" maxnumberoffailedsubjectspercardinaltimeunit="1" studyintensitycode="F" maxnumberofstudents="0" />
+
+  <opuscollege.subject id="277" currentacademicyearid="1" subjectcode="BIOL001A" subjectdescription="Biology 1A" primarystudyid="39" brspassingsubject="10" active="Y" creditamount="1.0" studytimecode="1" />
+  <opuscollege.examination id="277" examinationcode="E277" examinationdescription="NF" subjectid="277" examinationtypecode="200" numberofattempts="1" weighingfactor="60" active="Y" />
+  <opuscollege.examination id="278" examinationcode="E278" examinationdescription="EM" subjectid="277" examinationtypecode="201" numberofattempts="1" weighingfactor="40" active="Y" />
+
+  <opuscollege.subject id="288" currentacademicyearid="1" subjectcode="PHYS001A" subjectdescription="Physics 1A" primarystudyid="39" brspassingsubject="10" active="Y" creditamount="1.0" studytimecode="1" />
+  <opuscollege.examination id="288" examinationcode="E288" examinationdescription="NF" subjectid="288" examinationtypecode="200" numberofattempts="1" weighingfactor="60" active="Y" />
+  <opuscollege.examination id="289" examinationcode="E289" examinationdescription="EM" subjectid="288" examinationtypecode="201" numberofattempts="1" weighingfactor="40" active="Y" />
+
+  <opuscollege.subjectstudygradetype id="259" subjectid="277" studygradetypeid="59" active="Y" cardinaltimeunitnumber="1" rigiditytypecode="1"/>
+  <opuscollege.subjectstudygradetype id="260" subjectid="288" studygradetypeid="59" active="Y" cardinaltimeunitnumber="1" rigiditytypecode="1"/>
+
+  <opuscollege.person id="26" personcode="71" surnamefull="Hesse" firstnamesfull="Hermann" />
+  <opuscollege.student studentid="1" studentcode="hh" personid="26" />
+  <opuscollege.studyplan id="26" studentid="1" studyplandescription="Physics - Bachelor" active="Y" studyplanstatuscode="3" studyid="39" gradetypecode="B" />
+  <opuscollege.studyplancardinaltimeunit id="26" studyplanid="26" cardinaltimeunitnumber="2" progressstatuscode="01" active="Y" studygradetypeid="59" cardinaltimeunitstatuscode="10" studyintensitycode="F"/>
+  <opuscollege.studyplandetail id="26" subjectid="277" exempted="false" studyplanid="26" subjectblockid="0" active="Y" studyplancardinaltimeunitid="26" studygradetypeid="59"/>
+  <opuscollege.studyplandetail id="27" subjectid="288" exempted="false" studyplanid="26" subjectblockid="0" active="Y" studyplancardinaltimeunitid="26" studygradetypeid="59"/>
+
+  <!-- subject result for subjectId=277 averages to a positive mark, the other for for subjectId=88 to a negative mark,
+       because examinationFailCascade = false the subject results are expected to be calculated in both cases and evaluated for passing after calculation -->
+  <opuscollege.examinationresult id="277" examinationid="277" subjectid="277" studyplandetailid="26" examinationresultdate="2015-09-05" attemptnr="1" mark="9" passed="N" staffmemberid="1" active="Y" />
+  <opuscollege.examinationresult id="278" examinationid="278" subjectid="277" studyplandetailid="26" examinationresultdate="2015-09-05" attemptnr="1" mark="17" passed="Y" staffmemberid="1" active="Y" />
+  <opuscollege.examinationresult id="288" examinationid="288" subjectid="288" studyplandetailid="27" examinationresultdate="2015-09-05" attemptnr="1" mark="11" passed="Y" staffmemberid="1" active="Y" />
+  <opuscollege.examinationresult id="289" examinationid="289" subjectid="288" studyplandetailid="27" examinationresultdate="2015-09-05" attemptnr="1" mark="1" passed="N" staffmemberid="1" active="Y" />
+
+</dataset>

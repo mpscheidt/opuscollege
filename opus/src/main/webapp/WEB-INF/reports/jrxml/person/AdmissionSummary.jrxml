@@ -1,0 +1,1899 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
+<!-- 2015-06-30T18:12:17 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="AdmissionSummary" pageWidth="595" pageHeight="842" whenNoDataType="NoDataSection" columnWidth="535" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20" scriptletClass="OpusScriptletUtils" resourceBundle="org/uci/opus/college/messages" whenResourceMissingType="Error" uuid="50fd78f8-8b50-4a78-a00c-bee4173c3a0d">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="2108"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<subDataset name="dataset1" uuid="01beb4d2-d8f7-4099-9e61-9bd18f435c4f"/>
+	<parameter name="whereClause" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[" "]]></defaultValueExpression>
+	</parameter>
+	<parameter name="image_dir" class="java.io.File" isForPrompting="false">
+		<defaultValueExpression><![CDATA[new java.io.File(net.sf.jasperreports.engine.util.JRResourcesUtil.findClassLoaderResource("/images/report",null,null).getFile())]]></defaultValueExpression>
+	</parameter>
+	<parameter name="preferredLanguage" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["en"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="format" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["pdf"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="reportLogo" class="net.sf.jasperreports.engine.JRRenderable" isForPrompting="false">
+		<defaultValueExpression><![CDATA[net.sf.jasperreports.engine.RenderableUtil.getInstance($P{JASPER_REPORTS_CONTEXT}).getRenderable($P{image_dir} + "/report-logo.gif")]]></defaultValueExpression>
+	</parameter>
+	<parameter name="lang" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["en"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="reportTitle" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[$R{report.admissionsummary.title}]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT DISTINCT
+   person."surnamefull" AS person_surnamefull,
+   person."firstnamesfull" AS person_firstnamesfull,
+   person."healthissues" AS person_healthissues,
+   person."motivation" AS person_motivation,
+   person.firstnamesalias AS person_firstnamesalias,
+  person.nationalregistrationnumber AS   person_nationalregistrationnumber,
+  person.birthdate AS person_birthdate,
+  person.placeofbirth AS person_placeofbirth,
+  person.cityoforigin AS person_cityoforigin,
+  person.housingoncampus AS person_housingoncampus,
+  person.identificationnumber AS person_identificationnumber,
+  person.identificationplaceofissue AS person_identificationplaceofissue,
+  person.identificationdateofissue AS person_identificationdateofissue,
+  person.identificationdateofexpiration AS person_identificationdateofexpiration,
+
+
+ ApplicantCategory.description AS applicantcategory,
+ PersonGradeType.description AS person_academictitle,
+ gender.description AS gender_description,
+ civiltitle.description AS civiltitle_description,
+ civilstatus.description AS civilstatus_description,
+ district.description AS person_districtofbirth,
+ nationality.description AS person_nationality,
+ identificationtype.description AS person_identificationtype,
+
+  student."studentid" AS student_studentid,
+  student."studentcode" AS student_studentcode,
+  student.relativeofstaffmember AS student_relativeofstaffmember,
+  student.foreignstudent AS student_foreignstudent,
+  student.previousinstitutionid AS student_previousinstitutionid,
+  student.previousinstitutionname AS student_previousinstitutionname,
+  octet_length(student.previousinstitutiondiplomaphotograph::bytea) > 0 AS student_diplomaincluded,
+  student.previousInstitutionDiplomaPhotographRemarks AS student_previousInstitutionDiplomaPhotographRemarks,
+
+  PreviousInstitutionCountry.description AS previousinstitution_country,
+  PreviousInstitutionProvince.description AS previousinstitution_province,
+  PreviousInstitutionDistrict.description AS previousinstitution_district,
+  PreviousInstitutionType.description AS previousinstitution_type,
+  PreviousInstitutionGradeType.description AS previousinstitution_gradetype,
+
+  study."id" AS study_id,
+  study."studydescription" AS study_studydescription,
+  SecondaryStudy."studydescription" AS secondary_study,
+  gradetype."description" AS gradetype_description,
+
+
+   OrganizationalUnitAddress.street AS organizationalunitaddress_street,
+   OrganizationalUnitAddress.telephone AS organizationalunitaddress_telephone,
+   OrganizationalUnitAddress.faxnumber AS organizationalunitaddress_faxnumber,
+   OrganizationalUnitAddress.city AS organizationalunitaddress_city,
+   OrganizationalUnitAddress.emailaddress AS organizationalunitaddress_emailaddress,
+   OrganizationalUnitAddress.pobox AS organizationalunitaddress_pobox,
+   OrganizationalUnitAddress.zipcode AS organizationalunitaddress_zipcode,
+   OrganizationalUnitAddress.number AS organizationalunitaddress_number,
+   OrganizationalUnitAddress.number AS organizationalunitaddress_numberextension,
+   OrganizationalUnitAddress.emailaddress AS organizationalunitaddress_emailaddress,
+
+     OrganizationalUnitAddressCountry.description AS organizationalunitaddress_country,
+     OrganizationalUnitAddressProvince.description AS organizationalunitaddress_province,
+     OrganizationalUnitAddressDistrict.description AS organizationalunitaddress_district,
+     OrganizationalUnitAddressAdministrativePost.description AS organizationalunitaddress_administrativepost,
+
+
+  PreviousInstitution.institutiondescription AS previousinstitution_description,
+   Student.previousinstitutionname AS student_previousinstitution,
+   Student.previousinstitutionid AS student_previousinstitutionid,
+
+   StudentAddress.street AS studentaddress_street,
+   StudentAddress.telephone AS studentaddress_telephone,
+   StudentAddress.faxnumber AS studentaddress_faxnumber,
+   StudentAddress.city AS studentaddress_city,
+   StudentAddress.emailaddress AS studentaddress_emailaddress,
+   StudentAddress.pobox AS studentaddress_pobox,
+   StudentAddress.zipcode AS studentaddress_zipcode,
+   StudentAddress.number AS studentaddress_number,
+   StudentAddress.number AS studentaddress_numberextension,
+   StudentAddress.emailaddress AS studentaddress_emailaddress,
+
+     StudentAddressCountry.description AS studentaddress_country,
+     StudentAddressProvince.description AS studentaddress_province,
+     StudentAddressDistrict.description AS studentaddress_district,
+     StudentAddressAdministrativePost.description AS studentaddress_administrativepost,
+
+
+     country.description AS person_countryofbirth,
+     province.description AS person_provinceofbirth ,
+     studyplan.id AS studyplan_id,
+     gradetype.description AS gradetype_description,
+
+     CountryOfOrigin.description AS person_countryoforigin,
+     ProvinceOfOrigin.description AS person_provinceoforigin,
+     DistrictOfOrigin.description AS person_districtoforigin,
+
+     institution.id AS institution_id,
+     institution.institutiondescription AS institution_description,
+     branch.id AS branch_id,
+     branch.branchdescription AS branchdescription,
+     organizationalunit.id AS organizationalunit_id,
+     organizationalunit.organizationalunitdescription AS organizationalunit_organizationalunitdescription
+
+
+
+FROM
+      opuscollege.person person INNER JOIN opuscollege.student student ON person.id = student.personid
+     INNER JOIN opuscollege.studyplan studyplan ON student.studentid = studyplan.studentid
+     INNER JOIN opuscollege.study study ON studyplan.studyid = study.id
+     INNER JOIN opuscollege.gradetype gradetype ON studyplan.gradetypecode = gradetype.code AND gradetype.lang = $P{lang}
+     INNER JOIN opuscollege.organizationalunit organizationalunit ON study.organizationalunitid = organizationalunit.id
+     INNER JOIN opuscollege.branch ON branch.id = organizationalunit.branchId
+     INNER JOIN opuscollege.institution institution ON institution.id = branch.institutionid
+
+
+LEFT OUTER JOIN opuscollege.ApplicantCategory ON studyplan.applicantcategorycode = applicantcategory.code AND applicantcategory.lang = $P{lang}
+LEFT OUTER JOIN opuscollege.gender gender ON person.gendercode = gender.code  AND gender.lang = $P{lang}
+LEFT OUTER JOIN opuscollege.identificationtype identificationtype ON person.identificationtypecode = identificationtype.code  AND identificationtype.lang = $P{lang}
+LEFT OUTER JOIN opuscollege.civilstatus civilstatus ON person.civilstatuscode = civilstatus.code  AND civilstatus.lang = $P{lang}
+LEFT OUTER JOIN opuscollege.civiltitle civiltitle ON person.civiltitlecode = civiltitle.code  AND civiltitle.lang = $P{lang}
+LEFT OUTER JOIN "opuscollege"."nationality" nationality ON person."nationalitycode" = nationality."code" AND nationality.lang = $P{lang}
+LEFT OUTER JOIN "opuscollege"."country" country ON person."countryofbirthcode" = country."code" AND country.lang = $P{lang}
+LEFT OUTER JOIN opuscollege.province province ON person.provinceofbirthcode = province.code AND province.lang = $P{lang}
+LEFT OUTER JOIN opuscollege.district district ON person.districtofbirthcode = district.code AND district.lang = $P{lang}
+LEFT OUTER JOIN opuscollege.address OrganizationalUnitAddress ON (OrganizationalUnitAddress.organizationalunitid = organizationalunit.id) AND (OrganizationalUnitAddress.addresstypecode = '5')
+LEFT OUTER JOIN opuscollege.address StudentAddress ON (StudentAddress.personid = person.id) AND (StudentAddress.addresstypecode = '1')
+
+LEFT OUTER JOIN "opuscollege"."country" CountryOfOrigin ON person."countryoforigincode" = CountryOfOrigin."code" AND CountryOfOrigin.lang = $P{lang}
+LEFT OUTER JOIN "opuscollege"."province" ProvinceOfOrigin ON person."provinceoforigincode" = ProvinceOfOrigin."code" AND ProvinceOfOrigin.lang = $P{lang}
+LEFT OUTER JOIN "opuscollege"."district" DistrictOfOrigin ON person."districtoforigincode" = DistrictOfOrigin."code" AND DistrictOfOrigin.lang = $P{lang}
+LEFT OUTER JOIN "opuscollege"."gradetype" PersonGradeType ON person.GradeTypeCode = PersonGradeType."code" AND PersonGradeType.lang = $P{lang}
+
+LEFT OUTER JOIN "opuscollege"."country" PreviousInstitutionCountry ON student."previousinstitutioncountrycode" = PreviousInstitutionCountry."code" AND PreviousInstitutionCountry.lang = $P{lang}
+LEFT OUTER JOIN "opuscollege"."province" PreviousInstitutionProvince ON student."previousinstitutionprovincecode" = PreviousInstitutionProvince."code" AND PreviousInstitutionProvince.lang = $P{lang}
+LEFT OUTER JOIN "opuscollege"."district" PreviousInstitutionDistrict ON student.PreviousInstitutiondistrictcode = PreviousInstitutionDistrict."code" AND PreviousInstitutionDistrict.lang = $P{lang}
+LEFT OUTER JOIN "opuscollege"."institutionType" PreviousInstitutionType ON student.previousInstitutionTypeCode = PreviousInstitutionType."code" AND PreviousInstitutionType.lang = $P{lang}
+LEFT OUTER JOIN "opuscollege"."gradetype" PreviousInstitutionGradeType ON student.PreviousInstitutionFinalGradeTypeCode = PreviousInstitutionGradeType."code" AND PreviousInstitutionGradeType.lang = $P{lang}
+
+LEFT OUTER JOIN "opuscollege"."country" StudentAddressCountry ON StudentAddress."countrycode" = StudentAddressCountry."code" AND StudentAddressCountry.lang = $P{lang}
+LEFT OUTER JOIN "opuscollege"."province" StudentAddressProvince ON StudentAddress."provincecode" = StudentAddressProvince."code" AND StudentAddressProvince.lang = $P{lang}
+LEFT OUTER JOIN "opuscollege"."district" StudentAddressDistrict ON StudentAddress."districtcode" = StudentAddressDistrict."code" AND StudentAddressDistrict.lang = $P{lang}
+LEFT OUTER JOIN "opuscollege"."administrativepost" StudentAddressAdministrativePost ON StudentAddress."administrativepostcode" = StudentAddressAdministrativePost."code" AND StudentAddressAdministrativePost.lang = $P{lang}
+
+LEFT OUTER JOIN "opuscollege"."country" OrganizationalUnitAddressCountry ON OrganizationalUnitAddress."countrycode" = OrganizationalUnitAddressCountry."code" AND OrganizationalUnitAddressCountry.lang = $P{lang}
+LEFT OUTER JOIN "opuscollege"."province" OrganizationalUnitAddressProvince ON OrganizationalUnitAddress."provincecode" = OrganizationalUnitAddressProvince."code" AND OrganizationalUnitAddressProvince.lang = $P{lang}
+LEFT OUTER JOIN "opuscollege"."district" OrganizationalUnitAddressDistrict ON OrganizationalUnitAddress."districtcode" = OrganizationalUnitAddressDistrict."code" AND OrganizationalUnitAddressDistrict.lang = $P{lang}
+LEFT OUTER JOIN "opuscollege"."administrativepost" OrganizationalUnitAddressAdministrativePost ON OrganizationalUnitAddress."administrativepostcode" = OrganizationalUnitAddressAdministrativePost."code" AND OrganizationalUnitAddressAdministrativePost.lang = $P{lang}
+
+LEFT OUTER JOIN "opuscollege".institution PreviousInstitution ON student.previousinstitutionid = PreviousInstitution.id
+
+LEFT OUTER JOIN opuscollege.study SecondaryStudy ON student.secondarystudyid = SecondaryStudy.id
+
+WHERE true
+
+
+$P!{whereClause}]]>
+	</queryString>
+	<field name="person_surnamefull" class="java.lang.String"/>
+	<field name="person_firstnamesfull" class="java.lang.String"/>
+	<field name="person_healthissues" class="java.lang.String"/>
+	<field name="person_motivation" class="java.lang.String"/>
+	<field name="person_firstnamesalias" class="java.lang.String"/>
+	<field name="person_nationalregistrationnumber" class="java.lang.String"/>
+	<field name="person_birthdate" class="java.sql.Date"/>
+	<field name="person_placeofbirth" class="java.lang.String"/>
+	<field name="person_cityoforigin" class="java.lang.String"/>
+	<field name="person_housingoncampus" class="java.lang.String"/>
+	<field name="person_identificationnumber" class="java.lang.String"/>
+	<field name="person_identificationplaceofissue" class="java.lang.String"/>
+	<field name="person_identificationdateofissue" class="java.sql.Date"/>
+	<field name="person_identificationdateofexpiration" class="java.sql.Date"/>
+	<field name="applicantcategory" class="java.lang.String"/>
+	<field name="person_academictitle" class="java.lang.String"/>
+	<field name="gender_description" class="java.lang.String"/>
+	<field name="civiltitle_description" class="java.lang.String"/>
+	<field name="civilstatus_description" class="java.lang.String"/>
+	<field name="person_districtofbirth" class="java.lang.String"/>
+	<field name="person_nationality" class="java.lang.String"/>
+	<field name="person_identificationtype" class="java.lang.String"/>
+	<field name="student_studentid" class="java.lang.Integer"/>
+	<field name="student_studentcode" class="java.lang.String"/>
+	<field name="student_relativeofstaffmember" class="java.lang.String"/>
+	<field name="student_foreignstudent" class="java.lang.String"/>
+	<field name="student_previousinstitutionid" class="java.lang.Integer"/>
+	<field name="student_previousinstitutionname" class="java.lang.String"/>
+	<field name="student_diplomaincluded" class="java.lang.Boolean"/>
+	<field name="student_previousinstitutiondiplomaphotographremarks" class="java.lang.String"/>
+	<field name="previousinstitution_country" class="java.lang.String"/>
+	<field name="previousinstitution_province" class="java.lang.String"/>
+	<field name="previousinstitution_district" class="java.lang.String"/>
+	<field name="previousinstitution_type" class="java.lang.String"/>
+	<field name="previousinstitution_gradetype" class="java.lang.String"/>
+	<field name="study_id" class="java.lang.Integer"/>
+	<field name="study_studydescription" class="java.lang.String"/>
+	<field name="secondary_study" class="java.lang.String"/>
+	<field name="gradetype_description" class="java.lang.String"/>
+	<field name="organizationalunitaddress_street" class="java.lang.String"/>
+	<field name="organizationalunitaddress_telephone" class="java.lang.String"/>
+	<field name="organizationalunitaddress_faxnumber" class="java.lang.String"/>
+	<field name="organizationalunitaddress_city" class="java.lang.String"/>
+	<field name="organizationalunitaddress_emailaddress" class="java.lang.String"/>
+	<field name="organizationalunitaddress_pobox" class="java.lang.String"/>
+	<field name="organizationalunitaddress_zipcode" class="java.lang.String"/>
+	<field name="organizationalunitaddress_number" class="java.lang.Integer"/>
+	<field name="organizationalunitaddress_numberextension" class="java.lang.Integer"/>
+	<field name="organizationalunitaddress_country" class="java.lang.String"/>
+	<field name="organizationalunitaddress_province" class="java.lang.String"/>
+	<field name="organizationalunitaddress_district" class="java.lang.String"/>
+	<field name="organizationalunitaddress_administrativepost" class="java.lang.String"/>
+	<field name="previousinstitution_description" class="java.lang.String"/>
+	<field name="student_previousinstitution" class="java.lang.String"/>
+	<field name="studentaddress_street" class="java.lang.String"/>
+	<field name="studentaddress_telephone" class="java.lang.String"/>
+	<field name="studentaddress_faxnumber" class="java.lang.String"/>
+	<field name="studentaddress_city" class="java.lang.String"/>
+	<field name="studentaddress_emailaddress" class="java.lang.String"/>
+	<field name="studentaddress_pobox" class="java.lang.String"/>
+	<field name="studentaddress_zipcode" class="java.lang.String"/>
+	<field name="studentaddress_number" class="java.lang.Integer"/>
+	<field name="studentaddress_numberextension" class="java.lang.Integer"/>
+	<field name="studentaddress_country" class="java.lang.String"/>
+	<field name="studentaddress_province" class="java.lang.String"/>
+	<field name="studentaddress_district" class="java.lang.String"/>
+	<field name="studentaddress_administrativepost" class="java.lang.String"/>
+	<field name="person_countryofbirth" class="java.lang.String"/>
+	<field name="person_provinceofbirth" class="java.lang.String"/>
+	<field name="studyplan_id" class="java.lang.Integer"/>
+	<field name="person_countryoforigin" class="java.lang.String"/>
+	<field name="person_provinceoforigin" class="java.lang.String"/>
+	<field name="person_districtoforigin" class="java.lang.String"/>
+	<field name="institution_id" class="java.lang.Integer"/>
+	<field name="institution_description" class="java.lang.String"/>
+	<field name="branch_id" class="java.lang.Integer"/>
+	<field name="branchdescription" class="java.lang.String"/>
+	<field name="organizationalunit_id" class="java.lang.Integer"/>
+	<field name="organizationalunit_organizationalunitdescription" class="java.lang.String"/>
+	<variable name="language" class="java.lang.String">
+		<variableExpression><![CDATA[new String("pt")]]></variableExpression>
+	</variable>
+	<group name="student" isStartNewPage="true" isResetPageNumber="true">
+		<groupExpression><![CDATA[$F{student_studentid}]]></groupExpression>
+		<groupHeader>
+			<band height="171" splitType="Stretch">
+				<textField>
+					<reportElement key="fullname_value" x="0" y="120" width="535" height="37" forecolor="#777777" uuid="a6967c4b-6221-4e06-b482-a02a21c80be0"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+						<font fontName="SansSerif" size="24" isBold="false" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{reportTitle}]]></textFieldExpression>
+				</textField>
+				<image>
+					<reportElement key="image-1" x="0" y="1" width="99" height="100" uuid="3ed81630-c304-4e4d-8a70-747e70ccbd93"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<imageExpression><![CDATA[$P{reportLogo}]]></imageExpression>
+				</image>
+				<textField>
+					<reportElement x="99" y="25" width="436" height="16" uuid="705726a9-20d4-4269-86f6-d634cffd3ef5"/>
+					<box rightPadding="10">
+						<rightPen lineWidth="5.0" lineColor="#E2E2E2"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="SansSerif" size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{organizationalunit_organizationalunitdescription}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="99" y="70" width="436" height="16" uuid="a70a91ea-02e4-45c5-9d29-d37aa82d7618">
+						<printWhenExpression><![CDATA[$F{organizationalunitaddress_telephone} != null
+&&
+$F{organizationalunitaddress_telephone}.trim().length() > 0]]></printWhenExpression>
+					</reportElement>
+					<box rightPadding="10">
+						<rightPen lineWidth="5.0" lineColor="#E2E2E2"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="SansSerif" size="11" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$R{report.studentcertificate.tel} + ": " + $F{organizationalunitaddress_telephone} + " "
++$F{organizationalunitaddress_faxnumber} != null && $F{organizationalunitaddress_faxnumber}.length() > 1 ?  $R{report.studentcertificate.fax} + " : " + $F{organizationalunitaddress_faxnumber} : " "]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="99" y="40" width="436" height="16" uuid="51153ae8-83f0-451b-9dac-2fea4275f02c">
+						<printWhenExpression><![CDATA[$F{organizationalunitaddress_street} != null
+&&
+$F{organizationalunitaddress_street}.trim().length() > 0]]></printWhenExpression>
+					</reportElement>
+					<box rightPadding="10">
+						<rightPen lineWidth="5.0" lineColor="#E2E2E2"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="SansSerif" size="11" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{organizationalunitaddress_street} + ", " + $F{organizationalunitaddress_number}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="99" y="55" width="436" height="16" uuid="48e83cc6-e267-4e8e-b985-22acac990eda">
+						<printWhenExpression><![CDATA[$F{organizationalunitaddress_city} != null
+&&
+$F{organizationalunitaddress_city}.trim().length() > 0]]></printWhenExpression>
+					</reportElement>
+					<box rightPadding="10">
+						<rightPen lineWidth="5.0" lineColor="#E2E2E2"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="SansSerif" size="11" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$R{report.studentcertificate.pobox} + " " + $F{organizationalunitaddress_pobox}
++ " "
++ $F{organizationalunitaddress_city} + " - " + $F{organizationalunitaddress_country}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="false">
+					<reportElement key="institution_value" x="99" y="1" width="436" height="25" uuid="c5746af3-c979-4c31-a572-0b71c897e032"/>
+					<box rightPadding="10">
+						<rightPen lineWidth="5.0" lineColor="#E2E2E2"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Bottom">
+						<font fontName="SansSerif" size="12" isBold="true" isPdfEmbedded="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{institution_description}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="99" y="84" width="436" height="16" uuid="a24453b5-0f39-4549-a89a-dbef2e21a23e">
+						<printWhenExpression><![CDATA[$F{organizationalunitaddress_emailaddress} != null
+&&
+$F{organizationalunitaddress_emailaddress}.trim().length() > 0]]></printWhenExpression>
+					</reportElement>
+					<box rightPadding="10">
+						<rightPen lineWidth="5.0" lineColor="#E2E2E2"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="SansSerif" size="11" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$R{report.studentcertificate.email} + " : " + $F{organizationalunitaddress_emailaddress}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="657" splitType="Immediate">
+			<textField>
+				<reportElement x="0" y="0" width="492" height="20" forecolor="#969696" uuid="b29c2fda-75e3-479d-9ce1-e56dce442c5c"/>
+				<box>
+					<pen lineStyle="Dashed"/>
+					<topPen lineStyle="Dashed"/>
+					<leftPen lineStyle="Dashed"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dashed"/>
+					<rightPen lineStyle="Dashed"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{jsp.general.details}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="0" y="50" width="161" height="20" forecolor="#797979" backcolor="#CBD8DC" uuid="602b15ce-eba7-411b-a473-bf273ff4e24c"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{jsp.general.relativeofstaffmember}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="0" y="72" width="161" height="20" forecolor="#797979" backcolor="#CBD8DC" uuid="1759243f-c433-40fb-ba3c-3f94a07bccdc"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{jsp.general.studentcode}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="164" y="72" width="329" height="20" uuid="9b969330-5e38-4ddb-be1a-1101676ece9e"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{student_studentcode}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="164" y="28" width="329" height="20" uuid="fba210de-d5be-4ac9-bc08-0522a31c85c4"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{student_foreignstudent}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="164" y="50" width="329" height="20" uuid="933321ef-b918-45e8-9280-9cb5fd6cbca1"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{student_relativeofstaffmember}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="0" y="28" width="161" height="20" forecolor="#797979" backcolor="#CBD8DC" uuid="d2ca2cc3-03bc-4376-b464-2a797c6cdccc"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{jsp.general.foreignstudent}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="0" y="94" width="161" height="20" forecolor="#797979" backcolor="#CBD8DC" uuid="b77734e6-7c85-4b2a-9437-85580950cbfe"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{jsp.general.surname}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="164" y="94" width="329" height="20" uuid="67aea522-4265-4028-995c-69e7e0bde8ef"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{person_surnamefull}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="0" y="116" width="161" height="20" forecolor="#797979" backcolor="#CBD8DC" uuid="e7f05fd9-9992-4ee9-bdff-5fecac1c9e3f"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{jsp.general.firstnames}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="164" y="116" width="329" height="20" uuid="f302690d-0ff3-439b-997b-d6ae0d9ef018"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{person_firstnamesfull}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="0" y="138" width="161" height="20" forecolor="#797979" backcolor="#CBD8DC" uuid="ac96e840-8f9a-4cad-b127-2bfc79c201fa"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{jsp.general.aliasfirstnames}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="164" y="138" width="329" height="20" uuid="0c5b47dc-02b2-417a-a72d-f7aa5f71a4c2"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{person_firstnamesalias}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="0" y="160" width="161" height="20" forecolor="#797979" backcolor="#CBD8DC" uuid="e55c34c9-2769-4c51-afd2-e283057afc4d"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{jsp.general.nationalregistrationnumber}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="164" y="160" width="329" height="20" uuid="7f019f6d-b91c-4cb6-95b0-7a3e34fdb95c"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{person_nationalregistrationnumber}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="0" y="182" width="161" height="20" forecolor="#797979" backcolor="#CBD8DC" uuid="1d9dbe14-873b-4d1f-bc4e-d94e27b4e04a"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{jsp.general.civiltitle}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="164" y="182" width="329" height="20" uuid="caf49728-a279-49d4-b8f1-8bb7a1b7657d"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{civiltitle_description}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="164" y="204" width="329" height="20" uuid="47598bf0-e494-4680-82a9-065e0aefee82"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{person_academictitle}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="0" y="204" width="161" height="20" forecolor="#797979" backcolor="#CBD8DC" uuid="f6abfc1c-2615-4892-9421-540b6ad91a53"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{jsp.general.academictitle}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="0" y="226" width="161" height="20" forecolor="#797979" backcolor="#CBD8DC" uuid="cdf8a525-8d10-4507-a2fb-0a020afc0bb9"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{jsp.general.gender}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="164" y="226" width="329" height="20" uuid="9a97d126-69af-4fbe-b5cd-5adcadb20992"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{gender_description}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="0" y="248" width="161" height="20" forecolor="#797979" backcolor="#CBD8DC" uuid="d5f260e7-9d88-4e2a-a4c5-2fac8cbffed7"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{jsp.general.birthdate}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="164" y="248" width="329" height="20" uuid="33403575-8d40-4ab3-9975-7d36dd29155e"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[DateFormat.getDateInstance(DateFormat.MEDIUM, $P{REPORT_LOCALE}).format($F{person_birthdate})]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="164" y="270" width="329" height="20" uuid="c1804a52-ff07-4698-a1c9-d0a68534e19b"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{civilstatus_description}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="0" y="270" width="161" height="20" forecolor="#797979" backcolor="#CBD8DC" uuid="04085e86-355d-42f2-8337-35cfff1962f2"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{jsp.general.civilstatus}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="0" y="292" width="161" height="20" forecolor="#797979" backcolor="#CBD8DC" uuid="85cd0719-41a3-4e02-9248-f36f2cf14272"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{jsp.general.housingoncampus}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="164" y="292" width="329" height="20" uuid="dc719684-efb4-4958-ade2-ac7bfc0fd9db"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{person_housingoncampus}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="0" y="314" width="245" height="20" forecolor="#797979" backcolor="#CBD8DC" uuid="bdb746b5-32c1-4d9b-b40c-61f182f820fe"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{jsp.general.healthissues}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="335" width="245" height="76" uuid="32e026f9-bb6a-4992-a3c2-c67aeb75b717"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="0.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Top"/>
+				<textFieldExpression><![CDATA[$F{person_healthissues}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="248" y="314" width="245" height="20" forecolor="#797979" backcolor="#CBD8DC" uuid="9d2e0fa1-5818-4adc-8870-cc1e00c1e866"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{jsp.general.motivation}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="248" y="335" width="245" height="76" uuid="1b15fefa-63db-43b7-b45e-1d67cea4ad48"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="0.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Top"/>
+				<textFieldExpression><![CDATA[$F{person_motivation}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1" y="420" width="492" height="20" forecolor="#969696" uuid="4c55d9c4-f888-41cf-8195-1ce2a326b7b6"/>
+				<box>
+					<pen lineStyle="Dashed"/>
+					<topPen lineStyle="Dashed"/>
+					<leftPen lineStyle="Dashed"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dashed"/>
+					<rightPen lineStyle="Dashed"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{jsp.general.address}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="165" y="448" width="329" height="20" uuid="d1b5e182-7bb7-4a5d-928d-14a030b1ae01"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{studentaddress_country}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="1" y="448" width="161" height="20" forecolor="#797979" backcolor="#CBD8DC" uuid="63ac8340-8382-4e7b-8a9b-891270036deb"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{jsp.general.country}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="1" y="470" width="161" height="20" forecolor="#797979" backcolor="#CBD8DC" uuid="bcffd54d-3e98-4822-8f09-5ba3dd4dfd32"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{jsp.general.province}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="165" y="470" width="329" height="20" uuid="e9958965-b439-4b17-8815-8d173a665d61"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{studentaddress_province}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="1" y="492" width="161" height="20" forecolor="#797979" backcolor="#CBD8DC" uuid="d3271df0-b30f-422e-a8c0-217eed89d946"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{jsp.general.district}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="165" y="492" width="329" height="20" uuid="65195e49-83bd-439b-be6f-6ebd38a37096"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{studentaddress_district}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="1" y="514" width="161" height="20" forecolor="#797979" backcolor="#CBD8DC" uuid="583effc4-71ea-4348-8b0f-639dbd72979e"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{jsp.general.address.administrativepost}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="165" y="514" width="329" height="20" uuid="1b3566af-5782-4b5b-8379-b2601051e3af"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{studentaddress_administrativepost}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="1" y="536" width="161" height="20" forecolor="#797979" backcolor="#CBD8DC" uuid="67259244-3806-42ae-863a-e26a478fb4e4"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{jsp.general.city}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="165" y="536" width="329" height="20" uuid="1d4208b5-ce40-4cb2-90a1-3aa90767f699"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{studentaddress_city}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="1" y="558" width="161" height="20" forecolor="#797979" backcolor="#CBD8DC" uuid="f21a86f7-7815-4732-b161-90a663d5dc16"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{jsp.general.address.street}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="165" y="558" width="329" height="20" uuid="db730cf7-9246-4198-b13b-4caf6b377e4a"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{studentaddress_street}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="1" y="580" width="161" height="20" forecolor="#797979" backcolor="#CBD8DC" uuid="e9f1147c-9ce0-40f2-8d33-d4fb3fc6f8f7"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{jsp.general.address.numberextension}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="165" y="580" width="163" height="20" uuid="15010f74-e42f-43e1-8cf4-d4804a1a443f"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{studentaddress_number}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="331" y="580" width="163" height="20" uuid="a62fe45a-284b-4966-a85c-cfd93ba00a96"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{studentaddress_numberextension}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="1" y="602" width="161" height="20" forecolor="#797979" backcolor="#CBD8DC" uuid="148f3032-77ca-42d2-8604-0010bec272be"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{jsp.general.address.zipcode} + " / " + $R{jsp.general.address.POBox}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="165" y="602" width="163" height="20" uuid="f04358ca-1dc7-44c6-b7dd-c07759c14037"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{studentaddress_zipcode}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="331" y="602" width="163" height="20" uuid="d93be2be-a968-4831-b1c3-420bd6abd161"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{studentaddress_pobox}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="165" y="624" width="106" height="20" uuid="f4f3935a-a3a3-4f23-9f1f-decf3e291e0d"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{studentaddress_telephone}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="276" y="624" width="108" height="20" uuid="b9eebbcf-9e44-488a-b591-08e2e12bbf08"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{studentaddress_faxnumber}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="1" y="624" width="161" height="20" forecolor="#797979" backcolor="#CBD8DC" uuid="4aa1e3c3-cc13-4cda-8dfb-f5e88885c89c"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{report.admissionsummary.phonefaxmobile}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="388" y="624" width="106" height="20" uuid="a94a9a19-d568-422a-be49-7ae50c4eee7c"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{studentaddress_emailaddress}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="247">
+			<textField>
+				<reportElement x="2" y="4" width="492" height="20" forecolor="#969696" uuid="954b6546-259f-436b-932d-fda285b67271"/>
+				<box>
+					<pen lineStyle="Dashed"/>
+					<topPen lineStyle="Dashed"/>
+					<leftPen lineStyle="Dashed"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dashed"/>
+					<rightPen lineStyle="Dashed"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{jsp.general.background}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="0" y="36" width="161" height="20" forecolor="#797979" backcolor="#CBD8DC" uuid="89416d97-fc33-42cc-a9bf-64cefa17c3ea"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{jsp.general.nationality}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="164" y="36" width="329" height="20" uuid="05ac5b58-47e1-474a-b6d1-588850fd9ee7"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{person_nationality}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="0" y="58" width="161" height="20" forecolor="#797979" backcolor="#CBD8DC" uuid="e2ffc2a9-3b45-446e-ad02-9d091ddf8ba5"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{jsp.general.countryofbirth}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="164" y="58" width="329" height="20" uuid="16bd707f-7954-4fc0-a326-2c490c6c183f"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{person_countryofbirth}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="0" y="80" width="161" height="20" forecolor="#797979" backcolor="#CBD8DC" uuid="a9194657-c110-49db-9240-19e79e05ed3c"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{jsp.general.provinceofbirth}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="164" y="80" width="329" height="20" uuid="833f1079-58f0-4df0-b401-7c9e14666339"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{person_provinceofbirth}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="164" y="102" width="329" height="20" uuid="708ca656-1055-45d3-afa6-089bd24e7622"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{person_districtofbirth}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="0" y="102" width="161" height="20" forecolor="#797979" backcolor="#CBD8DC" uuid="dfa83bd4-704e-4f0c-9f3e-5cca8a9cecfd"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{jsp.general.districtofbirth}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="164" y="124" width="329" height="20" uuid="03a426b3-3134-443d-8356-9e010f67c7f3"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{person_placeofbirth}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="0" y="124" width="161" height="20" forecolor="#797979" backcolor="#CBD8DC" uuid="7f180878-6e98-4aa8-a430-f4a6376b110c"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{jsp.general.placeofbirth}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="164" y="146" width="329" height="20" uuid="7c336005-6b81-4067-916f-745f56d7dd89"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{person_countryoforigin}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="0" y="146" width="161" height="20" forecolor="#797979" backcolor="#CBD8DC" uuid="f0bf406b-3e6e-4ed3-b406-9a5e26df70ba"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{jsp.general.countryoforigin}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="164" y="168" width="329" height="20" uuid="57944582-6a05-4aea-b83e-9fc533e07a3d"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{person_provinceoforigin}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="0" y="168" width="161" height="20" forecolor="#797979" backcolor="#CBD8DC" uuid="b49c8438-93dd-489d-9a25-c83f1ee56c62"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{jsp.general.provinceoforigin}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="164" y="190" width="329" height="20" uuid="f1952849-e9e8-4224-bedf-5008eaaff9fd"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{person_districtoforigin}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="0" y="190" width="161" height="20" forecolor="#797979" backcolor="#CBD8DC" uuid="33367331-a307-4059-85d5-bcf061220c7e"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{jsp.general.districtoforigin}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="0" y="212" width="161" height="20" forecolor="#797979" backcolor="#CBD8DC" uuid="4728866c-97ca-4ab3-8eec-09c266db934b"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{jsp.general.cityoforigin}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="164" y="212" width="329" height="20" uuid="6d879b1d-fb45-4208-9ec3-88e8346ab9a5"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{person_cityoforigin}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="148">
+			<textField isBlankWhenNull="true">
+				<reportElement x="164" y="27" width="329" height="20" uuid="3455b90f-2e3a-450a-8d28-cfcd3f9faac4"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{person_identificationtype}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="0" y="27" width="161" height="20" forecolor="#797979" backcolor="#CBD8DC" uuid="5cb53185-e167-4bb4-b04a-7ee6094d6713"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{jsp.general.identificationtype}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1" y="2" width="492" height="20" forecolor="#969696" uuid="3f85ae9f-580f-4bb1-9948-5e13b0787f79"/>
+				<box>
+					<pen lineStyle="Dashed"/>
+					<topPen lineStyle="Dashed"/>
+					<leftPen lineStyle="Dashed"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dashed"/>
+					<rightPen lineStyle="Dashed"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{jsp.general.identification}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="164" y="49" width="329" height="20" uuid="e9d201f5-5fe0-49e5-b575-321b97c93b11"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{person_identificationnumber}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="0" y="49" width="161" height="20" forecolor="#797979" backcolor="#CBD8DC" uuid="2e44a262-a28c-4d06-b424-2631e868abd5"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{jsp.general.identificationnumber}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="164" y="71" width="329" height="20" uuid="43c3dde3-a7d1-4c84-b14a-0668a63ce67f"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{person_identificationplaceofissue}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="0" y="71" width="161" height="20" forecolor="#797979" backcolor="#CBD8DC" uuid="c550967e-69ec-44ef-a19d-7fb495a67b27"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{jsp.general.placeofissue}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="164" y="93" width="329" height="20" uuid="da831261-23e0-4443-89f8-29dd18c149ed"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[DateFormat.getDateInstance(DateFormat.MEDIUM, $P{REPORT_LOCALE}).format($F{person_identificationdateofissue})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="0" y="93" width="161" height="20" forecolor="#797979" backcolor="#CBD8DC" uuid="882bb42f-fb6c-4da5-ba73-fd06ed2e0bd3"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{jsp.general.dateofissue}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="164" y="115" width="329" height="20" uuid="0f09eb5f-3c29-47f4-aeb3-dc7f7430f3f2"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[DateFormat.getDateInstance(DateFormat.MEDIUM, $P{REPORT_LOCALE}).format($F{person_identificationdateofexpiration})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="0" y="115" width="161" height="20" forecolor="#797979" backcolor="#CBD8DC" uuid="516c167c-8ece-4977-8be8-74bdc7441225"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{jsp.general.dateofexpiration}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="266">
+			<textField>
+				<reportElement x="0" y="2" width="492" height="20" forecolor="#969696" uuid="b9621df3-c229-4176-85a2-0991e2456823"/>
+				<box>
+					<pen lineStyle="Dashed"/>
+					<topPen lineStyle="Dashed"/>
+					<leftPen lineStyle="Dashed"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dashed"/>
+					<rightPen lineStyle="Dashed"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{jsp.general.previousinstitution.information}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="164" y="31" width="329" height="20" uuid="c8264d9a-3a4a-4944-91a9-4f459c798bd9"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{student_previousinstitutionid} != 0 ? $F{previousinstitution_description} : $F{student_previousinstitution}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="0" y="31" width="161" height="20" forecolor="#797979" backcolor="#CBD8DC" uuid="2377b24c-3748-47d2-a08a-6011dd150d36"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{jsp.general.previousinstitution}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="0" y="53" width="161" height="20" forecolor="#797979" backcolor="#CBD8DC" uuid="5ec6c546-1f0c-4e03-ad45-9a1b28867ab1"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{jsp.general.country}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="164" y="53" width="329" height="20" uuid="7039f4f6-bd0f-45c6-97f7-1667a1053f28"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{previousinstitution_country}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="0" y="75" width="161" height="20" forecolor="#797979" backcolor="#CBD8DC" uuid="4b00c284-2d1e-44b5-8535-856d7a4e1a3b"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{jsp.general.province}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="164" y="75" width="329" height="20" uuid="d95f0824-4612-460f-9b1e-fac31e98d6e9"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{previousinstitution_province}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="0" y="97" width="161" height="20" forecolor="#797979" backcolor="#CBD8DC" uuid="6c992c0c-c757-489d-9d56-69c7cf89a30d"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{jsp.general.district}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="164" y="97" width="329" height="20" uuid="1b5ab1fc-60f5-439a-ba60-1d4a065b5740"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{previousinstitution_district}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="0" y="119" width="161" height="20" forecolor="#797979" backcolor="#CBD8DC" uuid="bfed44f1-64d9-4881-8b4d-4059dc125f5c"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{jsp.general.previousinstitutiontype}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="164" y="119" width="329" height="20" uuid="2d510c74-acce-4842-a491-21a1f0113f3e"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{previousinstitution_type}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="0" y="141" width="161" height="20" forecolor="#797979" backcolor="#CBD8DC" uuid="5cd1684e-19c3-4e72-b4fd-2597e69f423c"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{jsp.general.previousinstitutionfinalgradetype}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="164" y="141" width="329" height="20" uuid="6f634958-ff46-4dff-943c-ce2717429645"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{previousinstitution_gradetype}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="0" y="163" width="493" height="20" forecolor="#797979" backcolor="#CBD8DC" uuid="582c32d2-22b9-492f-aae5-375c80b0fab6"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{jsp.general.previousinstitutionphotographremarks}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="183" width="494" height="40" uuid="546b09b3-6671-4a17-8199-c2e847e117a5"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="0.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Top"/>
+				<textFieldExpression><![CDATA[$F{student_previousinstitutiondiplomaphotographremarks}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="0" y="225" width="161" height="20" forecolor="#797979" backcolor="#CBD8DC" uuid="8cc149ff-98c4-4842-975c-bfae806ca92c"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{report.admissionsummary.diplomaincluded}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="165" y="225" width="329" height="20" uuid="de3a02ea-4d46-4c2b-9c06-f0150c60ca29"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{student_diplomaincluded} ? $R{jsp.general.yes} : $R{jsp.general.no}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="115" splitType="Prevent">
+			<textField>
+				<reportElement x="2" y="2" width="492" height="20" forecolor="#969696" uuid="a47fcff8-3ef0-48e7-9ada-7d6ec897a23e"/>
+				<box>
+					<pen lineStyle="Dashed"/>
+					<topPen lineStyle="Dashed"/>
+					<leftPen lineStyle="Dashed"/>
+					<bottomPen lineWidth="1.0" lineStyle="Dashed"/>
+					<rightPen lineStyle="Dashed"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{jsp.general.subscriptiondata}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="164" y="27" width="329" height="20" uuid="94cac995-1799-47be-8e06-82b6410b54ec"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{applicantcategory}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="0" y="27" width="161" height="20" forecolor="#797979" backcolor="#CBD8DC" uuid="9e08fedb-bdd8-4d29-95b3-98716975d02a"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{jsp.general.applicantcategory}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="0" y="49" width="161" height="20" forecolor="#797979" backcolor="#CBD8DC" uuid="ed263e25-d37a-4dfe-8a72-16c0bfa6d17a"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{jsp.general.study}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="164" y="49" width="329" height="20" uuid="4309f4c7-f600-48dd-aea2-223bdff4fe6b"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{study_studydescription}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="0" y="71" width="161" height="20" forecolor="#797979" backcolor="#CBD8DC" uuid="3e6efea9-56cd-48b0-ab99-ef367462791c"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{jsp.general.grade}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="164" y="71" width="329" height="20" uuid="87fd5ac6-23b4-415e-9be2-ae712a0c5a67"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{gradetype_description}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="0" y="93" width="161" height="20" forecolor="#797979" backcolor="#CBD8DC" uuid="2d705a06-c2d2-4e61-b641-4787ce66a0ee"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{jsp.second.study}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="164" y="93" width="329" height="20" uuid="a6e38bbc-8b14-4b4f-865a-0bcd5eb6bcc3"/>
+				<box leftPadding="5">
+					<pen lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{secondary_study}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="32" splitType="Stretch">
+			<printWhenExpression><![CDATA[new Boolean("pdf".equals($P{format}))]]></printWhenExpression>
+			<textField isBlankWhenNull="false">
+				<reportElement key="page1" mode="Opaque" x="260" y="5" width="233" height="19" forecolor="#000000" backcolor="#FFFFFF" uuid="5ee97bb1-3053-4e29-853d-5bc11f115252"/>
+				<box leftPadding="10">
+					<pen lineWidth="1.0" lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER} + ""]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Group" evaluationGroup="student" isBlankWhenNull="false">
+				<reportElement key="page2" mode="Opaque" x="493" y="5" width="42" height="19" forecolor="#000000" backcolor="#FFFFFF" uuid="feafa793-1232-40ee-bb98-4ebbf673b061"/>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["/" + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report" pattern="" isBlankWhenNull="false">
+				<reportElement key="date_value" mode="Opaque" x="2" y="5" width="258" height="19" forecolor="#000000" backcolor="#FFFFFF" uuid="22b39728-6dc8-405c-b906-0fcc157ad410"/>
+				<box leftPadding="10">
+					<pen lineWidth="1.0" lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[DateFormat.getDateInstance(DateFormat.MEDIUM, $P{REPORT_LOCALE}).format(new Date())]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<lastPageFooter>
+		<band/>
+	</lastPageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+	<noData>
+		<band height="50" splitType="Stretch">
+			<textField isBlankWhenNull="false">
+				<reportElement key="nodata" x="0" y="0" width="535" height="50" uuid="ac925065-5d3e-4ac3-a3b3-888c514a5e76"/>
+				<textElement textAlignment="Center">
+					<font size="28"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{general.nodata}]]></textFieldExpression>
+			</textField>
+		</band>
+	</noData>
+</jasperReport>

@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ***** BEGIN LICENSE BLOCK *****
+  Version: MPL 1.1/GPL 2.0/LGPL 2.1
+  
+  The contents of this file are subject to the Mozilla Public License Version
+  1.1 (the "License"); you may not use this file except in compliance with
+  the License. You may obtain a copy of the License at
+  http://www.mozilla.org/MPL/
+  
+  Software distributed under the License is distributed on an "AS IS" basis,
+  WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+  for the specific language governing rights and limitations under the
+  License.
+  
+  The Original Code is Opus-College college module code.
+  
+  The Initial Developer of the Original Code is
+  Center for Information Services, Radboud University Nijmegen.
+  Portions created by the Initial Developer are Copyright (C) 2008
+  the Initial Developer. All Rights Reserved.
+  
+  Contributor(s):
+    For Java files, see Javadoc @author tags.
+  
+  Alternatively, the contents of this file may be used under the terms of
+  either the GNU General Public License Version 2 or later (the "GPL"), or
+  the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+  in which case the provisions of the GPL or the LGPL are applicable instead
+  of those above. If you wish to allow use of your version of this file only
+  under the terms of either the GPL or the LGPL, and not to allow others to
+  use your version of this file under the terms of the MPL, indicate your
+  decision by deleting the provisions above and replace them with the notice
+  and other provisions required by the GPL or the LGPL. If you do not delete
+  the provisions above, a recipient may use your version of this file under
+  the terms of any one of the MPL, the GPL or the LGPL.
+  
+  ***** END LICENSE BLOCK *****
+-->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:aop="http://www.springframework.org/schema/aop"
+        xmlns:context="http://www.springframework.org/schema/context"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans
+                            http://www.springframework.org/schema/beans/spring-beans.xsd
+                            http://www.springframework.org/schema/context
+                            http://www.springframework.org/schema/context/spring-context.xsd
+                            http://www.springframework.org/schema/aop
+                            http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+
+    <!-- base package for components (like @Controller a.o.) -->
+    <context:component-scan base-package="org.uci.opus.college.web.flow" />
+    <context:component-scan base-package="org.uci.opus.college.validator" />
+    <context:component-scan base-package="org.uci.opus.admin.web.flow" />
+
+
+    <!-- Web Flow bean definitions, must be in application context to find them.  --> 
+
+    <bean id="branchesController" class="org.uci.opus.college.web.flow.BranchesController">
+        <property name="viewName"><value>college/organization/branches</value></property>
+        <property name="securityChecker"><ref bean="securityChecker"/></property>
+        <property name="branchManager"><ref bean="branchManager"/></property>
+        <property name="institutionManager"><ref bean="institutionManager"/></property>
+    </bean>
+    <bean id="branchDeleteController" class="org.uci.opus.college.web.flow.BranchDeleteController">
+        <property name="viewName"><value>college/organization/branches</value></property>
+        <property name="securityChecker"><ref bean="securityChecker"/></property>
+        <property name="institutionManager"><ref bean="institutionManager"/></property>
+        <property name="branchManager"><ref bean="branchManager"/></property>
+        <property name="staffMemberManager"><ref bean="staffMemberManager"/></property>
+        <property name="studyManager"><ref bean="studyManager"/></property>
+        <property name="organizationalUnitManager"><ref bean="organizationalUnitManager"/></property>
+        <property name="lookupCacher"><ref bean="lookupCacher"/></property>
+    </bean>
+    
+    <bean id="institutionsController" class="org.uci.opus.college.web.flow.InstitutionsController">
+        <property name="viewName"><value>college/organization/institutions</value></property>
+        <property name="securityChecker"><ref bean="securityChecker"/></property>
+        <property name="institutionManager"><ref bean="institutionManager"/></property>
+        <property name="lookupCacher"><ref bean="lookupCacher"/></property>
+    </bean>
+
+    <bean id="institutionDeleteController" class="org.uci.opus.college.web.flow.InstitutionDeleteController">
+        <property name="viewName"><value>college/organization/institutions</value></property>
+        <property name="securityChecker"><ref bean="securityChecker"/></property>
+        <property name="institutionManager"><ref bean="institutionManager"/></property>
+        <property name="branchManager"><ref bean="branchManager"/></property>
+    </bean>
+    
+    <bean id="organizationalUnitsController" class="org.uci.opus.college.web.flow.OrganizationalUnitsController">
+        <property name="viewName"><value>college/organization/organizationalunits</value></property>
+        <property name="securityChecker"><ref bean="securityChecker"/></property>
+        <property name="organizationalUnitManager"><ref bean="organizationalUnitManager"/></property>
+        <property name="personManager"><ref bean="personManager"/></property>
+        <property name="lookupCacher"><ref bean="lookupCacher"/></property>
+        <property name="opusMethods"><ref bean="opusMethods"/></property>
+    </bean>
+    <bean id="organizationalUnitDeleteController" class="org.uci.opus.college.web.flow.OrganizationalUnitDeleteController">
+        <property name="viewName"><value>college/organization/organizationalunits</value></property>
+        <property name="securityChecker"><ref bean="securityChecker"/></property>
+        <property name="organizationalUnitManager"><ref bean="organizationalUnitManager"/></property>
+        <property name="personManager"><ref bean="personManager"/></property>
+        <property name="staffMemberManager"><ref bean="staffMemberManager"/></property>
+        <property name="studyManager"><ref bean="studyManager"/></property>
+        <property name="branchManager"><ref bean="branchManager"/></property>
+        <property name="institutionManager"><ref bean="institutionManager"/></property>
+        <property name="lookupCacher"><ref bean="lookupCacher"/></property>
+    </bean>
+    
+    <bean id="staffMembersController" class="org.uci.opus.college.web.flow.StaffMembersController">
+        <property name="viewName"><value>college/person/staffmembers</value></property>
+        <property name="securityChecker"><ref bean="securityChecker"/></property>
+        <property name="opusMethods"><ref bean="opusMethods"/></property>
+        <property name="staffMemberManager"><ref bean="staffMemberManager"/></property>
+        <property name="lookupCacher"><ref bean="lookupCacher"/></property>
+    </bean>
+
+    <bean id="staffMemberDeleteController" class="org.uci.opus.college.web.flow.StaffMemberDeleteController">
+        <property name="viewName"><value>college/person/staffmembers</value></property>
+        <property name="securityChecker"><ref bean="securityChecker"/></property>
+        <property name="messageSource"><ref bean="messageSource"/></property>
+        <property name="staffMemberManager"><ref bean="staffMemberManager"/></property>
+        <property name="opusMethods"><ref bean="opusMethods"/></property>
+    </bean>
+    <bean id="studyGradeTypeSecondarySchoolSubjectsController" class="org.uci.opus.college.web.flow.StudyGradeTypeSecondarySchoolSubjectsController">
+    </bean>
+
+   <bean id="contractDeleteController" class="org.uci.opus.college.web.flow.ContractDeleteController">
+        <property name="viewName"><value>college/person/staffmember</value></property>
+        <property name="securityChecker"><ref bean="securityChecker"/></property>
+        <property name="contractManager"><ref bean="contractManager"/></property>
+    </bean>
+
+   <bean id="examinationTeacherDeleteController" class="org.uci.opus.college.web.flow.ExaminationTeacherDeleteController">
+        <property name="viewName"><value>college/person/staffmember</value></property>
+        <property name="securityChecker"><ref bean="securityChecker"/></property>
+        <property name="messageSource"><ref bean="messageSource"/></property>
+        <property name="examinationManager"><ref bean="examinationManager"/></property>
+        <property name="resultManager"><ref bean="resultManager"/></property>
+    </bean>
+
+    <bean id="testTeacherDeleteController" class="org.uci.opus.college.web.flow.TestTeacherDeleteController">
+        <property name="viewName"><value>college/person/staffmember</value></property>
+        <property name="securityChecker"><ref bean="securityChecker"/></property>
+        <property name="messageSource"><ref bean="messageSource"/></property>
+        <property name="testManager"><ref bean="testManager"/></property>
+        <property name="examinationManager"><ref bean="examinationManager"/></property>
+        <property name="resultManager"><ref bean="resultManager"/></property>
+    </bean>
+
+    <bean id="opusUserRoleDeleteController" class="org.uci.opus.college.web.flow.OpusUserRoleDeleteController"/>
+
+    <bean id="studentDeleteController" class="org.uci.opus.college.web.flow.StudentDeleteController">
+        <property name="securityChecker"><ref bean="securityChecker"/></property>
+        <property name="messageSource"><ref bean="messageSource"/></property>
+        <property name="studentManager"><ref bean="studentManager"/></property>
+        <property name="opusMethods"><ref bean="opusMethods"/></property>
+        <property name="lookupCacher"><ref bean="lookupCacher"/></property>
+    </bean>
+
+    <bean id="studentAbsenceDeleteController" class="org.uci.opus.college.web.flow.StudentAbsenceDeleteController">
+        <property name="viewName"><value>college/person/student-absences</value></property>
+        <property name="securityChecker"><ref bean="securityChecker"/></property>
+        <property name="studentManager"><ref bean="studentManager"/></property>
+        <property name="opusMethods"><ref bean="opusMethods"/></property>
+    </bean>
+
+    <bean id="studyGradeTypeSubjectBlockDeleteController" class="org.uci.opus.college.web.flow.StudyGradeTypeSubjectBlockDeleteController">
+        <property name="viewName"><value>college/study/studygradetype</value></property>
+        <property name="securityChecker"><ref bean="securityChecker"/></property>
+        <property name="subjectManager"><ref bean="subjectManager"/></property>
+        <property name="resultManager"><ref bean="resultManager"/></property>
+        <property name="messageSource"><ref bean="messageSource"/></property>
+    </bean>
+
+    <bean id="studyGradeTypePrerequisiteDeleteController" class="org.uci.opus.college.web.flow.StudyGradeTypePrerequisiteDeleteController">
+        <property name="viewName"><value>college/study/studyGradeType</value></property>
+        <property name="securityChecker"><ref bean="securityChecker"/></property>
+        <property name="studyManager"><ref bean="studyManager"/></property>
+    </bean>
+   
+    <bean id="subjectBlockStudyGradeTypeDeleteController" class="org.uci.opus.college.web.flow.SubjectBlockStudyGradeTypeDeleteController">
+        <property name="viewName"><value>college/study/studygradetype</value></property>
+        <property name="securityChecker"><ref bean="securityChecker"/></property>
+        <property name="subjectManager"><ref bean="subjectManager"/></property>
+        <property name="resultManager"><ref bean="resultManager"/></property>
+        <property name="messageSource"><ref bean="messageSource"/></property>
+    </bean>
+
+    <bean id="subjectBlockSubjectDeleteController" class="org.uci.opus.college.web.flow.SubjectBlockSubjectDeleteController">
+        <property name="viewName"><value>college/subjectblock/subjectblock</value></property>
+        <property name="securityChecker"><ref bean="securityChecker"/></property>
+        <property name="subjectManager"><ref bean="subjectManager"/></property>
+        <property name="studyManager"><ref bean="studyManager"/></property>
+        <property name="staffMemberManager"><ref bean="staffMemberManager"/></property>
+        <property name="resultManager"><ref bean="resultManager"/></property>
+        <property name="opusMethods"><ref bean="opusMethods"/></property>
+        <property name="lookupCacher"><ref bean="lookupCacher"/></property>
+        <property name="messageSource"><ref bean="messageSource"/></property>
+    </bean>
+
+    <bean id="studyGradeTypeSubjectDeleteController" class="org.uci.opus.college.web.flow.StudyGradeTypeSubjectDeleteController">
+        <property name="viewName"><value>college/study/studygradetype</value></property>
+        <property name="securityChecker"><ref bean="securityChecker"/></property>
+        <property name="subjectManager"><ref bean="subjectManager"/></property>
+        <property name="resultManager"><ref bean="resultManager"/></property>
+        <property name="messageSource"><ref bean="messageSource"/></property>
+    </bean>
+
+    <bean id="subjectBlockPrerequisiteDeleteController" class="org.uci.opus.college.web.flow.SubjectBlockPrerequisiteDeleteController">
+        <property name="viewName"><value>college/subjectblock/subjectBlockStudyGradeType</value></property>
+        <property name="securityChecker"><ref bean="securityChecker"/></property>
+        <property name="subjectManager"><ref bean="subjectManager"/></property>
+    </bean>
+
+    <bean id="examinationDeleteController" class="org.uci.opus.college.web.flow.ExaminationDeleteController">
+        <property name="viewName"><value>college/subject/subject</value></property>
+        <property name="securityChecker"><ref bean="securityChecker"/></property>
+        <property name="examinationManager"><ref bean="examinationManager"/></property>
+        <property name="resultManager"><ref bean="resultManager"/></property>
+        <property name="messageSource"><ref bean="messageSource"/></property>
+    </bean>
+
+<!--     <bean id="testEditController" class="org.uci.opus.college.web.flow.TestEditController"> -->
+<!--         <property name="securityChecker"><ref bean="securityChecker"/></property> -->
+<!--         <property name="subjectManager"><ref bean="subjectManager"/></property> -->
+<!--         <property name="testManager"><ref bean="testManager"/></property> -->
+<!--         <property name="examinationManager"><ref bean="examinationManager"/></property> -->
+<!--         <property name="staffMemberManager"><ref bean="staffMemberManager"/></property> -->
+<!--         <property name="opusMethods"><ref bean="opusMethods"/></property>         -->
+<!--         <property name="lookupCacher"><ref bean="lookupCacher"/></property> -->
+<!--         <property name="studyManager"><ref bean="studyManager"/></property> -->
+<!--         <property name="messageSource"><ref bean="messageSource"/></property> -->
+<!--         <property name="formView"><value>college/subject/test</value></property> -->
+<!--         <property name="successView" value="redirect:subject.view" /> -->
+<!--         <property name="validator"> -->
+<!--             <bean class="org.uci.opus.college.validator.TestValidator" /> -->
+<!--         </property> -->
+<!--     </bean> -->
+
+    <bean id="testDeleteController" class="org.uci.opus.college.web.flow.TestDeleteController">
+        <property name="viewName"><value>college/subject/subject</value></property>
+        <property name="securityChecker"><ref bean="securityChecker"/></property>
+        <property name="testManager"><ref bean="testManager"/></property>
+        <property name="examinationManager"><ref bean="examinationManager"/></property>
+        <property name="resultManager"><ref bean="resultManager"/></property>
+        <property name="messageSource"><ref bean="messageSource"/></property>
+    </bean>
+
+    <bean id="testResultDeleteController" class="org.uci.opus.college.web.flow.TestResultDeleteController">
+        <property name="viewName"><value>college/exam/examinationResult</value></property>
+        <property name="securityChecker"><ref bean="securityChecker"/></property>
+        <property name="resultManager"><ref bean="resultManager"/></property>
+    </bean>
+
+    <!--  ADMIN CONTROLLERS -->
+    
+    <!-- lookup tables controller -->
+    <bean id="lookupTablesController" class="org.uci.opus.admin.web.flow.LookupTablesController">
+        <property name="viewName"><value>admin/lookuptables</value></property>
+        <property name="securityChecker"><ref bean="securityChecker"/></property>
+        <property name="opusMethods"><ref bean="opusMethods"/></property>
+        <property name="lookupManager"><ref bean="lookupManager"/></property>
+        <property name="messageSource"><ref bean="messageSource"/></property>
+    </bean>
+
+    <bean id="studentsStatusesController" class="org.uci.opus.college.web.flow.StudentsStatusesController">
+        <property name="viewName"><value>college/person/studentsstatuses</value></property>
+        <property name="securityChecker"><ref bean="securityChecker"/></property>
+        <property name="studentManager"><ref bean="studentManager"/></property>
+        <property name="studyManager"><ref bean="studyManager"/></property>
+        <property name="generalManager"><ref bean="generalManager"/></property>        
+        <property name="opusMethods"><ref bean="opusMethods"/></property>
+        <property name="lookupManager"><ref bean="lookupManager"/></property>
+        <property name="lookupCacher"><ref bean="lookupCacher"/></property>
+        <property name="academicYearManager"><ref bean="academicYearManager"/></property>
+    </bean>
+
+<!--     <bean id="exportsController" class="org.uci.opus.admin.web.flow.ExportsController"> -->
+<!--         <property name="viewName"><value>admin/exportsoverview</value></property> -->
+<!--         <property name="securityChecker"><ref bean="securityChecker"/></property> -->
+<!--     </bean> -->
+    
+<!--     <bean id="importsController" class="org.uci.opus.admin.web.flow.ImportsController"> -->
+<!--         <property name="viewName"><value>admin/importsoverview</value></property> -->
+<!--         <property name="securityChecker"><ref bean="securityChecker"/></property> -->
+<!--     </bean> -->
+
+
+<!--     <bean id="studentsExportsController" class="org.uci.opus.admin.web.flow.StudentsExportsController"> -->
+<!--         <property name="viewName"><value>admin/studentsexports</value></property> -->
+<!--         <property name="securityChecker"><ref bean="securityChecker"/></property> -->
+<!--         <property name="studentManager"><ref bean="studentManager"/></property> -->
+<!--         <property name="studyManager"><ref bean="studyManager"/></property> -->
+<!--         <property name="opusMethods"><ref bean="opusMethods"/></property> -->
+<!--         <property name="lookupCacher"><ref bean="lookupCacher"/></property> -->
+<!--         <property name="academicYearManager"><ref bean="academicYearManager"/></property> -->
+<!--     </bean> -->
+    
+<!--     <bean id="studentsImportsController" class="org.uci.opus.admin.web.flow.StudentsImportsController"> -->
+<!--         <property name="viewName"><value>admin/studentsimports</value></property> -->
+<!--         <property name="securityChecker"><ref bean="securityChecker"/></property> -->
+<!--         <property name="studentManager"><ref bean="studentManager"/></property> -->
+<!--         <property name="studyManager"><ref bean="studyManager"/></property> -->
+<!--         <property name="branchManager"><ref bean="branchManager"/></property> -->
+<!--         <property name="opusUserManager"><ref bean="opusUserManager"/></property> -->
+<!--         <property name="opusMethods"><ref bean="opusMethods"/></property> -->
+<!--         <property name="lookupManager"><ref bean="lookupManager"/></property> -->
+<!--         <property name="lookupCacher"><ref bean="lookupCacher"/></property> -->
+<!--         <property name="organizationalUnitManager"><ref bean="organizationalUnitManager"/></property> -->
+<!--         <property name="institutionManager"><ref bean="institutionManager"/></property> -->
+<!--         <property name="messageSource"><ref bean="messageSource"/></property> -->
+<!--     </bean> -->
+    
+    <bean id="thesisDeleteController" class="org.uci.opus.college.web.flow.ThesisDeleteController">
+        <property name="viewName"><value>college/subject/subjects</value></property>
+        <property name="securityChecker"><ref bean="securityChecker"/></property>
+        <property name="studentManager"><ref bean="studentManager"/></property>
+        <property name="lookupCacher"><ref bean="lookupCacher"/></property>
+    </bean>
+
+	<bean id="rolesController" class="org.uci.opus.admin.web.flow.RolesController">
+        <property name="viewName"><value>admin/roles</value></property>
+    </bean>
+
+    <bean id="rolePrivilegesDeleteController" class="org.uci.opus.admin.web.flow.RolePrivilegesDeleteController"/>
+
+    <bean id="privilegesController" class="org.uci.opus.admin.web.flow.PrivilegesController">
+        <property name="viewName"><value>admin/privileges</value></property>        
+    </bean>
+    
+    <bean id="roleDeleteController" class="org.uci.opus.admin.web.flow.RoleDeleteController">
+        <property name="viewName"><value>redirect:roles.view</value></property>        
+    </bean>
+
+    <!-- beans that implement the extension (located in the 'remote' module) -->
+    <bean id="fastStudentInputExtension" class="org.uci.opus.college.web.flow.FastStudentInputExtension"/>
+
+</beans>    

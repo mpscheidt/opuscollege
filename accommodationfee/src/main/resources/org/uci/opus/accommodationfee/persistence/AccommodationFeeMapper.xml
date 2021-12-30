@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+  ***** BEGIN LICENSE BLOCK *****
+  Version: MPL 1.1/GPL 2.0/LGPL 2.1
+  
+  The contents of this file are subject to the Mozilla Public License Version 
+  1.1 (the "License"), you may not use this file except in compliance with 
+  the License. You may obtain a copy of the License at 
+  http://www.mozilla.org/MPL/
+  
+  Software distributed under the License is distributed on an "AS IS" basis,
+  WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+  for the specific language governing rights and limitations under the
+  License.
+  
+  The Original Code is Opus-College accommodationfee module code.
+  
+  The Initial Developer of the Original Code is
+  Center for Information Services, Radboud University Nijmegen.
+  Portions created by the Initial Developer are Copyright (C) 2008
+  the Initial Developer. All Rights Reserved.
+  
+  Contributor(s):
+    For Java files, see Javadoc @author tags.
+  
+  Alternatively, the contents of this file may be used under the terms of
+  either the GNU General Public License Version 2 or later (the "GPL"), or
+  the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+  in which case the provisions of the GPL or the LGPL are applicable instead
+  of those above. If you wish to allow use of your version of this file only
+  under the terms of either the GPL or the LGPL, and not to allow others to
+  use your version of this file under the terms of the MPL, indicate your
+  decision by deleting the provisions above and replace them with the notice
+  and other provisions required by the GPL or the LGPL. If you do not delete
+  the provisions above, a recipient may use your version of this file under
+  the terms of any one of the MPL, the GPL or the LGPL.
+  
+  ***** END LICENSE BLOCK *****
+--><!--Converted at: Wed Feb 24 10:59:57 CET 2016-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.uci.opus.accommodationfee.persistence.AccommodationFeeMapper">
+
+    <resultMap id="AccommodationFeeResultMap" type="AccommodationFee">
+        <result property="id" column="id"/>    <!--  fee.id -->
+        <result property="accommodationFeeId" column="accommodationFeeId"/>    <!-- id of the accommodationfee table -->
+        <result property="hostelTypeCode" column="hostelTypeCode"/>
+        <result property="roomTypeCode" column="roomTypeCode"/>
+        <result property="feeDue" column="feeDue"/>
+        <result property="academicYearId" column="academicYearId"/>
+        <result property="numberOfInstallments" column="numberofinstallments"/>
+        <result property="feeUnitCode" column="feeUnitCode"/>
+        <result property="active" column="active"/>
+        <collection property="deadlines" select="org.uci.opus.fee.persistence.FeeDeadlineMapper.findDeadlinesForFee" column="id"/>
+    </resultMap>
+
+
+    <!-- Start of AccommodationFee -->
+    <insert id="addAccommodationFee" parameterType="AccommodationFee">
+        INSERT INTO opuscollege.acc_accommodationfee(
+            hostelTypeCode
+          , roomTypeCode
+          , feeId
+        )VALUES(
+            #{hostelTypeCode}
+          , #{roomTypeCode}
+          , #{id}
+        )
+        <selectKey keyProperty="accommodationFeeId" resultType="int">
+            SELECT CURRVAL('opuscollege.acc_accommodationfeeseq')
+        </selectKey>
+    </insert>
+    
+    <insert id="updateAccommodationFeeHistory" parameterType="map">
+    
+    	INSERT INTO audit.acc_accommodationfee_hist(
+      		  operation
+			, accommodationfeeid
+			, hosteltypecode
+			, roomtypecode
+			, feeid
+			, writewho
+	
+			) VALUES (
+  	
+  	 		  #{operation}
+			, #{AccommodationFee.accommodationFeeId}
+			, #{AccommodationFee.hostelTypeCode}
+			, #{AccommodationFee.roomTypeCode}
+			, #{AccommodationFee.id}
+			, #{AccommodationFee.writeWho}
+		)    
+    
+	</insert>  
+    
+    <update id="updateAccommodationFee" parameterType="AccommodationFee">
+        UPDATE opuscollege.acc_accommodationfee
+        SET hostelTypeCode = #{hostelTypeCode}
+          , roomTypeCode = #{roomTypeCode}
+          , feeId = #{id}
+        WHERE accommodationFeeId = #{accommodationFeeId}
+    </update>
+    
+    <delete id="deleteAccommodationFee" parameterType="int">
+        DELETE FROM opuscollege.acc_accommodationfee WHERE accommodationFeeId = #{value}
+    </delete>
+    
+    <select id="findAccommodationFee" parameterType="int" resultMap="AccommodationFeeResultMap">
+        SELECT *
+        FROM opuscollege.acc_accommodationFee
+        INNER JOIN opuscollege.fee_fee ON acc_accommodationfee.feeId = fee_fee.id
+        WHERE acc_accommodationFee.accommodationFeeId = #{id}
+    </select>
+    
+    <select id="findAccommodationFeeByFeeId" parameterType="int" resultType="AccommodationFee">
+        SELECT *
+        FROM opuscollege.acc_accommodationFee
+        INNER JOIN opuscollege.fee_fee ON acc_accommodationfee.feeId = fee_fee.id
+        WHERE feeId = #{id}
+    </select>
+    
+    <select id="findSimpleAccommodationFee" parameterType="int" resultType="AccommodationFee">
+        SELECT *
+        FROM opuscollege.acc_accommodationFee        
+        WHERE acc_accommodationFee.accommodationFeeId = #{id}
+    </select>
+    
+    <select id="findAccommodationFeeByParams" parameterType="map" resultMap="AccommodationFeeResultMap">
+        SELECT * FROM opuscollege.acc_accommodationfee 
+        INNER JOIN opuscollege.fee_fee ON acc_accommodationfee.feeId = fee_fee.id
+        WHERE 1=1
+        <if test="hostelTypeCode != null">
+            AND hostelTypeCode=#{hostelTypeCode}
+        </if>
+        <if test="roomTypeCode != null">
+            AND roomTypeCode=#{roomTypeCode}
+        </if>
+        <if test="academicYearId != null">
+            AND academicYearId=#{academicYearId}
+        </if>
+        <if test="feeDue != null">
+            AND feeDue=#{feeDue}
+        </if>
+        <if test="numberOfInstallments != null">
+            AND numberOfInstallments=#{numberOfInstallments}
+        </if>
+        <if test="active != null">
+            AND active=#{active}
+        </if>
+        LIMIT 1
+    </select>
+    
+    <select id="findAccommodationFeesByParams" parameterType="map" resultMap="AccommodationFeeResultMap">
+        SELECT * FROM opuscollege.acc_accommodationfee
+        INNER JOIN opuscollege.fee_fee ON acc_accommodationfee.feeId = fee_fee.id
+        INNER JOIN opuscollege.academicYear ON fee_fee.academicYearId = academicYear.id
+        WHERE 1=1
+        <if test="hostelTypeCode != null">
+            AND hostelTypeCode=#{hostelTypeCode}
+        </if>
+        <if test="roomTypeCode != null">
+            AND roomTypeCode=#{roomTypeCode}
+        </if>
+        <if test="academicYearId != null">
+            AND academicYearId=#{academicYearId}
+        </if>
+        <if test="feeDue != null">
+            AND feeDue=#{feeDue}
+        </if>
+        <if test="numberOfInstallments != null">
+            AND numberOfInstallments=#{numberOfInstallments}
+        </if>
+        <if test="active != null">
+            AND active=#{active}
+        </if>
+        ORDER BY academicYear.description DESC
+               , acc_accommodationfee.hostelTypeCode
+               , acc_accommodationfee.roomTypeCode
+    </select>
+    
+    <!-- End of Accommodation Fee -->
+
+
+    <!-- Not Yet Complete -->
+    <select id="getStudentBalance" parameterType="int" resultType="java.math.BigDecimal">
+        SELECT SUM(amountpaid) FROM opuscollege.acc_accommodationfeepayment
+        WHERE studentid=#{studentId}
+        
+    </select>
+    
+    <select id="getStudentAccommodationPaymentByAcademicYearID" parameterType="map" resultType="java.math.BigDecimal">
+        SELECT SUM(amountpaid) FROM opuscollege.acc_accommodationfeepayment
+        WHERE studentid=#{studentId} AND studentaccommodationid=(SELECT id FROM opuscollege.studentaccommodation WHERE studentid=#{studentId} AND academicyearid=#{academicYearId})
+    </select>
+    
+    <!-- Not yet complete -->
+     <select id="getOwingStudents" parameterType="map">
+        SELECT  student.studentCode FROM opuscollege.student AS student
+        INNER JOIN opuscollege.studyplan AS studyplan ON studyplan.studentid=student.studentid
+        INNER JOIN opuscollege.studyplandetail AS  studyplandetail ON studyplan.id=studyplandetail.studyplanid
+        INNER JOIN opuscollege.studygradetype AS studygradetype ON studyplandetail.studygradetypeid=studygradetype.id
+        INNER JOIN opuscollege.studentaccommodation AS studentaccommodation ON student.studentid=studentaccommodation.studentid
+        INNER JOIN opuscollege.studytime AS studytime ON studytime.code=studygradetype.studytimecode
+        INNER JOIN opuscollege.studyform AS studyform ON studyform.code=studygradetype.studyformcode 
+        WHERE studygradetype.currentacademicyearid=studentaccommodation.academicyearid
+        <if test="studentId != null">
+            AND studentid=#{studentId}
+        </if>
+        <if test="studyGradeTypeId != null">
+            AND studyGradeType=#{studyGradeTypeId})
+         </if>
+        <if test="cardinalTimeUnitId != null">
+            AND cardinalTimeUnitId=#{cardinalTimeUnitId})
+         </if>
+        <if test="academicYearId != null">
+            AND academicYearId=#{academicYearId})
+         </if>
+    </select>
+
+    <insert id="transferAcademicYearFee" parameterType="map">
+        insert into opuscollege.acc_accommodationfee
+                ( feeId
+                , hostelTypeCode
+                , roomTypeCode
+                ) select
+                  #{targetFeeId}
+                , sourceAccommodationFee.hostelTypeCode
+                , sourceAccommodationFee.roomTypeCode
+                from opuscollege.acc_accommodationfee sourceAccommodationFee
+                inner join opuscollege.fee_fee sourceFee on sourceAccommodationFee.feeId = sourceFee.id
+                where sourceAccommodationFee.feeId = #{sourceFeeId}
+                and not exists
+                ( select * from opuscollege.acc_accommodationfee targetAccommodationFee
+                  inner join opuscollege.fee_fee targetFee on sourceAccommodationFee.feeId = targetFee.id
+                  where targetAccommodationFee.feeId = #{targetFeeId}
+                  and targetFee.transferId = sourceFee.transferId
+                )
+
+    </insert>
+    
+	
+   
+ </mapper>

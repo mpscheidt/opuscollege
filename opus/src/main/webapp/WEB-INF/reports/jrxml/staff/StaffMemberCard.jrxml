@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="StaffMemberCard" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT
+     	person."firstnamesfull" AS person_firstnamesfull,
+     	person."surnamefull" AS person_surnamefull,
+ 	person."identificationnumber" AS person_identificationnumber,
+     	function.description,
+	organizationalunit."organizationalunitdescription" AS organizationalunit_organizationalunitdescription
+FROM
+     	"opuscollege"."person" person
+	INNER JOIN "opuscollege"."staffmember" staffmember ON person."id" = staffmember."personid"
+     	INNER JOIN "opuscollege"."staffmemberfunction" staffmemberfunction ON staffmember."staffmemberid" = staffmemberfunction."staffmemberid"
+	INNER JOIN "opuscollege"."function" function ON staffmemberfunction."functioncode" = function."code"
+		INNER JOIN "opuscollege"."organizationalunit" organizationalunit ON staffmember."primaryunitofappointmentid" = organizationalunit."id"]]>
+	</queryString>
+	<field name="person_firstnamesfull" class="java.lang.String"/>
+	<field name="person_surnamefull" class="java.lang.String"/>
+	<field name="person_identificationnumber" class="java.lang.String"/>
+	<field name="description" class="java.lang.String"/>
+	<field name="organizationalunit_organizationalunitdescription" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="222" splitType="Stretch">
+			<staticText>
+				<reportElement x="18" y="45" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[person_firstnamesfull]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="118" y="45" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{person_firstnamesfull}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="18" y="77" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[person_surnamefull]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="118" y="77" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{person_surnamefull}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="18" y="110" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[person_identificationnumber]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="118" y="110" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{person_identificationnumber}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="18" y="144" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[description]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="118" y="144" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="18" y="10" width="255" height="35"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{organizationalunit_organizationalunitdescription}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

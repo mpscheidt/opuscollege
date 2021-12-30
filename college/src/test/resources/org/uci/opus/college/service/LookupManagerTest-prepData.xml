@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ***** BEGIN LICENSE BLOCK *****
+  Version: MPL 1.1/GPL 2.0/LGPL 2.1
+  
+  The contents of this file are subject to the Mozilla Public License Version
+  1.1 (the "License"); you may not use this file except in compliance with
+  the License. You may obtain a copy of the License at
+  http://www.mozilla.org/MPL/
+  
+  Software distributed under the License is distributed on an "AS IS" basis,
+  WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+  for the specific language governing rights and limitations under the
+  License.
+  
+  The Original Code is Opus-College college module code.
+  
+  The Initial Developer of the Original Code is
+  Center for Information Services, Radboud University Nijmegen.
+  Portions created by the Initial Developer are Copyright (C) 2008
+  the Initial Developer. All Rights Reserved.
+  
+  Contributor(s):
+    For Java files, see Javadoc @author tags.
+  
+  Alternatively, the contents of this file may be used under the terms of
+  either the GNU General Public License Version 2 or later (the "GPL"), or
+  the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+  in which case the provisions of the GPL or the LGPL are applicable instead
+  of those above. If you wish to allow use of your version of this file only
+  under the terms of either the GPL or the LGPL, and not to allow others to
+  use your version of this file under the terms of the MPL, indicate your
+  decision by deleting the provisions above and replace them with the notice
+  and other provisions required by the GPL or the LGPL. If you do not delete
+  the provisions above, a recipient may use your version of this file under
+  the terms of any one of the MPL, the GPL or the LGPL.
+  
+  ***** END LICENSE BLOCK *****
+-->
+
+<dataset>
+
+  <!-- Note: Lookup6 is a scholarship lookup table only, so not included here in this college test -->
+  <opuscollege.lookuptable id="12" tablename="country" lookuptype="Lookup3" active="Y" writewho="opuscollege" writewhen="2009-02-05 16:49:32.224762"/>
+  <opuscollege.lookuptable id="13" tablename="district" lookuptype="Lookup2" active="Y" writewho="opuscollege" writewhen="2009-02-05 16:49:32.224762"/>
+  <opuscollege.lookuptable id="25" tablename="language" lookuptype="Lookup1" active="Y" writewho="opuscollege" writewhen="2009-02-05 16:49:32.224762"/>
+  <opuscollege.lookuptable id="31" tablename="province" lookuptype="Lookup5" active="Y" writewho="opuscollege" writewhen="2009-02-05 16:49:32.224762"/>
+  <opuscollege.lookuptable id="52" tablename="cardinaltimeunit" lookuptype="Lookup8" active="Y" writewho="opuscollege" writewhen="2010-07-15 17:31:23.460469"/>
+  <opuscollege.lookuptable id="3"  tablename="addresstype" lookuptype="Lookup" active="N" writewho="opuscollege" writewhen="2009-02-05 16:49:32.224762"/>
+  <opuscollege.lookuptable id="4"  tablename="administrativepost" lookuptype="Lookup4" active="Y" writewho="opuscollege" writewhen="2009-02-05 16:49:32.224762"/>
+  <opuscollege.lookuptable id="59" tablename="progressstatus" lookuptype="Lookup7" active="N" writewho="opuscollege" writewhen="2010-12-22 16:33:12.327227"/>
+  <opuscollege.lookuptable id="80" tablename="educationarea" lookuptype="Lookup" active="Y" writewho="opuscollege" writewhen="2014-03-05 14:59:12.908"/>
+  <opuscollege.lookuptable id="81" tablename="gradetype" lookuptype="Lookup9" active="Y" writewho="opuscollege" writewhen="2014-03-05 14:59:12.908"/>
+
+  <opuscollege.tabledependency id="33" lookuptableid="81" dependenttable="person" dependenttablecolumn="gradeTypeCode" active="Y" writewho="opuscollege" writewhen="2009-02-03 01:45:27.511305"/>
+  <opuscollege.tabledependency id="34" lookuptableid="81" dependenttable="student" dependenttablecolumn="previousInstitutionFinalGradeTypeCode" active="Y" writewho="opuscollege" writewhen="2009-02-03 01:45:27.511305"/>
+  <opuscollege.tabledependency id="35" lookuptableid="81" dependenttable="studyGradeType" dependenttablecolumn="gradeTypeCode" active="Y" writewho="opuscollege" writewhen="2009-02-03 01:45:27.511305"/>
+
+  <opuscollege.country id="507" code="208" lang="en" active="Y" short2="DK" short3="DNK" description="DENMARK" writewho="opuscollege" writewhen="2008-09-14 03:03:55.051101"/>
+  <opuscollege.country id="520" code="276" lang="en" active="Y" short2="DE" short3="DEU" description="GERMANY" writewho="opuscollege" writewhen="2008-09-14 03:03:55.051101"/>
+  <opuscollege.country id="641" code="208" lang="pt" active="Y" short2="DK" short3="DNK" description="DINAMARCA" writewho="opuscollege" writewhen="2008-09-14 03:03:55.051101"/>
+  <opuscollege.country id="654" code="276" lang="pt" active="Y" short2="DE" short3="DEU" description="ALEMANHA" writewho="opuscollege" writewhen="2008-09-14 03:03:55.051101"/>
+
+  <opuscollege.district id="99"  code="MZ-07-17" lang="en" active="Y" description="Nipepe" provincecode="MZ-07" writewho="opuscollege" writewhen="2008-09-14 02:59:13.688196"/>
+  <opuscollege.district id="100" code="MZ-08-01" lang="en" active="Y" description="Beira City" provincecode="MZ-08" writewho="opuscollege" writewhen="2008-09-14 02:59:13.688196"/>
+  <opuscollege.district id="246" code="MZ-07-17" lang="pt" active="Y" description="Nipepe" provincecode="MZ-07" writewho="opuscollege" writewhen="2008-09-14 02:59:13.688196"/>
+  <opuscollege.district id="247" code="MZ-08-01" lang="pt" active="Y" description="Cidade da Beira" provincecode="MZ-08" writewho="opuscollege" writewhen="2008-09-14 02:59:13.688196"/>
+
+  <opuscollege.language id="1526" code="spa" lang="en" active="Y" description="Spanish" descriptionshort="es " writewho="opuscollege" writewhen="2010-11-02 16:22:58.674788"/>
+  <opuscollege.language id="1528" code="cha" lang="en" active="Y" description="Changana" descriptionshort="ca " writewho="opuscollege" writewhen="2010-11-02 16:22:58.674788"/>
+  <opuscollege.language id="1494" code="spa" lang="pt" active="Y" description="Espanhol" descriptionshort="es " writewho="opuscollege" writewhen="2008-09-14 03:03:55.051101"/>
+  <opuscollege.language id="1496" code="cha" lang="pt" active="Y" description="Changana" descriptionshort="ca " writewho="opuscollege" writewhen="2008-09-14 03:03:55.051101"/>
+
+  <opuscollege.province id="1"  code="MZ-01" lang="en" active="Y" description="Cabo Delgado" countrycode="508" writewho="opuscollege" writewhen="2008-09-14 02:59:13.688196"/>
+  <opuscollege.province id="11" code="MZ-11" lang="en" active="Y" description="Maputo City" countrycode="508" writewho="opuscollege" writewhen="2008-09-14 02:59:13.688196"/>
+  <opuscollege.province id="12" code="MZ-01" lang="pt" active="Y" description="Cabo Delgado" countrycode="508" writewho="opuscollege" writewhen="2008-09-14 02:59:13.688196"/>
+  <opuscollege.province id="22" code="MZ-11" lang="pt" active="Y" description="Cidade de Maputo" countrycode="508" writewho="opuscollege" writewhen="2008-09-14 02:59:13.688196"/>
+
+  <opuscollege.cardinaltimeunit id="1" code="1" lang="en" active="Y" description="Year" writewho="opuscollege" writewhen="2012-01-05 12:45:09.882889" nrofunitsperyear="1"/>
+  <opuscollege.cardinaltimeunit id="2" code="2" lang="en" active="Y" description="Semester" writewho="opuscollege" writewhen="2012-01-05 12:45:09.882889" nrofunitsperyear="2"/>
+  <opuscollege.cardinaltimeunit id="3" code="3" lang="en" active="Y" description="Trimester" writewho="opuscollege" writewhen="2012-01-05 12:45:09.882889" nrofunitsperyear="3"/>
+  <opuscollege.cardinaltimeunit id="4" code="1" lang="pt" active="Y" description="Ano" writewho="opuscollege" writewhen="2012-01-05 12:45:09.882889" nrofunitsperyear="1"/>
+  <opuscollege.cardinaltimeunit id="5" code="2" lang="pt" active="Y" description="Semestre" writewho="opuscollege" writewhen="2012-01-05 12:45:09.882889" nrofunitsperyear="2"/>
+  <opuscollege.cardinaltimeunit id="6" code="3" lang="pt" active="Y" description="Trimestre" writewho="opuscollege" writewhen="2012-01-05 12:45:09.882889" nrofunitsperyear="3"/>
+
+  <opuscollege.addresstype id="1" code="1" lang="en" active="Y" description="home" writewho="opuscollege" writewhen="2008-09-14 02:59:13.688196"/>
+  <opuscollege.addresstype id="2" code="2" lang="en" active="Y" description="formal communication address student" writewho="opuscollege" writewhen="2008-09-14 02:59:13.688196"/>
+  <opuscollege.addresstype id="8" code="1" lang="pt" active="Y" description="casa" writewho="opuscollege" writewhen="2008-09-14 02:59:13.688196"/>
+  <opuscollege.addresstype id="9" code="2" lang="pt" active="Y" description="endereco de comunicacao formal estudante" writewho="opuscollege" writewhen="2008-09-14 02:59:13.688196"/>
+
+  <opuscollege.administrativepost id="48"  code="MZ-01-048" lang="en" active="Y" description="Pemba City" districtcode="MZ-01-14" writewho="opuscollege" writewhen="2008-09-14 02:59:13.688196"/>
+  <opuscollege.administrativepost id="49"  code="MZ-01-049" lang="en" active="Y" description="Balama" districtcode="MZ-01-15" writewho="opuscollege" writewhen="2008-09-14 02:59:13.688196"/>
+  <opuscollege.administrativepost id="434" code="MZ-01-048" lang="pt" active="Y" description="Cidade de Pemba" districtcode="MZ-01-14" writewho="opuscollege" writewhen="2008-09-14 02:59:13.688196"/>
+  <opuscollege.administrativepost id="435" code="MZ-01-049" lang="pt" active="Y" description="Balama" districtcode="MZ-01-15" writewho="opuscollege" writewhen="2008-09-14 02:59:13.688196"/>
+
+  <opuscollege.progressstatus id="1"  code="01" lang="en" active="Y" description="Clear pass" writewho="opuscollege" writewhen="2012-01-05 12:45:09.882889" continuing="Y" increment="Y" graduating="N" carrying="N"/>
+  <opuscollege.progressstatus id="2"  code="27" lang="en" active="Y" description="Proceed and Repeat" writewho="opuscollege" writewhen="2012-01-05 12:45:09.882889" continuing="Y" increment="Y" graduating="N" carrying="S"/>
+  <opuscollege.progressstatus id="23" code="01" lang="pt" active="Y" description="Transitar (todas cadeiras aprovadas)" writewho="opuscollege" writewhen="2012-02-14 12:29:15.530811" continuing="Y" increment="Y" graduating="N" carrying="N"/>
+  <opuscollege.progressstatus id="24" code="27" lang="pt" active="Y" description="Transitar e repetir" writewho="opuscollege" writewhen="2012-02-14 12:29:15.530811" continuing="Y" increment="Y" graduating="N" carrying="S"/>
+
+  <opuscollege.educationarea id="1" code="S" lang="en" active="Y" description="Science based" writewho="opuscollege" writewhen="2013-08-11 17:20:46.054729"/>
+  <opuscollege.educationarea id="2" code="A" lang="en" active="Y" description="Art based" writewho="opuscollege" writewhen="2013-08-11 17:20:46.054729"/>
+  <opuscollege.educationarea id="4" code="S" lang="pt" active="Y" description="Sciencias" writewho="opuscollege" writewhen="2013-08-11 17:20:46.054729"/>
+  <opuscollege.educationarea id="5" code="A" lang="pt" active="Y" description="Artes" writewho="opuscollege" writewhen="2013-08-11 17:20:46.054729"/>
+
+  <opuscollege.gradetype id="40" code="BSC" lang="en" active="Y" description="Bachelor of science" title="B.Sc." writewho="opuscollege" writewhen="2012-01-05 12:45:09.882889" educationlevelcode="B"/>
+  <opuscollege.gradetype id="44" code="BA"  lang="en" active="Y" description="Bachelor of art" title="B.A." writewho="opuscollege" writewhen="2012-01-05 12:45:09.882889" educationlevelcode="B"/>
+  <opuscollege.gradetype id="49" code="BSC" lang="pt" active="Y" description="Bacharelato" title="B.Sc." writewho="opuscollege" writewhen="2012-01-05 12:45:09.882889" educationlevelcode="B"/>
+  <opuscollege.gradetype id="53" code="BA"  lang="pt" active="Y" description="Bachelor of art" title="B.A." writewho="opuscollege" writewhen="2012-01-05 12:45:09.882889" educationlevelcode="B"/>
+
+  <!-- AppVersion -->
+  <opuscollege.appversions id="94"  module="report" state="A" db="Y" dbversion="4.00"/>
+  <opuscollege.appversions id="91"  module="mozambique" state="A" db="Y" dbversion="4.01"/>
+  <opuscollege.appversions id="93"  module="ucm" state="A" db="Y" dbversion="4.03"/>
+  <opuscollege.appversions id="108" module="college" state="A" db="Y" dbversion="4.39"/>
+
+  <!-- test for table dependency -->
+  <opuscollege.person id="16" personcode="61" surnamefull="UCM-PEMBA" firstnamesfull="Administrator" gradetypecode="BSC" />
+
+  <!-- The following is a bit misplaced in the LookupManger -> TODO move to a better place -->
+  <opuscollege.institution id="107" institutioncode="UCM" institutionTypeCode="3"/>
+  <opuscollege.branch id="118" branchcode="05" institutionid="107" />
+  <opuscollege.organizationalunit id="18" organizationalunitcode="O1" organizationalunitdescription="Faculdade de Ciencias de Saude" branchid="118" />
+  <opuscollege.study id="38" organizationalunitid="18" />
+  <opuscollege.studygradetype id="58" studyid="38" gradetypecode="BSC" currentacademicyearid="44"  />
+  <opuscollege.staffmember staffmemberid="19" staffmembercode="61" personid="16" />
+  <opuscollege.staffmemberfunction staffmemberid="19" functioncode="5"  functionlevelcode="1" active="Y" writewho="opuscollege" writewhen="2011-02-16 04:33:23.352152"/>
+  <opuscollege.staffmemberfunction staffmemberid="19" functioncode="12" functionlevelcode="1" active="Y" writewho="opuscollege" writewhen="2011-10-10 09:01:49.051752"/>
+
+</dataset>

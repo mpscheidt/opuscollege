@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ***** BEGIN LICENSE BLOCK *****
+  Version: MPL 1.1/GPL 2.0/LGPL 2.1
+  
+  The contents of this file are subject to the Mozilla Public License Version
+  1.1 (the "License"); you may not use this file except in compliance with
+  the License. You may obtain a copy of the License at
+  http://www.mozilla.org/MPL/
+  
+  Software distributed under the License is distributed on an "AS IS" basis,
+  WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+  for the specific language governing rights and limitations under the
+  License.
+  
+  The Original Code is Opus-College fee module code.
+  
+  The Initial Developer of the Original Code is
+  Center for Information Services, Radboud University Nijmegen.
+  Portions created by the Initial Developer are Copyright (C) 2008
+  the Initial Developer. All Rights Reserved.
+  
+  Contributor(s):
+    For Java files, see Javadoc @author tags.
+  
+  Alternatively, the contents of this file may be used under the terms of
+  either the GNU General Public License Version 2 or later (the "GPL"), or
+  the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+  in which case the provisions of the GPL or the LGPL are applicable instead
+  of those above. If you wish to allow use of your version of this file only
+  under the terms of either the GPL or the LGPL, and not to allow others to
+  use your version of this file under the terms of the MPL, indicate your
+  decision by deleting the provisions above and replace them with the notice
+  and other provisions required by the GPL or the LGPL. If you do not delete
+  the provisions above, a recipient may use your version of this file under
+  the terms of any one of the MPL, the GPL or the LGPL.
+  
+  ***** END LICENSE BLOCK *****
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns:aop="http://www.springframework.org/schema/aop"
+		xmlns:tx="http://www.springframework.org/schema/tx"
+		xmlns:context="http://www.springframework.org/schema/context"
+		xsi:schemaLocation="http://www.springframework.org/schema/beans
+							http://www.springframework.org/schema/beans/spring-beans.xsd
+							http://www.springframework.org/schema/context
+                            http://www.springframework.org/schema/context/spring-context.xsd
+							http://www.springframework.org/schema/aop
+       						http://www.springframework.org/schema/aop/spring-aop.xsd
+							http://www.springframework.org/schema/tx
+       						http://www.springframework.org/schema/tx/spring-tx.xsd
+       						">
+
+	<bean id="feeModule" class="org.uci.opus.college.module.Module">
+		<property name="name" value="Fee Module"/>
+		<property name="module" value="fee"/>
+		<property name="order" value="30"/>
+        <property name="menu" value="/WEB-INF/views/fee/feeMenu.jsp"/>
+        <!-- MoVe - Modular structure: startPage has the root of the targetproject -->
+		<property name="startPage" value="/fee/index.html"/>
+		<property name="messagesBasename" value="org/uci/opus/fee/messages"/>
+		<property name="moduleVersion" value="4.2" />
+    </bean>
+
+    <bean class="org.uci.opus.util.dbupgrade.SqlFileUpgradeCommand">
+        <property name="sqlFile" value="classpath:../database/version34_version40/34_01_fee_update.sql"/>
+        <property name="dataSource"><ref bean="dataSource" /></property>
+        <property name="order" value="2012-07-05" />
+        <property name="module" ref="feeModule" />
+        <property name="version" value="3.17" />
+    </bean>
+
+    <bean class="org.uci.opus.util.dbupgrade.SqlFileUpgradeCommand">
+        <property name="sqlFile" value="classpath:../database/version34_version40/34_02_fee_update.sql"/>
+        <property name="dataSource"><ref bean="dataSource" /></property>
+        <property name="order" value="2012-07-08" />
+        <property name="module" ref="feeModule" />
+        <property name="version" value="3.18" />
+    </bean>
+    
+    <bean name="fee-3.19" class="org.uci.opus.util.dbupgrade.SqlFileUpgradeCommand">
+        <property name="sqlFile" value="classpath:../database/version34_version40/34_03_fee_update.sql"/>
+        <property name="dataSource"><ref bean="dataSource" /></property>
+        <property name="order" value="2012-07-16" />
+        <property name="module" ref="feeModule" />
+        <property name="version" value="3.19" />
+    </bean>
+
+	<bean name="fee-3.20" class="org.uci.opus.util.dbupgrade.SqlFileUpgradeCommand">
+        <property name="sqlFile" value="classpath:../database/version34_version40/34_04_fee_update.sql"/>
+        <property name="dataSource"><ref bean="dataSource" /></property>
+        <property name="order" value="2012-07-24" />
+        <property name="module" ref="feeModule" />
+        <property name="version" value="3.20" />
+    </bean>
+    
+    <bean name="fee-3.21" class="org.uci.opus.util.dbupgrade.SqlFileUpgradeCommand">
+        <property name="sqlFile" value="classpath:../database/version34_version40/34_05_fee_update.sql"/>
+        <property name="dataSource"><ref bean="dataSource" /></property>
+        <property name="order" value="2012-07-25" />
+        <property name="module" ref="feeModule" />
+        <property name="version" value="3.21" />
+    </bean>
+
+    <bean name="fee-3.22" class="org.uci.opus.util.dbupgrade.SqlFileUpgradeCommand">
+        <property name="sqlFile" value="classpath:../database/version34_version40/34_06_fee_update.sql"/>
+        <property name="dataSource"><ref bean="dataSource" /></property>
+        <property name="order" value="2012-07-26" />
+        <property name="module" ref="feeModule" />
+        <property name="version" value="3.22" />
+    </bean>
+    
+    <bean name="fee-3.23" class="org.uci.opus.util.dbupgrade.SqlFileUpgradeCommand">
+        <property name="sqlFile" value="classpath:../database/version34_version40/34_07_fee_update.sql"/>
+        <property name="dataSource"><ref bean="dataSource" /></property>
+        <property name="order" value="2012-08-13" />
+        <property name="module" ref="feeModule" />
+        <property name="version" value="3.23" />
+    </bean>
+
+    <bean name="fee-4.00" class="org.uci.opus.util.dbupgrade.SqlFileUpgradeCommand">
+        <property name="sqlFile" value="classpath:../database/version34_version40/34_08_fee_update.sql"/>
+        <property name="dataSource"><ref bean="dataSource" /></property>
+        <property name="order" value="2012-10-04" />
+        <property name="module" ref="feeModule" />
+        <property name="version" value="4.00" />
+    </bean>
+    
+    <bean name="fee-4.01" class="org.uci.opus.util.dbupgrade.SqlFileUpgradeCommand">
+        <property name="sqlFile" value="classpath:../database/version40_milestone41/40_01_fee_update.sql"/>
+        <property name="dataSource"><ref bean="dataSource" /></property>
+        <property name="order" value="2012-10-08" />
+        <property name="module" ref="feeModule" />
+        <property name="version" value="4.01" />
+    </bean>
+
+    <bean name="fee-4.02" class="org.uci.opus.util.dbupgrade.SqlFileUpgradeCommand">
+        <property name="sqlFile" value="classpath:../database/version41_version42/402_fee.sql"/>
+        <property name="dataSource"><ref bean="dataSource" /></property>
+        <property name="order" value="2013-02-02" />
+        <property name="module" ref="feeModule" />
+        <property name="version" value="4.02" />
+    </bean>
+    
+    <bean name="fee-4.03" class="org.uci.opus.util.dbupgrade.SqlFileUpgradeCommand">
+        <property name="sqlFile" value="classpath:../database/version41_version42/403_fee.sql"/>
+        <property name="dataSource"><ref bean="dataSource" /></property>
+        <property name="order" value="2013-04-03" />
+        <property name="module" ref="feeModule" />
+        <property name="version" value="4.03" />
+    </bean>
+    
+    <bean name="fee-4.04" class="org.uci.opus.util.dbupgrade.SqlFileUpgradeCommand">
+        <property name="sqlFile" value="classpath:../database/version41_version42/404_fee.sql"/>
+        <property name="dataSource"><ref bean="dataSource" /></property>
+        <property name="order" value="2013-04-04" />
+        <property name="module" ref="feeModule" />
+        <property name="version" value="4.04" />
+    </bean>
+    
+    <bean name="fee-4.05" class="org.uci.opus.util.dbupgrade.SqlFileUpgradeCommand">
+        <property name="sqlFile" value="classpath:../database/version41_version42/405_fee.sql"/>
+        <property name="dataSource"><ref bean="dataSource" /></property>
+        <property name="order" value="2013-04-29" />
+        <property name="module" ref="feeModule" />
+        <property name="version" value="4.05" />
+    </bean>
+
+    <bean name="fee-4.06" class="org.uci.opus.util.dbupgrade.SqlFileUpgradeCommand">
+        <property name="sqlFile" value="classpath:../database/version41_version42/406_fee.sql"/>
+        <property name="dataSource"><ref bean="dataSource" /></property>
+        <property name="order" value="2013-04-30" />
+        <property name="module" ref="feeModule" />
+        <property name="version" value="4.06" />
+    </bean>
+
+    <bean name="fee-4.07" class="org.uci.opus.util.dbupgrade.SqlFileUpgradeCommand">
+        <property name="sqlFile" value="classpath:../database/version42_version43/407_fee.sql"/>
+        <property name="dataSource"><ref bean="dataSource" /></property>
+        <property name="order" value="2015-05-27" />
+        <property name="module" ref="feeModule" />
+        <property name="version" value="4.07" />
+    </bean>
+
+</beans>

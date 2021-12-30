@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ***** BEGIN LICENSE BLOCK *****
+  Version: MPL 1.1/GPL 2.0/LGPL 2.1
+  
+  The contents of this file are subject to the Mozilla Public License Version
+  1.1 (the "License"); you may not use this file except in compliance with
+  the License. You may obtain a copy of the License at
+  http://www.mozilla.org/MPL/
+  
+  Software distributed under the License is distributed on an "AS IS" basis,
+  WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+  for the specific language governing rights and limitations under the
+  License.
+  
+  The Original Code is Opus-College college module code.
+  
+  The Initial Developer of the Original Code is
+  Center for Information Services, Radboud University Nijmegen.
+  Portions created by the Initial Developer are Copyright (C) 2008
+  the Initial Developer. All Rights Reserved.
+  
+  Contributor(s):
+    For Java files, see Javadoc @author tags.
+  
+  Alternatively, the contents of this file may be used under the terms of
+  either the GNU General Public License Version 2 or later (the "GPL"), or
+  the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+  in which case the provisions of the GPL or the LGPL are applicable instead
+  of those above. If you wish to allow use of your version of this file only
+  under the terms of either the GPL or the LGPL, and not to allow others to
+  use your version of this file under the terms of the MPL, indicate your
+  decision by deleting the provisions above and replace them with the notice
+  and other provisions required by the GPL or the LGPL. If you do not delete
+  the provisions above, a recipient may use your version of this file under
+  the terms of any one of the MPL, the GPL or the LGPL.
+  
+  ***** END LICENSE BLOCK *****
+-->
+
+<dataset>
+
+  <opuscollege.gradetype id="40" code="B" lang="en" active="Y" description="Bachelor" title="B." educationlevelcode="B"/>
+  <opuscollege.gradetype id="50" code="B" lang="pt" active="Y" description="Bacharel" title="B." educationlevelcode="B"/>
+
+  <opuscollege.academicyear id="1" />
+
+  <opuscollege.institution id="107" institutioncode="UCM" institutionTypeCode="3"/>
+  <opuscollege.branch id="118" branchcode="05" institutionid="107" />
+  <opuscollege.branch id="119" branchcode="09" institutionid="107" />
+
+  <opuscollege.organizationalunit id="17" branchid="118" organizationalunitcode="O0" organizationalunitdescription="Faculty of Science" />
+  <opuscollege.organizationalunit id="18" branchid="118" organizationalunitcode="O1" organizationalunitdescription="Faculty of Engineering" />
+  <opuscollege.organizationalunit id="19" branchid="119" organizationalunitcode="O6" organizationalunitdescription="Faculty of Humanities" />
+
+  <opuscollege.study id="1210" organizationalunitid="17" studydescription="Physics" />
+  <opuscollege.study id="1211" organizationalunitid="17" studydescription="Chemistry" />
+  <opuscollege.study id="1213" organizationalunitid="18" studydescription="Electronics" />
+  <opuscollege.study id="1214" organizationalunitid="19" studydescription="Philosophy" />
+
+  <opuscollege.studygradetype id="256" studyid="1213" gradetypecode="B" active="Y" currentacademicyearid="1" cardinaltimeunitcode="2" numberofcardinaltimeunits="6" maxnumberofcardinaltimeunits="0" numberofsubjectspercardinaltimeunit="2" maxnumberofsubjectspercardinaltimeunit="4" studytimecode="1" studyformcode="1" maxnumberoffailedsubjectspercardinaltimeunit="1" studyintensitycode="" maxnumberofstudents="0" />
+  
+  <opuscollege.subject id="1690" currentacademicyearid="1" subjectcode="BIOL001" subjectdescription="Biology 1" primarystudyid="1213" active="Y" creditamount="1.0" studytimecode="1" />
+  <opuscollege.subject id="1685" currentacademicyearid="1" subjectcode="PHYS001" subjectdescription="Physics 1" primarystudyid="1213" active="Y" creditamount="1.0" studytimecode="1" />
+  <opuscollege.subject id="1709" currentacademicyearid="1" subjectcode="BIOL002" subjectdescription="Biology 2" primarystudyid="1213" active="Y" creditamount="1.0" studytimecode="1" />
+
+  <opuscollege.classgroup id="1" description="Turma A" studygradetypeid="256" />
+  <opuscollege.classgroup id="2" description="Turma B" studygradetypeid="256" />
+
+  <opuscollege.subjectclassgroup id="1" subjectid="1690" classgroupid="1" />
+  <opuscollege.subjectclassgroup id="2" subjectid="1685" classgroupid="1" />
+
+  <opuscollege.subjectclassgroup id="10" subjectid="1709" classgroupid="2" />
+
+  <opuscollege.person id="1" personcode="P1" active="Y" surnamefull="Full" firstnamesfull="First" firstnamesalias="" nationalregistrationnumber="" civiltitlecode="0" gradetypecode="0" gendercode="2" birthdate="1970-01-01" districtofbirthcode="" provinceofbirthcode="0" districtoforigincode="" provinceoforigincode="0" civilstatuscode="0" identificationtypecode="4" identificationnumber="207994/67/1" healthissues="" registrationdate="2013-08-20" publichomepage="N" motivation=""/>
+  <opuscollege.staffmember staffmemberid="1" staffmembercode="C1" personid="1" dateofappointment="2008-02-07" stafftypecode="2" primaryunitofappointmentid="13" educationtypecode="3"/>
+  <opuscollege.subjectteacher id="1" staffmemberid="1" subjectid="1690" classgroupid="1" active="Y" />
+  <opuscollege.subjectteacher id="2" staffmemberid="1" subjectid="1685" classgroupid="1" active="Y" />
+  
+  
+</dataset>

@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ***** BEGIN LICENSE BLOCK *****
+  Version: MPL 1.1/GPL 2.0/LGPL 2.1
+  
+  The contents of this file are subject to the Mozilla Public License Version
+  1.1 (the "License"); you may not use this file except in compliance with
+  the License. You may obtain a copy of the License at
+  http://www.mozilla.org/MPL/
+  
+  Software distributed under the License is distributed on an "AS IS" basis,
+  WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+  for the specific language governing rights and limitations under the
+  License.
+  
+  The Original Code is Opus-College college module code.
+  
+  The Initial Developer of the Original Code is
+  Center for Information Services, Radboud University Nijmegen.
+  Portions created by the Initial Developer are Copyright (C) 2008
+  the Initial Developer. All Rights Reserved.
+  
+  Contributor(s):
+    For Java files, see Javadoc @author tags.
+  
+  Alternatively, the contents of this file may be used under the terms of
+  either the GNU General Public License Version 2 or later (the "GPL"), or
+  the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+  in which case the provisions of the GPL or the LGPL are applicable instead
+  of those above. If you wish to allow use of your version of this file only
+  under the terms of either the GPL or the LGPL, and not to allow others to
+  use your version of this file under the terms of the MPL, indicate your
+  decision by deleting the provisions above and replace them with the notice
+  and other provisions required by the GPL or the LGPL. If you do not delete
+  the provisions above, a recipient may use your version of this file under
+  the terms of any one of the MPL, the GPL or the LGPL.
+  
+  ***** END LICENSE BLOCK *****
+-->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns:aop="http://www.springframework.org/schema/aop"
+		xmlns:jee="http://www.springframework.org/schema/jee"
+        xmlns:tx="http://www.springframework.org/schema/tx"
+		xmlns:context="http://www.springframework.org/schema/context"
+		xsi:schemaLocation="http://www.springframework.org/schema/beans
+							http://www.springframework.org/schema/beans/spring-beans.xsd
+							http://www.springframework.org/schema/context 
+                            http://www.springframework.org/schema/context/spring-context.xsd
+							http://www.springframework.org/schema/aop
+       						http://www.springframework.org/schema/aop/spring-aop.xsd
+							http://www.springframework.org/schema/jee 
+							http://www.springframework.org/schema/jee/spring-jee.xsd
+							http://www.springframework.org/schema/tx
+       						http://www.springframework.org/schema/tx/spring-tx.xsd
+       						">
+
+	<!-- MP 2012-03-31: Careful: No scanning of web components such as controllers,
+         because they are scanned in the applicationContext-web-flow.xml etc.
+         If they are also scanned here, we end up with two instances of web components,
+         one in the application context, another one in web application context 
+         !Only scan non-web components here!
+         -->
+    <context:component-scan base-package="org.uci.opus.config" />
+
+	<!-- Enables detection of AspectJ --> 
+    <aop:aspectj-autoproxy/>
+
+    <!-- Trace beans (config) -->
+    <bean id="logTracer" class="org.uci.opus.config.LogTracer" />
+	
+	<!--  configuration for aspectJ in older Java without annotations 
+	<aop:config>
+		<aop:pointcut id="setterMethod" expression="execution ..." />
+		<aop:aspect ref="logTracer">
+			<aop:before pointcut-ref="setterMethod"method="trackChange" />
+		</aop:aspect ref>
+	</aop:config> -->
+
+	<!-- Enables detection of transactional annotations --> 
+	<tx:annotation-driven transaction-manager="transactionManager"/>
+
+	<!-- configuration for transactions in older Java without annotations
+	<tx:advice id="txadvice">
+		<tx:attributes>
+			<tx:method name="find*" />
+		</tx:attributes>
+	</tx:advice>  -->
+
+	<!--  DataSource Transaction Manager -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	
+    <!-- Configurer that replaces ${...} placeholders with values from properties files -->
+    <!-- (in this case, JDBC and country related properties) -->
+    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="ignoreUnresolvablePlaceholders" value="true"/>
+        <property name="locations">
+            <list>
+                <!-- <value>WEB-INF/jdbc.properties</value> -->
+                <value>classpath:/org/uci/opus/country.properties</value>
+            </list>
+        </property>
+        <!--<property name="properties">
+            <bean class="java.util.Properties">
+                <constructor-arg>
+                    <map>
+                        <entry key="opus-sha">
+                            <jee:jndi-lookup jndi-name="java:comp/env/opus-sha"/>
+                        </entry>
+                    </map>
+                </constructor-arg>
+            </bean>
+        </property>-->
+    </bean>
+
+    <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName" value="java:comp/env/jdbc/opusCollege"/>   
+        <property name="resourceRef" value="true" />
+    </bean>
+
+    <!-- MyBatis -->
+    <!-- define the SqlSessionFactory -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="typeAliasesPackage" value="org.uci.opus.college.domain,org.uci.opus.admin.domain,org.uci.opus.accommodation.domain,org.uci.opus.accommodationfee.domain,org.uci.opus.scholarship.domain,org.uci.opus.fee.domain,org.uci.opus.finance.domain,org.uci.opus.ucm.domain" />
+        <property name="configLocation" value="classpath:/org/uci/opus/college/mybatis-config.xml" />
+    </bean>
+
+    <!-- Thread safe sql session provided by mybatis-spring -->
+    <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+      <constructor-arg index="0" ref="sqlSessionFactory" />
+    </bean>
+
+    <!-- scan for mappers and let them be autowired -->
+    <!-- Note, can be replaced by the more modern:
+         <mybatis:scan base-package="org.mybatis.spring.sample.mapper" />
+      -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="org.uci.opus.*.persistence" />
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
+    </bean>
+
+    <!--<bean id="messageSource"-->
+    <!--      class="org.springframework.context.support.ReloadableResourceBundleMessageSource">-->
+    <!--  <property name="basenames">-->
+    <!--    <list>-->
+    <!--      <value>/WEB-INF/classes/org/uci/opus/college/messages</value>-->
+    <!--    </list>-->
+    <!--  </property>-->
+    <!--</bean>-->
+
+    <!-- Map exceptions to errorpages -->
+    <bean id="exceptionMapping" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+        <property name="exceptionMappings">
+          <props>
+             <prop key="org.uci.opus.college.web.user.OpusSecurityException">error</prop>            
+             <prop key="org.springframework.dao.DataRetrievalFailureException">error</prop>         
+             <prop key="org.uci.opus.college.data.OpusUserNotAuthorizedException">error</prop>            
+          </props>
+        </property>
+    </bean>
+ </beans>

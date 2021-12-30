@@ -1,0 +1,2332 @@
+<!ELEMENT dataset (
+    audit.cardinaltimeunitresult_hist*,
+    audit.endgrade_hist*,
+    audit.examinationresult_hist*,
+    audit.financialtransaction_hist*,
+    audit.gradedsecondaryschoolsubject_hist*,
+    audit.opususerprivilege_hist*,
+    audit.staffmember_hist*,
+    audit.student_hist*,
+    audit.studentabsence_hist*,
+    audit.studentexpulsion_hist*,
+    audit.studyplanresult_hist*,
+    audit.subjectresult_hist*,
+    audit.testresult_hist*,
+    audit.thesisresult_hist*,
+    opuscollege.academicfield*,
+    opuscollege.academicyear*,
+    opuscollege.address*,
+    opuscollege.addresstype*,
+    opuscollege.administrativepost*,
+    opuscollege.admissionregistrationconfig*,
+    opuscollege.appconfig*,
+    opuscollege.applicantcategory*,
+    opuscollege.appointmenttype*,
+    opuscollege.appversions*,
+    opuscollege.authorisation*,
+    opuscollege.blocktype*,
+    opuscollege.bloodtype*,
+    opuscollege.branch*,
+    opuscollege.branchacademicyeartimeunit*,
+    opuscollege.cardinaltimeunit*,
+    opuscollege.cardinaltimeunitresult*,
+    opuscollege.cardinaltimeunitstatus*,
+    opuscollege.cardinaltimeunitstudygradetype*,
+    opuscollege.careerposition*,
+    opuscollege.civilstatus*,
+    opuscollege.civiltitle*,
+    opuscollege.classgroup*,
+    opuscollege.contract*,
+    opuscollege.contractduration*,
+    opuscollege.contracttype*,
+    opuscollege.country*,
+    opuscollege.daypart*,
+    opuscollege.discipline*,
+    opuscollege.disciplinegroup*,
+    opuscollege.district*,
+    opuscollege.educationarea*,
+    opuscollege.educationlevel*,
+    opuscollege.educationtype*,
+    opuscollege.endgrade*,
+    opuscollege.endgradegeneral*,
+    opuscollege.endgradetype*,
+    opuscollege.examination*,
+    opuscollege.examinationresult*,
+    opuscollege.examinationteacher*,
+    opuscollege.examinationtype*,
+    opuscollege.examtype*,
+    opuscollege.exclusion*,
+    opuscollege.expellationtype*,
+    opuscollege.failgrade*,
+    opuscollege.fieldofeducation*,
+    opuscollege.frequency*,
+    opuscollege.function*,
+    opuscollege.functionlevel*,
+    opuscollege.gender*,
+    opuscollege.gradedsecondaryschoolsubject*,
+    opuscollege.gradetype*,
+    opuscollege.groupeddiscipline*,
+    opuscollege.groupedsecondaryschoolsubject*,
+    opuscollege.identificationtype*,
+    opuscollege.importancetype*,
+    opuscollege.institution*,
+    opuscollege.language*,
+    opuscollege.levelofeducation*,
+    opuscollege.logmailerror*,
+    opuscollege.logrequesterror*,
+    opuscollege.lookuptable*,
+    opuscollege.mailconfig*,
+    opuscollege.masteringlevel*,
+    opuscollege.nationality*,
+    opuscollege.nationalitygroup*,
+    opuscollege.node_relationships_n_level*,
+    opuscollege.obtainedqualification*,
+    opuscollege.opusprivilege*,
+    opuscollege.opusrole_privilege*,
+    opuscollege.opususer*,
+    opuscollege.opususerrole*,
+    opuscollege.organizationalunit*,
+    opuscollege.penalty*,
+    opuscollege.penaltytype*,
+    opuscollege.person*,
+    opuscollege.profession*,
+    opuscollege.progressstatus*,
+    opuscollege.province*,
+    opuscollege.referee*,
+    opuscollege.relationtype*,
+    opuscollege.report*,
+    opuscollege.reportproperty*,
+    opuscollege.requestadmissionperiod*,
+    opuscollege.requestforchange*,
+    opuscollege.rfcstatus*,
+    opuscollege.rigiditytype*,
+    opuscollege.role*,
+    opuscollege.secondaryschoolsubject*,
+    opuscollege.secondaryschoolsubjectgroup*,
+    opuscollege.staffmember*,
+    opuscollege.staffmemberfunction*,
+    opuscollege.stafftype*,
+    opuscollege.status*,
+    opuscollege.student*,
+    opuscollege.studentabsence*,
+    opuscollege.studentactivity*,
+    opuscollege.studentcareer*,
+    opuscollege.studentclassgroup*,
+    opuscollege.studentcounseling*,
+    opuscollege.studentexpulsion*,
+    opuscollege.studentplacement*,
+    opuscollege.studentstatus*,
+    opuscollege.studentstudentstatus*,
+    opuscollege.study*,
+    opuscollege.studyform*,
+    opuscollege.studygradetype*,
+    opuscollege.studygradetypeprerequisite*,
+    opuscollege.studyintensity*,
+    opuscollege.studyplan*,
+    opuscollege.studyplancardinaltimeunit*,
+    opuscollege.studyplandetail*,
+    opuscollege.studyplanresult*,
+    opuscollege.studyplanstatus*,
+    opuscollege.studytime*,
+    opuscollege.studytype*,
+    opuscollege.subject*,
+    opuscollege.subjectblock*,
+    opuscollege.subjectblockprerequisite*,
+    opuscollege.subjectblockstudygradetype*,
+    opuscollege.subjectclassgroup*,
+    opuscollege.subjectprerequisite*,
+    opuscollege.subjectresult*,
+    opuscollege.subjectstudygradetype*,
+    opuscollege.subjectstudytype*,
+    opuscollege.subjectsubjectblock*,
+    opuscollege.subjectteacher*,
+    opuscollege.tabledependency*,
+    opuscollege.targetgroup*,
+    opuscollege.test*,
+    opuscollege.testresult*,
+    opuscollege.testteacher*,
+    opuscollege.thesis*,
+    opuscollege.thesisresult*,
+    opuscollege.thesisstatus*,
+    opuscollege.thesissupervisor*,
+    opuscollege.thesisthesisstatus*,
+    opuscollege.unitarea*,
+    opuscollege.unittype*)>
+
+<!ELEMENT audit.cardinaltimeunitresult_hist EMPTY>
+<!ATTLIST audit.cardinaltimeunitresult_hist
+    operation CDATA #REQUIRED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+    id CDATA #REQUIRED
+    studyplanid CDATA #REQUIRED
+    studyplancardinaltimeunitid CDATA #REQUIRED
+    cardinaltimeunitresultdate CDATA #IMPLIED
+    active CDATA #REQUIRED
+    passed CDATA #REQUIRED
+    mark CDATA #IMPLIED
+    endgradecomment CDATA #IMPLIED
+>
+
+<!ELEMENT audit.endgrade_hist EMPTY>
+<!ATTLIST audit.endgrade_hist
+    operation CDATA #REQUIRED
+    id CDATA #IMPLIED
+    code CDATA #IMPLIED
+    lang CDATA #IMPLIED
+    active CDATA #IMPLIED
+    endgradetypecode CDATA #IMPLIED
+    gradepoint CDATA #IMPLIED
+    percentagemin CDATA #IMPLIED
+    percentagemax CDATA #IMPLIED
+    comment CDATA #IMPLIED
+    description CDATA #IMPLIED
+    temporarygrade CDATA #IMPLIED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+    passed CDATA #IMPLIED
+    academicyearid CDATA #IMPLIED
+>
+
+<!ELEMENT audit.examinationresult_hist EMPTY>
+<!ATTLIST audit.examinationresult_hist
+    operation CDATA #REQUIRED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+    id CDATA #REQUIRED
+    examinationid CDATA #REQUIRED
+    subjectid CDATA #REQUIRED
+    studyplandetailid CDATA #REQUIRED
+    examinationresultdate CDATA #IMPLIED
+    attemptnr CDATA #REQUIRED
+    mark CDATA #IMPLIED
+    staffmemberid CDATA #REQUIRED
+    active CDATA #REQUIRED
+    passed CDATA #REQUIRED
+    examinationresultcommentid CDATA #IMPLIED
+    subjectresultid CDATA #REQUIRED
+>
+
+<!ELEMENT audit.financialtransaction_hist EMPTY>
+<!ATTLIST audit.financialtransaction_hist
+    operation CDATA #REQUIRED
+    writewho CDATA #REQUIRED
+    id CDATA #REQUIRED
+    transactiontypeid CDATA #REQUIRED
+    financialrequestid CDATA #REQUIRED
+    requestid CDATA #REQUIRED
+    statuscode CDATA #REQUIRED
+    errorcode CDATA #REQUIRED
+    nationalregistrationnumber CDATA #REQUIRED
+    academicyearid CDATA #IMPLIED
+    timestampprocessed CDATA #IMPLIED
+    amount CDATA #REQUIRED
+    name CDATA #REQUIRED
+    cell CDATA #IMPLIED
+    requeststring CDATA #REQUIRED
+    processedtostudentbalance CDATA #REQUIRED
+    errorreportedtofinancialbankrequest CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+    studentcode CDATA #IMPLIED
+>
+
+<!ELEMENT audit.gradedsecondaryschoolsubject_hist EMPTY>
+<!ATTLIST audit.gradedsecondaryschoolsubject_hist
+    operation CDATA #REQUIRED
+    id CDATA #REQUIRED
+    secondaryschoolsubjectid CDATA #REQUIRED
+    studyplanid CDATA #REQUIRED
+    grade CDATA #IMPLIED
+    active CDATA #REQUIRED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+    secondaryschoolsubjectgroupid CDATA #REQUIRED
+    level CDATA #IMPLIED
+>
+
+<!ELEMENT audit.opususerprivilege_hist EMPTY>
+<!ATTLIST audit.opususerprivilege_hist
+    operation CDATA #REQUIRED
+    id CDATA #IMPLIED
+    userid CDATA #IMPLIED
+    privilegecode CDATA #IMPLIED
+    organizationalunitid CDATA #IMPLIED
+    validfrom CDATA #IMPLIED
+    validthrough CDATA #IMPLIED
+    active CDATA #IMPLIED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+>
+
+<!ELEMENT audit.staffmember_hist EMPTY>
+<!ATTLIST audit.staffmember_hist
+    operation CDATA #REQUIRED
+    staffmemberid CDATA #REQUIRED
+    staffmembercode CDATA #REQUIRED
+    personid CDATA #REQUIRED
+    dateofappointment CDATA #IMPLIED
+    appointmenttypecode CDATA #IMPLIED
+    stafftypecode CDATA #IMPLIED
+    primaryunitofappointmentid CDATA #REQUIRED
+    educationtypecode CDATA #IMPLIED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+    startworkday CDATA #IMPLIED
+    endworkday CDATA #IMPLIED
+    teachingdaypartcode CDATA #IMPLIED
+    supervisingdaypartcode CDATA #IMPLIED
+    id CDATA #REQUIRED
+    personcode CDATA #REQUIRED
+    active CDATA #REQUIRED
+    surnamefull CDATA #REQUIRED
+    surnamealias CDATA #IMPLIED
+    firstnamesfull CDATA #REQUIRED
+    firstnamesalias CDATA #IMPLIED
+    nationalregistrationnumber CDATA #IMPLIED
+    civiltitlecode CDATA #IMPLIED
+    gradetypecode CDATA #IMPLIED
+    gendercode CDATA #IMPLIED
+    birthdate CDATA #REQUIRED
+    nationalitycode CDATA #IMPLIED
+    placeofbirth CDATA #IMPLIED
+    districtofbirthcode CDATA #IMPLIED
+    provinceofbirthcode CDATA #IMPLIED
+    countryofbirthcode CDATA #IMPLIED
+    cityoforigin CDATA #IMPLIED
+    administrativepostoforigincode CDATA #IMPLIED
+    districtoforigincode CDATA #IMPLIED
+    provinceoforigincode CDATA #IMPLIED
+    countryoforigincode CDATA #IMPLIED
+    civilstatuscode CDATA #IMPLIED
+    housingoncampus CDATA #IMPLIED
+    identificationtypecode CDATA #IMPLIED
+    identificationnumber CDATA #IMPLIED
+    identificationplaceofissue CDATA #IMPLIED
+    identificationdateofissue CDATA #IMPLIED
+    identificationdateofexpiration CDATA #IMPLIED
+    professioncode CDATA #IMPLIED
+    professiondescription CDATA #IMPLIED
+    languagefirstcode CDATA #IMPLIED
+    languagefirstmasteringlevelcode CDATA #IMPLIED
+    languagesecondcode CDATA #IMPLIED
+    languagesecondmasteringlevelcode CDATA #IMPLIED
+    languagethirdcode CDATA #IMPLIED
+    languagethirdmasteringlevelcode CDATA #IMPLIED
+    contactpersonemergenciesname CDATA #IMPLIED
+    contactpersonemergenciestelephonenumber CDATA #IMPLIED
+    bloodtypecode CDATA #IMPLIED
+    healthissues CDATA #IMPLIED
+    photograph CDATA #IMPLIED
+    remarks CDATA #IMPLIED
+    registrationdate CDATA #REQUIRED
+    photographname CDATA #IMPLIED
+    photographmimetype CDATA #IMPLIED
+    publichomepage CDATA #REQUIRED
+    socialnetworks CDATA #IMPLIED
+    hobbies CDATA #IMPLIED
+    motivation CDATA #IMPLIED
+>
+
+<!ELEMENT audit.student_hist EMPTY>
+<!ATTLIST audit.student_hist
+    operation CDATA #REQUIRED
+    studentid CDATA #REQUIRED
+    studentcode CDATA #IMPLIED
+    personid CDATA #REQUIRED
+    dateofenrolment CDATA #IMPLIED
+    primarystudyid CDATA #REQUIRED
+    expellationdate CDATA #IMPLIED
+    reasonforexpellation CDATA #IMPLIED
+    previousinstitutionid CDATA #REQUIRED
+    previousinstitutionname CDATA #IMPLIED
+    previousinstitutiondistrictcode CDATA #IMPLIED
+    previousinstitutionprovincecode CDATA #IMPLIED
+    previousinstitutioncountrycode CDATA #IMPLIED
+    previousinstitutiontypecode CDATA #IMPLIED
+    previousinstitutionfinalgradetypecode CDATA #IMPLIED
+    previousinstitutionfinalmark CDATA #IMPLIED
+    previousinstitutiondiplomaphotograph CDATA #IMPLIED
+    scholarship CDATA #REQUIRED
+    fatherfullname CDATA #IMPLIED
+    fathereducationcode CDATA #IMPLIED
+    fatherprofessioncode CDATA #IMPLIED
+    fatherprofessiondescription CDATA #IMPLIED
+    motherfullname CDATA #IMPLIED
+    mothereducationcode CDATA #IMPLIED
+    motherprofessioncode CDATA #IMPLIED
+    motherprofessiondescription CDATA #IMPLIED
+    financialguardianfullname CDATA #IMPLIED
+    financialguardianrelation CDATA #IMPLIED
+    financialguardianprofession CDATA #IMPLIED
+    writewho CDATA #IMPLIED
+    writewhen CDATA #REQUIRED
+    expellationenddate CDATA #IMPLIED
+    expellationtypecode CDATA #IMPLIED
+    previousinstitutiondiplomaphotographremarks CDATA #IMPLIED
+    previousinstitutiondiplomaphotographname CDATA #IMPLIED
+    previousinstitutiondiplomaphotographmimetype CDATA #IMPLIED
+    subscriptionrequirementsfulfilled CDATA #REQUIRED
+    secondarystudyid CDATA #REQUIRED
+    foreignstudent CDATA #REQUIRED
+    nationalitygroupcode CDATA #IMPLIED
+    fathertelephone CDATA #IMPLIED
+    mothertelephone CDATA #IMPLIED
+    relativeofstaffmember CDATA #REQUIRED
+    ruralareaorigin CDATA #REQUIRED
+    id CDATA #REQUIRED
+    personcode CDATA #REQUIRED
+    active CDATA #REQUIRED
+    surnamefull CDATA #REQUIRED
+    surnamealias CDATA #IMPLIED
+    firstnamesfull CDATA #REQUIRED
+    firstnamesalias CDATA #IMPLIED
+    nationalregistrationnumber CDATA #IMPLIED
+    civiltitlecode CDATA #IMPLIED
+    gradetypecode CDATA #IMPLIED
+    gendercode CDATA #IMPLIED
+    birthdate CDATA #REQUIRED
+    nationalitycode CDATA #IMPLIED
+    placeofbirth CDATA #IMPLIED
+    districtofbirthcode CDATA #IMPLIED
+    provinceofbirthcode CDATA #IMPLIED
+    countryofbirthcode CDATA #IMPLIED
+    cityoforigin CDATA #IMPLIED
+    administrativepostoforigincode CDATA #IMPLIED
+    districtoforigincode CDATA #IMPLIED
+    provinceoforigincode CDATA #IMPLIED
+    countryoforigincode CDATA #IMPLIED
+    civilstatuscode CDATA #IMPLIED
+    housingoncampus CDATA #IMPLIED
+    identificationtypecode CDATA #IMPLIED
+    identificationnumber CDATA #IMPLIED
+    identificationplaceofissue CDATA #IMPLIED
+    identificationdateofissue CDATA #IMPLIED
+    identificationdateofexpiration CDATA #IMPLIED
+    professioncode CDATA #IMPLIED
+    professiondescription CDATA #IMPLIED
+    languagefirstcode CDATA #IMPLIED
+    languagefirstmasteringlevelcode CDATA #IMPLIED
+    languagesecondcode CDATA #IMPLIED
+    languagesecondmasteringlevelcode CDATA #IMPLIED
+    languagethirdcode CDATA #IMPLIED
+    languagethirdmasteringlevelcode CDATA #IMPLIED
+    contactpersonemergenciesname CDATA #IMPLIED
+    contactpersonemergenciestelephonenumber CDATA #IMPLIED
+    bloodtypecode CDATA #IMPLIED
+    healthissues CDATA #IMPLIED
+    photograph CDATA #IMPLIED
+    remarks CDATA #IMPLIED
+    registrationdate CDATA #REQUIRED
+    photographname CDATA #IMPLIED
+    photographmimetype CDATA #IMPLIED
+    publichomepage CDATA #REQUIRED
+    socialnetworks CDATA #IMPLIED
+    hobbies CDATA #IMPLIED
+    motivation CDATA #IMPLIED
+    employeenumberofrelative CDATA #IMPLIED
+>
+
+<!ELEMENT audit.studentabsence_hist EMPTY>
+<!ATTLIST audit.studentabsence_hist
+    operation CDATA #REQUIRED
+    id CDATA #REQUIRED
+    studentid CDATA #REQUIRED
+    startdatetemporaryinactivity CDATA #IMPLIED
+    enddatetemporaryinactivity CDATA #IMPLIED
+    reasonforabsence CDATA #IMPLIED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+>
+
+<!ELEMENT audit.studentexpulsion_hist EMPTY>
+<!ATTLIST audit.studentexpulsion_hist
+    operation CDATA #REQUIRED
+    id CDATA #REQUIRED
+    studentid CDATA #REQUIRED
+    startdate CDATA #IMPLIED
+    enddate CDATA #IMPLIED
+    expulsiontypecode CDATA #IMPLIED
+    reasonforexpulsion CDATA #IMPLIED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+>
+
+<!ELEMENT audit.studyplanresult_hist EMPTY>
+<!ATTLIST audit.studyplanresult_hist
+    operation CDATA #REQUIRED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+    id CDATA #REQUIRED
+    studyplanid CDATA #REQUIRED
+    examdate CDATA #IMPLIED
+    finalmark CDATA #REQUIRED
+    mark CDATA #IMPLIED
+    markdecimal CDATA #IMPLIED
+    active CDATA #REQUIRED
+    passed CDATA #REQUIRED
+>
+
+<!ELEMENT audit.subjectresult_hist EMPTY>
+<!ATTLIST audit.subjectresult_hist
+    operation CDATA #REQUIRED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+    id CDATA #REQUIRED
+    subjectid CDATA #REQUIRED
+    studyplandetailid CDATA #REQUIRED
+    subjectresultdate CDATA #IMPLIED
+    mark CDATA #IMPLIED
+    staffmemberid CDATA #REQUIRED
+    active CDATA #REQUIRED
+    passed CDATA #REQUIRED
+    endgradecomment CDATA #IMPLIED
+>
+
+<!ELEMENT audit.testresult_hist EMPTY>
+<!ATTLIST audit.testresult_hist
+    operation CDATA #REQUIRED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+    id CDATA #REQUIRED
+    testid CDATA #REQUIRED
+    examinationid CDATA #REQUIRED
+    studyplandetailid CDATA #REQUIRED
+    testresultdate CDATA #IMPLIED
+    attemptnr CDATA #REQUIRED
+    mark CDATA #IMPLIED
+    passed CDATA #REQUIRED
+    staffmemberid CDATA #REQUIRED
+    active CDATA #REQUIRED
+    testresultcommentid CDATA #IMPLIED
+    examinationresultid CDATA #REQUIRED
+>
+
+<!ELEMENT audit.thesisresult_hist EMPTY>
+<!ATTLIST audit.thesisresult_hist
+    operation CDATA #REQUIRED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+    id CDATA #REQUIRED
+    studyplanid CDATA #REQUIRED
+    thesisid CDATA #REQUIRED
+    thesisresultdate CDATA #IMPLIED
+    mark CDATA #IMPLIED
+    active CDATA #REQUIRED
+    passed CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.academicfield EMPTY>
+<!ATTLIST opuscollege.academicfield
+    id CDATA #REQUIRED
+    code CDATA #REQUIRED
+    lang CDATA #REQUIRED
+    active CDATA #REQUIRED
+    description CDATA #IMPLIED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.academicyear EMPTY>
+<!ATTLIST opuscollege.academicyear
+    id CDATA #REQUIRED
+    description CDATA #IMPLIED
+    active CDATA #REQUIRED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+    startdate CDATA #IMPLIED
+    enddate CDATA #IMPLIED
+    nextacademicyearid CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.address EMPTY>
+<!ATTLIST opuscollege.address
+    id CDATA #REQUIRED
+    addresstypecode CDATA #REQUIRED
+    personid CDATA #IMPLIED
+    studyid CDATA #IMPLIED
+    organizationalunitid CDATA #IMPLIED
+    active CDATA #REQUIRED
+    street CDATA #IMPLIED
+    number CDATA #REQUIRED
+    numberextension CDATA #IMPLIED
+    zipcode CDATA #IMPLIED
+    pobox CDATA #IMPLIED
+    city CDATA #IMPLIED
+    administrativepostcode CDATA #IMPLIED
+    districtcode CDATA #REQUIRED
+    provincecode CDATA #REQUIRED
+    countrycode CDATA #REQUIRED
+    telephone CDATA #IMPLIED
+    faxnumber CDATA #IMPLIED
+    mobilephone CDATA #IMPLIED
+    emailaddress CDATA #IMPLIED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.addresstype EMPTY>
+<!ATTLIST opuscollege.addresstype
+    id CDATA #REQUIRED
+    code CDATA #REQUIRED
+    lang CDATA #REQUIRED
+    active CDATA #REQUIRED
+    description CDATA #IMPLIED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.administrativepost EMPTY>
+<!ATTLIST opuscollege.administrativepost
+    id CDATA #REQUIRED
+    code CDATA #REQUIRED
+    lang CDATA #REQUIRED
+    active CDATA #REQUIRED
+    description CDATA #IMPLIED
+    districtcode CDATA #REQUIRED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.admissionregistrationconfig EMPTY>
+<!ATTLIST opuscollege.admissionregistrationconfig
+    id CDATA #REQUIRED
+    organizationalunitid CDATA #REQUIRED
+    academicyearid CDATA #REQUIRED
+    startofregistration CDATA #IMPLIED
+    endofregistration CDATA #IMPLIED
+    active CDATA #REQUIRED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+    startofadmission CDATA #IMPLIED
+    endofadmission CDATA #IMPLIED
+    startofrefundperiod CDATA #IMPLIED
+    endofrefundperiod CDATA #IMPLIED
+>
+
+<!ELEMENT opuscollege.appconfig EMPTY>
+<!ATTLIST opuscollege.appconfig
+    id CDATA #REQUIRED
+    appconfigattributename CDATA #REQUIRED
+    appconfigattributevalue CDATA #REQUIRED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+    startdate CDATA #REQUIRED
+    enddate CDATA #IMPLIED
+>
+
+<!ELEMENT opuscollege.applicantcategory EMPTY>
+<!ATTLIST opuscollege.applicantcategory
+    id CDATA #REQUIRED
+    code CDATA #REQUIRED
+    lang CDATA #REQUIRED
+    active CDATA #REQUIRED
+    description CDATA #IMPLIED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.appointmenttype EMPTY>
+<!ATTLIST opuscollege.appointmenttype
+    id CDATA #REQUIRED
+    code CDATA #REQUIRED
+    lang CDATA #REQUIRED
+    active CDATA #REQUIRED
+    description CDATA #IMPLIED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.appversions EMPTY>
+<!ATTLIST opuscollege.appversions
+    id CDATA #REQUIRED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+    module CDATA #REQUIRED
+    state CDATA #REQUIRED
+    db CDATA #REQUIRED
+    dbversion CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.authorisation EMPTY>
+<!ATTLIST opuscollege.authorisation
+    code CDATA #REQUIRED
+    description CDATA #REQUIRED
+    active CDATA #REQUIRED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.blocktype EMPTY>
+<!ATTLIST opuscollege.blocktype
+    id CDATA #REQUIRED
+    code CDATA #REQUIRED
+    lang CDATA #REQUIRED
+    active CDATA #REQUIRED
+    description CDATA #IMPLIED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.bloodtype EMPTY>
+<!ATTLIST opuscollege.bloodtype
+    id CDATA #REQUIRED
+    code CDATA #REQUIRED
+    lang CDATA #REQUIRED
+    active CDATA #REQUIRED
+    description CDATA #IMPLIED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.branch EMPTY>
+<!ATTLIST opuscollege.branch
+    id CDATA #REQUIRED
+    branchcode CDATA #REQUIRED
+    branchdescription CDATA #IMPLIED
+    institutionid CDATA #REQUIRED
+    active CDATA #REQUIRED
+    registrationdate CDATA #REQUIRED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.branchacademicyeartimeunit EMPTY>
+<!ATTLIST opuscollege.branchacademicyeartimeunit
+    id CDATA #REQUIRED
+    branchid CDATA #REQUIRED
+    academicyearid CDATA #REQUIRED
+    cardinaltimeunitcode CDATA #REQUIRED
+    cardinaltimeunitnumber CDATA #REQUIRED
+    resultspublishdate CDATA #IMPLIED
+    active CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.cardinaltimeunit EMPTY>
+<!ATTLIST opuscollege.cardinaltimeunit
+    id CDATA #REQUIRED
+    code CDATA #REQUIRED
+    lang CDATA #REQUIRED
+    active CDATA #REQUIRED
+    description CDATA #IMPLIED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+    nrofunitsperyear CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.cardinaltimeunitresult EMPTY>
+<!ATTLIST opuscollege.cardinaltimeunitresult
+    id CDATA #REQUIRED
+    studyplanid CDATA #REQUIRED
+    studyplancardinaltimeunitid CDATA #REQUIRED
+    cardinaltimeunitresultdate CDATA #IMPLIED
+    active CDATA #REQUIRED
+    passed CDATA #REQUIRED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+    mark CDATA #IMPLIED
+    endgradecomment CDATA #IMPLIED
+>
+
+<!ELEMENT opuscollege.cardinaltimeunitstatus EMPTY>
+<!ATTLIST opuscollege.cardinaltimeunitstatus
+    id CDATA #REQUIRED
+    code CDATA #REQUIRED
+    lang CDATA #REQUIRED
+    obsolete CDATA #REQUIRED
+    description CDATA #IMPLIED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+    active CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.cardinaltimeunitstudygradetype EMPTY>
+<!ATTLIST opuscollege.cardinaltimeunitstudygradetype
+    id CDATA #REQUIRED
+    studygradetypeid CDATA #REQUIRED
+    cardinaltimeunitnumber CDATA #REQUIRED
+    numberofelectivesubjectblocks CDATA #REQUIRED
+    numberofelectivesubjects CDATA #REQUIRED
+    active CDATA #REQUIRED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.careerposition EMPTY>
+<!ATTLIST opuscollege.careerposition
+    id CDATA #REQUIRED
+    studyplanid CDATA #REQUIRED
+    employer CDATA #IMPLIED
+    startdate CDATA #IMPLIED
+    enddate CDATA #IMPLIED
+    careerposition CDATA #IMPLIED
+    responsibility CDATA #IMPLIED
+    active CDATA #REQUIRED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.civilstatus EMPTY>
+<!ATTLIST opuscollege.civilstatus
+    id CDATA #REQUIRED
+    code CDATA #REQUIRED
+    lang CDATA #REQUIRED
+    active CDATA #REQUIRED
+    description CDATA #IMPLIED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.civiltitle EMPTY>
+<!ATTLIST opuscollege.civiltitle
+    id CDATA #REQUIRED
+    code CDATA #REQUIRED
+    lang CDATA #REQUIRED
+    active CDATA #REQUIRED
+    description CDATA #IMPLIED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.classgroup EMPTY>
+<!ATTLIST opuscollege.classgroup
+    id CDATA #REQUIRED
+    description CDATA #IMPLIED
+    studygradetypeid CDATA #REQUIRED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.contract EMPTY>
+<!ATTLIST opuscollege.contract
+    id CDATA #REQUIRED
+    contractcode CDATA #REQUIRED
+    staffmemberid CDATA #REQUIRED
+    contracttypecode CDATA #REQUIRED
+    contractdurationcode CDATA #REQUIRED
+    contractstartdate CDATA #REQUIRED
+    contractenddate CDATA #IMPLIED
+    contacthours CDATA #REQUIRED
+    fteappointmentoverall CDATA #REQUIRED
+    fteeducation CDATA #REQUIRED
+    fteresearch CDATA #REQUIRED
+    fteadministrativetasks CDATA #REQUIRED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.contractduration EMPTY>
+<!ATTLIST opuscollege.contractduration
+    id CDATA #REQUIRED
+    code CDATA #REQUIRED
+    lang CDATA #REQUIRED
+    active CDATA #REQUIRED
+    description CDATA #IMPLIED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.contracttype EMPTY>
+<!ATTLIST opuscollege.contracttype
+    id CDATA #REQUIRED
+    code CDATA #REQUIRED
+    lang CDATA #REQUIRED
+    active CDATA #REQUIRED
+    description CDATA #IMPLIED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.country EMPTY>
+<!ATTLIST opuscollege.country
+    id CDATA #REQUIRED
+    code CDATA #REQUIRED
+    lang CDATA #REQUIRED
+    active CDATA #REQUIRED
+    short2 CDATA #IMPLIED
+    short3 CDATA #IMPLIED
+    description CDATA #IMPLIED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.daypart EMPTY>
+<!ATTLIST opuscollege.daypart
+    id CDATA #REQUIRED
+    code CDATA #REQUIRED
+    lang CDATA #REQUIRED
+    active CDATA #REQUIRED
+    description CDATA #IMPLIED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.discipline EMPTY>
+<!ATTLIST opuscollege.discipline
+    id CDATA #REQUIRED
+    code CDATA #REQUIRED
+    lang CDATA #REQUIRED
+    active CDATA #REQUIRED
+    description CDATA #IMPLIED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.disciplinegroup EMPTY>
+<!ATTLIST opuscollege.disciplinegroup
+    id CDATA #REQUIRED
+    code CDATA #REQUIRED
+    active CDATA #REQUIRED
+    description CDATA #IMPLIED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.district EMPTY>
+<!ATTLIST opuscollege.district
+    id CDATA #REQUIRED
+    code CDATA #REQUIRED
+    lang CDATA #REQUIRED
+    active CDATA #REQUIRED
+    description CDATA #IMPLIED
+    provincecode CDATA #IMPLIED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.educationarea EMPTY>
+<!ATTLIST opuscollege.educationarea
+    id CDATA #REQUIRED
+    code CDATA #REQUIRED
+    lang CDATA #REQUIRED
+    active CDATA #REQUIRED
+    description CDATA #IMPLIED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.educationlevel EMPTY>
+<!ATTLIST opuscollege.educationlevel
+    id CDATA #REQUIRED
+    code CDATA #REQUIRED
+    lang CDATA #REQUIRED
+    active CDATA #REQUIRED
+    description CDATA #IMPLIED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.educationtype EMPTY>
+<!ATTLIST opuscollege.educationtype
+    id CDATA #REQUIRED
+    code CDATA #REQUIRED
+    lang CDATA #REQUIRED
+    active CDATA #REQUIRED
+    description CDATA #IMPLIED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.endgrade EMPTY>
+<!ATTLIST opuscollege.endgrade
+    id CDATA #REQUIRED
+    code CDATA #REQUIRED
+    lang CDATA #REQUIRED
+    active CDATA #REQUIRED
+    endgradetypecode CDATA #REQUIRED
+    gradepoint CDATA #IMPLIED
+    percentagemin CDATA #IMPLIED
+    percentagemax CDATA #IMPLIED
+    comment CDATA #IMPLIED
+    description CDATA #IMPLIED
+    temporarygrade CDATA #REQUIRED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+    passed CDATA #REQUIRED
+    academicyearid CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.endgradegeneral EMPTY>
+<!ATTLIST opuscollege.endgradegeneral
+    id CDATA #REQUIRED
+    code CDATA #REQUIRED
+    lang CDATA #REQUIRED
+    active CDATA #REQUIRED
+    comment CDATA #IMPLIED
+    description CDATA #IMPLIED
+    temporarygrade CDATA #REQUIRED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.endgradetype EMPTY>
+<!ATTLIST opuscollege.endgradetype
+    id CDATA #REQUIRED
+    code CDATA #REQUIRED
+    lang CDATA #REQUIRED
+    active CDATA #REQUIRED
+    description CDATA #IMPLIED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.examination EMPTY>
+<!ATTLIST opuscollege.examination
+    id CDATA #REQUIRED
+    examinationcode CDATA #REQUIRED
+    examinationdescription CDATA #IMPLIED
+    subjectid CDATA #REQUIRED
+    examinationtypecode CDATA #REQUIRED
+    numberofattempts CDATA #REQUIRED
+    weighingfactor CDATA #REQUIRED
+    examinationdate CDATA #IMPLIED
+    brspassingexamination CDATA #IMPLIED
+    active CDATA #REQUIRED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.examinationresult EMPTY>
+<!ATTLIST opuscollege.examinationresult
+    id CDATA #REQUIRED
+    examinationid CDATA #REQUIRED
+    subjectid CDATA #REQUIRED
+    studyplandetailid CDATA #REQUIRED
+    examinationresultdate CDATA #IMPLIED
+    attemptnr CDATA #REQUIRED
+    mark CDATA #IMPLIED
+    staffmemberid CDATA #REQUIRED
+    active CDATA #REQUIRED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+    passed CDATA #REQUIRED
+    examinationresultcommentid CDATA #IMPLIED
+    subjectresultid CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.examinationteacher EMPTY>
+<!ATTLIST opuscollege.examinationteacher
+    id CDATA #REQUIRED
+    staffmemberid CDATA #REQUIRED
+    examinationid CDATA #REQUIRED
+    active CDATA #REQUIRED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+    classgroupid CDATA #IMPLIED
+>
+
+<!ELEMENT opuscollege.examinationtype EMPTY>
+<!ATTLIST opuscollege.examinationtype
+    id CDATA #REQUIRED
+    code CDATA #REQUIRED
+    lang CDATA #REQUIRED
+    active CDATA #REQUIRED
+    description CDATA #IMPLIED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.examtype EMPTY>
+<!ATTLIST opuscollege.examtype
+    id CDATA #REQUIRED
+    code CDATA #REQUIRED
+    lang CDATA #REQUIRED
+    active CDATA #REQUIRED
+    description CDATA #IMPLIED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.exclusion EMPTY>
+<!ATTLIST opuscollege.exclusion
+    subject1 CDATA #REQUIRED
+    subject2 CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.expellationtype EMPTY>
+<!ATTLIST opuscollege.expellationtype
+    id CDATA #REQUIRED
+    code CDATA #REQUIRED
+    lang CDATA #REQUIRED
+    active CDATA #REQUIRED
+    description CDATA #IMPLIED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.failgrade EMPTY>
+<!ATTLIST opuscollege.failgrade
+    id CDATA #REQUIRED
+    code CDATA #REQUIRED
+    lang CDATA #REQUIRED
+    active CDATA #REQUIRED
+    comment CDATA #IMPLIED
+    description CDATA #IMPLIED
+    temporarygrade CDATA #REQUIRED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.fieldofeducation EMPTY>
+<!ATTLIST opuscollege.fieldofeducation
+    id CDATA #REQUIRED
+    code CDATA #REQUIRED
+    lang CDATA #REQUIRED
+    active CDATA #REQUIRED
+    description CDATA #IMPLIED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.frequency EMPTY>
+<!ATTLIST opuscollege.frequency
+    id CDATA #REQUIRED
+    code CDATA #REQUIRED
+    lang CDATA #REQUIRED
+    active CDATA #REQUIRED
+    description CDATA #IMPLIED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.function EMPTY>
+<!ATTLIST opuscollege.function
+    id CDATA #REQUIRED
+    code CDATA #REQUIRED
+    lang CDATA #REQUIRED
+    active CDATA #REQUIRED
+    description CDATA #IMPLIED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.functionlevel EMPTY>
+<!ATTLIST opuscollege.functionlevel
+    id CDATA #REQUIRED
+    code CDATA #REQUIRED
+    lang CDATA #REQUIRED
+    active CDATA #REQUIRED
+    description CDATA #IMPLIED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.gender EMPTY>
+<!ATTLIST opuscollege.gender
+    id CDATA #REQUIRED
+    code CDATA #REQUIRED
+    lang CDATA #REQUIRED
+    active CDATA #REQUIRED
+    description CDATA #IMPLIED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.gradedsecondaryschoolsubject EMPTY>
+<!ATTLIST opuscollege.gradedsecondaryschoolsubject
+    id CDATA #REQUIRED
+    secondaryschoolsubjectid CDATA #REQUIRED
+    studyplanid CDATA #REQUIRED
+    grade CDATA #IMPLIED
+    active CDATA #REQUIRED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+    secondaryschoolsubjectgroupid CDATA #REQUIRED
+    level CDATA #IMPLIED
+>
+
+<!ELEMENT opuscollege.gradetype EMPTY>
+<!ATTLIST opuscollege.gradetype
+    id CDATA #REQUIRED
+    code CDATA #REQUIRED
+    lang CDATA #REQUIRED
+    active CDATA #REQUIRED
+    description CDATA #IMPLIED
+    title CDATA #REQUIRED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+    educationlevelcode CDATA #IMPLIED
+    educationareacode CDATA #IMPLIED
+>
+
+<!ELEMENT opuscollege.groupeddiscipline EMPTY>
+<!ATTLIST opuscollege.groupeddiscipline
+    id CDATA #REQUIRED
+    disciplinecode CDATA #REQUIRED
+    active CDATA #REQUIRED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+    disciplinegroupid CDATA #IMPLIED
+>
+
+<!ELEMENT opuscollege.groupedsecondaryschoolsubject EMPTY>
+<!ATTLIST opuscollege.groupedsecondaryschoolsubject
+    id CDATA #REQUIRED
+    secondaryschoolsubjectid CDATA #REQUIRED
+    secondaryschoolsubjectgroupid CDATA #REQUIRED
+    active CDATA #REQUIRED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+    weight CDATA #REQUIRED
+    minimumgradepoint CDATA #REQUIRED
+    maximumgradepoint CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.identificationtype EMPTY>
+<!ATTLIST opuscollege.identificationtype
+    id CDATA #REQUIRED
+    code CDATA #REQUIRED
+    lang CDATA #REQUIRED
+    active CDATA #REQUIRED
+    description CDATA #IMPLIED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.importancetype EMPTY>
+<!ATTLIST opuscollege.importancetype
+    id CDATA #REQUIRED
+    code CDATA #REQUIRED
+    lang CDATA #REQUIRED
+    active CDATA #REQUIRED
+    description CDATA #IMPLIED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.institution EMPTY>
+<!ATTLIST opuscollege.institution
+    id CDATA #REQUIRED
+    institutioncode CDATA #REQUIRED
+    institutiontypecode CDATA #REQUIRED
+    institutiondescription CDATA #IMPLIED
+    active CDATA #REQUIRED
+    provincecode CDATA #REQUIRED
+    rector CDATA #IMPLIED
+    registrationdate CDATA #REQUIRED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.language EMPTY>
+<!ATTLIST opuscollege.language
+    id CDATA #REQUIRED
+    code CDATA #REQUIRED
+    lang CDATA #REQUIRED
+    active CDATA #REQUIRED
+    description CDATA #IMPLIED
+    descriptionshort CDATA #IMPLIED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.levelofeducation EMPTY>
+<!ATTLIST opuscollege.levelofeducation
+    id CDATA #REQUIRED
+    code CDATA #REQUIRED
+    lang CDATA #REQUIRED
+    active CDATA #REQUIRED
+    description CDATA #IMPLIED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.logmailerror EMPTY>
+<!ATTLIST opuscollege.logmailerror
+    id CDATA #REQUIRED
+    recipients CDATA #REQUIRED
+    msgsubject CDATA #REQUIRED
+    msgsender CDATA #REQUIRED
+    errormsg CDATA #REQUIRED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.logrequesterror EMPTY>
+<!ATTLIST opuscollege.logrequesterror
+    id CDATA #REQUIRED
+    ipaddress CDATA #REQUIRED
+    requeststring CDATA #REQUIRED
+    errormsg CDATA #REQUIRED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.lookuptable EMPTY>
+<!ATTLIST opuscollege.lookuptable
+    id CDATA #REQUIRED
+    tablename CDATA #REQUIRED
+    lookuptype CDATA #REQUIRED
+    active CDATA #REQUIRED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.mailconfig EMPTY>
+<!ATTLIST opuscollege.mailconfig
+    id CDATA #REQUIRED
+    msgtype CDATA #REQUIRED
+    msgsubject CDATA #REQUIRED
+    msgbody CDATA #REQUIRED
+    msgsender CDATA #REQUIRED
+    lang CDATA #REQUIRED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.masteringlevel EMPTY>
+<!ATTLIST opuscollege.masteringlevel
+    id CDATA #REQUIRED
+    code CDATA #REQUIRED
+    lang CDATA #REQUIRED
+    active CDATA #REQUIRED
+    description CDATA #IMPLIED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.nationality EMPTY>
+<!ATTLIST opuscollege.nationality
+    id CDATA #REQUIRED
+    code CDATA #REQUIRED
+    lang CDATA #REQUIRED
+    active CDATA #REQUIRED
+    descriptionshort CDATA #IMPLIED
+    description CDATA #IMPLIED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.nationalitygroup EMPTY>
+<!ATTLIST opuscollege.nationalitygroup
+    id CDATA #REQUIRED
+    code CDATA #REQUIRED
+    lang CDATA #REQUIRED
+    active CDATA #REQUIRED
+    description CDATA #IMPLIED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.node_relationships_n_level EMPTY>
+<!ATTLIST opuscollege.node_relationships_n_level
+    id CDATA #REQUIRED
+    organizationalunitcode CDATA #REQUIRED
+    organizationalunitdescription CDATA #IMPLIED
+    active CDATA #REQUIRED
+    branchid CDATA #REQUIRED
+    unitlevel CDATA #REQUIRED
+    parentorganizationalunitid CDATA #REQUIRED
+    unitareacode CDATA #REQUIRED
+    unittypecode CDATA #REQUIRED
+    academicfieldcode CDATA #REQUIRED
+    directorid CDATA #REQUIRED
+    registrationdate CDATA #REQUIRED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+    level CDATA #IMPLIED
+>
+
+<!ELEMENT opuscollege.obtainedqualification EMPTY>
+<!ATTLIST opuscollege.obtainedqualification
+    id CDATA #REQUIRED
+    studyplanid CDATA #REQUIRED
+    university CDATA #IMPLIED
+    startdate CDATA #IMPLIED
+    enddate CDATA #IMPLIED
+    qualification CDATA #IMPLIED
+    endgradedate CDATA #IMPLIED
+    gradetypecode CDATA #IMPLIED
+    active CDATA #REQUIRED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.opusprivilege EMPTY>
+<!ATTLIST opuscollege.opusprivilege
+    id CDATA #REQUIRED
+    code CDATA #REQUIRED
+    lang CDATA #REQUIRED
+    active CDATA #REQUIRED
+    description CDATA #IMPLIED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+    validfrom CDATA #IMPLIED
+    validthrough CDATA #IMPLIED
+>
+
+<!ELEMENT opuscollege.opusrole_privilege EMPTY>
+<!ATTLIST opuscollege.opusrole_privilege
+    id CDATA #REQUIRED
+    privilegecode CDATA #REQUIRED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+    role CDATA #IMPLIED
+    validfrom CDATA #IMPLIED
+    validthrough CDATA #IMPLIED
+    active CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.opususer EMPTY>
+<!ATTLIST opuscollege.opususer
+    id CDATA #REQUIRED
+    personid CDATA #REQUIRED
+    username CDATA #REQUIRED
+    pw CDATA #IMPLIED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+    lang CDATA #REQUIRED
+    preferredorganizationalunitid CDATA #REQUIRED
+    failedloginattempts CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.opususerrole EMPTY>
+<!ATTLIST opuscollege.opususerrole
+    id CDATA #REQUIRED
+    role CDATA #REQUIRED
+    username CDATA #REQUIRED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+    validfrom CDATA #REQUIRED
+    validthrough CDATA #IMPLIED
+    organizationalunitid CDATA #REQUIRED
+    active CDATA #REQUIRED
+    institutionid CDATA #REQUIRED
+    branchid CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.organizationalunit EMPTY>
+<!ATTLIST opuscollege.organizationalunit
+    id CDATA #REQUIRED
+    organizationalunitcode CDATA #REQUIRED
+    organizationalunitdescription CDATA #IMPLIED
+    active CDATA #REQUIRED
+    branchid CDATA #REQUIRED
+    unitlevel CDATA #REQUIRED
+    parentorganizationalunitid CDATA #REQUIRED
+    unitareacode CDATA #REQUIRED
+    unittypecode CDATA #REQUIRED
+    academicfieldcode CDATA #REQUIRED
+    directorid CDATA #REQUIRED
+    registrationdate CDATA #REQUIRED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.penalty EMPTY>
+<!ATTLIST opuscollege.penalty
+    id CDATA #REQUIRED
+    studentid CDATA #REQUIRED
+    penaltytypecode CDATA #REQUIRED
+    amount CDATA #REQUIRED
+    startdate CDATA #IMPLIED
+    enddate CDATA #IMPLIED
+    remark CDATA #IMPLIED
+    paid CDATA #REQUIRED
+    active CDATA #REQUIRED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.penaltytype EMPTY>
+<!ATTLIST opuscollege.penaltytype
+    id CDATA #REQUIRED
+    code CDATA #REQUIRED
+    lang CDATA #REQUIRED
+    active CDATA #REQUIRED
+    description CDATA #IMPLIED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.person EMPTY>
+<!ATTLIST opuscollege.person
+    id CDATA #REQUIRED
+    personcode CDATA #REQUIRED
+    active CDATA #REQUIRED
+    surnamefull CDATA #REQUIRED
+    surnamealias CDATA #IMPLIED
+    firstnamesfull CDATA #REQUIRED
+    firstnamesalias CDATA #IMPLIED
+    nationalregistrationnumber CDATA #IMPLIED
+    civiltitlecode CDATA #IMPLIED
+    gradetypecode CDATA #IMPLIED
+    gendercode CDATA #IMPLIED
+    birthdate CDATA #REQUIRED
+    nationalitycode CDATA #IMPLIED
+    placeofbirth CDATA #IMPLIED
+    districtofbirthcode CDATA #IMPLIED
+    provinceofbirthcode CDATA #IMPLIED
+    countryofbirthcode CDATA #IMPLIED
+    cityoforigin CDATA #IMPLIED
+    administrativepostoforigincode CDATA #IMPLIED
+    districtoforigincode CDATA #IMPLIED
+    provinceoforigincode CDATA #IMPLIED
+    countryoforigincode CDATA #IMPLIED
+    civilstatuscode CDATA #IMPLIED
+    housingoncampus CDATA #IMPLIED
+    identificationtypecode CDATA #IMPLIED
+    identificationnumber CDATA #IMPLIED
+    identificationplaceofissue CDATA #IMPLIED
+    identificationdateofissue CDATA #IMPLIED
+    identificationdateofexpiration CDATA #IMPLIED
+    professioncode CDATA #IMPLIED
+    professiondescription CDATA #IMPLIED
+    languagefirstcode CDATA #IMPLIED
+    languagefirstmasteringlevelcode CDATA #IMPLIED
+    languagesecondcode CDATA #IMPLIED
+    languagesecondmasteringlevelcode CDATA #IMPLIED
+    languagethirdcode CDATA #IMPLIED
+    languagethirdmasteringlevelcode CDATA #IMPLIED
+    contactpersonemergenciesname CDATA #IMPLIED
+    contactpersonemergenciestelephonenumber CDATA #IMPLIED
+    bloodtypecode CDATA #IMPLIED
+    healthissues CDATA #IMPLIED
+    photograph CDATA #IMPLIED
+    remarks CDATA #IMPLIED
+    registrationdate CDATA #REQUIRED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+    photographname CDATA #IMPLIED
+    photographmimetype CDATA #IMPLIED
+    publichomepage CDATA #REQUIRED
+    socialnetworks CDATA #IMPLIED
+    hobbies CDATA #IMPLIED
+    motivation CDATA #IMPLIED
+>
+
+<!ELEMENT opuscollege.profession EMPTY>
+<!ATTLIST opuscollege.profession
+    id CDATA #REQUIRED
+    code CDATA #REQUIRED
+    lang CDATA #REQUIRED
+    active CDATA #REQUIRED
+    description CDATA #IMPLIED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.progressstatus EMPTY>
+<!ATTLIST opuscollege.progressstatus
+    id CDATA #REQUIRED
+    code CDATA #REQUIRED
+    lang CDATA #REQUIRED
+    active CDATA #REQUIRED
+    description CDATA #IMPLIED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+    continuing CDATA #REQUIRED
+    increment CDATA #REQUIRED
+    graduating CDATA #REQUIRED
+    carrying CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.province EMPTY>
+<!ATTLIST opuscollege.province
+    id CDATA #REQUIRED
+    code CDATA #REQUIRED
+    lang CDATA #REQUIRED
+    active CDATA #REQUIRED
+    description CDATA #IMPLIED
+    countrycode CDATA #IMPLIED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.referee EMPTY>
+<!ATTLIST opuscollege.referee
+    id CDATA #REQUIRED
+    studyplanid CDATA #REQUIRED
+    name CDATA #IMPLIED
+    address CDATA #IMPLIED
+    telephone CDATA #IMPLIED
+    email CDATA #IMPLIED
+    orderby CDATA #IMPLIED
+    active CDATA #REQUIRED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.relationtype EMPTY>
+<!ATTLIST opuscollege.relationtype
+    id CDATA #REQUIRED
+    code CDATA #REQUIRED
+    lang CDATA #REQUIRED
+    active CDATA #REQUIRED
+    description CDATA #IMPLIED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.report EMPTY>
+<!ATTLIST opuscollege.report
+    id CDATA #REQUIRED
+    name CDATA #REQUIRED
+    reportgroup CDATA #REQUIRED
+    active CDATA #REQUIRED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.reportproperty EMPTY>
+<!ATTLIST opuscollege.reportproperty
+    id CDATA #REQUIRED
+    reportname CDATA #REQUIRED
+    propertyname CDATA #REQUIRED
+    propertytype CDATA #REQUIRED
+    propertyfile CDATA #IMPLIED
+    propertytext CDATA #IMPLIED
+    visible CDATA #REQUIRED
+    active CDATA #REQUIRED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.requestadmissionperiod EMPTY>
+<!ATTLIST opuscollege.requestadmissionperiod
+    startdate CDATA #REQUIRED
+    enddate CDATA #REQUIRED
+    academicyearid CDATA #REQUIRED
+    numberofsubjectstograde CDATA #IMPLIED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.requestforchange EMPTY>
+<!ATTLIST opuscollege.requestforchange
+    id CDATA #REQUIRED
+    requestinguserid CDATA #REQUIRED
+    respondinguserid CDATA #REQUIRED
+    rfc CDATA #IMPLIED
+    comments CDATA #IMPLIED
+    entityid CDATA #REQUIRED
+    entitytypecode CDATA #REQUIRED
+    rfcstatuscode CDATA #REQUIRED
+    expirationdate CDATA #IMPLIED
+    active CDATA #REQUIRED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.rfcstatus EMPTY>
+<!ATTLIST opuscollege.rfcstatus
+    id CDATA #REQUIRED
+    code CDATA #REQUIRED
+    lang CDATA #REQUIRED
+    active CDATA #REQUIRED
+    description CDATA #IMPLIED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.rigiditytype EMPTY>
+<!ATTLIST opuscollege.rigiditytype
+    id CDATA #REQUIRED
+    code CDATA #REQUIRED
+    lang CDATA #REQUIRED
+    active CDATA #REQUIRED
+    description CDATA #IMPLIED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.role EMPTY>
+<!ATTLIST opuscollege.role
+    id CDATA #REQUIRED
+    lang CDATA #REQUIRED
+    active CDATA #REQUIRED
+    role CDATA #REQUIRED
+    roledescription CDATA #REQUIRED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+    level CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.secondaryschoolsubject EMPTY>
+<!ATTLIST opuscollege.secondaryschoolsubject
+    id CDATA #REQUIRED
+    code CDATA #REQUIRED
+    active CDATA #REQUIRED
+    description CDATA #IMPLIED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.secondaryschoolsubjectgroup EMPTY>
+<!ATTLIST opuscollege.secondaryschoolsubjectgroup
+    id CDATA #REQUIRED
+    groupnumber CDATA #REQUIRED
+    minimumnumbertograde CDATA #REQUIRED
+    maximumnumbertograde CDATA #REQUIRED
+    studygradetypeid CDATA #REQUIRED
+    active CDATA #REQUIRED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.staffmember EMPTY>
+<!ATTLIST opuscollege.staffmember
+    staffmemberid CDATA #REQUIRED
+    staffmembercode CDATA #REQUIRED
+    personid CDATA #REQUIRED
+    dateofappointment CDATA #IMPLIED
+    appointmenttypecode CDATA #IMPLIED
+    stafftypecode CDATA #IMPLIED
+    primaryunitofappointmentid CDATA #REQUIRED
+    educationtypecode CDATA #IMPLIED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+    startworkday CDATA #IMPLIED
+    endworkday CDATA #IMPLIED
+    teachingdaypartcode CDATA #IMPLIED
+    supervisingdaypartcode CDATA #IMPLIED
+>
+
+<!ELEMENT opuscollege.staffmemberfunction EMPTY>
+<!ATTLIST opuscollege.staffmemberfunction
+    staffmemberid CDATA #REQUIRED
+    functioncode CDATA #REQUIRED
+    functionlevelcode CDATA #REQUIRED
+    active CDATA #REQUIRED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.stafftype EMPTY>
+<!ATTLIST opuscollege.stafftype
+    id CDATA #REQUIRED
+    code CDATA #REQUIRED
+    lang CDATA #REQUIRED
+    active CDATA #REQUIRED
+    description CDATA #IMPLIED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.status EMPTY>
+<!ATTLIST opuscollege.status
+    id CDATA #REQUIRED
+    code CDATA #REQUIRED
+    lang CDATA #REQUIRED
+    active CDATA #REQUIRED
+    description CDATA #IMPLIED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.student EMPTY>
+<!ATTLIST opuscollege.student
+    studentid CDATA #REQUIRED
+    studentcode CDATA #IMPLIED
+    personid CDATA #REQUIRED
+    dateofenrolment CDATA #IMPLIED
+    primarystudyid CDATA #REQUIRED
+    expellationdate CDATA #IMPLIED
+    reasonforexpellation CDATA #IMPLIED
+    previousinstitutionid CDATA #REQUIRED
+    previousinstitutionname CDATA #IMPLIED
+    previousinstitutiondistrictcode CDATA #IMPLIED
+    previousinstitutionprovincecode CDATA #IMPLIED
+    previousinstitutioncountrycode CDATA #IMPLIED
+    previousinstitutiontypecode CDATA #IMPLIED
+    previousinstitutionfinalgradetypecode CDATA #IMPLIED
+    previousinstitutionfinalmark CDATA #IMPLIED
+    previousinstitutiondiplomaphotograph CDATA #IMPLIED
+    scholarship CDATA #REQUIRED
+    fatherfullname CDATA #IMPLIED
+    fathereducationcode CDATA #IMPLIED
+    fatherprofessioncode CDATA #IMPLIED
+    fatherprofessiondescription CDATA #IMPLIED
+    motherfullname CDATA #IMPLIED
+    mothereducationcode CDATA #IMPLIED
+    motherprofessioncode CDATA #IMPLIED
+    motherprofessiondescription CDATA #IMPLIED
+    financialguardianfullname CDATA #IMPLIED
+    financialguardianrelation CDATA #IMPLIED
+    financialguardianprofession CDATA #IMPLIED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+    expellationenddate CDATA #IMPLIED
+    expellationtypecode CDATA #IMPLIED
+    previousinstitutiondiplomaphotographremarks CDATA #IMPLIED
+    previousinstitutiondiplomaphotographname CDATA #IMPLIED
+    previousinstitutiondiplomaphotographmimetype CDATA #IMPLIED
+    subscriptionrequirementsfulfilled CDATA #REQUIRED
+    secondarystudyid CDATA #REQUIRED
+    foreignstudent CDATA #REQUIRED
+    nationalitygroupcode CDATA #IMPLIED
+    fathertelephone CDATA #IMPLIED
+    mothertelephone CDATA #IMPLIED
+    relativeofstaffmember CDATA #REQUIRED
+    ruralareaorigin CDATA #REQUIRED
+    employeenumberofrelative CDATA #IMPLIED
+>
+
+<!ELEMENT opuscollege.studentabsence EMPTY>
+<!ATTLIST opuscollege.studentabsence
+    id CDATA #REQUIRED
+    studentid CDATA #REQUIRED
+    startdatetemporaryinactivity CDATA #IMPLIED
+    enddatetemporaryinactivity CDATA #IMPLIED
+    reasonforabsence CDATA #IMPLIED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.studentactivity EMPTY>
+<!ATTLIST opuscollege.studentactivity
+    id CDATA #REQUIRED
+    studentid CDATA #REQUIRED
+    description CDATA #IMPLIED
+>
+
+<!ELEMENT opuscollege.studentcareer EMPTY>
+<!ATTLIST opuscollege.studentcareer
+    id CDATA #REQUIRED
+    studentid CDATA #REQUIRED
+    description CDATA #IMPLIED
+>
+
+<!ELEMENT opuscollege.studentclassgroup EMPTY>
+<!ATTLIST opuscollege.studentclassgroup
+    id CDATA #REQUIRED
+    studentid CDATA #REQUIRED
+    classgroupid CDATA #REQUIRED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.studentcounseling EMPTY>
+<!ATTLIST opuscollege.studentcounseling
+    id CDATA #REQUIRED
+    studentid CDATA #REQUIRED
+    description CDATA #IMPLIED
+>
+
+<!ELEMENT opuscollege.studentexpulsion EMPTY>
+<!ATTLIST opuscollege.studentexpulsion
+    id CDATA #REQUIRED
+    studentid CDATA #REQUIRED
+    startdate CDATA #IMPLIED
+    enddate CDATA #IMPLIED
+    expulsiontypecode CDATA #IMPLIED
+    reasonforexpulsion CDATA #IMPLIED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.studentplacement EMPTY>
+<!ATTLIST opuscollege.studentplacement
+    id CDATA #REQUIRED
+    studentid CDATA #REQUIRED
+    description CDATA #IMPLIED
+>
+
+<!ELEMENT opuscollege.studentstatus EMPTY>
+<!ATTLIST opuscollege.studentstatus
+    id CDATA #REQUIRED
+    code CDATA #REQUIRED
+    lang CDATA #REQUIRED
+    active CDATA #REQUIRED
+    description CDATA #IMPLIED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.studentstudentstatus EMPTY>
+<!ATTLIST opuscollege.studentstudentstatus
+    id CDATA #REQUIRED
+    studentid CDATA #REQUIRED
+    startdate CDATA #IMPLIED
+    studentstatuscode CDATA #IMPLIED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.study EMPTY>
+<!ATTLIST opuscollege.study
+    id CDATA #REQUIRED
+    studydescription CDATA #IMPLIED
+    active CDATA #REQUIRED
+    organizationalunitid CDATA #REQUIRED
+    academicfieldcode CDATA #REQUIRED
+    dateofestablishment CDATA #IMPLIED
+    startdate CDATA #IMPLIED
+    registrationdate CDATA #REQUIRED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+    minimummarksubject CDATA #IMPLIED
+    maximummarksubject CDATA #IMPLIED
+    brspassingsubject CDATA #IMPLIED
+>
+
+<!ELEMENT opuscollege.studyform EMPTY>
+<!ATTLIST opuscollege.studyform
+    id CDATA #REQUIRED
+    code CDATA #REQUIRED
+    lang CDATA #REQUIRED
+    active CDATA #REQUIRED
+    description CDATA #IMPLIED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.studygradetype EMPTY>
+<!ATTLIST opuscollege.studygradetype
+    id CDATA #REQUIRED
+    studyid CDATA #REQUIRED
+    gradetypecode CDATA #REQUIRED
+    active CDATA #REQUIRED
+    contactid CDATA #REQUIRED
+    registrationdate CDATA #REQUIRED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+    studytimecode CDATA #IMPLIED
+    currentacademicyearid CDATA #REQUIRED
+    cardinaltimeunitcode CDATA #REQUIRED
+    numberofcardinaltimeunits CDATA #REQUIRED
+    maxnumberofcardinaltimeunits CDATA #REQUIRED
+    numberofsubjectspercardinaltimeunit CDATA #REQUIRED
+    maxnumberofsubjectspercardinaltimeunit CDATA #REQUIRED
+    brspassingsubject CDATA #IMPLIED
+    studyformcode CDATA #IMPLIED
+    maxnumberoffailedsubjectspercardinaltimeunit CDATA #REQUIRED
+    studyintensitycode CDATA #REQUIRED
+    maxnumberofstudents CDATA #IMPLIED
+    disciplinegroupcode CDATA #IMPLIED
+    studygradetypecode CDATA #IMPLIED
+>
+
+<!ELEMENT opuscollege.studygradetypeprerequisite EMPTY>
+<!ATTLIST opuscollege.studygradetypeprerequisite
+    studygradetypeid CDATA #REQUIRED
+    active CDATA #REQUIRED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+    requiredstudyid CDATA #IMPLIED
+    requiredgradetypecode CDATA #IMPLIED
+>
+
+<!ELEMENT opuscollege.studyintensity EMPTY>
+<!ATTLIST opuscollege.studyintensity
+    id CDATA #REQUIRED
+    code CDATA #REQUIRED
+    lang CDATA #REQUIRED
+    active CDATA #REQUIRED
+    description CDATA #IMPLIED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.studyplan EMPTY>
+<!ATTLIST opuscollege.studyplan
+    id CDATA #REQUIRED
+    studentid CDATA #REQUIRED
+    studyplandescription CDATA #IMPLIED
+    active CDATA #REQUIRED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+    brspassingexam CDATA #IMPLIED
+    studyplanstatuscode CDATA #IMPLIED
+    studyid CDATA #REQUIRED
+    gradetypecode CDATA #IMPLIED
+    minor1id CDATA #REQUIRED
+    major2id CDATA #REQUIRED
+    minor2id CDATA #REQUIRED
+    applicationnumber CDATA #REQUIRED
+    applicantcategorycode CDATA #IMPLIED
+    firstchoiceonwardstudyid CDATA #IMPLIED
+    firstchoiceonwardgradetypecode CDATA #IMPLIED
+    secondchoiceonwardstudyid CDATA #IMPLIED
+    secondchoiceonwardgradetypecode CDATA #IMPLIED
+    thirdchoiceonwardstudyid CDATA #IMPLIED
+    thirdchoiceonwardgradetypecode CDATA #IMPLIED
+    previousdisciplinecode CDATA #IMPLIED
+    previousdisciplinegrade CDATA #IMPLIED
+>
+
+<!ELEMENT opuscollege.studyplancardinaltimeunit EMPTY>
+<!ATTLIST opuscollege.studyplancardinaltimeunit
+    id CDATA #REQUIRED
+    studyplanid CDATA #REQUIRED
+    cardinaltimeunitnumber CDATA #REQUIRED
+    progressstatuscode CDATA #IMPLIED
+    active CDATA #REQUIRED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+    studygradetypeid CDATA #REQUIRED
+    cardinaltimeunitstatuscode CDATA #IMPLIED
+    tuitionwaiver CDATA #REQUIRED
+    studyintensitycode CDATA #IMPLIED
+>
+
+<!ELEMENT opuscollege.studyplandetail EMPTY>
+<!ATTLIST opuscollege.studyplandetail
+    id CDATA #REQUIRED
+    studyplanid CDATA #REQUIRED
+    subjectid CDATA #REQUIRED
+    subjectblockid CDATA #REQUIRED
+    active CDATA #REQUIRED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+    studyplancardinaltimeunitid CDATA #REQUIRED
+    studygradetypeid CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.studyplanresult EMPTY>
+<!ATTLIST opuscollege.studyplanresult
+    id CDATA #REQUIRED
+    studyplanid CDATA #REQUIRED
+    examdate CDATA #IMPLIED
+    finalmark CDATA #REQUIRED
+    mark CDATA #IMPLIED
+    markdecimal CDATA #IMPLIED
+    active CDATA #REQUIRED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+    passed CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.studyplanstatus EMPTY>
+<!ATTLIST opuscollege.studyplanstatus
+    id CDATA #REQUIRED
+    code CDATA #REQUIRED
+    lang CDATA #REQUIRED
+    active CDATA #REQUIRED
+    description CDATA #IMPLIED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.studytime EMPTY>
+<!ATTLIST opuscollege.studytime
+    id CDATA #REQUIRED
+    code CDATA #REQUIRED
+    lang CDATA #REQUIRED
+    active CDATA #REQUIRED
+    description CDATA #IMPLIED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.studytype EMPTY>
+<!ATTLIST opuscollege.studytype
+    id CDATA #REQUIRED
+    code CDATA #REQUIRED
+    lang CDATA #REQUIRED
+    active CDATA #REQUIRED
+    description CDATA #IMPLIED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.subject EMPTY>
+<!ATTLIST opuscollege.subject
+    id CDATA #REQUIRED
+    subjectcode CDATA #REQUIRED
+    subjectdescription CDATA #IMPLIED
+    subjectcontentdescription CDATA #IMPLIED
+    primarystudyid CDATA #REQUIRED
+    active CDATA #REQUIRED
+    targetgroupcode CDATA #IMPLIED
+    freechoiceoption CDATA #IMPLIED
+    creditamount CDATA #IMPLIED
+    hourstoinvest CDATA #REQUIRED
+    frequencycode CDATA #IMPLIED
+    studytimecode CDATA #IMPLIED
+    examtypecode CDATA #IMPLIED
+    maximumparticipants CDATA #REQUIRED
+    brspassingsubject CDATA #IMPLIED
+    registrationdate CDATA #REQUIRED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+    currentacademicyearid CDATA #REQUIRED
+    resulttype CDATA #IMPLIED
+>
+
+<!ELEMENT opuscollege.subjectblock EMPTY>
+<!ATTLIST opuscollege.subjectblock
+    id CDATA #REQUIRED
+    subjectblockcode CDATA #REQUIRED
+    subjectblockdescription CDATA #IMPLIED
+    active CDATA #REQUIRED
+    targetgroupcode CDATA #IMPLIED
+    registrationdate CDATA #REQUIRED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+    brsapplyingtosubjectblock CDATA #IMPLIED
+    brspassingsubjectblock CDATA #IMPLIED
+    blocktypecode CDATA #IMPLIED
+    brsmaxcontacthours CDATA #IMPLIED
+    studytimecode CDATA #IMPLIED
+    currentacademicyearid CDATA #REQUIRED
+    primarystudyid CDATA #REQUIRED
+    freechoiceoption CDATA #IMPLIED
+>
+
+<!ELEMENT opuscollege.subjectblockprerequisite EMPTY>
+<!ATTLIST opuscollege.subjectblockprerequisite
+    subjectblockstudygradetypeid CDATA #REQUIRED
+    active CDATA #REQUIRED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+    requiredsubjectblockcode CDATA #IMPLIED
+>
+
+<!ELEMENT opuscollege.subjectblockstudygradetype EMPTY>
+<!ATTLIST opuscollege.subjectblockstudygradetype
+    id CDATA #REQUIRED
+    subjectblockid CDATA #REQUIRED
+    studygradetypeid CDATA #IMPLIED
+    active CDATA #REQUIRED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+    cardinaltimeunitnumber CDATA #REQUIRED
+    rigiditytypecode CDATA #IMPLIED
+    importancetypecode CDATA #IMPLIED
+>
+
+<!ELEMENT opuscollege.subjectclassgroup EMPTY>
+<!ATTLIST opuscollege.subjectclassgroup
+    id CDATA #REQUIRED
+    subjectid CDATA #REQUIRED
+    classgroupid CDATA #REQUIRED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.subjectprerequisite EMPTY>
+<!ATTLIST opuscollege.subjectprerequisite
+    subjectstudygradetypeid CDATA #REQUIRED
+    active CDATA #REQUIRED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+    requiredsubjectcode CDATA #IMPLIED
+>
+
+<!ELEMENT opuscollege.subjectresult EMPTY>
+<!ATTLIST opuscollege.subjectresult
+    id CDATA #REQUIRED
+    subjectid CDATA #REQUIRED
+    studyplandetailid CDATA #REQUIRED
+    subjectresultdate CDATA #IMPLIED
+    mark CDATA #IMPLIED
+    staffmemberid CDATA #REQUIRED
+    active CDATA #REQUIRED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+    passed CDATA #REQUIRED
+    endgradecomment CDATA #IMPLIED
+>
+
+<!ELEMENT opuscollege.subjectstudygradetype EMPTY>
+<!ATTLIST opuscollege.subjectstudygradetype
+    id CDATA #REQUIRED
+    subjectid CDATA #REQUIRED
+    studygradetypeid CDATA #IMPLIED
+    active CDATA #REQUIRED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+    cardinaltimeunitnumber CDATA #REQUIRED
+    rigiditytypecode CDATA #IMPLIED
+    importancetypecode CDATA #IMPLIED
+>
+
+<!ELEMENT opuscollege.subjectstudytype EMPTY>
+<!ATTLIST opuscollege.subjectstudytype
+    id CDATA #REQUIRED
+    subjectid CDATA #REQUIRED
+    studytypecode CDATA #REQUIRED
+    active CDATA #REQUIRED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.subjectsubjectblock EMPTY>
+<!ATTLIST opuscollege.subjectsubjectblock
+    id CDATA #REQUIRED
+    subjectid CDATA #REQUIRED
+    subjectblockid CDATA #IMPLIED
+    active CDATA #REQUIRED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.subjectteacher EMPTY>
+<!ATTLIST opuscollege.subjectteacher
+    id CDATA #REQUIRED
+    staffmemberid CDATA #REQUIRED
+    subjectid CDATA #REQUIRED
+    active CDATA #REQUIRED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+    classgroupid CDATA #IMPLIED
+>
+
+<!ELEMENT opuscollege.tabledependency EMPTY>
+<!ATTLIST opuscollege.tabledependency
+    id CDATA #REQUIRED
+    lookuptableid CDATA #REQUIRED
+    dependenttable CDATA #REQUIRED
+    dependenttablecolumn CDATA #REQUIRED
+    active CDATA #REQUIRED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.targetgroup EMPTY>
+<!ATTLIST opuscollege.targetgroup
+    id CDATA #REQUIRED
+    code CDATA #REQUIRED
+    lang CDATA #REQUIRED
+    active CDATA #REQUIRED
+    description CDATA #IMPLIED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.test EMPTY>
+<!ATTLIST opuscollege.test
+    id CDATA #REQUIRED
+    testcode CDATA #REQUIRED
+    testdescription CDATA #IMPLIED
+    examinationid CDATA #REQUIRED
+    examinationtypecode CDATA #REQUIRED
+    numberofattempts CDATA #REQUIRED
+    weighingfactor CDATA #REQUIRED
+    testdate CDATA #IMPLIED
+    minimummark CDATA #IMPLIED
+    maximummark CDATA #IMPLIED
+    brspassingtest CDATA #IMPLIED
+    active CDATA #REQUIRED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.testresult EMPTY>
+<!ATTLIST opuscollege.testresult
+    id CDATA #REQUIRED
+    testid CDATA #REQUIRED
+    examinationid CDATA #REQUIRED
+    studyplandetailid CDATA #REQUIRED
+    testresultdate CDATA #IMPLIED
+    attemptnr CDATA #REQUIRED
+    mark CDATA #IMPLIED
+    passed CDATA #REQUIRED
+    staffmemberid CDATA #REQUIRED
+    active CDATA #REQUIRED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+    testresultcommentid CDATA #IMPLIED
+    examinationresultid CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.testteacher EMPTY>
+<!ATTLIST opuscollege.testteacher
+    id CDATA #REQUIRED
+    staffmemberid CDATA #REQUIRED
+    testid CDATA #REQUIRED
+    active CDATA #REQUIRED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+    classgroupid CDATA #IMPLIED
+>
+
+<!ELEMENT opuscollege.thesis EMPTY>
+<!ATTLIST opuscollege.thesis
+    id CDATA #REQUIRED
+    thesiscode CDATA #REQUIRED
+    thesisdescription CDATA #IMPLIED
+    thesiscontentdescription CDATA #IMPLIED
+    studyplanid CDATA #REQUIRED
+    creditamount CDATA #REQUIRED
+    brsapplyingtothesis CDATA #IMPLIED
+    brspassingthesis CDATA #IMPLIED
+    keywords CDATA #IMPLIED
+    researchers CDATA #IMPLIED
+    supervisors CDATA #IMPLIED
+    publications CDATA #IMPLIED
+    readingcommittee CDATA #IMPLIED
+    defensecommittee CDATA #IMPLIED
+    statusofclearness CDATA #IMPLIED
+    thesisstatusdate CDATA #REQUIRED
+    startacademicyearid CDATA #IMPLIED
+    affiliationfee CDATA #REQUIRED
+    research CDATA #IMPLIED
+    nonrelatedpublications CDATA #IMPLIED
+    active CDATA #REQUIRED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.thesisresult EMPTY>
+<!ATTLIST opuscollege.thesisresult
+    id CDATA #REQUIRED
+    studyplanid CDATA #REQUIRED
+    thesisresultdate CDATA #IMPLIED
+    mark CDATA #IMPLIED
+    active CDATA #REQUIRED
+    passed CDATA #REQUIRED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+    thesisid CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.thesisstatus EMPTY>
+<!ATTLIST opuscollege.thesisstatus
+    id CDATA #REQUIRED
+    code CDATA #REQUIRED
+    lang CDATA #REQUIRED
+    active CDATA #REQUIRED
+    description CDATA #IMPLIED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.thesissupervisor EMPTY>
+<!ATTLIST opuscollege.thesissupervisor
+    id CDATA #REQUIRED
+    thesisid CDATA #REQUIRED
+    name CDATA #IMPLIED
+    address CDATA #IMPLIED
+    telephone CDATA #IMPLIED
+    email CDATA #IMPLIED
+    principal CDATA #REQUIRED
+    orderby CDATA #IMPLIED
+    active CDATA #REQUIRED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.thesisthesisstatus EMPTY>
+<!ATTLIST opuscollege.thesisthesisstatus
+    id CDATA #REQUIRED
+    thesisid CDATA #REQUIRED
+    startdate CDATA #IMPLIED
+    thesisstatuscode CDATA #IMPLIED
+    active CDATA #REQUIRED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.unitarea EMPTY>
+<!ATTLIST opuscollege.unitarea
+    id CDATA #REQUIRED
+    code CDATA #REQUIRED
+    lang CDATA #REQUIRED
+    active CDATA #REQUIRED
+    description CDATA #IMPLIED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+>
+
+<!ELEMENT opuscollege.unittype EMPTY>
+<!ATTLIST opuscollege.unittype
+    id CDATA #REQUIRED
+    code CDATA #REQUIRED
+    lang CDATA #REQUIRED
+    active CDATA #REQUIRED
+    description CDATA #IMPLIED
+    writewho CDATA #REQUIRED
+    writewhen CDATA #REQUIRED
+>
+

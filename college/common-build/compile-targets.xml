@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ***** BEGIN LICENSE BLOCK *****
+  Version: MPL 1.1/GPL 2.0/LGPL 2.1
+  
+  The contents of this file are subject to the Mozilla Public License Version
+  1.1 (the "License"); you may not use this file except in compliance with
+  the License. You may obtain a copy of the License at
+  http://www.mozilla.org/MPL/
+  
+  Software distributed under the License is distributed on an "AS IS" basis,
+  WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+  for the specific language governing rights and limitations under the
+  License.
+  
+  The Original Code is Opus-College college module code.
+  
+  The Initial Developer of the Original Code is
+  Center for Information Services, Radboud University Nijmegen.
+  Portions created by the Initial Developer are Copyright (C) 2008
+  the Initial Developer. All Rights Reserved.
+  
+  Contributor(s):
+    For Java files, see Javadoc @author tags.
+  
+  Alternatively, the contents of this file may be used under the terms of
+  either the GNU General Public License Version 2 or later (the "GPL"), or
+  the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+  in which case the provisions of the GPL or the LGPL are applicable instead
+  of those above. If you wish to allow use of your version of this file only
+  under the terms of either the GPL or the LGPL, and not to allow others to
+  use your version of this file under the terms of the MPL, indicate your
+  decision by deleting the provisions above and replace them with the notice
+  and other provisions required by the GPL or the LGPL. If you do not delete
+  the provisions above, a recipient may use your version of this file under
+  the terms of any one of the MPL, the GPL or the LGPL.
+  
+  ***** END LICENSE BLOCK *****
+-->
+<project name="module-compile-targets" xmlns:ivy="antlib:org.apache.ivy.ant">
+	
+	<!--
+		Targets imported by all modules (through the module-targets.xml file)
+		that deal with compiling (sources and test sources).
+	-->
+
+	<property name="target.dir" value="${basedir}/build" />
+	<property name="main.dir" value="src/main/java"/>
+	<property name="main.classes.dir" value="${target.dir}/classes"/>
+	<property name="test.dir" value="${basedir}/src/test/java"/>
+	<property name="test.resources.dir" value="${basedir}/src/test/resources"/>
+	<property name="test.classes.dir" value="${target.dir}/test-classes"/>
+    <property name="common.test.classes.dir" value="${workspace.dir}/college/build/test-classes"/>
+	<property name="webapp.dir" value="src/main/webapp"/>
+	<property name="repository.dir" value="${workspace.dir}/college/src/main/webapp/WEB-INF/lib"/>
+    <property name="repository.project.dir" value="${basedir}/src/main/webapp/WEB-INF/lib"/>
+	<!--<property name="test.repository.dir" value="${basedir}/../college/src/test/lib"/>-->
+	<!-- MoVe - modular structure: targetproject.dir is the name of the targetproject -->
+	<property name="targetproject.dir" value="${workspace.dir}/opus"/>
+    <property name="targetproject.webapp.dir" value="${targetproject.dir}/src/main/webapp"/>
+	<property name="jrxml.dir" value="${webapp.dir}/WEB-INF/reports/jrxml"/>
+	<property name="jasper.dir" value="${target.dir}/reports/jasper"/>
+
+	<fileset id="classpath" dir="${repository.dir}">
+		<include name="**/*.jar"/>
+	</fileset>
+
+<!-- add project specific libraries; (even better would be to add to classpath variable above -->
+    <fileset id="classpath.project" dir="${repository.project.dir}">
+        <include name="**/*.jar"/>
+    </fileset>
+    
+    <!--<fileset id="test.classpath" dir="${test.repository.dir}">
+        <include name="**/*.jar"/>
+    </fileset>-->
+	
+	<path id="provided-libs">
+		<fileset dir="${targetproject.dir}/lib">
+			<include name="**/*.jar" />
+		</fileset>
+		<!--<pathelement location="${targetproject.dir}/lib/servlet-api-2.4.jar"/>
+		<pathelement location="${targetproject.dir}/lib/junit-4.8.2.jar"/>
+		<pathelement location="${targetproject.dir}/lib/dbunit-2.4.8.jar"/>
+		<pathelement location="${targetproject.dir}/lib/hsqldb.jar"/>
+		<pathelement location="${targetproject.dir}/lib/slf4j-api-1.6.1.jar"/>
+		<pathelement location="${targetproject.dir}/lib/slf4j-log4j12-1.6.1.jar"/>-->
+	</path>
+		
+	<target name="compile" description="Compile the sources and tests"
+		depends="make-req-dirs, compile.source, copy.source.resources, compile.test, copy.test.resources, compile.jrxml">
+	</target>
+	
+	<target name="make-req-dirs">
+		<!-- make sure web-inf dir exists to avoid errors in ant -->
+		<mkdir dir="${repository.project.dir}"/>
+	</target>
+	
+	<target name="compile.source">
+		<mkdir dir="${main.classes.dir}"/>
+		<javac destdir="${main.classes.dir}" debug="true" includeantruntime="false">
+			<src path="${main.dir}" />
+			<classpath>
+				<fileset refid="classpath"/>
+                <fileset refid="classpath.project"/>
+				<path refid="provided-libs"/>
+				<path refid="module-dependencies"/>
+			</classpath>
+		</javac>
+	</target>
+	
+	<target name="copy.source.resources">
+		<mkdir dir="${main.classes.dir}"/>
+		<copy todir="${main.classes.dir}">
+			<fileset dir="${main.dir}">
+				<exclude name="**/*.java" />
+				<exclude name="*.java"/>
+			</fileset>
+		</copy>
+	</target>
+	
+	<target name="compile.test">
+		<mkdir dir="${test.classes.dir}"/>
+		<javac destdir="${test.classes.dir}" debug="true" includeantruntime="false">
+			<src path="${test.dir}" />
+			<classpath>
+				<path location="${main.classes.dir}"/>
+				<path location="${common.test.classes.dir}"/>
+				<path refid="provided-libs"/>
+				<fileset refid="classpath"/>
+               <!-- <fileset refid="test.classpath"/> -->
+                <path refid="module-dependencies"/>
+			</classpath>
+		</javac>
+	</target>
+	
+	<target name="copy.test.resources">
+		<mkdir dir="${test.classes.dir}"/>
+		<mkdir dir="${test.resources.dir}"/>
+		<copy todir="${test.classes.dir}">
+			<fileset dir="${test.resources.dir}" >
+				<exclude name="**/*.java" />
+				<exclude name="*.java"/>
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="compile.jrxml">
+        <taskdef name="jrc" classname="net.sf.jasperreports.ant.JRAntCompileTask">
+            <classpath>
+                <fileset refid="classpath"/>
+            </classpath>
+	    </taskdef>
+		<mkdir dir="${jasper.dir}" />
+	    <mkdir dir="${jrxml.dir}" />
+		<jrc destdir="${jasper.dir}" srcdir="${jrxml.dir}" >
+		    <include name="**/*.jrxml" />
+            <include name="**/*.xml" />
+			<classpath>
+				<fileset refid="classpath"/>
+				<path location="${main.classes.dir}"/>
+				<path refid="provided-libs"/>
+				<path refid="module-dependencies"/>
+			</classpath>
+		</jrc>
+	</target>
+	
+
+</project>

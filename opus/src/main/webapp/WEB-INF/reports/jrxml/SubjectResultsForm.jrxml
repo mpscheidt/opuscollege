@@ -1,0 +1,537 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 5.6.2.final using JasperReports Library version 5.6.1  -->
+<!-- 2015-08-11T15:36:18 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="SubjectResultsForm" pageWidth="595" pageHeight="842" whenNoDataType="NoDataSection" columnWidth="535" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20" resourceBundle="org/uci/opus/report/messages" uuid="b08140f1-9c07-468c-aa0d-4f6144e0a610">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<parameter name="whereClause" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="image_dir" class="java.io.File" isForPrompting="false">
+		<defaultValueExpression><![CDATA[new java.io.File(net.sf.jasperreports.engine.util.JRResourcesUtil.findClassLoaderResource("/images/report",null,null).getFile())]]></defaultValueExpression>
+	</parameter>
+	<parameter name="institution" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["UNIVERSIDADE DE MOCAMBIQUE"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="lang" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["en"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="orderClause" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="format" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["pdf"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="nameFormat" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[The format to display a student's name.
+This needs to be a key in the reportmessages.properties file]]></parameterDescription>
+		<defaultValueExpression><![CDATA["jasper.nameformat.surname_firstnames"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="reportTeacherName" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="reportCoordinatorName" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="reportPedagogicDirectorName" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="reportLogo" class="net.sf.jasperreports.engine.JRRenderable" isForPrompting="false">
+		<defaultValueExpression><![CDATA[net.sf.jasperreports.engine.RenderableUtil.getInstance($P{JASPER_REPORTS_CONTEXT}).getRenderable($P{image_dir} + "/report-logo.gif")]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT DISTINCT
+	     institution.institutiondescription AS institution_description,
+	     branch.branchdescription AS branch_description,
+	     organizationalunit.organizationalunitdescription AS organizationalunit_organizationalunitdescription,
+	     primarystudy.studydescription AS primarystudy_studydescription,
+	     academicyear.description as academicyear_description,
+	     subject.id AS subject_id,
+	     subject.subjectdescription AS subject_subjectdescription,
+	     subject.subjectcode AS subject_subjectcode,
+	     study.studydescription AS study_studydescription,
+	     studygradetype.id AS studygradetype_id,
+	     gradetype.description AS gradetype_description,
+	     student.studentid AS student_studentid,
+	     student.studentcode AS student_studentcode,
+	     person.surnamefull AS person_surnamefull,
+	     person.firstnamesfull AS person_firstnamesfull,
+	     person.gendercode AS person_gendercode,
+	     person.birthdate AS person_birthdate,
+	     person.provinceoforigincode AS person_provinceoforigincode,
+	     province.description AS province_description ,
+	     UPPER(SUBSTRING(gender.description,1,1))AS gender_description,
+	     subjectresult.mark AS mark,
+	     subjectresult.passed AS passed
+
+	FROM opuscollege.person person
+	     INNER JOIN opuscollege.student student ON person.id = student.personid
+	     INNER JOIN opuscollege.studyplan studyplan ON student.studentid = studyplan.studentid
+	     INNER JOIN opuscollege.studyPlanCardinalTimeUnit ON studyplancardinaltimeunit.studyPlanId = studyplan.id
+	     INNER JOIN opuscollege.studyplandetail ON studyplandetail.studyplancardinaltimeunitid = studyPlanCardinalTimeUnit.id
+	     INNER JOIN opuscollege.studyGradeType on studyPlanCardinalTimeUnit.studyGradeTypeId = studyGradeType.id
+	     INNER JOIN opuscollege.academicyear ON academicyear.id = studygradetype.currentacademicyearid
+	     INNER JOIN opuscollege.study study ON studygradetype.studyid = study.id
+	     INNER JOIN opuscollege.gradetype gradetype ON studygradetype.gradetypecode = gradetype.code AND gradetype.lang = $P{lang}
+
+	     LEFT OUTER JOIN opuscollege.subjectblock subjectblock ON studyplandetail.subjectblockid = subjectblock.id
+	     LEFT OUTER JOIN opuscollege.subjectsubjectblock subjectsubjectblock ON subjectblock.id = subjectsubjectblock.subjectblockid
+
+	     INNER JOIN opuscollege.subject subject ON subjectsubjectblock.subjectid = subject.id
+	         OR subject.id = studyplandetail.subjectid
+	     INNER JOIN opuscollege.study primarystudy ON subject.primarystudyid = primarystudy.id
+	     INNER JOIN opuscollege.organizationalunit organizationalunit ON study.organizationalunitid = organizationalunit.id
+	     INNER JOIN opuscollege.branch branch ON branch.id = organizationalunit.branchid
+	     INNER JOIN opuscollege.institution institution ON institution.id = branch.institutionid
+
+	     LEFT OUTER JOIN opuscollege.subjectresult subjectresult ON subject.id = subjectresult.subjectid
+	         AND subjectresult.studyplandetailid = studyplandetail.id
+	     LEFT OUTER JOIN opuscollege.province province ON person.provinceoforigincode = province.code AND province.lang = $P{lang}
+--	     LEFT OUTER JOIN opuscollege.address address ON person.id = address.personid
+	     INNER JOIN opuscollege.gender gender ON person.gendercode = gender.code  AND gender.lang = $P{lang}
+
+	WHERE true
+$P!{whereClause}
+
+	ORDER BY institution_description
+		, branch_description
+		, organizationalunit_organizationalunitdescription
+		, primarystudy_studydescription
+		, academicyear_description
+		, subject_subjectdescription
+		, gradetype_description
+		, study_studydescription
+		$P!{orderClause}]]>
+	</queryString>
+	<field name="institution_description" class="java.lang.String"/>
+	<field name="branch_description" class="java.lang.String"/>
+	<field name="organizationalunit_organizationalunitdescription" class="java.lang.String"/>
+	<field name="primarystudy_studydescription" class="java.lang.String"/>
+	<field name="academicyear_description" class="java.lang.String"/>
+	<field name="subject_id" class="java.lang.Integer"/>
+	<field name="subject_subjectdescription" class="java.lang.String"/>
+	<field name="subject_subjectcode" class="java.lang.String"/>
+	<field name="study_studydescription" class="java.lang.String"/>
+	<field name="studygradetype_id" class="java.lang.Integer"/>
+	<field name="gradetype_description" class="java.lang.String"/>
+	<field name="student_studentid" class="java.lang.Integer"/>
+	<field name="student_studentcode" class="java.lang.String"/>
+	<field name="person_surnamefull" class="java.lang.String"/>
+	<field name="person_firstnamesfull" class="java.lang.String"/>
+	<field name="person_gendercode" class="java.lang.String"/>
+	<field name="person_birthdate" class="java.sql.Date"/>
+	<field name="person_provinceoforigincode" class="java.lang.String"/>
+	<field name="province_description" class="java.lang.String"/>
+	<field name="gender_description" class="java.lang.String"/>
+	<field name="mark" class="java.lang.String"/>
+	<field name="passed" class="java.lang.String"/>
+	<group name="branch" isStartNewPage="true">
+		<groupExpression><![CDATA[$F{branch_description}]]></groupExpression>
+		<groupHeader>
+			<band height="100">
+				<image scaleImage="RetainShape" isUsingCache="false" onErrorType="Blank">
+					<reportElement key="image-1" x="0" y="0" width="65" height="47" uuid="f3f23cfe-4e71-40a8-8c2e-c7221bdd9534"/>
+					<imageExpression><![CDATA[$P{reportLogo}]]></imageExpression>
+				</image>
+				<textField isBlankWhenNull="false">
+					<reportElement key="institution_value" x="99" y="0" width="436" height="25" uuid="82d45bb8-7ecc-456c-b11f-8eeb23c3507d"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Top">
+						<font size="18"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{institution_description}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="false">
+					<reportElement key="organizationalunit_value" x="99" y="25" width="436" height="22" uuid="9cf867f9-2545-43b9-8e73-d46b3f0e3e9e"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Bottom">
+						<font size="16" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{branch_description}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="false">
+					<reportElement key="header" x="0" y="47" width="535" height="53" uuid="6560d9c5-abb4-496d-b97a-1380eaf5d0db"/>
+					<textElement verticalAlignment="Middle">
+						<font size="18" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$R{studentsbysubject.header}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<group name="subject" isStartNewPage="true" isResetPageNumber="true">
+		<groupExpression><![CDATA[$F{subject_subjectdescription} + $F{subject_id}]]></groupExpression>
+		<groupHeader>
+			<band height="75">
+				<textField isBlankWhenNull="false">
+					<reportElement key="academicyear_value" mode="Opaque" x="110" y="15" width="425" height="15" backcolor="#FFFFCC" uuid="260000b4-44f6-4847-9390-32c4e6d31569"/>
+					<box leftPadding="2">
+						<topPen lineWidth="0.0"/>
+						<leftPen lineColor="#000000"/>
+						<bottomPen lineWidth="0.0"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{academicyear_description}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="false">
+					<reportElement key="subject_value" mode="Opaque" x="110" y="45" width="425" height="15" backcolor="#FFFFCC" uuid="94c73b35-7147-4c8e-906e-074071664efb"/>
+					<box leftPadding="2" rightPadding="2">
+						<leftPen lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{subject_subjectdescription}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="false">
+					<reportElement key="academicyear_name" mode="Opaque" x="0" y="15" width="110" height="15" backcolor="#FFFFCC" uuid="a8f7b8c5-be7d-4da9-b70a-6839ea5809ab"/>
+					<box leftPadding="2">
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.5" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$R{general.academicyear} + ":"]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="false">
+					<reportElement key="lastname_header" mode="Opaque" x="110" y="60" width="360" height="15" backcolor="#CCCCCC" uuid="84ea8912-025c-49d5-be2d-d42ae341f7b3"/>
+					<box leftPadding="2">
+						<topPen lineWidth="0.5" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineColor="#000000"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$R{studentsperstudygradeacadyear.fullname}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="false">
+					<reportElement key="subject_name" mode="Opaque" x="0" y="45" width="110" height="15" backcolor="#FFFFCC" uuid="d0440de8-72e8-444c-b938-3b3434b857ed"/>
+					<box leftPadding="2">
+						<leftPen lineWidth="0.5" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$R{studentsbysubject.subjectdescription} + ":"]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="false">
+					<reportElement key="mark_name" mode="Opaque" x="470" y="60" width="65" height="15" backcolor="#CCCCCC" uuid="8dc1f0ba-d0ac-470c-869a-15bbe41c3d11"/>
+					<box>
+						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$R{studentsbysubject.mark}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="false">
+					<reportElement key="studygrade_name" mode="Opaque" x="0" y="30" width="110" height="15" backcolor="#FFFFCC" uuid="fa74aeec-ceeb-4db0-a078-596df970c56b"/>
+					<box leftPadding="2">
+						<leftPen lineWidth="0.5" lineColor="#000000"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$R{studentsbysubject.subjectcode} + ":"]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="false">
+					<reportElement key="studydescription_value" mode="Opaque" x="110" y="30" width="425" height="15" backcolor="#FFFFCC" uuid="b23e2c4b-7726-4242-9673-7c3075de8690"/>
+					<box leftPadding="2">
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{subject_subjectcode}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="false">
+					<reportElement key="studentcode_header" mode="Opaque" x="0" y="60" width="110" height="15" backcolor="#CCCCCC" uuid="1bd4514a-df0b-4ca4-b737-1ee190874668"/>
+					<box leftPadding="2">
+						<pen lineWidth="0.0"/>
+						<topPen lineWidth="0.5" lineColor="#000000"/>
+						<leftPen lineWidth="0.5" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font size="8" isBold="false" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$R{studentsperstudygradeacadyear.numero}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="false">
+					<reportElement key="studydescription_value" mode="Opaque" x="110" y="0" width="425" height="15" backcolor="#FFFFCC" uuid="ab177dad-1706-4752-a9b9-3d3bdb0ffaf6"/>
+					<box leftPadding="2">
+						<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{primarystudy_studydescription}
++ " ("
++ $F{organizationalunit_organizationalunitdescription}
++ ")"]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="false">
+					<reportElement key="studygrade_name" mode="Opaque" x="0" y="0" width="110" height="15" backcolor="#FFFFCC" uuid="a586e8d9-16eb-4204-92d1-d5393205cc84"/>
+					<box leftPadding="2">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$R{studentsbysubject.primarystudy} + ":"]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="40">
+				<textField isBlankWhenNull="false">
+					<reportElement key="academicyeartotal_value" x="0" y="1" width="535" height="15" uuid="2a481421-a4ba-4ece-ae75-a10da61a4267"/>
+					<box>
+						<topPen lineWidth="0.5" lineColor="#000000"/>
+					</box>
+					<textFieldExpression><![CDATA[$R{general.total} + ": " + ($V{subject_COUNT}).toString()]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="studyGradeType">
+		<groupExpression><![CDATA[$F{study_studydescription} + $F{studygradetype_id}]]></groupExpression>
+		<groupHeader>
+			<band height="15">
+				<textField isBlankWhenNull="false">
+					<reportElement key="studygrade_name" mode="Opaque" x="0" y="0" width="110" height="15" backcolor="#FFFFCC" uuid="4d44e330-9aef-4ee8-bd87-ca16b8598a30"/>
+					<box leftPadding="2">
+						<leftPen lineWidth="0.5" lineColor="#000000"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$R{studentsbysubject.studygrade} + ":"]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="false">
+					<reportElement key="studydescription_value" mode="Opaque" x="110" y="0" width="425" height="15" backcolor="#FFFFCC" uuid="6d42d52e-08b9-4c46-b058-d538fe03b8a6"/>
+					<box leftPadding="2">
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{study_studydescription} + " - " + $F{gradetype_description}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band/>
+	</title>
+	<pageHeader>
+		<band/>
+	</pageHeader>
+	<columnHeader>
+		<band/>
+	</columnHeader>
+	<detail>
+		<band height="16">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
+				<reportElement key="fullname_value" stretchType="RelativeToTallestObject" x="110" y="0" width="360" height="16" uuid="e9bf22e3-73ad-4ee4-88a9-ad2c1c624374"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#CCCCCC"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#CCCCCC"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[msg(str($P{nameFormat}), $F{person_surnamefull}, $F{person_firstnamesfull})]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
+				<reportElement key="grade_value" stretchType="RelativeToTallestObject" x="470" y="0" width="65" height="16" uuid="8717df0e-bc5b-4644-8c3d-b53a0ca2888a"/>
+				<box leftPadding="0">
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#CCCCCC"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{mark} == null) ? "---" : $F{mark}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="studentcode_value" stretchType="RelativeToTallestObject" x="0" y="0" width="110" height="16" uuid="08985824-3ee9-4de5-b604-92464a9cf355"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.5" lineColor="#CCCCCC"/>
+					<leftPen lineWidth="0.5" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#CCCCCC"/>
+					<rightPen lineWidth="0.5" lineColor="#CCCCCC"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{student_studentcode}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band height="120">
+			<printWhenExpression><![CDATA[new Boolean("pdf".equals($P{format}))]]></printWhenExpression>
+			<textField isBlankWhenNull="false">
+				<reportElement key="date_value" mode="Opaque" x="0" y="102" width="199" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="957f4e0a-6e84-4d95-b13e-902437b37956"/>
+				<box leftPadding="10">
+					<pen lineWidth="1.0" lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new Date()]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="page1" mode="Opaque" x="199" y="102" width="296" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="29a4e96d-3ce5-4340-8051-cd2a55535bdf"/>
+				<box leftPadding="10">
+					<pen lineWidth="1.0" lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{general.page1} + " " + $V{PAGE_NUMBER} + " " + $R{general.page2}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Group" evaluationGroup="subject" isBlankWhenNull="false">
+				<reportElement key="page2" mode="Opaque" x="495" y="102" width="40" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="bfae2f8e-dfaa-459c-ac94-cb39631185e4"/>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Solid"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<frame>
+				<reportElement positionType="Float" x="0" y="0" width="534" height="92" uuid="9a5342af-8984-4a98-a804-9d99d0d106bf">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<staticText>
+					<reportElement x="55" y="32" width="58" height="15" isRemoveLineWhenBlank="true" uuid="2f3766fb-2058-4be3-95ec-830605271146">
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="local_mesure_unitwidth" value="pixel"/>
+						<property name="local_mesure_unitheight" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="local_mesure_unity" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<text><![CDATA[Docente]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="214" y="32" width="100" height="15" isRemoveLineWhenBlank="true" uuid="8277cf2f-f46c-420f-98b0-dc4617222ba8">
+						<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="local_mesure_unitwidth" value="pixel"/>
+						<property name="local_mesure_unitheight" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<text><![CDATA[Coordenador(a)]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="372" y="32" width="148" height="15" isRemoveLineWhenBlank="true" uuid="684963d7-9629-40a7-a077-be2c9ad34af4">
+						<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+						<property name="local_mesure_unitwidth" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="local_mesure_unitheight" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<text><![CDATA[Director(a) Pedagógico(a)]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement positionType="Float" x="5" y="71" width="148" height="20" uuid="3dda52c7-1e7a-420a-b504-2ab1b5916e49">
+						<property name="local_mesure_unitwidth" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					</reportElement>
+					<box>
+						<topPen lineWidth="1.0"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" markup="none"/>
+					<textFieldExpression><![CDATA[$P{reportTeacherName}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="193" y="71" width="148" height="20" uuid="7ba6b857-ff75-454e-b32f-9bfa856dffef">
+						<property name="local_mesure_unitwidth" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="local_mesure_unity" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					</reportElement>
+					<box>
+						<topPen lineWidth="1.0"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" markup="none"/>
+					<textFieldExpression><![CDATA[$P{reportCoordinatorName}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="372" y="71" width="148" height="20" uuid="322c4989-3ebb-4c8c-88d3-80e8dc127c29">
+						<property name="local_mesure_unitwidth" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="local_mesure_unity" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					</reportElement>
+					<box>
+						<topPen lineWidth="1.0"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" markup="none"/>
+					<textFieldExpression><![CDATA[$P{reportPedagogicDirectorName}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</pageFooter>
+	<summary>
+		<band/>
+	</summary>
+</jasperReport>

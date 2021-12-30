@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ***** BEGIN LICENSE BLOCK *****
+  Version: MPL 1.1/GPL 2.0/LGPL 2.1
+  
+  The contents of this file are subject to the Mozilla Public License Version
+  1.1 (the "License"); you may not use this file except in compliance with
+  the License. You may obtain a copy of the License at
+  http://www.mozilla.org/MPL/
+  
+  Software distributed under the License is distributed on an "AS IS" basis,
+  WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+  for the specific language governing rights and limitations under the
+  License.
+  
+  The Original Code is Opus-College ucm module code.
+  
+  The Initial Developer of the Original Code is
+  Center for Information Services, Radboud University Nijmegen.
+  Portions created by the Initial Developer are Copyright (C) 2008
+  the Initial Developer. All Rights Reserved.
+  
+  Contributor(s):
+    For Java files, see Javadoc @author tags.
+  
+  Alternatively, the contents of this file may be used under the terms of
+  either the GNU General Public License Version 2 or later (the "GPL"), or
+  the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+  in which case the provisions of the GPL or the LGPL are applicable instead
+  of those above. If you wish to allow use of your version of this file only
+  under the terms of either the GPL or the LGPL, and not to allow others to
+  use your version of this file under the terms of the MPL, indicate your
+  decision by deleting the provisions above and replace them with the notice
+  and other provisions required by the GPL or the LGPL. If you do not delete
+  the provisions above, a recipient may use your version of this file under
+  the terms of any one of the MPL, the GPL or the LGPL.
+  
+  ***** END LICENSE BLOCK *****
+-->
+
+<!-- This dataset comprises a study grade type with 3 associated subjects -->
+<dataset>
+
+  <!-- Curriculum -->
+
+  <opuscollege.academicyear id="44" />
+
+  <opuscollege.lookuptable id="67" tablename="gradetype" lookuptype="Lookup9" active="Y" writewho="opuscollege" writewhen="2013-08-11 17:20:51.333882"/>
+
+  <opuscollege.gradetype id="50" code="LIC" lang="pt" active="Y" description="Licenciatura" title="Lic." />
+  <opuscollege.gradetype id="51" code="MSC" lang="pt" active="Y" description="Mestre" title="M.Sc." />
+
+  <opuscollege.institution id="107" institutioncode="UCM" institutionTypeCode="3" provincecode="MZ-08"/>
+  <opuscollege.branch id="118" branchcode="05" institutionid="107" />
+  <opuscollege.organizationalunit id="18" organizationalunitcode="O1070710200824102" organizationalunitdescription="Faculdade de Ci&#234;ncias de Sa&#250;de - Beira" active="Y" branchid="118" unitlevel="1" parentorganizationalunitid="0" unitareacode="1" unittypecode="1" academicfieldcode="85" directorid="0" registrationdate="2008-10-07" writewho="opuscollege" writewhen="2009-03-09 10:21:51.024802"/>
+  <opuscollege.study id="38" organizationalunitid="18" studydescription="Medicina Geral" academicfieldcode="85" />
+  <opuscollege.studygradetype id="58" studyid="38" gradetypecode="LIC" currentacademicyearid="44" />
+  <opuscollege.studygradetype id="59" studyid="38" gradetypecode="MSC" currentacademicyearid="44" />
+  <opuscollege.person id="16" personcode="61" surnamefull="Professor" firstnamesfull="Domingos" birthdate="1966-04-13" />
+  <opuscollege.staffmember staffmemberid="19" staffmembercode="61" personid="16" />
+
+  <!-- studyplanstatus in two languages, but in test case we expect only Portuguese results -->
+  <opuscollege.studyplanstatus id="1" code="3" lang="en" description="Approved initial admission"/>
+  <opuscollege.studyplanstatus id="2" code="3" lang="pt" description="Inscricao aprovado"/>
+  <opuscollege.studyplanstatus id="3" code="11" lang="pt" description="Graduado"/>
+  <opuscollege.studyplanstatus id="4" code="11" lang="en" description="Graduated"/>
+
+  <!-- Study plans -->
+
+  <!-- Student with two graduated studies: LIC and MSC -->
+  <opuscollege.person id="19065" personcode="p1" surnamefull="Tomo" firstnamesfull="Ailton Artur" birthdate="1981-12-17" />
+  <opuscollege.student studentid="18699" studentcode="705120131" personid="19065" />
+  <opuscollege.studyPlan id="26306" studentid="18699" studyPlanStatusCode="11" studyid="38" gradetypecode="LIC" />
+  <opuscollege.studyplanresult id="1" studyplanid="26306" examdate="2009-04-18" mark="13" passed="Y"/>
+  <opuscollege.studyPlan id="26307" studentid="18699" studyPlanStatusCode="11" studyid="38" gradetypecode="MSC"/>
+  <opuscollege.studyplanresult id="2" studyplanid="26307" examdate="2012-06-17" mark="12" passed="Y"/>
+
+  <!-- Student with one graduated (LIC) and one active, but non-graduated study (MSC) -->
+  <opuscollege.person id="19076" personcode="p2" surnamefull="Ernesto" firstnamesfull="Aldivandia Da Merilia" birthdate="1979-01-29"/>
+  <opuscollege.student studentid="18710" studentcode="705120134" personid="19076" />
+  <opuscollege.studyPlan id="26308" studentid="18710" studyPlanStatusCode="11" studyid="38" gradetypecode="LIC"/>
+  <opuscollege.studyplanresult id="10" studyplanid="26308" examdate="2010-07-01" mark="14" passed="Y"/>
+  <opuscollege.studyPlan id="26309" studentid="18710" studyPlanStatusCode="3" studyid="38" gradetypecode="MSC"/>
+
+  <!-- Student with active, but non-graduated study (LIC) -->
+  <opuscollege.person id="19078" personcode="p3" surnamefull="Alane" firstnamesfull="Mariamo" birthdate="1988-07-14"/>
+  <opuscollege.student studentid="18711" studentcode="705120137" personid="19078" />
+  <opuscollege.studyPlan id="26310" studentid="18711" studyPlanStatusCode="3" studyid="38" gradetypecode="LIC"/>
+  <opuscollege.studyplanresult id="20" studyplanid="26310" examdate="2013-06-03" mark="8" passed="N"/>
+
+</dataset>

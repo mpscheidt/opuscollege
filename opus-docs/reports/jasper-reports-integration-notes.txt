@@ -1,0 +1,47 @@
+
+Observations of integrating jasper reports into the core of opusCollege
+by Markus Pscheidt
+
+Additional files:
+=================
+
+- src/org.uci.opus.college.web.flow.ReportController.java: executes jasper reports
+
+- web/WEB-INF/lib/jasperreports-1.3.1.jar
+- web/WEB-INF/lib/poi-2.5.1.jar: needed for creating Excel reports
+- web/WEB-INF/lib/commons-beanutils.jar: needed by jasper reports
+
+- web/WEB-INF/reports/basic_report_opuscollege.jasper: the demo report called in start.jsp
+
+
+Modified files:
+===============
+
+- web/WEB-INF/jsp/start.jsp: added a demo on how to execute the "basic_report"
+
+- web/WEB-INF/applicationContext-flox.xml: defined the bean "reportsController"
+- web/WEB-INF/frontcontroller-servlet.xml: map /reports.view to the reportsController
+
+Notes:
+======
+
+- Thanks to Karol for the initial code implementation.
+
+- The basic report gives a report of all female students.
+  So there need to be female students defined to have results.
+
+- This is a basic implementation for a report without parameters.
+  Adding parameters needs some adjustment in the ReportController.java.
+
+- The Html report has still a problem with using images.
+  It has something to do with the location of images.
+  
+- To execute other reports:
+  - add the compiled .jasper file to the reports folder
+  - add a link like the the one in start.jsp to execute the report.
+
+- If we want reports to be checked into the opusCollegeReports CVS project,
+  we would need to copy the reports in the build process to the reports dir within the war file.
+  (e. g. with ant).
+
+  

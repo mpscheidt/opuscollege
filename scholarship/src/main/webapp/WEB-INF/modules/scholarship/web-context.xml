@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ***** BEGIN LICENSE BLOCK *****
+  Version: MPL 1.1/GPL 2.0/LGPL 2.1
+  
+  The contents of this file are subject to the Mozilla Public License Version
+  1.1 (the "License"); you may not use this file except in compliance with
+  the License. You may obtain a copy of the License at
+  http://www.mozilla.org/MPL/
+  
+  Software distributed under the License is distributed on an "AS IS" basis,
+  WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+  for the specific language governing rights and limitations under the
+  License.
+  
+  The Original Code is Opus-College scholarship module code.
+  
+  The Initial Developer of the Original Code is
+  Center for Information Services, Radboud University Nijmegen.
+  Portions created by the Initial Developer are Copyright (C) 2008
+  the Initial Developer. All Rights Reserved.
+  
+  Contributor(s):
+    For Java files, see Javadoc @author tags.
+  
+  Alternatively, the contents of this file may be used under the terms of
+  either the GNU General Public License Version 2 or later (the "GPL"), or
+  the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+  in which case the provisions of the GPL or the LGPL are applicable instead
+  of those above. If you wish to allow use of your version of this file only
+  under the terms of either the GPL or the LGPL, and not to allow others to
+  use your version of this file under the terms of the MPL, indicate your
+  decision by deleting the provisions above and replace them with the notice
+  and other provisions required by the GPL or the LGPL. If you do not delete
+  the provisions above, a recipient may use your version of this file under
+  the terms of any one of the MPL, the GPL or the LGPL.
+  
+  ***** END LICENSE BLOCK *****
+ -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+              http://www.springframework.org/schema/beans/spring-beans.xsd
+              http://www.springframework.org/schema/context
+              http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<import resource="classpath:org/uci/opus/scholarship/applicationContext-web-flow.xml" />
+
+	<!-- View url mapping -->
+	<bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">        
+        <!-- interceptors need to be defined in every SimpleUrlHandlerMapping -->
+        <property name="interceptors">
+            <list>
+                <ref bean="moduleInterceptor" />
+                <ref bean="localeChangeInterceptor"/>
+                <ref bean="roleChangeInterceptor"/>
+            </list>
+        </property>
+		<property name="mappings">            
+			<props>
+                <prop key="/scholarship/students.view">scholarshipStudentsController</prop>
+<!--                 <prop key="/scholarship/scholarshipstudent.view">scholarshipStudentEditController</prop> -->
+<!--                 <prop key="/scholarship/scholarshipapplication.view">scholarshipApplicationEditController</prop>-->
+                <prop key="/scholarship/scholarshipapplication_delete.view">scholarshipApplicationDeleteController</prop>
+<!--                 <prop key="/scholarship/subsidy.view">subsidyEditController</prop> -->
+                <prop key="/scholarship/subsidy_delete.view">subsidyDeleteController</prop>
+                
+                <!-- <prop key="/scholarship/scholarshipapplicationcomplaints.view">scholarshipApplicationComplaintsController</prop> -->
+<!--                 <prop key="/scholarship/complaint.view">complaintEditController</prop> -->
+                <prop key="/scholarship/complaint_delete.view">complaintDeleteController</prop>
+
+                <prop key="/scholarship/scholarships.view">scholarshipsController</prop>
+<!--                 <prop key="/scholarship/scholarship.view">scholarshipEditController</prop> -->
+                <prop key="/scholarship/scholarship_delete.view">scholarshipDeleteController</prop>
+                <prop key="/scholarship/scholarshipapplications.view">scholarshipApplicationsController</prop>
+                <prop key="/scholarship/subsidies.view">subsidiesController</prop>
+                <prop key="/scholarship/complaints.view">complaintsController</prop>
+
+<!--                 <prop key="/scholarship/banks.view">banksController</prop> -->
+<!--                 <prop key="/scholarship/bank.view">bankEditController</prop> -->
+                <prop key="/scholarship/bank_delete.view">bankDeleteController</prop>
+
+                <prop key="/scholarship/scholarshipreports.view">scholarshipReportsController</prop>
+                <prop key="/scholarship/observation.view">observationController</prop>
+			</props>        
+		</property>    
+	</bean>
+
+</beans>

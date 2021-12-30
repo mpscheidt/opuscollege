@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.0.0.final using JasperReports Library version 6.0.0  -->
+<!-- 2015-01-12T15:28:47 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="StudentDetails" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e1ce455c-7907-4416-9d85-229e0d37a2f7">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="PGDB"/>
+	<queryString>
+		<![CDATA[SELECT  a.personcode, a.firstnamesfull,  a.surnamefull , a.identificationnumber ,
+(SELECT b.description FROM  opuscollege.identificationtype  b WHERE b.code = a.identificationtypecode OR b.id = to_number(a.identificationtypecode,'99G999D9S')) as "Type" 
+FROM  opuscollege.person a]]>
+	</queryString>
+	<field name="surnamefull" class="java.lang.String"/>
+	<field name="firstnamesfull" class="java.lang.String"/>
+	<field name="personcode" class="java.lang.String"/>
+	<field name="identificationnumber" class="java.lang.String"/>
+	<field name="Type" class="java.lang.String"/>
+	<group name="surnamefull">
+		<groupExpression><![CDATA[$F{surnamefull}]]></groupExpression>
+	</group>
+	<group name="firstnamesfull">
+		<groupExpression><![CDATA[$F{firstnamesfull}]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="39" splitType="Stretch">
+			<staticText>
+				<reportElement x="240" y="9" width="107" height="21" uuid="e0f707b3-b732-41fa-b799-34ffd720b6af"/>
+				<text><![CDATA[Student Detail]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="26" splitType="Stretch">
+			<staticText>
+				<reportElement x="240" y="0" width="107" height="21" uuid="d668d5f7-aaca-4604-a509-fb39e87ef2cf"/>
+				<text><![CDATA[Student Details]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="68" splitType="Stretch">
+			<staticText>
+				<reportElement x="10" y="23" width="100" height="30" uuid="f12371d1-9b22-4b0a-8d1b-75940d0e6a66"/>
+				<text><![CDATA[Student #]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="110" y="23" width="100" height="30" uuid="e1ae5db9-f263-4aab-ae94-ce642a57417c"/>
+				<text><![CDATA[First Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="210" y="23" width="100" height="30" uuid="469cd2dd-6e02-4d62-aa1b-157528cd4fb0"/>
+				<text><![CDATA[Surname]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="310" y="23" width="100" height="30" uuid="805943c2-08ea-4d24-8011-5d63f79761bc"/>
+				<text><![CDATA[ID #]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="410" y="23" width="100" height="30" uuid="90fb502d-6955-4330-aaca-1e062ec80124"/>
+				<text><![CDATA[ID Type]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="39" splitType="Stretch">
+			<textField>
+				<reportElement x="310" y="-1" width="100" height="30" uuid="166a9145-c579-4027-bf53-33f0e2db758f"/>
+				<textFieldExpression><![CDATA[$F{identificationnumber}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="110" y="-1" width="100" height="30" uuid="3197679f-6490-44cb-b6a6-c4bc3bc684c4"/>
+				<textFieldExpression><![CDATA[$F{firstnamesfull}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="410" y="0" width="100" height="30" uuid="949bb75e-f6c5-4625-9b68-fed5f33bbbc8"/>
+				<textFieldExpression><![CDATA[$F{Type}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="10" y="-1" width="100" height="30" uuid="31adc5f2-53fc-417b-aa01-69f6752c4ba5"/>
+				<textFieldExpression><![CDATA[$F{personcode}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="210" y="0" width="100" height="30" uuid="ae2e9a0c-b8b5-4327-9858-e33ad7de7e4c"/>
+				<textFieldExpression><![CDATA[$F{surnamefull}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="40" splitType="Stretch">
+			<textField>
+				<reportElement x="180" y="0" width="100" height="30" uuid="76d45033-1b10-4f4e-a8dd-ac069b99cb61"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="300" y="0" width="100" height="30" uuid="3b8750c2-120f-4844-b598-d523b5b74c5f"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="280" y="0" width="24" height="30" uuid="ccb88e7e-6d24-4121-add3-2459038b5e41"/>
+				<text><![CDATA[of]]></text>
+			</staticText>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="29" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="21" splitType="Stretch"/>
+	</summary>
+</jasperReport>

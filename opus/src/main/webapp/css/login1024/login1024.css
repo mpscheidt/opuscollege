@@ -1,0 +1,131 @@
+body {
+	background-color:#A2C4E6;
+	color:#414242;
+	font-family:verdana, arial, helvetica, sans-serif;
+	font-size:0.7em;
+	height:100%;
+	margin:0pt;
+	padding:0pt;
+}
+#page {
+	margin-left:auto;
+	margin-right:auto;
+	width:960px;
+	background:#39C;
+}
+#Language {
+	color:#FFFFFF;
+	font-weight:bold;
+	line-height:1;
+	margin-top:-1.15em;
+	padding:0pt 2em 0pt 0pt;
+	text-align:right;
+}
+#Language a {
+	color:#FFFFFF;
+	text-decoration:none;
+}
+#Language a:hover {
+	color:#FFFFFF;
+	text-decoration:underline;
+}
+#HeaderLogin {
+	background:#244A6D none repeat scroll 0%;
+	border:1px solid #000000;
+	height:40px;
+	padding-top:5px;
+	width:960px;
+}
+#LoginContent {
+	background:#FFFFFF none repeat scroll 0%;
+	border:1px solid #000000;
+	height: auto;
+	/*margin-top:5px; */
+	min-height:320px;
+	padding:10px 15px 10px 10px;
+	width:935px;
+}
+#upgradeException {
+    background:#ffe0e0 none repeat scroll 0%;
+    border:1px solid #dd0000;
+    margin-left:auto;
+    margin-right:auto;
+    margin-top:10px;
+    width:400px;
+    padding:10px 10px 10px 0px;
+}
+/*html > body #LoginContent {
+width:735px;
+}*/
+table {
+	color:#414242;
+	font-family:verdana, arial, helvetica, sans-serif;
+	font-size:1em;
+}
+#login {
+    background: #D6E0E9 none repeat scroll 0%;
+    border: 1px solid #000000;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 60px;
+    margin-bottom: 60px;
+    padding: 10px 10px 10px 0px;
+    width: 400px;
+}
+
+#LoginForm {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+#footer {
+	/* MoVe - Modular structure: name of the image dir with root of targetproject */
+	/*background:#244A6D url(../../images/footer.gif) no-repeat center right;*/
+	background:#244A6D;
+	height:35px;
+	border:1px solid #000000;
+	color:#FFFFFF;
+	padding-top:5px;
+	text-align:center;
+	font-weight:bold;
+	width:960px;
+	line-height:1.2;
+}
+input {
+	font-size:1em;
+}
+label  {
+    font-weight: bold;
+    text-align: left;
+}
+.logotxt {
+	padding-top:10px;
+    text-align: center;
+	color:#00743f;
+	font-weight:bold;
+	font-size:14px;
+}
+.tenanttxt {
+    padding-top: 4px;
+    padding-bottom: 10px;
+    text-align: center;
+    color:#003f74;
+    font-weight:bold;
+    font-size:14px;
+}
+/* Marl - removing ant trails */
+a:active, a:focus {
+	outline-style: none;
+}
+a.white, a.white:link, a.white:visited, a.white:hover, a.white:active {
+	color:#FFFFFF;
+	font-family:verdana, arial, helvetica, sans-serif;
+	text-decoration: none;
+}
+.error {
+    background:#ffe7e7 none repeat scroll 0%;
+	border:1px solid red;
+	color:red;
+	display:block;
+	padding:3px;
+}

@@ -1,0 +1,271 @@
+<!--
+  ***** BEGIN LICENSE BLOCK *****
+  Version: MPL 1.1/GPL 2.0/LGPL 2.1
+  
+  The contents of this file are subject to the Mozilla Public License Version
+  1.1 (the "License"); you may not use this file except in compliance with
+  the License. You may obtain a copy of the License at
+  http://www.mozilla.org/MPL/
+  
+  Software distributed under the License is distributed on an "AS IS" basis,
+  WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+  for the specific language governing rights and limitations under the
+  License.
+  
+  The Original Code is Opus-College college module code.
+  
+  The Initial Developer of the Original Code is
+  Center for Information Services, Radboud University Nijmegen.
+  Portions created by the Initial Developer are Copyright (C) 2008
+  the Initial Developer. All Rights Reserved.
+  
+  Contributor(s):
+    For Java files, see Javadoc @author tags.
+  
+  Alternatively, the contents of this file may be used under the terms of
+  either the GNU General Public License Version 2 or later (the "GPL"), or
+  the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+  in which case the provisions of the GPL or the LGPL are applicable instead
+  of those above. If you wish to allow use of your version of this file only
+  under the terms of either the GPL or the LGPL, and not to allow others to
+  use your version of this file under the terms of the MPL, indicate your
+  decision by deleting the provisions above and replace them with the notice
+  and other provisions required by the GPL or the LGPL. If you do not delete
+  the provisions above, a recipient may use your version of this file under
+  the terms of any one of the MPL, the GPL or the LGPL.
+  
+  ***** END LICENSE BLOCK *****
+-->
+
+<xs:schema xmlns:staffmember="http://domain.college.opus.uci.org/staffmember" 
+    xmlns="http://domain.college.opus.uci.org/staffmember" 
+    xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+    targetNamespace="http://domain.college.opus.uci.org/staffmember" 
+    elementFormDefault="qualified" 
+    attributeFormDefault="qualified">
+    
+	<!-- start general image element definition -->
+	<!-- <xs:element name="photograph">
+        <xs:complexType>
+            <xs:attribute name="src" use="required" type="xs:string"/>
+            <xs:attribute name="width" use="optional" type="xs:string"/>            
+        </xs:complexType>
+    </xs:element>          
+    -->
+	<!-- start top level staffmember element definition -->
+	<xs:element name="staffmember">
+		<xs:complexType>
+			<xs:all>
+				<!-- xs:element minOccurs="0" maxOccurs="1" ref="rss"/  -->
+				<xs:element ref="personal_data" minOccurs="0" maxOccurs="1"/>
+				<xs:element ref="staffmember_data" minOccurs="0" maxOccurs="1"/>
+				<xs:element ref="identification" minOccurs="0" maxOccurs="1"/>
+				<xs:element ref="miscellaneous" minOccurs="0" maxOccurs="1"/>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<!-- start staffmember element definition -->
+	<xs:element name="personal_data">
+		<xs:complexType>
+			<xs:attribute name="id" type="xs:string" use="optional"/>
+			<xs:attribute name="registrationDate" type="xs:string" use="optional"/>
+			<xs:attribute name="personCode" type="xs:string" use="optional"/>
+			<xs:attribute name="surnameFull" type="xs:string" use="optional"/>
+			<xs:attribute name="surnameAlias" type="xs:string" use="optional"/>
+			<xs:attribute name="firstnamesFull" type="xs:string" use="optional"/>
+			<xs:attribute name="firstnamesAlias" type="xs:string" use="optional"/>
+			<xs:attribute name="nationalRegistrationNumber" type="xs:string" use="optional"/>
+			<xs:attribute name="civilTitleCode" type="xs:string" use="optional"/>
+			<xs:attribute name="gradeTypeCode" type="xs:string" use="optional"/>
+			<xs:attribute name="genderCode" type="xs:string" use="optional"/>
+			<xs:attribute name="birthdate" type="xs:string" use="optional"/>
+			<xs:attribute name="nationalityCode" type="xs:string" use="optional"/>
+			<xs:attribute name="placeOfBirth" type="xs:string" use="optional"/>
+			<xs:attribute name="districtOfBirthCode" type="xs:string" use="optional"/>
+			<xs:attribute name="provinceOfBirthCode" type="xs:string" use="optional"/>
+			<xs:attribute name="countryOfBirthCode" type="xs:string" use="optional"/>
+			<xs:attribute name="cityOfOrigin" type="xs:string" use="optional"/>
+			<xs:attribute name="administrativePostOfOriginCode" type="xs:string" use="optional"/>
+			<xs:attribute name="districtOfOriginCode" type="xs:string" use="optional"/>
+			<xs:attribute name="provinceOfOriginCode" type="xs:string" use="optional"/>
+			<xs:attribute name="countryOfOriginCode" type="xs:string" use="optional"/>
+			<xs:attribute name="civilStatusCode" type="xs:string" use="optional"/>
+			<xs:attribute name="housingOnCampus" type="xs:string" use="optional"/>
+			<xs:attribute name="active" type="xs:string" use="optional"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="staffmember_data">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="functions" minOccurs="0"/>
+				<xs:element ref="contracts" minOccurs="0"/>
+				<xs:element ref="addresses" minOccurs="0"/>
+				<xs:element ref="subjectsTaught" minOccurs="0"/>
+				<xs:element ref="examinationsTaught" minOccurs="0"/>
+				<xs:element ref="testsSupervised" minOccurs="0"/>
+			</xs:sequence>
+			<xs:attribute name="personId" type="xs:string" use="optional"/>
+			<xs:attribute name="staffMemberId" type="xs:string" use="optional"/>
+			<xs:attribute name="staffMemberCode" type="xs:string" use="optional"/>
+			<xs:attribute name="dateOfAppointment" type="xs:string" use="optional"/>
+			<xs:attribute name="appointmentTypeCode" type="xs:string" use="optional"/>
+			<xs:attribute name="staffTypeCode" type="xs:string" use="optional"/>
+			<xs:attribute name="primaryUnitOfAppointmentId" type="xs:string" use="optional"/>
+			<xs:attribute name="educationTypeCode" type="xs:string" use="optional"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="identification">
+		<xs:complexType>
+			<xs:attribute name="identificationTypeCode" type="xs:string" use="optional"/>
+			<xs:attribute name="identificationNumber" type="xs:string" use="optional"/>
+			<xs:attribute name="identificationPlaceOfIssue" type="xs:string" use="optional"/>
+			<xs:attribute name="identificationDateOfIssue" type="xs:string" use="optional"/>
+			<xs:attribute name="identificationDateOfExpiration" type="xs:string" use="optional"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="miscellaneous">
+		<xs:complexType>
+			<xs:attribute name="professionCode" type="xs:string" use="optional"/>
+			<xs:attribute name="professionDescription" type="xs:string" use="optional"/>
+			<xs:attribute name="languageFirstCode" type="xs:string" use="optional"/>
+			<xs:attribute name="languageFirstMasteringLevelCode" type="xs:string" use="optional"/>
+			<xs:attribute name="languageSecondCode" type="xs:string" use="optional"/>
+			<xs:attribute name="languageSecondMasteringLevelCode" type="xs:string" use="optional"/>
+			<xs:attribute name="languageThirdCode" type="xs:string" use="optional"/>
+			<xs:attribute name="languageThirdMasteringLevelCode" type="xs:string" use="optional"/>
+			<xs:attribute name="contactPersonEmergenciesName" type="xs:string" use="optional"/>
+			<xs:attribute name="contactPersonEmergenciesTelephoneNumber" type="xs:string" use="optional"/>
+			<xs:attribute name="bloodTypeCode" type="xs:string" use="optional"/>
+			<xs:attribute name="healthIssues" type="xs:string" use="optional"/>
+			<!--<xs:attribute name="photographName" type="xs:string" use="optional"/>
+			<xs:attribute name="photographMimeType" type="xs:string" use="optional"/>-->
+			<xs:attribute name="remarks" type="xs:string" use="optional"/>
+			<!--<xs:sequence>
+				<xs:element ref="photograph" minOccurs="0"/>
+			</xs:sequence> -->
+			<!-- photograph -->
+		</xs:complexType>
+	</xs:element>
+	<!--  derived elements from here -->
+	<xs:element name="staffMemberFunction">
+		<xs:complexType>
+			<xs:attribute name="id" type="xs:string" use="optional"/>
+			<xs:attribute name="staffMemberId" type="xs:string" use="optional"/>
+			<xs:attribute name="functionCode" type="xs:string" use="optional"/>
+			<xs:attribute name="functionLevelCode" type="xs:string" use="optional"/>
+			<xs:attribute name="active" type="xs:string" use="optional"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="functions">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="staffMemberFunction" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:attribute name="id" type="xs:string" use="optional"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="contract">
+		<xs:complexType>
+			<xs:attribute name="id" type="xs:string" use="optional"/>
+			<xs:attribute name="contractCode" type="xs:string" use="optional"/>
+			<xs:attribute name="staffMemberId" type="xs:string" use="optional"/>
+			<xs:attribute name="contractTypeCode" type="xs:string" use="optional"/>
+			<xs:attribute name="contractDurationCode" type="xs:string" use="optional"/>
+			<xs:attribute name="contractStartDate" type="xs:string" use="optional"/>
+			<xs:attribute name="contractEndDate" type="xs:string" use="optional"/>
+			<xs:attribute name="contactHours" type="xs:string" use="optional"/>
+			<xs:attribute name="fteAppointmentOverall" type="xs:string" use="optional"/>
+			<xs:attribute name="fteResearch" type="xs:string" use="optional"/>
+			<xs:attribute name="fteEducation" type="xs:string" use="optional"/>
+			<xs:attribute name="fteAdministrativeTasks" type="xs:string" use="optional"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="contracts">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="contract" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:attribute name="id" type="xs:string" use="optional"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="address">
+		<xs:complexType>
+			<xs:attribute name="id" type="xs:string" use="optional"/>
+			<xs:attribute name="addressCode" type="xs:string" use="optional"/>
+			<xs:attribute name="addressTypeCode" type="xs:string" use="optional"/>
+			<xs:attribute name="organizationalUnitId" type="xs:string" use="optional"/>
+			<xs:attribute name="personId" type="xs:string" use="optional"/>
+			<xs:attribute name="studyId" type="xs:string" use="optional"/>
+			<xs:attribute name="street" type="xs:string" use="optional"/>
+			<xs:attribute name="number" type="xs:string" use="optional"/>
+			<xs:attribute name="numberExtension" type="xs:string" use="optional"/>
+			<xs:attribute name="zipCode" type="xs:string" use="optional"/>
+			<xs:attribute name="POBox" type="xs:string" use="optional"/>
+			<xs:attribute name="city" type="xs:string" use="optional"/>
+			<xs:attribute name="administrativePostCode" type="xs:string" use="optional"/>
+			<xs:attribute name="districtCode" type="xs:string" use="optional"/>
+			<xs:attribute name="provinceCode" type="xs:string" use="optional"/>
+			<xs:attribute name="countryCode" type="xs:string" use="optional"/>
+			<xs:attribute name="telephone" type="xs:string" use="optional"/>
+			<xs:attribute name="faxNumber" type="xs:string" use="optional"/>
+			<xs:attribute name="mobilePhone" type="xs:string" use="optional"/>
+			<xs:attribute name="emailAddress" type="xs:string" use="optional"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="addresses">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="address" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:attribute name="id" type="xs:string" use="optional"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="subjectTeacher">
+		<xs:complexType>
+			<xs:attribute name="id" type="xs:string" use="optional"/>
+			<xs:attribute name="staffMemberId" type="xs:string" use="optional"/>
+			<xs:attribute name="subjectId" type="xs:string" use="optional"/>
+			<xs:attribute name="active" type="xs:string" use="optional"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="subjectsTaught">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="subjectTeacher" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:attribute name="id" type="xs:string" use="optional"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="examinationTeacher">
+		<xs:complexType>
+			<xs:attribute name="id" type="xs:string" use="optional"/>
+			<xs:attribute name="staffMemberId" type="xs:string" use="optional"/>
+			<xs:attribute name="examinationId" type="xs:string" use="optional"/>
+			<xs:attribute name="active" type="xs:string" use="optional"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="examinationsTaught">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="examinationTeacher" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:attribute name="id" type="xs:string" use="optional"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="testTeacher">
+		<xs:complexType>
+			<xs:attribute name="id" type="xs:string" use="optional"/>
+			<xs:attribute name="staffMemberId" type="xs:string" use="optional"/>
+			<xs:attribute name="testId" type="xs:string" use="optional"/>
+			<xs:attribute name="active" type="xs:string" use="optional"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="testsSupervised">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="testTeacher" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:attribute name="id" type="xs:string" use="optional"/>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

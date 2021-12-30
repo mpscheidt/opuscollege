@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="StaffMemberCard" columnCount="2" printOrder="Horizontal" pageWidth="595" pageHeight="842" whenNoDataType="NoDataSection" columnWidth="252" columnSpacing="30" leftMargin="30" rightMargin="30" topMargin="30" bottomMargin="30" resourceBundle="org/uci/opus/report/messages">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="1.5026296018031575"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<parameter name="image_dir" class="java.io.File" isForPrompting="false">
+		<parameterDescription><![CDATA[The base directory of images used in this report]]></parameterDescription>
+		<defaultValueExpression><![CDATA[new java.io.File(this.getClass().getResource("/images/report").getFile())]]></defaultValueExpression>
+	</parameter>
+	<parameter name="whereClause" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="reportLogo" class="net.sf.jasperreports.engine.JRRenderable" isForPrompting="false">
+		<defaultValueExpression><![CDATA[net.sf.jasperreports.engine.RenderableUtil.getInstance($P{JASPER_REPORTS_CONTEXT}).getRenderable($P{image_dir} + "/cartao-estudante-logo.gif")]]></defaultValueExpression>
+	</parameter>
+	<parameter name="reportTitle" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[$R{studentcard.studentcard}]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     person."firstnamesfull" AS person_firstnamesfull,
+     person."surnamefull" AS person_surnamefull,
+     person."photograph" AS person_photograph,
+     person."identificationnumber" AS person_identificationnumber,
+     person."professiondescription" AS profession_description,
+     organizationalunit."organizationalunitdescription" AS organizationalunit_description
+
+
+FROM
+     	"opuscollege"."person" person
+	INNER JOIN "opuscollege"."staffmember" staffmember ON person."id" = staffmember."personid"
+	INNER JOIN "opuscollege"."organizationalunit" organizationalunit ON staffmember."primaryunitofappointmentid" = organizationalunit."id"
+
+
+WHERE true
+
+$P!{whereClause}]]>
+	</queryString>
+	<field name="person_firstnamesfull" class="java.lang.String"/>
+	<field name="person_surnamefull" class="java.lang.String"/>
+	<field name="person_photograph" class="java.lang.Object"/>
+	<field name="person_identificationnumber" class="java.lang.String"/>
+	<field name="organizationalunit_description" class="java.lang.String"/>
+	<field name="profession_description" class="java.lang.String"/>
+	<background>
+		<band height="194"/>
+	</background>
+	<title>
+		<band/>
+	</title>
+	<pageHeader>
+		<band/>
+	</pageHeader>
+	<columnHeader>
+		<band/>
+	</columnHeader>
+	<detail>
+		<band height="194">
+			<rectangle>
+				<reportElement key="rectangle-1" mode="Opaque" x="5" y="0" width="242" height="164"/>
+			</rectangle>
+			<frame>
+				<reportElement key="frame-1" x="183" y="-58" width="1" height="0"/>
+			</frame>
+			<textField isBlankWhenNull="true">
+				<reportElement key="name_value-1" x="53" y="99" width="107" height="11"/>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{person_firstnamesfull}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="studentcard_name-1" x="9" y="87" width="151" height="12"/>
+				<textElement textAlignment="Left">
+					<font size="8" isBold="true" isUnderline="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA["CARTÃO DE FUNCIONÁRIO"]]></textFieldExpression>
+			</textField>
+			<image scaleImage="FillFrame" hAlign="Right">
+				<reportElement key="image-1" x="160" y="55" width="84" height="86"/>
+				<box>
+					<pen lineWidth="0.0" lineStyle="Solid"/>
+					<topPen lineWidth="0.0" lineStyle="Solid"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid"/>
+				</box>
+				<imageExpression><![CDATA[new java.io.ByteArrayInputStream((byte[]) $F{person_photograph})]]></imageExpression>
+			</image>
+			<image scaleImage="RetainShape" hAlign="Center">
+				<reportElement key="image-2" mode="Transparent" x="6" y="1" width="240" height="54"/>
+				<imageExpression><![CDATA[$P{reportLogo}]]></imageExpression>
+			</image>
+			<textField isBlankWhenNull="true">
+				<reportElement key="name_value-1" x="53" y="110" width="107" height="11"/>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{person_surnamefull}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="studentnumber_name" x="9" y="99" width="43" height="12"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Nome:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="9" y="55" width="151" height="32"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{organizationalunit_description}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="9" y="129" width="43" height="12"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Função:"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="53" y="129" width="107" height="24"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{profession_description}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band/>
+	</pageFooter>
+	<summary>
+		<band/>
+	</summary>
+	<noData>
+		<band height="50">
+			<textField isBlankWhenNull="false">
+				<reportElement key="nodata" x="0" y="0" width="535" height="50"/>
+				<textElement textAlignment="Center">
+					<font size="28"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{report.studentcard.nodata}]]></textFieldExpression>
+			</textField>
+		</band>
+	</noData>
+</jasperReport>

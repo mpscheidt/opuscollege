@@ -1,0 +1,393 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ***** BEGIN LICENSE BLOCK *****
+  Version: MPL 1.1/GPL 2.0/LGPL 2.1
+  
+  The contents of this file are subject to the Mozilla Public License Version
+  1.1 (the "License"); you may not use this file except in compliance with
+  the License. You may obtain a copy of the License at
+  http://www.mozilla.org/MPL/
+  
+  Software distributed under the License is distributed on an "AS IS" basis,
+  WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+  for the specific language governing rights and limitations under the
+  License.
+  
+  The Original Code is Opus-College college module code.
+  
+  The Initial Developer of the Original Code is
+  Center for Information Services, Radboud University Nijmegen.
+  Portions created by the Initial Developer are Copyright (C) 2008
+  the Initial Developer. All Rights Reserved.
+  
+  Contributor(s):
+    For Java files, see Javadoc @author tags.
+  
+  Alternatively, the contents of this file may be used under the terms of
+  either the GNU General Public License Version 2 or later (the "GPL"), or
+  the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+  in which case the provisions of the GPL or the LGPL are applicable instead
+  of those above. If you wish to allow use of your version of this file only
+  under the terms of either the GPL or the LGPL, and not to allow others to
+  use your version of this file under the terms of the MPL, indicate your
+  decision by deleting the provisions above and replace them with the notice
+  and other provisions required by the GPL or the LGPL. If you do not delete
+  the provisions above, a recipient may use your version of this file under
+  the terms of any one of the MPL, the GPL or the LGPL.
+  
+  ***** END LICENSE BLOCK *****
+-->
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.uci.opus.college.persistence.StudyplanMapper"> 
+
+
+    <!-- resultmap with basic study plan properties (no collections) -->
+    <resultMap id="BasicStudyPlanResultMap" type="StudyPlan">
+        <id property="id" column="studyPlan_id"/>
+        <result property="studentId" column="studyPlan_studentId"/>
+        <result property="studyId" column="studyPlan_studyId"/>
+        <result property="minor1Id" column="studyPlan_minor1Id"/>
+        <result property="gradeTypeCode" column="studyPlan_gradeTypeCode"/>
+        <result property="studyPlanDescription" column="studyPlan_studyPlanDescription"/>
+        <result property="applicantCategoryCode" column="studyPlan_applicantCategoryCode"/>
+        <result property="BRsPassingExam" column="studyPlan_BRsPassingExam"/>
+        <result property="missingDocuments" column="studyPlan_missingDocuments"/>
+        <result property="active" column="studyPlan_active"/>
+        <result property="previousDiscipline.code" column="studyPlan_previousDisciplineCode"/>
+        <result property="previousDisciplineGrade" column="studyPlan_previousDisciplineGrade"/>
+        <result property="studyPlanStatusCode" column="studyPlan_studyPlanStatusCode"/>
+        <result property="applicationNumber" column="studyPlan_applicationNumber"/>
+        <result property="firstChoiceOnwardStudyId" column="studyPlan_firstChoiceOnwardStudyId"/>
+        <result property="firstChoiceOnwardGradeTypeCode" column="studyPlan_firstChoiceOnwardGradeTypeCode"/>
+        <result property="secondChoiceOnwardStudyId" column="studyPlan_secondChoiceOnwardStudyId"/>
+        <result property="secondChoiceOnwardGradeTypeCode" column="studyPlan_secondChoiceOnwardGradeTypeCode"/>
+        <result property="thirdChoiceOnwardStudyId" column="studyPlan_thirdChoiceOnwardStudyId"/>
+        <result property="thirdChoiceOnwardGradeTypeCode" column="studyPlan_thirdChoiceOnwardGradeTypeCode"/>
+    </resultMap>
+
+    <!-- resultmap to define complete StudyPlan -->
+    <resultMap id="StudyPlanResultMap" type="StudyPlan" extends="BasicStudyPlanResultMap">
+        <association property="studyPlanResult" select="org.uci.opus.college.persistence.StudyplanResultMapper.findStudyPlanResultByStudyPlanId" column="studyPlan_id"/>
+        <association property="thesis" select="org.uci.opus.college.persistence.ThesisMapper.findThesisForStudyPlan" column="studyPlan_id"/>
+        <association property="study" select="org.uci.opus.college.persistence.StudyMapper.findStudy" column="studyPlan_studyId"/>
+        <collection property="studyPlanCardinalTimeUnits" select="org.uci.opus.college.persistence.StudyplanCardinaltimeunitMapper.findStudyPlanCardinalTimeUnitsForStudyPlan" column="studyPlan_id"/> 
+        <collection property="studyPlanDetails" select="org.uci.opus.college.persistence.StudyplanDetailMapper.findStudyPlanDetailsForStudyPlan" column="studyPlan_id"/>       
+        <collection property="allObtainedQualifications" select="org.uci.opus.college.persistence.ObtainedQualificationMapper.findObtainedQualificationsByStudyPlanId" column="studyPlan_id"/>
+        <collection property="allCareerPositions" select="org.uci.opus.college.persistence.CareerPositionMapper.findCareerPositionsByStudyPlanId" column="studyPlan_id"/>
+        <collection property="allReferees" select="org.uci.opus.college.persistence.RefereeMapper.findRefereesByStudyPlanId" column="studyPlan_id"/>
+        <!-- enriched in studymanager, cannot be fetched from db in whole -->
+        <!--<result property="secondarySchoolSubjectGroups" select="Study.findSecondarySchoolSubjectGroupsForStudyPlan" column="studyPlan_id" /> -->       
+        <!--<result property="gradedSecondarySchoolSubjects" select="Study.findGradedSecondarySchoolSubjects" column="studyPlan_id" />-->
+        <!--<result property="gradedUngroupedSecondarySchoolSubjects" select="Study.findGradedUngroupedSecondarySchoolSubjects" column="studyPlan_id" />-->
+    </resultMap>
+
+    <!-- resultmap to define complete StudyPlan, without sub-selects, but with inner result maps -->
+    <resultMap id="StudyPlanResultMap_WithCTUAndSubjectResults" type="StudyPlan" extends="BasicStudyPlanResultMap">
+<!--         <result property="studyPlanResult" resultMap="Exam.BasicStudyPlanResultResultMap"/> -->
+<!--         <result property="thesis" resultMap="Student.ThesisResultMap"/> -->
+        <collection property="studyPlanCardinalTimeUnits" resultMap="org.uci.opus.college.persistence.StudyplanCardinaltimeunitMapper.StudyPlanCardinalTimeUnitResultMap_WithCTUAndSubjectResults"/>
+        <!-- studyplandetails are loaded into the studyplancardinaltimeunits (having it two times would complicate the sql query) -->
+    </resultMap>
+
+    <!-- resultmap to define StudyPlan and SPCTUs, without sub-selects, but with inner result maps -->
+    <resultMap id="StudyPlanResultMap_WithCTUs" type="StudyPlan" extends="BasicStudyPlanResultMap">
+        <collection property="studyPlanCardinalTimeUnits" resultMap="org.uci.opus.college.persistence.StudyplanCardinaltimeunitMapper.BasicFQStudyPlanCardinalTimeUnitResultMap"/>
+        <!-- studyplandetails are loaded into the studyplancardinaltimeunits (having it two times would complicate the sql query) -->
+    </resultMap>
+
+    <resultMap id="LimitedStudyPlanAndStudentResultMap" type="LimitedStudyPlanAndStudent">
+        <result property="studyPlanId" column="studyPlanId"/>
+        <result property="studyPlanDescription" column="studyPlanDescription"/>
+        <result property="studyPlanStatusCode" column="studyPlanStatusCode"/>
+        <result property="surnameFull" column="surnameFull"/>
+        <result property="firstnamesFull" column="firstnamesFull"/>
+        <result property="studentId" column="studentId"/>
+        <result property="studentCode" column="studentCode"/>
+    </resultMap>
+
+    <sql id="findStudyPlan_fragment">
+        SELECT  studyPlan.id AS studyPlan_id
+        ,       studyPlan.studentId AS studyPlan_studentId
+        ,       studyPlan.studyId AS studyPlan_studyId
+        ,       studyPlan.minor1Id AS studyPlan_minor1Id
+        ,       studyPlan.gradeTypeCode AS studyPlan_gradeTypeCode
+        ,       studyPlan.studyPlanDescription AS studyPlan_studyPlanDescription
+        ,       applicantCategoryCode AS studyPlan_applicantCategoryCode
+        ,       studyPlan.studyPlanStatusCode AS studyPlan_studyPlanStatusCode
+        ,       studyPlan.applicationNumber AS studyPlan_applicationNumber
+        ,       studyPlan.BRsPassingExam AS studyPlan_BRsPassingExam
+        ,       studyPlan.missingDocuments AS studyPlan_missingDocuments
+        ,       studyPlan.active AS studyPlan_active
+        ,       previousDisciplineCode AS studyPlan_previousDisciplineCode
+        ,       previousDisciplineGrade AS studyPlan_previousDisciplineGrade
+        ,       studyPlan.firstChoiceOnwardStudyId AS studyPlan_firstChoiceOnwardStudyId
+        ,       studyPlan.firstChoiceOnwardGradeTypeCode AS studyPlan_firstChoiceOnwardGradeTypeCode
+        ,       studyPlan.secondChoiceOnwardStudyId AS studyPlan_secondChoiceOnwardStudyId
+        ,       studyPlan.secondChoiceOnwardGradeTypeCode AS studyPlan_secondChoiceOnwardGradeTypeCode
+        ,       studyPlan.thirdChoiceOnwardStudyId AS studyPlan_thirdChoiceOnwardStudyId
+        ,       studyPlan.thirdChoiceOnwardGradeTypeCode AS studyPlan_thirdChoiceOnwardGradeTypeCode
+    </sql>
+
+
+    <!-- find all studyPlans for params - apparently unused -->
+<!--     <select id="findStudyPlansByParams" parameterType="map" resultMap="StudyPlanResultMap"> -->
+<!--         <include refid="findStudyPlan_fragment"/> -->
+<!--         from opuscollege.studyPlan -->
+<!--         INNER JOIN opuscollege.study ON studyPlan.studyId = study.id -->
+<!--         INNER JOIN opuscollege.organizationalUnit on study.organizationalUnitId = organizationalUnit.id -->
+<!--         inner join opuscollege.branch on organizationalUnit.branchId = branch.id -->
+<!--         inner join opuscollege.institution on branch.institutionId = institution.id -->
+<!--         where  true -->
+<!--         <if test='institutionId != null and institutionId != "" and institutionId != "0"'> -->
+<!--             and institution.id = #{institutionId} -->
+<!--         </if> -->
+<!--         <if test='branchId != null and branchId != "" and branchId != "0"'> -->
+<!--             and branch.id = #{branchId} -->
+<!--         </if> -->
+<!--         <if test='organizationalUnitId != null and organizationalUnitId != "" and organizationalUnitId != "0"'> -->
+<!--             and organizationalunit.id in  -->
+<!--                     (select id from opuscollege.crawl_tree(#{organizationalUnitId}, 0)) -->
+<!--         </if> -->
+<!--         <if test='branchId != null and branchId != "" and branchId != "0"'> -->
+<!--             and branch.id = #{branchId} -->
+<!--         </if> -->
+<!--         <if test='applicationNumber != null and applicationNumber != "0"'> -->
+<!--             and WHERE studyPlan.applicationNumber = #{applicationNumber} -->
+<!--         </if> -->
+        
+<!--     </select> -->
+
+    <!-- find all studyPlans for one Student 
+         2015-08-12 MP: order by studyPlan.id DESC so that latest studyplan is on top
+    -->
+    <select id="findStudyPlansForStudent" parameterType="int" resultMap="StudyPlanResultMap">
+        <include refid="findStudyPlan_fragment"/>
+        from    opusCollege.studyPlan
+        WHERE   studentId = #{value}
+        ORDER BY studyPlan.id DESC
+    </select>
+
+    <!-- find all studyPlans for one Student -->
+    <select id="findStudyPlansForStudentByParams" parameterType="map" resultMap="StudyPlanResultMap">
+        <include refid="findStudyPlan_fragment"/>
+        from    opusCollege.studyPlan
+        WHERE   studentId = #{studentId}
+        AND     active = #{active}
+    </select>
+
+    <!-- find a specific studyPlan for one Student -->
+    <select id="findStudyPlanByParams" parameterType="map" resultMap="StudyPlanResultMap">
+        <include refid="findStudyPlan_fragment"/>
+        from    opusCollege.studyPlan
+        WHERE   studentId = #{studentId}
+        AND     studyId = #{studyId}
+        AND     gradeTypeCode = #{gradeTypeCode}
+        AND     studyPlanDescription = #{studyPlanDescription}
+    </select>
+    
+    <select id="findStudyPlanByParams2" parameterType="map" resultMap="StudyPlanResultMap">
+        <include refid="findStudyPlan_fragment"/>
+        from    opusCollege.studyPlan
+        WHERE   true
+
+        <if test="id != null">
+	        AND id = #{id}
+	    </if>
+        <if test="studentId != null">
+	        AND studentId = #{studentId}
+        </if>
+        <if test="gradeTypeCode != null">
+	        AND gradeTypeCode = #{gradeTypeCode}
+        </if>
+        <if test="studyId != null">
+	        AND studyId = #{studyId}
+        </if>
+        <if test="active != null">
+	        AND active = #{active}
+        </if>
+        <if test="studyPlanStatusCode != null">
+	        AND studyPlanStatusCode = #{studyPlanStatusCode}
+        </if>
+        <if test="studyPlanDescription != null">
+	        AND studyPlanDescription = #{studyPlanDescription}
+        </if>
+    </select>
+
+<!-- apparently unused, commented during mybatis migration -->
+<!--     <select id="findStudyPlansWhereExistsTargetSPCTU" parameterType="map" resultType="Integer"> -->
+<!--         select  studyplan.id -->
+<!--         from    opuscollege.studyplan -->
+        
+<!--         where exists ( -->
+<!--             select * from opuscollege.studyplan innerstudyplan -->
+<!--             inner join opuscollege.studyPlanCardinalTimeUnit on innerstudyplan.id = studyplanCardinalTimeUnit.studyPlanId -->
+<!--             where innerstudyplan.studentid = studyplan.studentid -->
+<!--             <if test="studyGradeTypeId != null"> -->
+                
+<!--                     and studyplancardinaltimeunit.studyGradeTypeId = #{studyGradeTypeId} -->
+                
+<!--             </if> -->
+<!--             <if test="cardinalTimeUnitNumber != null"> -->
+<!--                     and studyPlanCardinalTimeUnit.cardinalTimeUnitNumber = #{cardinalTimeUnitNumber}  -->
+<!--             </if> -->
+<!--         ) -->
+        
+<!--             and studyplan.id in -->
+<!--              <foreach collection="studyPlanIds" item="item" separator="," close=")" open="("> -->
+<!--               #{item} -->
+<!--             </foreach> -->
+        
+
+<!--     </select> -->
+
+    <!-- find one studyPlan -->
+    <select id="findStudyPlan" parameterType="int" resultMap="StudyPlanResultMap">
+        <include refid="findStudyPlan_fragment"/>
+        from    opusCollege.studyPlan
+        WHERE   id = #{value}
+    </select>
+
+    <insert id="addStudyPlanToStudent" parameterType="StudyPlan">
+        INSERT into opusCollege.studyPlan
+        ( studentId
+        , studyId
+        , minor1Id
+        , gradeTypeCode
+        , studyPlanDescription
+        , applicantCategoryCode
+        , BRsPassingExam
+        , studyPlanStatusCode
+        , applicationNumber
+        , missingDocuments
+        , active
+        , previousDisciplineCode
+        , previousDisciplineGrade
+        , firstChoiceOnwardStudyId
+        , firstChoiceOnwardGradeTypeCode
+        , secondChoiceOnwardStudyId
+        , secondChoiceOnwardGradeTypeCode
+        , thirdChoiceOnwardStudyId
+        , thirdChoiceOnwardGradeTypeCode
+        ) values
+        ( #{studentId}
+        , #{studyId}
+        , #{minor1Id}
+        , #{gradeTypeCode}
+        , #{studyPlanDescription}
+        , #{applicantCategoryCode}
+        , #{BRsPassingExam}
+        , #{studyPlanStatusCode}
+        , #{applicationNumber}
+        , #{missingDocuments}
+        , #{active}
+        , #{previousDiscipline.code}
+        , #{previousDisciplineGrade}
+        , #{firstChoiceOnwardStudyId}
+        , #{firstChoiceOnwardGradeTypeCode}
+        , #{secondChoiceOnwardStudyId}
+        , #{secondChoiceOnwardGradeTypeCode}
+        , #{thirdChoiceOnwardStudyId}
+        , #{thirdChoiceOnwardGradeTypeCode}
+        )
+        <selectKey keyProperty="id" resultType="int">
+            SELECT currVal('opuscollege.studyplanseq')
+        </selectKey>
+    </insert>
+
+    <update id="updateStudyPlan" parameterType="StudyPlan">
+        UPDATE  opuscollege.studyPlan
+        SET  studentId                          = #{studentId}
+            ,studyId                            = #{studyId}
+            ,minor1Id                           = #{minor1Id}
+            ,gradeTypeCode                      = #{gradeTypeCode}
+            ,studyPlanDescription               = #{studyPlanDescription}
+            ,applicantCategoryCode              = #{applicantCategoryCode}
+            ,studyPlanStatusCode                = #{studyPlanStatusCode}
+            ,applicationNumber                  = #{applicationNumber}
+            ,BRsPassingExam                     = #{BRsPassingExam} 
+            ,missingDocuments                   = #{missingDocuments}
+            ,active                             = #{active}
+            ,previousDisciplineCode             = #{previousDiscipline.code}
+            ,previousDisciplineGrade            = #{previousDisciplineGrade}
+            ,firstChoiceOnwardStudyId  = #{firstChoiceOnwardStudyId}
+            ,firstChoiceOnwardGradeTypeCode = #{firstChoiceOnwardGradeTypeCode}
+            ,secondChoiceOnwardStudyId = #{secondChoiceOnwardStudyId}
+            ,secondChoiceOnwardGradeTypeCode = #{secondChoiceOnwardGradeTypeCode}
+            ,thirdChoiceOnwardStudyId  = #{thirdChoiceOnwardStudyId}
+            ,thirdChoiceOnwardGradeTypeCode = #{thirdChoiceOnwardGradeTypeCode}
+            
+        WHERE   id = #{id}
+    </update>
+
+    <delete id="deleteStudyPlan" parameterType="int">
+        DELETE FROM opuscollege.studyPlan
+        WHERE   id   = #{value}
+    </delete>
+    
+    <update id="updateStudyPlanStatusCode" parameterType="StudyPlan">
+        UPDATE  opuscollege.studyPlan
+        SET  studyPlanStatusCode = #{studyPlanStatusCode}
+        WHERE   id = #{id}
+    </update>    
+
+    <delete id="deleteStudentInStudyPlan" parameterType="int">
+        DELETE FROM opuscollege.studyPlan
+        WHERE   studentId   = #{value}
+    </delete>
+
+    <select id="findStudyPlanIds" parameterType="map" resultType="int">
+        SELECT studyPlan.id FROM opuscollege.studyPlan
+        INNER JOIN opuscollege.studyPlanCardinalTimeUnit ON studyPlanCardinalTimeUnit.studyPlanId = studyPlan.id
+        INNER JOIN opuscollege.studyGradeType ON studyPlanCardinalTimeUnit.studyGradeTypeId = studyGradeType.id
+        WHERE TRUE
+        <if test="studyPlanCardinalTimeUnitIds != null">
+            AND studyPlanCardinalTimeUnit.id in
+             <foreach collection="studyPlanCardinalTimeUnitIds" item="item" separator="," close=")" open="(">
+                #{item}
+            </foreach>
+        </if>
+        <if test='currentAcademicYearId != null and currentAcademicYearId != "0"'>
+            AND studyGradeType.currentAcademicYearId = #{currentAcademicYearId}
+        </if>
+        <if test='studyPlanStatusCode != null and studyPlanStatusCode != "" and studyPlanStatusCode != "0"'>
+            AND studyPlan.studyPlanStatusCode = #{studyPlanStatusCode}
+        </if>
+
+    </select>
+
+    <select id="findNumberOfActiveStudyPlans" resultType="int">
+        select count(*) from opuscollege.studyplan
+        where studyplanstatuscode = '3'
+    </select>
+
+    <select id="findTotalNumberOfStudyPlans" resultType="int">
+        select count(*) from opuscollege.studyplan
+    </select>
+
+    <select id="findBranchIdForStudyPlan" resultType="int">
+    	select distinct organizationalunit.branchid
+        from opuscollege.studyPlan
+        inner join opuscollege.study on studyPlan.studyId = study.id
+        inner join opuscollege.organizationalunit on study.organizationalunitid = organizationalunit.id
+        where studyplan.id = #{value}
+    </select>
+
+	<select id="findLimitedStudyPlanAndStudent" parameterType="collection" resultMap="LimitedStudyPlanAndStudentResultMap">
+        select studyPlanStatusCode
+           , studyPlan.Id as studyPlanId
+           , studyPlanDescription
+           , surnameFull
+           , firstnamesFull
+           , student.studentId
+           , studentCode
+        from opuscollege.studyplan
+        inner join opuscollege.student on studyplan.studentid = student.studentid
+        inner join opuscollege.person on student.personid = person.id
+        where studyplan.id in
+		<foreach collection="collection" item="item" separator="," open="(" close=")">
+            #{item}
+		</foreach>
+	</select>
+
+</mapper>

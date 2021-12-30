@@ -1,0 +1,836 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+  ***** BEGIN LICENSE BLOCK *****
+  Version: MPL 1.1/GPL 2.0/LGPL 2.1
+  
+  The contents of this file are subject to the Mozilla Public License Version
+  1.1 (the "License"); you may not use this file except in compliance with
+  the License. You may obtain a copy of the License at
+  http://www.mozilla.org/MPL/
+  
+  Software distributed under the License is distributed on an "AS IS" basis,
+  WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+  for the specific language governing rights and limitations under the
+  License.
+  
+  The Original Code is Opus-College ucm module code.
+  
+  The Initial Developer of the Original Code is
+  Center for Information Services, Radboud University Nijmegen.
+  Portions created by the Initial Developer are Copyright (C) 2008
+  the Initial Developer. All Rights Reserved.
+  
+  Contributor(s):
+    For Java files, see Javadoc @author tags.
+  
+  Alternatively, the contents of this file may be used under the terms of
+  either the GNU General Public License Version 2 or later (the "GPL"), or
+  the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+  in which case the provisions of the GPL or the LGPL are applicable instead
+  of those above. If you wish to allow use of your version of this file only
+  under the terms of either the GPL or the LGPL, and not to allow others to
+  use your version of this file under the terms of the MPL, indicate your
+  decision by deleting the provisions above and replace them with the notice
+  and other provisions required by the GPL or the LGPL. If you do not delete
+  the provisions above, a recipient may use your version of this file under
+  the terms of any one of the MPL, the GPL or the LGPL.
+  
+  ***** END LICENSE BLOCK *****
+--><!--Converted at: Fri Feb 26 12:31:11 CET 2016-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.uci.opus.ucm.persistence.UcmMapper">
+
+    <resultMap id="StudentResultResultMap" type="StudentResult">
+	    <result property="id" column="id"/>
+	    <result property="studyPlanDetailId" column="studyPlanDetailId"/>
+	    <result property="subjectResultDate" column="subjectResultDate" javaType="java.util.Date"/>
+	    <result property="mark" column="mark"/>
+        <result property="endGradeComment" column="endGradeComment"/>
+	    <result property="staffMemberId" column="staffMemberId"/>
+	    <result property="subjectId" column="subjectId"/>
+	    <result property="active" column="active"/>
+        <result property="passed" column="passed"/>
+        <result property="studentCode" column="studentCode"/>
+        <result property="studentName" column="studentName"/>
+        <result property="writeWho" column="writeWho"/>
+    </resultMap>	
+     
+<sql id="common_filters">
+         <if test="institutionId != null">
+          AND institution.id = #{institutionId}
+        </if>
+        
+        <if test="branchId != null">
+          AND branch.id = #{branchId}
+        </if>
+        
+        <if test="organizationalUnitId != null">
+          AND organizationalunit.id in (SELECT id FROM opuscollege.crawl_tree(#{organizationalUnitId}, 0))
+        </if>
+        
+        <if test="studyId != null">
+            AND study.id = #{studyId}
+        </if>
+
+ 		<if test="gradeTypeCode != null">
+            AND gradeType.code = #{code}
+        </if>
+        
+        <if test="academicYearId != null">
+          AND academicyear.id = #{academicYearId} 
+        </if>
+    
+        <if test="studyGradeTypeId != null">
+          AND studygradetype.id = #{studyGradeTypeId}
+        </if>
+       
+        <if test="subjectBlockId != null">
+          AND subjectblock.id = #{subjectBlockId}
+        </if>
+       
+       <if test="studentId != null">
+          AND student.studentId = #{studentId}
+        </if>
+        
+        <if test="studyPlanId != null">
+          AND studyPlan.id = #{studyPlanId}
+        </if>
+        
+        <if test="personId != null">
+          AND person.id = #{personId}
+        </if>
+        <if test="registrationYear != null">
+          AND EXTRACT(YEAR FROM student.dateofenrolment) = #{registrationYear}
+        </if>
+       
+    </sql>
+    
+	<!--
+	Find current highest student code for given facultyCode and year 
+	-->
+    <select id="findHighestStudentCode" parameterType="map" resultType="String"> 
+        SELECT MAX(studentcode) FROM opuscollege.student
+        WHERE student.studentcode ILIKE '7' || #{branchCode} || #{year} || '____'
+        
+    </select>
+
+    <!-- List cardinal time units existing in study plans -->
+
+    <select id="findCTUsInStudyPlans" parameterType="map" resultType="java.util.HashMap"> 
+       SELECT
+          count(distinct student.studentid) AS count,
+          studyGradeType.id AS studygradetypeid,
+          studyGradeType.currentacademicyearid,
+          cardinaltimeunit.description AS cardinaltimeunitdescription,
+          studyplancardinaltimeunit.cardinaltimeunitnumber AS cardinaltimeunitnumber,
+          academicyear.description AS academicYear,
+          study.studydescription || ' - ' || gradetype.description AS studygradedescription,
+          studyForm.description as studyFormDescription,
+          studyTime.description as studyTimeDescription
+
+        FROM
+            opuscollege.student 
+            INNER JOIN opuscollege.person person ON student.personId = person.id
+            INNER JOIN opuscollege.studyplan studyplan ON student.studentid = studyplan.studentid
+            LEFT OUTER JOIN opuscollege.studyplanstatus ON studyplan.studyplanstatuscode = studyplanstatus.code AND studyplanstatus.lang = #{lang}
+            INNER JOIN opuscollege.studyPlanCardinalTimeUnit ON studyplan.id = studyplancardinaltimeunit.studyPlanId
+            INNER JOIN opuscollege.studyGradeType on studyPlanCardinalTimeUnit.studyGradeTypeId = studyGradeType.id
+            INNER JOIN opuscollege.cardinalTimeUnit ON studyGradeType.cardinaltimeunitcode = cardinaltimeunit.code AND cardinaltimeunit.lang = #{lang}
+            INNER JOIN opuscollege.academicyear ON academicyear.id = studygradetype.currentacademicyearid
+            INNER JOIN opuscollege.study study ON studygradetype.studyid = study.id
+            INNER JOIN opuscollege.gradetype gradetype ON gradetype.code = studygradetype.gradetypecode AND gradetype.lang = #{lang}
+            LEFT OUTER JOIN opuscollege.studyForm ON studyForm.code = studygradetype.studyFormCode AND studyForm.lang = #{lang}
+            LEFT OUTER JOIN opuscollege.studyTime ON studyTime.code = studygradetype.studyTimeCode AND studyTime.lang = #{lang}
+            INNER JOIN opuscollege.organizationalunit ON study.organizationalunitid = organizationalunit.id
+            INNER JOIN opuscollege.branch branch ON organizationalunit.branchid = branch.id
+            INNER JOIN opuscollege.institution institution ON branch.institutionid = institution.id
+
+        WHERE true
+            AND studyplancardinaltimeunit.cardinaltimeunitnumber != 0
+          
+            <include refid="common_filters"/>
+
+            <if test='searchValue != null and searchValue != ""'>
+                and ( 
+                opuscollege.remove_diacritics(lower(academicYear.description)) LIKE opuscollege.remove_diacritics(lower('%' || #{searchValue} || '%'))
+                OR opuscollege.remove_diacritics(lower(cardinaltimeunit.description) || ' ' || CAST(studyplancardinaltimeunit.cardinaltimeunitnumber AS VARCHAR)) like '%' || #{searchValue} || '%'
+                OR opuscollege.remove_diacritics(lower(study.studydescription || ' - ' || gradetype.description)) LIKE opuscollege.remove_diacritics(lower('%' || #{searchValue} || '%'))
+                )
+            </if>
+
+            <if test="statusCode != null">
+                AND studyplan.studyplanstatuscode = #{statusCode}
+            </if> 
+            <if test="cardinalTimeUnitNumber != null">
+            	AND opuscollege.studyPlanCardinalTimeUnit.cardinalTimeUnitNumber = #{cardinalTimeUnitNumber} 
+        	</if>
+            <if test="progressStatusCode != null">            	                
+                AND studyPlanCardinalTimeUnit.progressStatusCode = #{progressStatusCode}
+            </if>    
+            <if test="studyPlanStatusCode != null">            	                
+                AND studyPlan.studyPlanStatusCode = #{studyPlanStatusCode}
+            </if>    
+            <if test="genderCode != null">
+          		AND person.genderCode = #{genderCode}
+        	</if>
+       
+       GROUP BY
+          studyGradeType.id ,
+          studygradetype.currentacademicyearid,
+          cardinaltimeunitdescription,
+          cardinaltimeunitnumber,
+          academicYear,
+          studygradedescription,
+          studyFormDescription,
+          studyTimeDescription
+          
+       ORDER BY studygradedescription ASC, academicYear DESC, cardinaltimeunitnumber ASC
+       
+    </select>
+
+
+<select id="findStudentsByNameAsMaps" parameterType="map" resultType="java.util.HashMap"> 
+     SELECT DISTINCT
+         
+         person.firstNamesFull AS "firstNamesFull",
+         person.surnameFull AS "surnameFull",
+         person.firstNamesFull || ' ' || person.surnameFull AS "fullName" ,
+         person.birthdate AS "birthDate",
+         person.active,
+         student.studentId AS "studentId",
+         student.personId AS "personId",
+         student.primaryStudyId AS "primarystudyId",
+         student.studentCode AS "studentCode",
+         studyPlan.id AS "studyPlanId",
+         study.studydescription AS "studyDescription",
+         upper(substr(gender.description,0,2)) AS "genderDescription",
+         studyplan.studyplandescription,
+         studyPlanCardinalTimeUnit.id AS "studyPlanCardinalTimeUnitId",
+         studyplancardinaltimeunit.studygradeTypeId || ':'|| studyplancardinaltimeunit.cardinalTimeUnitNumber AS studyGradeIdCardinalTimeUnit
+         
+         
+    FROM
+     opuscollege.person person 
+     INNER JOIN opuscollege.student student ON person.id = student.personid
+     LEFT OUTER JOIN opuscollege.gender ON gender.code = person.gendercode and gender.lang = #{lang}
+     LEFT OUTER JOIN opuscollege.studyplan studyplan ON student.studentid = studyplan.studentid
+     LEFT OUTER JOIN opuscollege.studyPlanCardinalTimeUnit ON studyplan.id = studyplancardinaltimeunit.studyPlanId
+     LEFT OUTER JOIN opuscollege.studyGradeType on studyPlanCardinalTimeUnit.studyGradeTypeId = studyGradeType.id
+     LEFT OUTER JOIN opuscollege.academicyear ON academicyear.id = studygradetype.currentacademicyearid
+     LEFT OUTER JOIN opuscollege.studyplandetail studyplandetail ON studyplan.id = studyplandetail.studyplanid
+     LEFT OUTER JOIN opuscollege.study study ON studygradetype.studyid = study.id
+         OR study.id = student.primarystudyid
+     LEFT OUTER JOIN opuscollege.organizationalunit ON study.organizationalunitid = organizationalunit.id
+     LEFT OUTER JOIN opuscollege.branch branch ON organizationalunit.branchid = branch.id
+     LEFT OUTER JOIN opuscollege.institution institution ON branch.institutionid = institution.id
+     WHERE true
+        
+        <if test='searchValue != null and searchValue != ""'>
+            AND (
+                opuscollege.remove_diacritics(lower(studentcode))
+                || ' ' || opuscollege.remove_diacritics(lower(person.firstnamesfull))
+                || ' ' || opuscollege.remove_diacritics(lower(person.surnamefull))
+                like opuscollege.remove_diacritics(lower('%' || #{searchValue} || '%'))
+                OR opuscollege.remove_diacritics(lower(study.studydescription)) like opuscollege.remove_diacritics(lower('%' || #{searchValue} || '%'))
+            )
+        </if>
+        
+        <if test="institutionId != null">
+          AND institution.id = #{institutionId}
+        </if>
+        
+        <if test="branchId != null">
+          AND branch.id = #{branchId}
+        </if>
+        
+        <if test="organizationalUnitId != null">
+          AND organizationalunit.id in (SELECT id FROM opuscollege.crawl_tree(#{organizationalUnitId}, 0))
+        </if>
+        
+        <if test="studyId != null">
+          AND study.id = #{studyId}
+        </if>
+    
+        <if test="academicYearId != null">
+          AND academicyear.id = #{academicYearId} 
+        </if>
+    
+        <if test="studyGradeTypeId != null">
+          AND studygradetype.id = #{studyGradeTypeId}
+        </if>
+        <if test='studyGradeTypesIds != null and studyGradeTypesIds.size() > 0'>
+        	AND studygradetype.id IN  <foreach collection="studyGradeTypesIds" item="item" separator=",  " close="')" open="('">
+     			#{item}
+            </foreach>	
+		</if>
+        <if test="genderCode != null">
+          AND person.genderCode = #{genderCode}
+        </if>
+
+        <if test="registrationYear != null">
+          AND EXTRACT(YEAR FROM student.dateofenrolment) = #{registrationYear}
+        </if>
+        <if test="cardinalTimeUnitNumber != null">
+            	AND opuscollege.studyPlanCardinalTimeUnit.cardinalTimeUnitNumber = #{cardinalTimeUnitNumber} 
+        </if>
+       <if test="progressStatusCode != null">            	                
+                AND studyPlanCardinalTimeUnit.progressStatusCode = #{progressStatusCode}
+       </if>    
+        <if test="studyPlanStatusCode != null">            	                
+                AND studyPlan.studyPlanStatusCode = #{studyPlanStatusCode}
+        </if>
+        <if test='studentsIds != null and studentsIds.size() > 0'>
+			AND student.studentId IN <foreach collection="studentsIds" item="item" separator="," close=")" open="(">
+				#{item}  
+			</foreach>
+		</if>
+        <if test='studyPlansIds != null and studyPlansIds.size() > 0'>
+			AND studyPlansIds IN <foreach collection="studyPlansIds" item="item" separator="," close=")" open="(">
+				#{item}  
+			</foreach>
+		</if>
+        <if test='studyGradeIdsCardinalTimeUnits != null and studyGradeIdsCardinalTimeUnits.size() > 0'>
+			AND studyplancardinaltimeunit.studygradeTypeId || ':'|| studyplancardinaltimeunit.cardinalTimeUnitNumber IN 
+			<foreach collection="studyGradeIdsCardinalTimeUnits" item="item" separator="," close=")" open="(">
+     			#{item}
+			</foreach>
+        </if>
+       GROUP BY studyPlan.id,
+       student.studentid,
+       person.firstNamesFull ,
+         person.surnameFull ,
+         person.birthdate,
+         person.active,
+         student.personId,
+         student.primarystudyId,     
+         student.studentcode,
+         study.studydescription ,
+         gender.description ,
+         studyplan.studyplandescription,
+         studyPlanCardinalTimeUnit.id
+         
+    </select>
+    
+    <!-- Export students in a format suitable for importing in the Moodle system-->
+    <select id="findStudentsForMoodle" parameterType="map" resultType="java.util.HashMap"> 
+     SELECT DISTINCT
+         
+         student.studentcode AS "UserName",
+         person.firstNamesFull AS "FirstNames",
+         person.surnameFull AS "LastName",
+         person.firstNamesFull || '@ucm.ac.mz' AS "Email",
+         'Beira'  AS "City"
+         
+    FROM
+     opuscollege.person person 
+     INNER JOIN opuscollege.student student ON person.id = student.personid
+     LEFT OUTER JOIN opuscollege.gender ON gender.code = person.gendercode and gender.lang = #{lang}
+     LEFT OUTER JOIN opuscollege.studyplan studyplan ON student.studentid = studyplan.studentid
+     LEFT OUTER JOIN opuscollege.studyPlanCardinalTimeUnit ON studyplan.id = studyplancardinaltimeunit.studyPlanId
+     LEFT OUTER JOIN opuscollege.studyGradeType on studyPlanCardinalTimeUnit.studyGradeTypeId = studyGradeType.id
+     LEFT OUTER JOIN opuscollege.academicyear ON academicyear.id = studygradetype.currentacademicyearid
+     LEFT OUTER JOIN opuscollege.studyplandetail studyplandetail ON studyplan.id = studyplandetail.studyplanid
+     LEFT OUTER JOIN opuscollege.study study ON studygradetype.studyid = study.id
+         OR study.id = student.primarystudyid
+     LEFT OUTER JOIN opuscollege.organizationalunit ON study.organizationalunitid = organizationalunit.id
+     LEFT OUTER JOIN opuscollege.branch branch ON organizationalunit.branchid = branch.id
+     LEFT OUTER JOIN opuscollege.institution institution ON branch.institutionid = institution.id
+     WHERE true
+        
+        <if test='searchValue != null and searchValue != ""'>
+                AND (
+                    opuscollege.remove_diacritics(lower(studentcode))
+                    || ' ' || opuscollege.remove_diacritics(lower(person.firstnamesfull))
+                    || ' ' || opuscollege.remove_diacritics(lower(person.surnamefull))
+                    like opuscollege.remove_diacritics(lower('%' || #{searchValue} || '%'))
+                    OR opuscollege.remove_diacritics(lower(study.studydescription)) like opuscollege.remove_diacritics(lower('%' || #{searchValue} || '%'))
+                )
+        </if>
+        
+        <if test="institutionId != null">
+          AND institution.id = #{institutionId}
+        </if>
+        
+        <if test="branchId != null">
+          AND branch.id = #{branchId}
+        </if>
+        
+        <if test="organizationalUnitId != null">
+          AND organizationalunit.id in (SELECT id FROM opuscollege.crawl_tree(#{organizationalUnitId}, 0))
+        </if>
+        
+        <if test="studyId != null">
+          AND study.id = #{studyId}
+        </if>
+    
+        <if test="academicYearId != null">
+          AND academicyear.id = #{academicYearId} 
+        </if>
+    
+        <if test="studyGradeTypeId != null">
+          AND studygradetype.id = #{studyGradeTypeId}
+        </if>
+
+        <if test="genderCode != null">
+          AND person.genderCode = #{genderCode}
+        </if>
+
+        <if test="registrationYear != null">
+          AND EXTRACT(YEAR FROM student.dateofenrolment) = #{registrationYear}
+        </if>
+        <if test="cardinalTimeUnitNumber != null">
+            	AND opuscollege.studyPlanCardinalTimeUnit.cardinalTimeUnitNumber = #{cardinalTimeUnitNumber} 
+        </if>
+       <if test="progressStatusCode != null">            	                
+                AND studyPlanCardinalTimeUnit.progressStatusCode = #{progressStatusCode}
+       </if>    
+        <if test="studyPlanStatusCode != null">            	                
+                AND studyPlan.studyPlanStatusCode = #{studyPlanStatusCode}
+        </if>    
+            
+       GROUP BY studyPlan.id,
+       student.studentid,
+       person.firstNamesFull ,
+         person.surnameFull ,
+         person.birthdate,
+         person.active,
+         student.personId,
+         student.primarystudyId,     
+         student.studentcode,
+         study.studydescription ,
+         gender.description ,
+         studyplan.studyplandescription,
+         studyPlanCardinalTimeUnit.id
+         
+    </select>
+
+<!-- migration: apparently unused
+<select id="findStudentsAsMaps" parameterClass="map" resultClass="java.util.HashMap" > 
+     SELECT DISTINCT
+         
+         person.firstNamesFull AS "firstNamesFull",
+         person.surnameFull AS "surnameFull",
+         person.birthdate AS "birthDate",
+         person.active,
+         student.studentId AS "studentId",
+         student.personId AS "personId",
+         student.primaryStudyId AS "primarystudyId",
+         student.studentCode AS "studentCode",         
+         study.studydescription AS "studyDescription",
+         upper(substr(gender.description,0,2)) AS "genderDescription",
+         
+         
+    FROM
+     opuscollege.person person 
+     INNER JOIN opuscollege.student student ON person.id = student.personid
+     LEFT OUTER JOIN opuscollege.gender ON gender.code = person.gendercode and gender.lang = #{lang}
+     LEFT OUTER JOIN opuscollege.studyplan studyplan ON student.studentid = studyplan.studentid
+     LEFT OUTER JOIN opuscollege.studyPlanCardinalTimeUnit ON studyplan.id = studyplancardinaltimeunit.studyPlanId
+     LEFT OUTER JOIN opuscollege.studyGradeType on studyPlanCardinalTimeUnit.studyGradeTypeId = studyGradeType.id
+     LEFT OUTER JOIN opuscollege.academicyear ON academicyear.id = studygradetype.currentacademicyearid
+     LEFT OUTER JOIN opuscollege.studyplandetail studyplandetail ON studyplan.id = studyplandetail.studyplanid
+     LEFT OUTER JOIN opuscollege.study study ON studygradetype.studyid = study.id
+         OR study.id = student.primarystudyid
+     LEFT OUTER JOIN opuscollege.organizationalunit ON study.organizationalunitid = organizationalunit.id
+     LEFT OUTER JOIN opuscollege.branch branch ON organizationalunit.branchid = branch.id
+     LEFT OUTER JOIN opuscollege.institution institution ON branch.institutionid = institution.id
+     WHERE true
+        
+        <isNotNull property="searchValue">
+            <isNotEqual property="searchValue" compareValue="">
+                AND (
+                    opuscollege.remove_diacritics(lower(studentcode))
+                    || ' ' || opuscollege.remove_diacritics(lower(person.firstnamesfull))
+                    || ' ' || opuscollege.remove_diacritics(lower(person.surnamefull))
+                    like opuscollege.remove_diacritics(lower('%' || #{searchValue} || '%'))
+                    OR opuscollege.remove_diacritics(lower(study.studydescription)) like opuscollege.remove_diacritics(lower('%' || #{searchValue} || '%'))
+                )
+            </isNotEqual>
+        </isNotNull>
+        
+        <isNotNull property="institutionId">
+          AND institution.id = #{institutionId}
+        </isNotNull>
+        
+        <isNotNull property="branchId">
+          AND branch.id = #{branchId}
+        </isNotNull>
+        
+        <isNotNull property="organizationalUnitId">
+          AND organizationalunit.id in (SELECT id FROM opuscollege.crawl_tree(#{organizationalUnitId}, 0))
+        </isNotNull>
+        
+        <isNotNull property="studyId">
+          AND study.id = #{studyId}
+        </isNotNull>
+    
+        <isNotNull property="academicYearId">
+          AND academicyear.id = #{academicYearId} 
+        </isNotNull>
+    
+        <isNotNull  property="studyGradeTypeId" >
+          AND studygradetype.id = #{studyGradeTypeId}
+        </isNotNull>
+		<isNotEmpty property="studyGradeTypesIds">
+        	<iterate property="studyGradeTypesIds" prepend="AND studygradetype.id IN " open="('" close="')" conjunction=",  ">
+     			#{item}
+		</iterate>	
+		</isNotEmpty>
+        <isNotNull  property='genderCode' >
+          AND person.genderCode = #{genderCode}
+        </isNotNull>
+
+        <isNotNull  property='registrationYear' >
+          AND EXTRACT(YEAR FROM student.dateofenrolment) = #{registrationYear}
+        </isNotNull>
+        <isNotNull property="cardinalTimeUnitNumber">
+            	AND opuscollege.studyPlanCardinalTimeUnit.cardinalTimeUnitNumber = #{cardinalTimeUnitNumber} 
+        </isNotNull>
+       <isNotNull  property="progressStatusCode">            	                
+                AND studyPlanCardinalTimeUnit.progressStatusCode = #{progressStatusCode}
+       </isNotNull>    
+        <isNotNull  property="studyPlanStatusCode">            	                
+                AND studyPlan.studyPlanStatusCode = #{studyPlanStatusCode}
+        </isNotNull>
+        <isNotEmpty property="studentsIds" prepend=" AND student.studentId IN ">
+			<iterate property="studentsIds" open="(" close=")" conjunction=",">
+				#{item}  
+			</iterate>
+		</isNotEmpty>
+            
+       GROUP BY studyPlan.id,
+       student.studentid,
+       person.firstNamesFull ,
+         person.surnameFull ,
+         person.birthdate,
+         person.active,
+         student.personId,
+         student.primarystudyId,     
+         student.studentcode,
+         study.studydescription ,
+         gender.description ,
+         
+       
+
+    </select>
+ -->
+
+    <select id="findStudentsForExport" parameterType="map" resultType="java.util.HashMap"> 
+     SELECT DISTINCT
+         
+         person.firstNamesFull AS "firstNamesFull",
+         person.surnameFull AS "surnameFull",
+         person.firstNamesFull || ' ' || person.surnameFull AS "fullName",
+         person.birthdate AS "birthDate",         
+         student.studentCode AS "studentCode",                  
+         upper(substr(gender.description,0,2)) AS "genderDescription",
+         Address.emailAddress AS "emailAddress",
+         IdentificationType.description AS "identificationType",
+         Person.IdentificationNumber AS "identificationNumber"
+         
+    FROM
+     opuscollege.person person 
+     INNER JOIN opuscollege.Student ON person.id = student.personid
+     LEFT OUTER JOIN opuscollege.Gender ON gender.code = person.gendercode
+     LEFT OUTER JOIN opuscollege.Address ON Person.id = Address.personId
+     LEFT OUTER JOIN opuscollege.IdentificationType ON IdentificationType.code = Person.identificationTypeCode
+     
+     WHERE 
+     Gender.lang = #{lang}      
+     AND IdentificationType.lang = #{lang}
+
+        <if test='studentsIds != null and studentsIds.size() > 0'>
+			 <foreach collection="studentsIds" item="item" separator="," close=")" open="(">
+				#{item}  
+			</foreach>
+		</if>
+            
+       GROUP BY
+		student.studentId ,
+        person.firstNamesFull ,
+        person.surnameFull ,
+        person.birthdate,      
+        student.studentcode,         
+        gender.description,
+        address.emailaddress,
+        IdentificationType.description,
+        Person.IdentificationNumber
+
+        ORDER BY person.firstNamesFull
+        , person.surnameFull
+         ,person.firstNamesFull || ' ' || person.surnameFull 
+         ,person.birthdate         
+         ,student.studentCode                  
+         ,upper(substr(gender.description,0,2))
+         ,Address.emailAddress 
+         ,IdentificationType.description 
+         ,Person.IdentificationNumber 
+
+    </select>
+
+	<select id="findStudentWithCode" parameterType="String" resultType="StudentResult">
+		SELECT
+	
+		Person.firstNamesFull || ' ' || Person.surnameFull AS studentName,
+		Student.studentCode AS studentCode
+	
+		FROM opuscollege.person
+		INNER JOIN opuscollege.Student ON Student.personId = Person.id
+		
+		WHERE Student.studentCode = #{value}
+	
+	</select>
+
+	<!--
+	Find students for exam screen
+	-->
+    <select id="findStudentsForExam" parameterType="map" resultType="java.util.HashMap">
+        SELECT
+		studentCode AS "studentCode",
+		firstNamesFull AS "firstNamesFull",
+		surnameFull AS "surnameFull",
+		opuscollege.studyPlanDetail.*
+        
+    	FROM opuscollege.studyPlanDetail
+        INNER JOIN opuscollege.studyPlanCardinalTimeUnit ON studyPlanDetail.studyPlanCardinalTimeUnitId = studyPlanCardinalTimeUnit.id
+        INNER JOIN opuscollege.studyPlan ON studyPlanCardinalTimeUnit.studyPlanId = studyPlan.id
+        INNER JOIN opuscollege.studyGradeType ON studyPlanCardinalTimeUnit.studyGradeTypeId = studyGradeType.id
+        INNER JOIN opuscollege.Student ON StudyPlan.studentId = Student.studentId
+        INNER JOIN opuscollege.Person ON Person.id = Student.personId
+        WHERE true
+    
+        <if test='subjectId != null and subjectId != "0"'>
+                AND (studyPlanDetail.subjectId = #{subjectId}
+                OR  studyPlanDetail.subjectBlockId IN (
+                    SELECT studyPlanDetail.subjectBlockId
+                    FROM opuscollege.studyPlanDetail
+                    INNER JOIN opuscollege.subjectSubjectBlock ON studyPlanDetail.subjectBlockId = subjectSubjectBlock.subjectBlockId
+                    WHERE subjectSubjectBlock.subjectId = #{subjectId}
+                ))
+        </if>
+       <if test="studentCode != null">
+       		AND student.studentCode = #{studentCode}
+       </if> 
+        <if test='subjectBlockId != null and subjectBlockId != "0"'>
+            	AND studyPlanDetail.subjectBlockId = #{subjectBlockId}
+        </if>
+        <if test='studyPlanId != null and studyPlanId != "0"'>
+        		AND	 studyPlanCardinalTimeUnit.studyPlanId = #{studyPlanId}
+        </if>
+        <if test='studyPlanCardinalTimeUnitId != null and studyPlanCardinalTimeUnitId != "0"'>
+        		AND		studyPlanCardinalTimeUnitId = #{studyPlanCardinalTimeUnitId}
+        </if>
+        <if test="cardinalTimeUnitStatusCode != null">
+                AND     studyPlanCardinalTimeUnit.cardinalTimeUnitStatusCode = #{cardinalTimeUnitStatusCode}
+        </if>
+        <if test="progressStatusCodeNotCarryingAll != null">
+            AND not exists (
+                select carrying from opuscollege.progressStatus
+                where studyPlanCardinalTimeUnit.progressStatusCode = progressStatus.code
+                  and progressStatus.lang = #{preferredLanguage}
+                  and upper(carrying) = 'A'
+            )
+        </if>
+        <if test="rigidityTypeCode != null">
+        	AND		"rigidityTypeCode" = #"rigidityTypeCode"#
+        </if>
+        <if test='studyGradeTypeId != null and studyGradeTypeId != "0"'>
+        		AND     studyGradeType.id = #{studyGradeTypeId}
+        </if>
+        <if test='academicYearId != null and academicYearId != "0"'>
+        		AND     studyGradeType.currentAcademicYearId = #{academicYearId}
+        </if>
+        <if test="active != null">
+            AND     studyPlanDetail.active = #{active}
+        </if>
+        ORDER BY   studyPlanDetail.id 
+    </select>
+
+    <!-- migration: apparently unused
+   <select id="countStudentsForExam" parameterType="map" resultType="int">
+        SELECT COUNT(*)
+        
+    	FROM opuscollege.studyPlanDetail
+       
+        INNER JOIN opuscollege.studyPlanCardinalTimeUnit ON studyPlanDetail.studyPlanCardinalTimeUnitId = studyPlanCardinalTimeUnit.id
+        INNER JOIN opuscollege.studyPlan ON studyPlanCardinalTimeUnit.studyPlanId = studyPlan.id
+        INNER JOIN opuscollege.studyGradeType ON studyPlanCardinalTimeUnit.studyGradeTypeId = studyGradeType.id
+        INNER JOIN opuscollege.Student ON StudyPlan.studentId = Student.studentId
+        INNER JOIN opuscollege.Person ON Person.id = Student.personId
+       
+     	 WHERE true
+    
+        <if test='subjectId != null and subjectId != "0"'>
+                AND (studyPlanDetail.subjectId = #{subjectId}
+                OR  studyPlanDetail.subjectBlockId IN (
+                    SELECT studyPlanDetail.subjectBlockId
+                    FROM opuscollege.studyPlanDetail
+                    INNER JOIN opuscollege.subjectSubjectBlock ON studyPlanDetail.subjectBlockId = subjectSubjectBlock.subjectBlockId
+                    WHERE subjectSubjectBlock.subjectId = #{subjectId}
+                ))
+        </if>
+       <if test="studentCode != null">
+       		AND student.studentCode = #{studentCode}
+       </if>
+        <if test='subjectBlockId != null and subjectBlockId != "0"'>
+            	AND studyPlanDetail.subjectBlockId = #{subjectBlockId}
+        </if>
+        <if test='studyPlanId != null and studyPlanId != "0"'>
+        		AND	 studyPlanCardinalTimeUnit.studyPlanId = #{studyPlanId}
+        </if>
+        <if test='studyPlanCardinalTimeUnitId != null and studyPlanCardinalTimeUnitId != "0"'>
+        		AND		studyPlanCardinalTimeUnitId = #{studyPlanCardinalTimeUnitId}
+        </if>
+        <if test="cardinalTimeUnitStatusCode != null">
+                AND     studyPlanCardinalTimeUnit.cardinalTimeUnitStatusCode = #{cardinalTimeUnitStatusCode}
+        </if>
+        <if test="progressStatusCodeNotCarryingAll != null">
+            AND not exists (
+                select carrying from opuscollege.progressStatus
+                where studyPlanCardinalTimeUnit.progressStatusCode = progressStatus.code
+                  and progressStatus.lang = #{preferredLanguage}
+                  and upper(carrying) = 'A'
+            )
+        </if>
+        <if test="rigidityTypeCode != null">
+        	AND		"rigidityTypeCode" = #"rigidityTypeCode"#
+        </if>
+        <if test='studyGradeTypeId != null and studyGradeTypeId != "0"'>
+        		AND     studyGradeType.id = #{studyGradeTypeId}
+        </if>
+        <if test='academicYearId != null and academicYearId != "0"'>
+        		AND     studyGradeType.currentAcademicYearId = #{academicYearId}
+        </if>
+        <if test="active != null">
+            AND     studyPlanDetail.active = #{active}
+        </if>
+        ORDER BY   studyPlanDetail.id 
+    </select> -->
+    
+    <select id="validateStudentForExam" parameterType="map" resultType="java.util.HashMap">
+       SELECT distinct
+		studentCode AS "studentCode",
+		firstNamesFull AS "firstNamesFull",
+		surnameFull AS "surnameFull",
+   		studyPlanDetail.id AS "studyPlanDetailId",	
+		
+	        Exists(Select Sdt.studentCode From opuscollege.StudyPlandetail 
+	        INNER JOIN opuscollege.StudyPlan ON StudyPlanDetail.studyPlanId = StudyPlan.id
+	        INNER JOIN opuscollege.Student Sdt ON StudyPlan.studentId = Sdt.studentId
+	        WHERE 
+		Sdt.studentCode = #{studentCode}
+		AND
+		(
+	        studyPlanDetail.subjectId = #{subjectId}
+                OR  studyPlanDetail.subjectBlockId IN (
+                    SELECT studyPlanDetail.subjectBlockId
+                    FROM opuscollege.studyPlanDetail
+                    INNER JOIN opuscollege.subjectSubjectBlock ON studyPlanDetail.subjectBlockId = subjectSubjectBlock.subjectBlockId
+                    WHERE subjectSubjectBlock.subjectId = #{subjectId}
+                ))) AS "isValid"
+        
+    	FROM opuscollege.studyPlanDetail
+        INNER JOIN opuscollege.studyPlanCardinalTimeUnit ON studyPlanDetail.studyPlanCardinalTimeUnitId = studyPlanCardinalTimeUnit.id
+        INNER JOIN opuscollege.studyPlan ON studyPlanCardinalTimeUnit.studyPlanId = studyPlan.id
+        INNER JOIN opuscollege.studyGradeType ON studyPlanCardinalTimeUnit.studyGradeTypeId = studyGradeType.id
+        INNER JOIN opuscollege.Student ON StudyPlan.studentId = Student.studentId
+        INNER JOIN opuscollege.Person ON Person.id = Student.personId
+        WHERE true
+    
+        AND studentCode = #{studentCode}
+   		AND studyPlanCardinalTimeUnit.cardinalTimeUnitNumber = #{cardinalTimeUnitNumber}
+
+   </select>
+
+  
+  
+  <select id="findStudentsResults" parameterType="map" resultMap="StudentResultResultMap">
+        SELECT
+  	
+		Student.studentCode AS "studentCode",
+		Person.firstNamesFull AS "firstNamesFull",
+		Person.surnameFull AS "surnameFull",
+  		Person.firstNamesFull || ' ' || Person.surnameFull AS "studentName", 
+
+  		COALESCE(SubjectResult.id,0) AS "id", 
+  		COALESCE(SubjectResult.subjectid,0) AS "subjectId", 
+  		SubjectResult.subjectresultdate, 
+  		SubjectResult.mark, 
+  		COALESCE(SubjectResult.staffmemberid,0) AS "staffMemberId",
+		SubjectResult.active, 
+		SubjectResult.writewho, 
+		SubjectResult.writewhen, 
+		SubjectResult.passed, 
+		SubjectResult.endgradecomment,
+
+		StudyPlanDetail.id AS "studyPlanDetailId", 
+		StudyPlanDetail.studyplanid, 
+		StudyPlanDetail.studyplancardinaltimeunitid, 
+		StudyPlanDetail.studygradetypeid	
+        
+    	FROM opuscollege.studyPlanDetail
+        INNER JOIN opuscollege.studyPlanCardinalTimeUnit ON studyPlanDetail.studyPlanCardinalTimeUnitId = studyPlanCardinalTimeUnit.id
+        INNER JOIN opuscollege.studyPlan ON studyPlanCardinalTimeUnit.studyPlanId = studyPlan.id
+        INNER JOIN opuscollege.studyGradeType ON studyPlanCardinalTimeUnit.studyGradeTypeId = studyGradeType.id
+        INNER JOIN opuscollege.Student ON StudyPlan.studentId = Student.studentId
+        INNER JOIN opuscollege.Person ON Person.id = Student.personId
+  		LEFT OUTER JOIN opuscollege.SubjectResult ON StudyPlanDetail.id = SubjectResult.studyPlanDetailId	
+        WHERE true
+    
+        <if test='subjectId != null and subjectId != "0"'>
+            AND (studyPlanDetail.subjectId = #{subjectId}
+                OR  studyPlanDetail.subjectBlockId IN (
+                    SELECT studyPlanDetail.subjectBlockId
+                    FROM opuscollege.studyPlanDetail
+                    INNER JOIN opuscollege.subjectSubjectBlock ON studyPlanDetail.subjectBlockId = subjectSubjectBlock.subjectBlockId
+                    WHERE subjectSubjectBlock.subjectId = #{subjectId}
+                ))
+        	AND
+                ((COALESCE(SubjectResult.subjectid,0) = 0) OR (COALESCE(SubjectResult.subjectid,0) = #{subjectId}))		
+        </if>
+        <if test="studentCode != null">
+       		AND student.studentCode = #{studentCode}
+       </if> 
+        <if test='subjectBlockId != null and subjectBlockId != "0"'>
+            	AND studyPlanDetail.subjectBlockId = #{subjectBlockId}
+        </if>
+        <if test='studyPlanId != null and studyPlanId != "0"'>
+        		AND	 studyPlanCardinalTimeUnit.studyPlanId = #{studyPlanId}
+        </if>
+        <if test='studyPlanCardinalTimeUnitId != null and studyPlanCardinalTimeUnitId != "0"'>
+        		AND		studyPlanCardinalTimeUnitId = #{studyPlanCardinalTimeUnitId}
+        </if>
+        <if test="cardinalTimeUnitStatusCode != null">
+                AND     studyPlanCardinalTimeUnit.cardinalTimeUnitStatusCode = #{cardinalTimeUnitStatusCode}
+        </if>
+        <if test='cardinalTimeUnitNumber != null and cardinalTimeUnitNumber != "0"'>
+       			AND studyPlanCardinalTimeUnit.cardinalTimeUnitNumber = #{cardinalTimeUnitNumber}
+       </if> 
+        <if test="progressStatusCodeNotCarryingAll != null">
+            AND not exists (
+                select carrying from opuscollege.progressStatus
+                where studyPlanCardinalTimeUnit.progressStatusCode = progressStatus.code
+                  and progressStatus.lang = #{preferredLanguage}
+                  and upper(carrying) = 'A'
+            )
+        </if>
+        <if test="rigidityTypeCode != null">
+        	AND		"rigidityTypeCode" = #"rigidityTypeCode"#
+        </if>
+        <if test='studyGradeTypeId != null and studyGradeTypeId != "0"'>
+        		AND     studyGradeType.id = #{studyGradeTypeId}
+        </if>
+        <if test='academicYearId != null and academicYearId != "0"'>
+        		AND     studyGradeType.currentAcademicYearId = #{academicYearId}
+        </if>
+        <if test="active != null">
+            AND     studyPlanDetail.active = #{active}
+        </if>
+         
+        ORDER BY person.firstNamesFull
+        , person.surnameFull
+         ,person.firstNamesFull || ' ' || person.surnameFull 
+         ,studyPlanDetail.id 
+    </select>
+
+</mapper>

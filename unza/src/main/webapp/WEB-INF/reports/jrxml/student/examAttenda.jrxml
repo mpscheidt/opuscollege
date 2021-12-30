@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="course" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="mode_of_study" class="java.lang.String" isForPrompting="false"/>
+	<queryString>
+		<![CDATA[select
+st.studentcode,
+pn.surnamefull,
+pn.firstnamesfull,
+spd.subjectid,
+spd.studyplanid
+from
+opuscollege.studyplandetail spd,
+opuscollege.studyplan sp,
+opuscollege.student st,
+opuscollege.person pn
+where
+spd.studyplanid=sp.id and
+st.studentid=sp.studentid and
+st.personid=pn.id
+order by subjectid]]>
+	</queryString>
+	<field name="studentcode" class="java.lang.String"/>
+	<field name="surnamefull" class="java.lang.String"/>
+	<field name="firstnamesfull" class="java.lang.String"/>
+	<field name="subjectid" class="java.lang.Integer"/>
+	<field name="studyplanid" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="128" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="25"/>
+				<textElement textAlignment="Center">
+					<font size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[The University of Zambia]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="25" width="555" height="19"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Examination Attendance Register]]></text>
+			</staticText>
+			<textField pattern="dd MMMMM yyyy">
+				<reportElement x="455" y="55" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="170" y="104" width="100" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Candidate ID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="18" y="104" width="140" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Candidate  Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="394" y="104" width="161" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Candidate's Signature]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="260" y="55" width="185" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{course}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="16" y="58" width="230" height="17"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{mode_of_study}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<detail>
+		<band height="24" splitType="Stretch">
+			<textField>
+				<reportElement x="18" y="0" width="33" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{surnamefull}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="61" y="0" width="36" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{firstnamesfull}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="170" y="4" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{studentcode}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="55" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="74" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="22" width="270" height="20"/>
+				<textElement/>
+				<text><![CDATA[Number of candidate sitting for this examination =]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="9" width="555" height="1"/>
+			</line>
+			<staticText>
+				<reportElement x="294" y="48" width="110" height="20"/>
+				<textElement/>
+				<text><![CDATA[Invigilator's Signature]]></text>
+			</staticText>
+			<line>
+				<reportElement x="404" y="67" width="151" height="1"/>
+			</line>
+		</band>
+	</summary>
+</jasperReport>

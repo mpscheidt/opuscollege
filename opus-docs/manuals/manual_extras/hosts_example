@@ -1,0 +1,14 @@
+#
+# Copyright (c) 2007 F-Secure Corporation 
+# 
+# This is a HOSTS file created during malware removal. 
+#
+# Your original HOSTS file was infected and it was replaced 
+# by this file containing only clean default entries. 
+# The original HOSTS file may be restored from the product's
+# quarantine feature.
+#
+127.0.0.1		localhost
+::1			localhost
+131.174.92.74   	ru.nl   	ru
+131.174.93.241	opusdb	opusdb.boomwants

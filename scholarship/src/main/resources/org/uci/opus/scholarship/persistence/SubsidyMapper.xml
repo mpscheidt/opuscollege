@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ***** BEGIN LICENSE BLOCK *****
+  Version: MPL 1.1/GPL 2.0/LGPL 2.1
+  
+  The contents of this file are subject to the Mozilla Public License Version
+  1.1 (the "License"); you may not use this file except in compliance with
+  the License. You may obtain a copy of the License at
+  http://www.mozilla.org/MPL/
+  
+  Software distributed under the License is distributed on an "AS IS" basis,
+  WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+  for the specific language governing rights and limitations under the
+  License.
+  
+  The Original Code is Opus-College scholarship module code.
+  
+  The Initial Developer of the Original Code is
+  Center for Information Services, Radboud University Nijmegen.
+  Portions created by the Initial Developer are Copyright (C) 2008
+  the Initial Developer. All Rights Reserved.
+  
+  Contributor(s):
+    For Java files, see Javadoc @author tags.
+  
+  Alternatively, the contents of this file may be used under the terms of
+  either the GNU General Public License Version 2 or later (the "GPL"), or
+  the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+  in which case the provisions of the GPL or the LGPL are applicable instead
+  of those above. If you wish to allow use of your version of this file only
+  under the terms of either the GPL or the LGPL, and not to allow others to
+  use your version of this file under the terms of the MPL, indicate your
+  decision by deleting the provisions above and replace them with the notice
+  and other provisions required by the GPL or the LGPL. If you do not delete
+  the provisions above, a recipient may use your version of this file under
+  the terms of any one of the MPL, the GPL or the LGPL.
+  
+  ***** END LICENSE BLOCK *****
+-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.uci.opus.scholarship.persistence.SubsidyMapper">
+
+    <resultMap id="findSubsidiesResultMap" type="java.util.HashMap">
+        <result property="surnameFull" column="surnameFull"/>
+        <result property="firstnamesFull" column="firstnamesFull"/>
+        <result property="birthdate" column="birthdate"/>
+        <result property="civilTitleCode" column="civilTitleCode"/>
+        <result property="studentId" column="studentId"/>
+        <result property="subsidyId" column="id"/>
+        <result property="scholarshipStudentId" column="scholarshipStudentId"/>
+        <result property="amount" column="amount"/>
+        <result property="subsidyDate" column="subsidyDate"/>
+        <result property="observation" column="observation"/>
+        <result property="active" column="active"/>
+        <result property="sponsorId" column="sponsorId"/>
+        <result property="sponsorName" column="sponsorName"/>      
+        <result property="subsidyTypeCode" column="subsidyTypeCode"/>
+        <result property="subsidyTypeDescription" column="subsidyTypeDescription"/>
+    </resultMap>
+        
+    <select id="findStudentSubsidies" parameterType="int" resultType="Subsidy">
+        select *
+        from   opuscollege.sch_subsidy
+        where  scholarshipStudentid = #{value}
+        ORDER BY subsidyDate DESC
+    </select>
+
+    <delete id="deleteSubsidiesForStudent" parameterType="int">
+        DELETE  from opuscollege.sch_subsidy
+        where   scholarshipStudentId = #{value}
+    </delete>
+
+    <select id="findSubsidy" parameterType="int" resultType="Subsidy">
+        select  *
+        from    opuscollege.sch_subsidy
+        where   id = #{value}
+    </select> 
+
+    <select id="findSubsidies" parameterType="map" resultMap="findSubsidiesResultMap">
+        select  person.surnameFull
+        ,       person.firstnamesFull
+        ,       person.birthdate
+        ,       person.civilTitleCode
+        ,       student.studentId
+        ,       sch_subsidy.id
+        ,       sch_subsidy.scholarshipStudentId
+        ,       sch_subsidy.amount
+        ,       sch_subsidy.subsidydate
+        ,       sch_subsidy.observation
+        ,       sch_subsidy.active
+        ,       sch_sponsor.id as sponsorId
+        ,       sch_sponsor.name  as sponsorName
+        ,       sch_subsidyType.code as subsidyTypeCode
+        ,       sch_subsidyType.description as subsidyTypeDescription
+        from    opuscollege.sch_subsidy
+        inner   join opuscollege.sch_sponsor on sch_sponsor.id = sch_subsidy.sponsorId
+        inner   join opuscollege.sch_subsidytype on sch_subsidytype.code = sch_subsidy.subsidyTypeCode
+        inner   join opuscollege.sch_student on sch_student.scholarshipStudentId = sch_subsidy.scholarshipStudentId
+        inner   join opuscollege.student on student.studentId = sch_student.studentId
+        inner   join opuscollege.person ON student.personId = person.id
+        inner   join opuscollege.study on student.primaryStudyId = study.id
+        inner   join opuscollege.organizationalunit on study.organizationalUnitId = organizationalunit.id
+        inner   join opuscollege.branch on branch.id = organizationalunit.branchId
+        inner   join opuscollege.institution on institution.id = branch.institutionId
+        where   sch_subsidyType.lang = #{preferredLanguage}
+        <if test='institutionId != null and institutionId != "0"'>
+            and institution.id = #{institutionId}
+        </if>
+        <if test='branchId != null and branchId != "0"'>
+            and branch.id = #{branchId}
+        </if>
+        <if test='organizationalUnitId != null and organizationalUnitId != "0"'>
+            and organizationalUnit.id in
+                (select id from opuscollege.crawl_tree(#{organizationalUnitId}, 0))
+        </if>
+        <if test='sponsorId != null and sponsorId != "0"'>
+            and sch_subsidy.sponsorId = #{sponsorId}
+        </if>
+        ORDER BY lower(person.surnameFull)
+    </select>
+    
+    <insert id="addSubsidy" parameterType="Subsidy"> 
+        insert into opuscollege.sch_subsidy
+        ( scholarshipStudentId
+        , subsidyTypeCode
+        , sponsorId
+        , amount
+        , subsidyDate
+        , observation
+        , active
+        ) values
+        ( #{scholarshipStudentId}
+        , #{subsidyTypeCode}
+        , #{sponsorId}
+        , #{amount}
+        , #{subsidyDate}
+        , #{observation}
+        , #{active}
+        )
+        <!-- http://opensource.atlassian.com/confluence/oss/pages/viewpage.action?pageId=407 -->
+        <selectKey keyProperty="id" resultType="int">
+            SELECT currVal('opuscollege.sch_subsidySeq')
+        </selectKey>
+    </insert>
+    
+    <update id="updateSubsidy" parameterType="Subsidy">
+        update  opuscollege.sch_subsidy
+        set     scholarshipStudentId = #{scholarshipStudentId}
+        ,       subsidyTypeCode = #{subsidyTypeCode}
+        ,       sponsorId = #{sponsorId}
+        ,       amount = #{amount}
+        ,       subsidyDate = #{subsidyDate}
+        ,       observation = #{observation}
+        ,       active = #{active}
+       where   id = #{id}
+    </update>
+    
+    <delete id="deleteSubsidy" parameterType="int">
+        delete from opuscollege.sch_subsidy
+        where  id = #{value}
+    </delete>
+
+</mapper>

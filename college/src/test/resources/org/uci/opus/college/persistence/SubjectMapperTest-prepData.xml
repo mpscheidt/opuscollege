@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ***** BEGIN LICENSE BLOCK *****
+  Version: MPL 1.1/GPL 2.0/LGPL 2.1
+  
+  The contents of this file are subject to the Mozilla Public License Version
+  1.1 (the "License"); you may not use this file except in compliance with
+  the License. You may obtain a copy of the License at
+  http://www.mozilla.org/MPL/
+  
+  Software distributed under the License is distributed on an "AS IS" basis,
+  WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+  for the specific language governing rights and limitations under the
+  License.
+  
+  The Original Code is Opus-College college module code.
+  
+  The Initial Developer of the Original Code is
+  Center for Information Services, Radboud University Nijmegen.
+  Portions created by the Initial Developer are Copyright (C) 2008
+  the Initial Developer. All Rights Reserved.
+  
+  Contributor(s):
+    For Java files, see Javadoc @author tags.
+  
+  Alternatively, the contents of this file may be used under the terms of
+  either the GNU General Public License Version 2 or later (the "GPL"), or
+  the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+  in which case the provisions of the GPL or the LGPL are applicable instead
+  of those above. If you wish to allow use of your version of this file only
+  under the terms of either the GPL or the LGPL, and not to allow others to
+  use your version of this file under the terms of the MPL, indicate your
+  decision by deleting the provisions above and replace them with the notice
+  and other provisions required by the GPL or the LGPL. If you do not delete
+  the provisions above, a recipient may use your version of this file under
+  the terms of any one of the MPL, the GPL or the LGPL.
+  
+  ***** END LICENSE BLOCK *****
+-->
+
+<dataset>
+
+  <opuscollege.academicyear id="1" />
+  <opuscollege.academicyear id="2" />
+  <opuscollege.academicyear id="3" />
+
+  <opuscollege.institution id="107" institutioncode="UCM" institutionTypeCode="3"/>
+  <opuscollege.branch id="118" branchcode="05" institutionid="107" />
+  <opuscollege.branch id="129" branchcode="08" institutionid="107" />
+
+  <!-- subject and examinations are used at both org units -->
+  <opuscollege.subject id="77" currentacademicyearid="1" subjectcode="BIOL001" subjectdescription="Biology 1" primarystudyid="1213" brspassingsubject="10" active="Y" creditamount="1.0" studytimecode="1" />
+
+  <opuscollege.subject id="88" currentacademicyearid="1" subjectcode="PHYS001" subjectdescription="Physics 1" primarystudyid="1213" brspassingsubject="10" active="Y" creditamount="1.0" studytimecode="1" />
+
+  <!-- Org.unit at branch with default examinationFailCascade (=false) -->
+  <opuscollege.organizationalunit id="18" organizationalunitcode="O1" organizationalunitdescription="Faculdade de Ciencias de Saude" branchid="118" />
+
+  <!-- Teacher -->
+  <opuscollege.person id="16" personcode="61" surnamefull="Juergens" firstnamesfull="Udo" />
+  <opuscollege.staffmember staffmemberid="1" staffmembercode="ju" personid="16" primaryunitofappointmentid="18" />
+
+  <opuscollege.study id="1213" organizationalunitid="18" />
+  <opuscollege.studygradetype id="256" studyid="1213" gradetypecode="B" active="Y" currentacademicyearid="1" cardinaltimeunitcode="2" numberofcardinaltimeunits="6" maxnumberofcardinaltimeunits="0" numberofsubjectspercardinaltimeunit="2" maxnumberofsubjectspercardinaltimeunit="4" studytimecode="1" studyformcode="1" maxnumberoffailedsubjectspercardinaltimeunit="1" studyintensitycode="" maxnumberofstudents="0" />
+  <opuscollege.subjectstudygradetype id="256" subjectid="77" studygradetypeid="256" active="Y" cardinaltimeunitnumber="1" rigiditytypecode="1"/>
+
+  <!-- Org.unit at branch with different examinationFailCascade (=true) -->
+  <opuscollege.organizationalunit id="19" organizationalunitcode="O2" organizationalunitdescription="A Department" branchid="129" />
+  <opuscollege.study id="39" organizationalunitid="19" />
+  <opuscollege.studygradetype id="59" studyid="39" gradetypecode="BSC" active="Y" currentacademicyearid="1" cardinaltimeunitcode="2" numberofcardinaltimeunits="6" maxnumberofcardinaltimeunits="0" numberofsubjectspercardinaltimeunit="2" maxnumberofsubjectspercardinaltimeunit="4" studytimecode="1" studyformcode="1" maxnumberoffailedsubjectspercardinaltimeunit="1" studyintensitycode="" maxnumberofstudents="0" />
+
+  <opuscollege.subjectstudygradetype id="59" subjectid="77" studygradetypeid="59" active="Y" cardinaltimeunitnumber="1" rigiditytypecode="1"/>
+  <opuscollege.subjectstudygradetype id="60" subjectid="88" studygradetypeid="59" active="Y" cardinaltimeunitnumber="1" rigiditytypecode="1"/>
+
+</dataset>

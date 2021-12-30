@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ***** BEGIN LICENSE BLOCK *****
+  Version: MPL 1.1/GPL 2.0/LGPL 2.1
+  
+  The contents of this file are subject to the Mozilla Public License Version
+  1.1 (the "License"); you may not use this file except in compliance with
+  the License. You may obtain a copy of the License at
+  http://www.mozilla.org/MPL/
+  
+  Software distributed under the License is distributed on an "AS IS" basis,
+  WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+  for the specific language governing rights and limitations under the
+  License.
+  
+  The Original Code is Opus-College scholarship module code.
+  
+  The Initial Developer of the Original Code is
+  Center for Information Services, Radboud University Nijmegen.
+  Portions created by the Initial Developer are Copyright (C) 2008
+  the Initial Developer. All Rights Reserved.
+  
+  Contributor(s):
+    For Java files, see Javadoc @author tags.
+  
+  Alternatively, the contents of this file may be used under the terms of
+  either the GNU General Public License Version 2 or later (the "GPL"), or
+  the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+  in which case the provisions of the GPL or the LGPL are applicable instead
+  of those above. If you wish to allow use of your version of this file only
+  under the terms of either the GPL or the LGPL, and not to allow others to
+  use your version of this file under the terms of the MPL, indicate your
+  decision by deleting the provisions above and replace them with the notice
+  and other provisions required by the GPL or the LGPL. If you do not delete
+  the provisions above, a recipient may use your version of this file under
+  the terms of any one of the MPL, the GPL or the LGPL.
+  
+  ***** END LICENSE BLOCK *****
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns:aop="http://www.springframework.org/schema/aop"
+		xmlns:tx="http://www.springframework.org/schema/tx"
+		xmlns:context="http://www.springframework.org/schema/context"
+		xsi:schemaLocation="http://www.springframework.org/schema/beans
+							http://www.springframework.org/schema/beans/spring-beans.xsd
+							http://www.springframework.org/schema/context
+                            http://www.springframework.org/schema/context/spring-context.xsd
+							http://www.springframework.org/schema/aop
+       						http://www.springframework.org/schema/aop/spring-aop.xsd
+							http://www.springframework.org/schema/tx
+       						http://www.springframework.org/schema/tx/spring-tx.xsd
+       						">
+
+	<bean id="scholarshipModule" class="org.uci.opus.college.module.Module">
+		<property name="name" value="Scholarship Module"/>
+		<property name="module" value="scholarship"/>
+		<property name="order" value="40"/>
+        <property name="menu" value="/WEB-INF/views/scholarship/scholarshipMenu.jsp"/>
+		<property name="startPage" value="/scholarship/index.html"/>
+		<property name="messagesBasename" value="org/uci/opus/scholarship/messages"/>
+		<property name="moduleVersion" value="4.2" />
+	</bean>	
+	
+    <bean name="scholarship-3.26" class="org.uci.opus.util.dbupgrade.SqlFileUpgradeCommand">
+        <property name="sqlFile" value="classpath:../database/version33_version34/33_001_opuscollege_scholarship_update.sql"/>
+        <property name="dataSource"><ref bean="dataSource" /></property>
+        <property name="order" value="2012-07-01" />
+        <property name="module" ref="scholarshipModule" />
+        <property name="version" value="3.26" />
+    </bean>
+    
+	<bean name="scholarship-3.27" class="org.uci.opus.util.dbupgrade.SqlFileUpgradeCommand">
+        <property name="sqlFile" value="classpath:../database/version33_version34/33_002_opuscollege_scholarship_update.sql"/>
+        <property name="dataSource"><ref bean="dataSource" /></property>
+        <property name="order" value="2012-07-02" />
+        <property name="module" ref="scholarshipModule" />
+        <property name="version" value="3.27" />
+    </bean>
+    
+    <bean name="scholarship-3.28" class="org.uci.opus.util.dbupgrade.SqlFileUpgradeCommand">
+        <property name="sqlFile" value="classpath:../database/version33_version34/33_003_opuscollege_scholarship_update.sql"/>
+        <property name="dataSource"><ref bean="dataSource" /></property>
+        <property name="order" value="2012-07-03" />
+        <property name="module" ref="scholarshipModule" />
+        <property name="version" value="3.28" />
+    </bean>
+    
+    <bean name="scholarship-3.29" class="org.uci.opus.util.dbupgrade.SqlFileUpgradeCommand">
+        <property name="sqlFile" value="classpath:../database/version33_version34/33_004_opuscollege_scholarship_update.sql"/>
+        <property name="dataSource"><ref bean="dataSource" /></property>
+        <property name="order" value="2012-07-04" />
+        <property name="module" ref="scholarshipModule" />
+        <property name="version" value="3.29" />
+    </bean>
+
+    <bean name="scholarship-3.30" class="org.uci.opus.util.dbupgrade.SqlFileUpgradeCommand">
+        <property name="sqlFile" value="classpath:../database/version33_version34/33_005_opuscollege_scholarship_update.sql"/>
+        <property name="dataSource"><ref bean="dataSource" /></property>
+        <property name="order" value="2012-07-04" />
+        <property name="module" ref="scholarshipModule" />
+        <property name="version" value="3.30" />
+    </bean>
+
+    <bean name="scholarship-4.00" class="org.uci.opus.util.dbupgrade.SqlFileUpgradeCommand">
+        <property name="sqlFile" value="classpath:../database/version33_version34/33_006_opuscollege_scholarship_update.sql"/>
+        <property name="dataSource"><ref bean="dataSource" /></property>
+        <property name="order" value="2012-10-04" />
+        <property name="module" ref="scholarshipModule" />
+        <property name="version" value="4.00" />
+    </bean>
+
+    <bean name="scholarship-4.01" class="org.uci.opus.util.dbupgrade.SqlFileUpgradeCommand">
+        <property name="sqlFile" value="classpath:../database/version41_version42/401_scholarship.sql"/>
+        <property name="dataSource"><ref bean="dataSource" /></property>
+        <property name="order" value="2013-04-03" />
+        <property name="module" ref="scholarshipModule" />
+        <property name="version" value="4.01" />
+    </bean>
+
+    <bean name="scholarship-4.02" class="org.uci.opus.util.dbupgrade.SqlFileUpgradeCommand">
+        <property name="sqlFile" value="classpath:../database/version41_version42/402_scholarship.sql"/>
+        <property name="dataSource"><ref bean="dataSource" /></property>
+        <property name="order" value="2013-04-05" />
+        <property name="module" ref="scholarshipModule" />
+        <property name="version" value="4.02" />
+    </bean>
+
+    <bean name="scholarship-4.03" class="org.uci.opus.util.dbupgrade.SqlFileUpgradeCommand">
+        <property name="sqlFile" value="classpath:../database/version41_version42/403_scholarship.sql"/>
+        <property name="dataSource"><ref bean="dataSource" /></property>
+        <property name="order" value="2013-04-08" />
+        <property name="module" ref="scholarshipModule" />
+        <property name="version" value="4.03" />
+    </bean>
+
+    <bean name="scholarship-4.04" class="org.uci.opus.util.dbupgrade.SqlFileUpgradeCommand">
+        <property name="sqlFile" value="classpath:../database/version41_version42/404_scholarship.sql"/>
+        <property name="dataSource"><ref bean="dataSource" /></property>
+        <property name="order" value="2013-04-09" />
+        <property name="module" ref="scholarshipModule" />
+        <property name="version" value="4.04" />
+    </bean>
+
+    <bean name="scholarship-4.05" class="org.uci.opus.util.dbupgrade.SqlFileUpgradeCommand">
+        <property name="sqlFile" value="classpath:../database/version41_version42/405_scholarship.sql"/>
+        <property name="dataSource"><ref bean="dataSource" /></property>
+        <property name="order" value="2013-04-10" />
+        <property name="module" ref="scholarshipModule" />
+        <property name="version" value="4.05" />
+    </bean>
+
+    <bean name="scholarship-4.06" class="org.uci.opus.util.dbupgrade.SqlFileUpgradeCommand">
+        <property name="sqlFile" value="classpath:../database/version41_version42/406_scholarship.sql"/>
+        <property name="dataSource"><ref bean="dataSource" /></property>
+        <property name="order" value="2013-04-17" />
+        <property name="module" ref="scholarshipModule" />
+        <property name="version" value="4.06" />
+    </bean>
+
+    <bean name="scholarship-4.07" class="org.uci.opus.util.dbupgrade.SqlFileUpgradeCommand">
+        <property name="sqlFile" value="classpath:../database/version41_version42/407_scholarship.sql"/>
+        <property name="dataSource"><ref bean="dataSource" /></property>
+        <property name="order" value="2013-04-29" />
+        <property name="module" ref="scholarshipModule" />
+        <property name="version" value="4.07" />
+    </bean>
+
+    <bean name="scholarship-4.08" class="org.uci.opus.util.dbupgrade.SqlFileUpgradeCommand">
+        <property name="sqlFile" value="classpath:../database/version41_version42/408_scholarship.sql"/>
+        <property name="dataSource"><ref bean="dataSource" /></property>
+        <property name="order" value="2013-05-04" />
+        <property name="module" ref="scholarshipModule" />
+        <property name="version" value="4.08" />
+    </bean>
+
+    <bean name="scholarship-4.09" class="org.uci.opus.util.dbupgrade.SqlFileUpgradeCommand">
+        <property name="sqlFile" value="classpath:../database/version41_version42/409_scholarship.sql"/>
+        <property name="dataSource"><ref bean="dataSource" /></property>
+        <property name="order" value="2013-11-04" />
+        <property name="module" ref="scholarshipModule" />
+        <property name="version" value="4.09" />
+    </bean>
+
+    <bean name="scholarship-4.10" class="org.uci.opus.util.dbupgrade.SqlFileUpgradeCommand">
+        <property name="sqlFile" value="classpath:../database/version42_version43/410_scholarship.sql"/>
+        <property name="dataSource"><ref bean="dataSource" /></property>
+        <property name="order" value="2015-07-27" />
+        <property name="module" ref="scholarshipModule" />
+        <property name="version" value="4.10" />
+    </bean>
+
+</beans>

@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ***** BEGIN LICENSE BLOCK *****
+  Version: MPL 1.1/GPL 2.0/LGPL 2.1
+  
+  The contents of this file are subject to the Mozilla Public License Version
+  1.1 (the "License"); you may not use this file except in compliance with
+  the License. You may obtain a copy of the License at
+  http://www.mozilla.org/MPL/
+  
+  Software distributed under the License is distributed on an "AS IS" basis,
+  WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+  for the specific language governing rights and limitations under the
+  License.
+  
+  The Original Code is Opus-College college module code.
+  
+  The Initial Developer of the Original Code is
+  Center for Information Services, Radboud University Nijmegen.
+  Portions created by the Initial Developer are Copyright (C) 2008
+  the Initial Developer. All Rights Reserved.
+  
+  Contributor(s):
+    For Java files, see Javadoc @author tags.
+  
+  Alternatively, the contents of this file may be used under the terms of
+  either the GNU General Public License Version 2 or later (the "GPL"), or
+  the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+  in which case the provisions of the GPL or the LGPL are applicable instead
+  of those above. If you wish to allow use of your version of this file only
+  under the terms of either the GPL or the LGPL, and not to allow others to
+  use your version of this file under the terms of the MPL, indicate your
+  decision by deleting the provisions above and replace them with the notice
+  and other provisions required by the GPL or the LGPL. If you do not delete
+  the provisions above, a recipient may use your version of this file under
+  the terms of any one of the MPL, the GPL or the LGPL.
+  
+  ***** END LICENSE BLOCK *****
+-->
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.uci.opus.college.persistence.TestResultMapper"> 
+
+    <resultMap id="TestResultResultMap" type="TestResult">
+        <result property="id" column="id"/>
+        <result property="testId" column="testId"/>
+        <result property="examinationId" column="examinationId"/>
+        <result property="studyPlanDetailId" column="studyPlanDetailId"/>
+        <result property="testResultDate" column="testResultDate" javaType="java.util.Date"/>
+        <result property="attemptNr" column="attemptNr"/>
+        <result property="mark" column="mark"/>
+        <result property="staffMemberId" column="staffMemberId"/>
+        <result property="active" column="active"/>
+        <result property="passed" column="passed"/>
+        <result property="writeWho" column="writeWho"/>
+        <result property="writeWhen" column="writeWhen"/>
+        <association property="test" select="org.uci.opus.college.persistence.TestMapper.findTest" column="testId"/>
+    </resultMap>
+    
+    <resultMap id="TestResultHistoryResultMap" type="TestResultHistory" autoMapping="false">
+    	<result property="operation" column="operation"/>
+    	<result property="writewho" column="writewho"/>
+    	<result property="writewhen" column="writewhen" javaType="java.util.Date"/>
+    	<result property="mark" column="mark"/>
+    	<result property="passed" column="passed"/>
+    	<result property="surnameFull" column="surnameFull"/>
+    	<result property="firstnamesFull" column="firstnamesFull"/>
+    </resultMap>
+
+    <insert id="addTestResult" parameterType="TestResult">
+        insert into opuscollege.TestResult
+        ( testId
+        , examinationId
+        , studyPlanDetailId
+        , testResultDate
+        , attemptNr
+        , mark
+        , staffMemberId
+        , active
+        , passed
+        , writeWho
+        ) values ( 
+        #{testId}
+        , #{examinationId}
+        , #{studyPlanDetailId}
+        , #{testResultDate}
+        , #{attemptNr}
+        , #{mark}
+        , #{staffMemberId}
+        , #{active}
+        , #{passed}
+        , #{writeWho}
+        )
+        <selectKey keyProperty="id" resultType="int">
+            SELECT currVal('opuscollege.testResultSeq')
+        </selectKey>
+        
+    </insert>
+
+    <insert id="addTestResultHistory" parameterType="TestResult">
+        insert into audit.testResult_hist
+        ( operation
+        , writeWho
+        <!--  , writeWhen: is written automatically-->
+        , id
+        , testId
+        , examinationId
+        , studyPlanDetailId
+        , testResultDate
+        , attemptNr
+        , mark
+        , staffMemberId
+        , active
+        , passed
+        ) values (
+          'I'
+        , #{writeWho}
+        , #{id}
+        , #{testId}
+        , #{examinationId}
+        , #{studyPlanDetailId}
+        , #{testResultDate}
+        , #{attemptNr}
+        , #{mark}
+        , #{staffMemberId}
+        , #{active}
+        , #{passed}
+        )
+    </insert>
+
+    <update id="updateTestResult" parameterType="TestResult">
+        update  opuscollege.TestResult
+        set     testId              = #{testId}
+        ,       examinationId       = #{examinationId}
+        ,       studyPlanDetailId   = #{studyPlanDetailId}
+        ,       testResultDate      = #{testResultDate}
+        ,       attemptNr           = #{attemptNr}
+        ,       mark                = #{mark}
+        ,       staffMemberId       = #{staffMemberId}
+        ,       active              = #{active}
+        ,       passed              = #{passed}
+        ,       writeWho            = #{writeWho}
+        where   id = #{id}
+    </update>
+
+    <insert id="updateTestResultHistory" parameterType="TestResult">
+        insert into audit.testResult_hist
+        ( operation
+        , writeWho
+        <!--  , writeWhen: is written automatically-->
+        , id
+        , testId
+        , examinationId
+        , studyPlanDetailId
+        , testResultDate
+        , attemptNr
+        , mark
+        , staffMemberId
+        , active
+        , passed
+        ) values (
+          'U'
+        , #{writeWho}
+        , #{id}
+        , #{testId}
+        , #{examinationId}
+        , #{studyPlanDetailId}
+        , #{testResultDate}
+        , #{attemptNr}
+        , #{mark}
+        , #{staffMemberId}
+        , #{active}
+        , #{passed}
+        )
+    </insert>
+    
+    <delete id="deleteTestResult" parameterType="int">
+        delete from opuscollege.TestResult
+        where  id = #{value}
+    </delete>
+
+    <insert id="deleteTestResultHistory" parameterType="TestResult">
+        insert into audit.testResult_hist
+        ( operation
+        , writeWho
+        <!--  , writeWhen: is written automatically-->
+        , id
+        , testId
+        , examinationId
+        , studyPlanDetailId
+        , testResultDate
+        , attemptNr
+        , mark
+        , staffMemberId
+        , active
+        , passed
+        ) values ( 
+          'D'
+        , #{writeWho}
+        , #{id}
+        , #{testId}
+        , #{examinationId}
+        , #{studyPlanDetailId}
+        , #{testResultDate}
+        , #{attemptNr}
+        , #{mark}
+        , #{staffMemberId}
+        , #{active}
+        , #{passed}
+        )
+    </insert>
+
+    <select id="findTestResult" parameterType="int" resultMap="TestResultResultMap">
+        select opuscollege.testResult.*
+        from   opuscollege.testResult
+        where  id = #{value}
+    </select>
+
+    <select id="findTestResults" parameterType="int" resultMap="TestResultResultMap">
+        select opuscollege.testResult.*
+        from   opuscollege.testResult
+        where  testId = #{value}
+    </select>
+    
+    <select id="findTestResultsByParams" parameterType="map" resultMap="TestResultResultMap">
+        select  opuscollege.testResult.*
+        from    opuscollege.testResult
+        inner join opuscollege.studyplandetail on testResult.studyPlanDetailId = studyPlanDetail.id
+        inner join opuscollege.studyplancardinaltimeunit on studyplandetail.studyplancardinaltimeunitid = studyplancardinaltimeunit.id
+
+        WHERE true
+        <if test='studyPlanDetailId != null'>
+            AND studyPlanDetailId = #{studyPlanDetailId}
+        </if>
+        <if test="studyPlanId != null">
+            AND studyplancardinaltimeunit.studyPlanId = #{studyPlanId}
+        </if>
+        <if test='examinationId != null'>
+            AND     examinationId = #{examinationId}
+        </if>
+        <if test='testId != null and testId != "0"'>
+            AND   testId = #{testId}
+        </if>
+        ORDER BY attemptNr
+    </select>
+
+    <select id="findTestResultsForStudyPlanDetail" parameterType="map" resultMap="TestResultResultMap">
+        select  opuscollege.testResult.*
+        from    opuscollege.testResult
+        where   examinationId = #{examinationId}
+        AND     studyPlanDetailId = #{studyPlanDetailId}
+        ORDER BY testId ASC, attemptNr ASC
+    </select>
+
+    <select id="findActiveTestResultsForExaminationResult" parameterType="map" resultMap="TestResultResultMap">
+        select  opuscollege.testResult.*
+        from    opuscollege.testResult
+        where   examinationId = #{examinationId}
+        AND     studyPlanDetailId = #{studyPlanDetailId}
+        AND     active = 'Y'
+        ORDER BY testId ASC, attemptNr ASC
+    </select>
+
+    <select id="findTestResultsForStudyPlanDetailId" parameterType="int" resultMap="TestResultResultMap">
+        select  opuscollege.testResult.*
+        from    opuscollege.testResult
+        where   studyPlanDetailId = #{value}
+        ORDER BY testId ASC, attemptNr ASC
+    </select>
+
+    <select id="findTestResultsForSubjectStudyGradeType" parameterType="map" resultMap="TestResultResultMap"> 
+        SELECT opuscollege.testResult.*
+        FROM   opuscollege.testResult
+        INNER JOIN opuscollege.studyPlanDetail ON testResult.studyPlanDetailId = studyPlanDetail.id
+        INNER JOIN opuscollege.studyPlanCardinalTimeUnit ON studyPlanDetail.studyPlanCardinalTimeUnitId = studyPlanCardinalTimeUnit.id
+         INNER JOIN opuscollege.studyPlan ON studyPlanDetail.studyPlanId = studyPlan.id
+        WHERE   studyPlanCardinalTimeUnit.studyGradeTypeId = #{studyGradeTypeId}
+        AND     testResult.examinationId IN (
+                    SELECT examination.id 
+                    FROM opuscollege.examination 
+                    WHERE subjectId = #{subjectId}
+                )
+        OR      testResult.studyPlanDetailId IN (
+                    SELECT studyPlanDetail.id 
+                    FROM opuscollege.studyPlanDetail
+                    INNER JOIN opuscollege.studyPlan ON studyPlanDetail.studyPlanId = studyPlan.id
+                    INNER JOIN opuscollege.studyPlanCardinalTimeUnit ON studyPlanDetail.studyPlanCardinalTimeUnitId = studyPlanCardinalTimeUnit.id
+                    INNER JOIN opuscollege.subjectSubjectBlock ON studyPlanDetail.subjectBlockId = subjectSubjectBlock.subjectBlockId
+                    WHERE studyPlanCardinalTimeUnit.studyGradeTypeId = #{studyGradeTypeId}
+                    AND subjectSubjectBlock.subjectId IN (
+                        SELECT examination.subjectId 
+                        FROM opuscollege.examination 
+                        WHERE subjectId = #{subjectId}
+                    )                
+                )
+        ORDER BY testResult.examinationId, testResult.testId, testResult.attemptNr      
+    </select>
+
+    <select id="findTestResultsForSubjectBlockStudyGradeType" parameterType="map" resultMap="TestResultResultMap"> 
+        SELECT opuscollege.testResult.*
+        FROM   opuscollege.testResult
+        INNER JOIN opuscollege.studyPlanDetail ON testResult.studyPlanDetailId = studyPlanDetail.id
+        INNER JOIN opuscollege.studyPlanCardinalTimeUnit ON studyPlanDetail.studyPlanCardinalTimeUnitId = studyPlanCardinalTimeUnit.id
+        INNER JOIN opuscollege.studyPlan ON studyPlanDetail.studyPlanId = studyPlan.id
+        WHERE studyPlanCardinalTimeUnit.studyGradeTypeId = #{studyGradeTypeId}
+        AND     (
+                studyPlanDetail.subjectBlockId = #{subjectBlockId}
+        OR      testResult.studyPlanDetailId IN (
+                    SELECT studyPlanDetail.id 
+                    FROM opuscollege.studyPlanDetail
+                    INNER JOIN opuscollege.studyPlan ON studyPlanDetail.studyPlanId = studyPlan.id
+                    INNER JOIN opuscollege.studyPlanCardinalTimeUnit ON studyPlanDetail.studyPlanCardinalTimeUnitId = studyPlanCardinalTimeUnit.id
+                    INNER JOIN opuscollege.subjectSubjectBlock ON studyPlanDetail.subjectBlockId = subjectSubjectBlock.subjectBlockId
+                    WHERE studyPlanCardinalTimeUnit.studyGradeTypeId = #{studyGradeTypeId}
+                    AND subjectSubjectBlock.subjectBlockId = #{subjectBlockId}         
+                )
+        )
+        ORDER BY testResult.examinationId, testResult.testId, testResult.attemptNr      
+    </select>
+    
+    <select id="findTestResultHistory" resultType="map" resultMap="TestResultHistoryResultMap">
+    	select  DISTINCT
+		   testresult_hist.operation,
+		   testresult_hist.writewho,
+		   testresult_hist.writewhen,
+		   testresult_hist.mark,
+		   testresult_hist.passed,
+		   person.surnamefull AS surnamefull,
+		   person.firstnamesfull AS firstnamesfull
+		    
+		FROM audit.testresult_hist
+		INNER JOIN opuscollege.test on testresult_hist.testid = test.id
+		INNER JOIN opuscollege.opususer ON split_part(testresult_hist.writewho, ':', 2)::int = opususer.id
+		INNER JOIN opuscollege.person on opususer.personid = person.id
+		INNER JOIN opuscollege.studyplandetail studyplandetail ON testresult_hist.studyplandetailid = studyplandetail.id
+		INNER JOIN opuscollege.studyplan ON studyplandetail.studyplanid = studyplan.id
+		
+		WHERE test.id=#{testId} and studyPlanDetail.id = #{studyPlanDetailId}
+    	ORDER BY testresult_hist.writewhen DESC
+    </select>
+
+</mapper>
