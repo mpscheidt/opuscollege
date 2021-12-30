@@ -5,7 +5,7 @@ OPUS-College is a free and open source information system for the registration a
 
 [General Presentation of OPUS-College (Power Point - 5 MB)](opus-docs/presentations/general/OPUS-College_presentation_May2011.pdf).
 
-Click here for our INSTRUCTION VIDEOS: the best way to quickly get an idea of OPUS-College  
+[Click here for our INSTRUCTION VIDEOS](opus-docs/presentations/instruction_material): the best way to quickly get an idea of OPUS-College  
 
 
 Imported from opuscollege.com/svn.
