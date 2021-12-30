@@ -12,54 +12,47 @@ OPUS-College is a free and open source information system for the registration a
 
 The following institutes of higher learning in Mozambique currently participate in the project: 	  	 
 
-
-	  	Universidade Eduardo Mondlane (UEM)
+[Universidade Eduardo Mondlane (UEM)](http://www.uem.mz/)
 Praça 25 de Junho
 Maputo
 Tel. +258 (21) 427851/2
 Fax +258 (21) 307272 - +258 (21) 426426
 
 
-	  	Universidade Católica de Moçambique (UCM)
+[Universidade Católica de Moçambique](http://www.ucm.ac.mz/) (UCM)
 Rua Marques de Soveral, 960
 Beira
 Tel. +258 (23) 313077
 Fax +258 (23) 311520
 
-
-	  	Universidade Pedagógica (UP)
+[Universidade Pedagógica](http://www.up.ac.mz/) (UP)
 Rua Comandante Cardoso, 135
 Maputo
 Tel. +258 (21) 320860/2
 Fax +258 (21) 322113
-  	  	Universidade Mussa Bin Bique (UMBB)
+
+Universidade Mussa Bin Bique (UMBB)
 Rua Cidade de Moçambique,10 Pensão Rofas)
 Nampula
 Tel. +258 (26) 215919
 Fax +258 (26) 215903
  
-
-
-	  	Instituto Superior Politecnico e Universitario (ISPU) / Quelimane
+[Instituto Superior Politecnico e Universitario](http://www.ispu.ac.mz/) (ISPU) / Quelimane
 Av. Paulo S. Kankhomba 1170
 Maputo
 Tel. +258 (21) 314226/9
 Fax +258 (21) 314340
  
-
-
-	  	Instituto Superior de Transportes e Comunicações (ISUTC)
+[Instituto Superior de Transportes e Comunicações](http://www.transcom.co.mz/isutc/) (ISUTC)
 Prolong. Av. Kim Il Sung, Edif. D1 Sommerschield
 Caixa Postal 2088
 Maputo
 Tel. Reitoria: +258 21 48 87 92/3 - Geral: +258 21 48 87 95/6 - Cel: +258 82 31 26 200 / 30 62 620
 Fax +258 (21) 48 87 94
- 
-National coordinator Mozambique:
-	  	 
-	  	
 
-Ministério da Educação e Cultura: Direcção de Coordenação do Ensino Superior (MEC/DICES) 
+
+### National coordinator Mozambique:
+[Ministério da Educação e Cultura: Direcção de Coordenação do Ensino Superior](http://www.mec.gov.mz/dep.php?p=13) (MEC/DICES) 
 Avenida 24 de Julho, Nº 167
 P.O. Box 34, Maputo
 Moçambique
@@ -68,15 +61,15 @@ Fax. +258 (21) 492196
 
 ## Zambian Participants
 
-University of Zambia (UNZA)
+[University of Zambia (UNZA)](http://www.unza.zm/)
 
-Copperbelt University (CBU)
+[Copperbelt University (CBU)](http://www.cbu.edu.zm/)
 
-Mulungushi University
+[Mulungushi University](http://http//www.mu.ac.zm//)
 
 ## Dutch Participants
 	  	 
-	  	Radboud Universiteit (RU)
+[Radboud Universiteit](http://www.ru.nl/english/) (RU)
 University Information Centre (UCI)
 Geert Grooteplein 41
 Nijmegen
