@@ -6,6 +6,38 @@ OPUS-College is a free and open source information system for the registration a
 
 [Click here for our INSTRUCTION VIDEOS](opus-docs/presentations/instruction_material): the best way to quickly get an idea of OPUS-College  
 
+# Documents
+
+Below you find documents on which the development of the OPUS-College is based. These documents are not finished, but continuously changing (additions) along with the development path of the system itself.
+
+[Manual do usuário de e-SURA](opus-docs/manuals/e-SURA-manual-de-usuario.pdf) (PDF - 4MB)  
+
+     
+[Hard- and Software Infrastructure](opus-docs/design/Infrastructure_OPUS-College.doc)  
+    This document describes the hard- and software used for OPUS-College and explains the reasons for the choices made.
+
+     
+[Overview of Use Cases](opus-docs/usecases/Use_Cases.doc) (MS-Word file 550 Kb)  
+This document describes the business processes in the Higher Education business domain, in the form of use cases, which play a role in an ARIS. The starting point of the document is a general overview diagram of the HE business processes
+
+     
+[Conceptual domain analysis](opus-docs/design/Conceptual_Domain.doc) (MS-Word file 5 Mb)  
+    This document contains a conceptual domain analysis of the HE-business domain, in other words: an overview of the core entities and their specific aspects and structure when looked upon from an ARIS point of view. Attention: it is a big file!
+
+     
+[Summary tables: business rules, attributes and system actions](opus-docs/datamodel/Summary_tables.doc) (MS-Word file 146 Kb)  
+In this document the integrated synthesis of the domain and the use case analyses of the previous documents is presented. It gives for each use case (tables 1) an overview of the business rules, the user interfaces (system screens) and the system actions or steps involved. Furthermore: for each system screen involved an exhaustive overview of the attributes to be listed on the screen is provided. (tables 2)
+
+     
+[Overview of entities and their attributes](opus-docs/datamodel/Table_attributes.doc) (MS-Word file 57 Kb)  
+This document gives a comprehensive list of the entities in OPUS-College and their attributes.
+
+## Modular Design Documents
+
+[Scholarships module](scholarship/doc/design/)
+     
+[Time Tabling Module - Design document](timetable/doc/design/FO/design_timetablemodule.pdf)
+
 # Participants
 
 ## Mozambican participants
@@ -77,7 +109,7 @@ Tel.(31) (24) 3617999
 
 # Developers team
 
-## FROM RADBOUD UNIVERSITY:
+## From Radboud University:
 Ed Simons (Project leader)  
 Radboud University Nijmegen  
 Central Administration Staff  
@@ -110,42 +142,9 @@ University Information Centre
 Tel. +31 (24) 3617921  
 e-mail: w.vanzanten@uci.ru.nl  
 
-## EXTERNAL EXPERTS:
+## External Experts:
 Stelio Macumbe  
 Mozambican IT Epert, woking at UCM)  
 Universidade Católica de Moçambique  
 Beira, MZ  
 e-mail: stelio.macumbe@GMAIL.COM  
-
-# Documents
-
-Below you find documents on which the development of the OPUS-College is based. These documents are not finished, but continuously changing (additions) along with the development path of the system itself.
-
-[Manual do usuário de e-SURA](opus-docs/manuals/e-SURA-manual-de-usuario.pdf) (PDF - 4MB)  
-
-     
-[Hard- and Software Infrastructure](opus-docs/design/Infrastructure_OPUS-College.doc)  
-    This document describes the hard- and software used for OPUS-College and explains the reasons for the choices made.
-
-     
-[Overview of Use Cases](opus-docs/usecases/Use_Cases.doc) (MS-Word file 550 Kb)  
-This document describes the business processes in the Higher Education business domain, in the form of use cases, which play a role in an ARIS. The starting point of the document is a general overview diagram of the HE business processes
-
-     
-[Conceptual domain analysis](opus-docs/design/Conceptual_Domain.doc) (MS-Word file 5 Mb)  
-    This document contains a conceptual domain analysis of the HE-business domain, in other words: an overview of the core entities and their specific aspects and structure when looked upon from an ARIS point of view. Attention: it is a big file!
-
-     
-[Summary tables: business rules, attributes and system actions](opus-docs/datamodel/Summary_tables.doc) (MS-Word file 146 Kb)  
-In this document the integrated synthesis of the domain and the use case analyses of the previous documents is presented. It gives for each use case (tables 1) an overview of the business rules, the user interfaces (system screens) and the system actions or steps involved. Furthermore: for each system screen involved an exhaustive overview of the attributes to be listed on the screen is provided. (tables 2)
-
-     
-[Overview of entities and their attributes](opus-docs/datamodel/Table_attributes.doc) (MS-Word file 57 Kb)  
-This document gives a comprehensive list of the entities in OPUS-College and their attributes.
-
-## MODULAR DESIGN DOCUMENTS
-
-[Scholarships module](scholarship/doc/design/)
-     
-[Time Tabling Module - Design document](timetable/doc/design/FO/design_timetablemodule.pdf)
-
