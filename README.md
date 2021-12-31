@@ -44,7 +44,7 @@ This document gives a comprehensive list of the entities in OPUS-College and the
 
 The following institutes of higher learning in Mozambique currently participate in the project: 	  	 
 
-[Universidade Eduardo Mondlane (UEM)](http://www.uem.mz/)  
+[Universidade Eduardo Mondlane (UEM)](https://www.uem.mz/)  
 Praça 25 de Junho  
 Maputo  
 Tel. +258 (21) 427851/2  
@@ -101,7 +101,7 @@ Fax. +258 (21) 492196
 
 ## Dutch Participants
 	  	 
-[Radboud Universiteit](http://www.ru.nl/english/) (RU)  
+[Radboud Universiteit](https://www.ru.nl/english/) (RU)  
 University Information Centre (UCI)  
 Geert Grooteplein 41  
 Nijmegen  
@@ -147,4 +147,4 @@ Stelio Macumbe
 Mozambican IT Epert, woking at UCM)  
 Universidade Católica de Moçambique  
 Beira, MZ  
-e-mail: stelio.macumbe@GMAIL.COM  
+e-mail: stelio.macumbe@gmail.com  
