@@ -42,7 +42,7 @@ This document gives a comprehensive list of the entities in OPUS-College and the
 
 ## Mozambican participants
 
-The following institutes of higher learning in Mozambique currently participate in the project: 	  	 
+The following institutes of higher learning in Mozambique participate in the project: 	  	 
 
 [Universidade Eduardo Mondlane (UEM)](https://www.uem.mz/)  
 Praça 25 de Junho  
