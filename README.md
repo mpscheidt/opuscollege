@@ -69,13 +69,13 @@ Nampula
 Tel. +258 (26) 215919  
 Fax +258 (26) 215903  
  
-[Instituto Superior Politecnico e Universitario](http://www.ispu.ac.mz/) (ISPU) / Quelimane  
+[Instituto Superior Politecnico e Universitario](http://www.apolitecnica.ac.mz/) (ISPU) / Quelimane  
 Av. Paulo S. Kankhomba 1170  
 Maputo  
 Tel. +258 (21) 314226/9  
 Fax +258 (21) 314340  
  
-[Instituto Superior de Transportes e Comunicações](http://www.transcom.co.mz/isutc/) (ISUTC)  
+[Instituto Superior de Transportes e Comunicações](https://www.isutc.ac.mz/) (ISUTC)  
 Prolong. Av. Kim Il Sung, Edif. D1 Sommerschield  
 Caixa Postal 2088  
 Maputo  
@@ -93,11 +93,11 @@ Fax. +258 (21) 492196
 
 ## Zambian Participants
 
-[University of Zambia (UNZA)](http://www.unza.zm/)
+[University of Zambia (UNZA)](https://www.unza.zm/)
 
-[Copperbelt University (CBU)](http://www.cbu.edu.zm/)
+[Copperbelt University (CBU)](https://www.cbu.edu.zm/)
 
-[Mulungushi University](http://http//www.mu.ac.zm//)
+[Mulungushi University](https://www.mu.ac.zm//)
 
 ## Dutch Participants
 	  	 
