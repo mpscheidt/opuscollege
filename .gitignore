@@ -31,3 +31,4 @@ Servers
 
 # Build artifacts
 **/build
+**/*.jasper
