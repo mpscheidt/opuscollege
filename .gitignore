@@ -1,5 +1,6 @@
-# Compiled class file
+# Compiled files
 *.class
+*.jasper
 
 # Log file
 *.log
@@ -31,4 +32,6 @@ Servers
 
 # Build artifacts
 **/build
-**/*.jasper
+
+# Generated content in opus project
+opus/src/main/webapp/
