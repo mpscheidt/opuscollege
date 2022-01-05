@@ -42,12 +42,12 @@ package org.uci.opus.college.web.util;
 import org.springframework.web.servlet.view.jasperreports.JasperReportsXlsView;
 
 import net.sf.jasperreports.engine.JRExporter;
-import net.sf.jasperreports.engine.export.JExcelApiExporter;
+import net.sf.jasperreports.engine.export.JRXlsExporter;
 
 public class CollegeJasperReportsXlsView extends JasperReportsXlsView {
 
 	protected JRExporter createExporter() {
-		return new JExcelApiExporter();
+		return new JRXlsExporter();
 	}
 
 }

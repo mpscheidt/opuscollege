@@ -53,7 +53,8 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.EncodedResource;
 import org.springframework.dao.DataAccessResourceFailureException;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.test.jdbc.JdbcTestUtils;
+//import org.springframework.test.jdbc.JdbcTestUtils;
+import org.springframework.jdbc.datasource.init.ScriptUtils;
 import org.springframework.transaction.annotation.Transactional;
 import org.uci.opus.college.module.Module;
 
@@ -78,12 +79,12 @@ public class SqlFileUpgradeCommand implements DbUpgradeCommandInterface, Seriali
         logger.info(resource + " starts.");
         try {
             LineNumberReader lnr = new LineNumberReader(resource.getReader());
-            String script = JdbcTestUtils.readScript(lnr);
-            char delimiter = ';';
-            if (!JdbcTestUtils.containsSqlScriptDelimiters(script, delimiter)) {
-                delimiter = '\n';
+            String script = ScriptUtils.readScript(lnr, "--", ";");
+            String delimiter = ";";
+            if (!ScriptUtils.containsSqlScriptDelimiters(script, delimiter)) {
+                delimiter = "\n";
             }
-            JdbcTestUtils.splitSqlScript(script, delimiter, statements);
+            ScriptUtils.splitSqlScript(script, delimiter, statements);
             for (String statement : statements) {
                 jdbcTemplate.execute(statement);
             }

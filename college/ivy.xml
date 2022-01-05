@@ -1,0 +1,119 @@
+<?xml version="1.0"?>
+<!DOCTYPE ivy-module [
+    <!ENTITY spring.version "4.3.26.RELEASE">
+    <!ENTITY spring.security.version "4.2.15.RELEASE">
+    <!ENTITY jackson.version "2.13.1">
+    <!ENTITY jasperreports.version "6.18.1">
+]>
+<ivy-module version="2.0">
+    <info organisation="opuscollege" module="college"/>
+    <configurations>
+        <conf name="compile" description="This is this configuration that describes modules need to build our project"/>
+        <conf name="test" description="This is this configuration that describes modules need to run test on our project"/>
+    </configurations>
+    <dependencies>
+    	<!-- conf="compile->default": Read "configuration compile of this module depends on the default configuration of e.g. spring-webmvc".
+    	     Do not include test/runtime/.. dependencies of spring-webmvc, only the default dependencies (that is: spring-webmvc itself plus its non-optional compile dependencies) 
+    	     For more info see examples section on https://ant.apache.org/ivy/history/latest-milestone/ivyfile/dependency.html and Apache Ivy's examples source code -->
+
+	    <!-- Batik is used for SVG rendering by JasperReports - version upgraded to 1.8 even though it was/is unstable, see: http://stackoverflow.com/a/30245104/606662
+			 for 1.8 it was necessary to add xmlgraphics-commons  -->
+		<!-- xmlgraphics-commons used by batik 1.8 -->
+        <dependency org="org.apache.xmlgraphics" name="batik-bridge" rev="1.8" conf="compile->default"/>
+        <dependency org="org.apache.xmlgraphics" name="batik-svggen" rev="1.8" conf="compile->default"/>
+        <dependency org="org.apache.xmlgraphics" name="xmlgraphics-commons" rev="2.1" conf="compile->default"/>
+
+		<!-- xml-apis: Note that version 1.4.01 is newer than 2.0.2 - see: http://stackoverflow.com/a/29393588/606662 -->
+        <dependency org="xml-apis" name="xml-apis" rev="1.4.01" conf="compile->default"/>
+
+		<!-- commons-io used by xmlgraphics-commons, which by default points to a very old version -->
+        <dependency org="commons-io" name="commons-io" rev="2.5" conf="compile->default"/>
+
+        <dependency org="org.apache.commons" name="commons-dbcp2" rev="2.1.1" conf="compile->default"/>
+        <dependency org="commons-lang" name="commons-lang" rev="2.6" conf="compile->sources,default"/>
+        <dependency org="org.apache.commons" name="commons-lang3" rev="3.12.0" conf="compile->default"/>
+        <dependency org="commons-beanutils" name="commons-beanutils" rev="1.9.2" conf="compile->default"/>
+        <dependency org="commons-collections" name="commons-collections" rev="3.2.2" conf="compile->default"/>
+		<dependency org="commons-fileupload" name="commons-fileupload" rev="1.4" conf="compile->default"/>
+		<dependency org="commons-io" name="commons-io" rev="2.11.0" conf="compile->default"/>
+		
+
+		<!-- Bouncy castle are security libraries. They are depended on by iText and others -->
+<!--         <dependency org="org.bouncycastle" name="bcmail-jdk14" rev="1.54" conf="compile->default"/> -->
+        <dependency org="org.bouncycastle" name="bcmail-jdk15on" rev="1.70" conf="compile->default"/>
+
+        <dependency org="com.fasterxml.jackson.core" name="jackson-databind" rev="&jackson.version;" conf="compile->default"/>
+		<!-- the JDK8 Packages may not even be in use in Opus -->
+        <dependency org="com.fasterxml.jackson.datatype" name="jackson-datatype-jsr310" rev="&jackson.version;" conf="compile->default"/>
+        <dependency org="com.fasterxml.jackson.datatype" name="jackson-datatype-jdk8" rev="&jackson.version;" conf="compile->default"/>
+        <dependency org="com.fasterxml.jackson.module" name="jackson-module-parameter-names" rev="&jackson.version;" conf="compile->default"/>
+		
+        <dependency org="net.sf.jasperreports" name="jasperreports" rev="&jasperreports.version;" conf="compile->default"/>
+        <dependency org="net.sf.jasperreports" name="jasperreports-fonts" rev="&jasperreports.version;" conf="compile->default"/>
+        <dependency org="org.apache.poi" name="poi" rev="5.1.0" conf="compile->default"/>
+		<dependency org="org.apache.poi" name="poi-ooxml" rev="5.1.0" conf="compile->default"/>
+		<dependency org="org.apache.poi" name="poi-ooxml-schemas" rev="4.1.2" conf="compile->default"/>
+
+        <dependency org="net.sourceforge.jexcelapi" name="jxl" rev="2.6.12" conf="compile->default"/>
+        <dependency org="net.sf.barcode4j" name="barcode4j" rev="2.1" conf="compile->default">
+        	<!-- Barcode4j has declared dependencies on Avalon Framework and Ant libraries, which are apparently not needed -->
+        	<exclude module="avalon-framework-impl"/>
+        	<exclude org="org.apache.ant"/>
+        </dependency>
+        <!-- Groovy is the default language in Jasper reports -->
+		<dependency org="org.codehaus.groovy" name="groovy-all" rev="3.0.9" conf="compile->default"/>
+
+        <dependency org="net.jawr.extensions" name="jawr-spring-extension" rev="3.8" conf="compile->default"/>
+
+        <dependency org="javax.servlet" name="jstl" rev="1.2" conf="compile->default"/>
+
+        <dependency org="org.apache.logging.log4j" name="log4j-api" rev="2.17.1" conf="compile->default"/>
+        <dependency org="org.apache.logging.log4j" name="log4j-slf4j-impl" rev="2.17.1" conf="compile->default"/>
+        <dependency org="org.apache.logging.log4j" name="log4j-web" rev="2.17.1" conf="compile->default"/>
+        <dependency org="org.slf4j" name="slf4j-api" rev="1.7.32" conf="compile->default"/>
+        <dependency org="org.slf4j" name="jcl-over-slf4j" rev="1.7.32" conf="compile->default"/>
+
+        <dependency org="javax.mail" name="javax.mail-api" rev="1.5.5" conf="compile->default"/>
+
+		<!-- MyBatis -->
+        <dependency org="org.mybatis" name="mybatis" rev="3.5.4" conf="compile->default"/>
+        <dependency org="org.mybatis" name="mybatis-spring" rev="1.3.3" conf="compile->default"/>
+        <!-- Javassist: used by MyBatis to enable lazy loading -->
+        <dependency org="org.javassist" name="javassist" rev="3.20.0-GA" conf="compile->default"/>
+
+        <dependency org="org.springframework" name="spring-webmvc" rev="&spring.version;" conf="compile->sources,default"/>
+        <dependency org="org.springframework" name="spring-aspects" rev="&spring.version;" conf="compile->default"/>
+        <dependency org="org.springframework" name="spring-context-support" rev="&spring.version;" conf="compile->default"/>
+        <dependency org="org.springframework" name="spring-orm" rev="&spring.version;" conf="compile->default"/>
+
+        <dependency org="org.springframework.security" name="spring-security-web" rev="&spring.security.version;" conf="compile->default"/>
+        <dependency org="org.springframework.security" name="spring-security-taglibs" rev="&spring.security.version;" conf="compile->default"/>
+        <dependency org="org.springframework.security" name="spring-security-config" rev="&spring.security.version;" conf="compile->default"/>
+
+		<dependency org="org.springframework" name="spring-test" rev="&spring.version;" conf="test->default"/>
+		<dependency org="org.springframework.security" name="spring-security-test" rev="&spring.security.version;" conf="test->default"/>
+
+		<!-- ~~~~~~~~~~ -->
+		<!--  -->
+		<!-- ~~~~~~~~~~ -->
+
+
+		<!-- ~~~~~~~~~~ -->
+		<!-- EXCLUSIONS -->
+		<!-- ~~~~~~~~~~ -->
+        <exclude org="commons-logging" module="commons-logging"/>
+
+        <!-- 'bouncycastle' has moved to 'org.bouncycastle', but old still referenced by some lib and other lib already references the new group; therefore ban the old group -->
+        <exclude org="bouncycastle"/>
+
+		<!-- there are two almost identical stax-api libraries: stax-api-1.0.1.jar and stax-api-1.0-2.jar, the latter has a weird version number (1.0-2) and we exclude this one -->
+		<exclude org="javax.xml.stream" module="stax-api"/>
+
+		<!-- exclude Log4j 1.x because we use Log4j 2.x (note that log4j2 has a different group than the 'old' log4j) -->
+		<exclude org="org.slf4j" module="slf4j-log4j12"/>
+		<exclude org="log4j" module="log4j"/>
+
+		<exclude org="org.apache.ant"/>
+    </dependencies>
+</ivy-module>
+

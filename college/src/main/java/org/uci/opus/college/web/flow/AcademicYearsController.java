@@ -50,8 +50,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
@@ -85,7 +85,7 @@ import org.uci.opus.util.ServletUtil;
 @SessionAttributes({"academicYearsForm"})
  public class AcademicYearsController {
 
-    private static Logger log = LogManager.getLogger(AcademicYearsController.class);
+    private static Logger log = LoggerFactory.getLogger(AcademicYearsController.class);
     
     private final String formView;
     

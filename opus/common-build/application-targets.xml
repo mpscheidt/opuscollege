@@ -207,4 +207,11 @@
 		</subant>
 	</target>
 
+	<target name="resolve" description="Resolve Ivy dependencies">
+		<subant target="resolve" verbose="true">
+            <property name="workspace.dir" value="${workspace.dir}"></property>
+			<buildpath refid="modules" />
+		</subant>
+	</target>
+
 </project>

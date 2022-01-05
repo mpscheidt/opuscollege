@@ -1,0 +1,11 @@
+<ivy-module version="2.0">
+    <info organisation="opuscollege" module="ucm"/>
+    <configurations>
+        <conf name="compile" description="This is this configuration that describes modules need to build our project"/>
+        <conf name="test" description="This is this configuration that describes modules need to run test on our project"/>
+    </configurations>
+    <dependencies>
+		<dependency org="com.google.code.gson" name="gson" rev="2.8.9" conf="compile->default"/>
+    </dependencies>
+</ivy-module>
+

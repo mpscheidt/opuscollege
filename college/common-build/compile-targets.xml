@@ -37,7 +37,7 @@
   
   ***** END LICENSE BLOCK *****
 -->
-<project name="module-compile-targets" xmlns:ivy="antlib:org.apache.ivy.ant">
+<project name="module-compile-targets">
 	
 	<!--
 		Targets imported by all modules (through the module-targets.xml file)
@@ -54,6 +54,8 @@
 	<property name="webapp.dir" value="src/main/webapp"/>
 	<property name="repository.dir" value="${workspace.dir}/college/src/main/webapp/WEB-INF/lib"/>
     <property name="repository.project.dir" value="${basedir}/src/main/webapp/WEB-INF/lib"/>
+	<property name="college.ivy.dir" value="${workspace.dir}/college/lib2"/>
+    <property name="project.ivy.dir" value="${basedir}/lib2"/>
 	<!--<property name="test.repository.dir" value="${basedir}/../college/src/test/lib"/>-->
 	<!-- MoVe - modular structure: targetproject.dir is the name of the targetproject -->
 	<property name="targetproject.dir" value="${workspace.dir}/opus"/>
@@ -61,19 +63,43 @@
 	<property name="jrxml.dir" value="${webapp.dir}/WEB-INF/reports/jrxml"/>
 	<property name="jasper.dir" value="${target.dir}/reports/jasper"/>
 
-	<fileset id="classpath" dir="${repository.dir}">
+	<path id="classpath">
+		<fileset dir="${repository.dir}">
+			<include name="**/*.jar"/>
+		</fileset>
+	    <fileset dir="${repository.project.dir}">
+	        <include name="**/*.jar"/>
+	    </fileset>
+	    <fileset dir="${college.ivy.dir}/compile" erroronmissingdir="false">
+	        <include name="**/*.jar"/>
+	    </fileset>
+	    <fileset dir="${project.ivy.dir}/compile" erroronmissingdir="false">
+	        <include name="**/*.jar"/>
+	    </fileset>
+	</path>
+
+	<path id="test.classpath">
+	    <fileset dir="${college.ivy.dir}/test" erroronmissingdir="false">
+	        <include name="**/*.jar"/>
+	    </fileset>
+	    <fileset dir="${project.ivy.dir}/test" erroronmissingdir="false">
+	        <include name="**/*.jar"/>
+	    </fileset>
+	</path>
+
+<!--	<fileset id="classpath" dir="${repository.dir}">
 		<include name="**/*.jar"/>
-	</fileset>
+	</fileset>-->
 
 <!-- add project specific libraries; (even better would be to add to classpath variable above -->
-    <fileset id="classpath.project" dir="${repository.project.dir}">
+<!--    <fileset id="classpath.project" dir="${repository.project.dir}">
         <include name="**/*.jar"/>
-    </fileset>
-    
+    </fileset>-->
+
     <!--<fileset id="test.classpath" dir="${test.repository.dir}">
         <include name="**/*.jar"/>
     </fileset>-->
-	
+
 	<path id="provided-libs">
 		<fileset dir="${targetproject.dir}/lib">
 			<include name="**/*.jar" />
@@ -100,8 +126,9 @@
 		<javac destdir="${main.classes.dir}" debug="true" includeantruntime="false">
 			<src path="${main.dir}" />
 			<classpath>
-				<fileset refid="classpath"/>
-                <fileset refid="classpath.project"/>
+				<path refid="classpath"/>
+<!--				<fileset refid="classpath"/>
+                <fileset refid="classpath.project"/>-->
 				<path refid="provided-libs"/>
 				<path refid="module-dependencies"/>
 			</classpath>
@@ -126,7 +153,9 @@
 				<path location="${main.classes.dir}"/>
 				<path location="${common.test.classes.dir}"/>
 				<path refid="provided-libs"/>
-				<fileset refid="classpath"/>
+				<path refid="classpath"/>
+				<path refid="test.classpath"/>
+<!--				<fileset refid="classpath"/>-->
                <!-- <fileset refid="test.classpath"/> -->
                 <path refid="module-dependencies"/>
 			</classpath>
@@ -147,7 +176,7 @@
 	<target name="compile.jrxml">
         <taskdef name="jrc" classname="net.sf.jasperreports.ant.JRAntCompileTask">
             <classpath>
-                <fileset refid="classpath"/>
+                <path refid="classpath"/>
             </classpath>
 	    </taskdef>
 		<mkdir dir="${jasper.dir}" />
@@ -156,7 +185,7 @@
 		    <include name="**/*.jrxml" />
             <include name="**/*.xml" />
 			<classpath>
-				<fileset refid="classpath"/>
+				<path refid="classpath"/>
 				<path location="${main.classes.dir}"/>
 				<path refid="provided-libs"/>
 				<path refid="module-dependencies"/>

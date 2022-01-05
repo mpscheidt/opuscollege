@@ -291,7 +291,7 @@ public class ReportController extends AbstractController {
         }
         parameters.put(JRExporterParameter.CHARACTER_ENCODING, "UTF8");
         parameters.put(JRHtmlExporterParameter.IMAGES_URI, "../report/image?image=");
-        parameters.put(JRHtmlExporterParameter.IS_USING_IMAGES_TO_ALIGN, Boolean.FALSE);
+//        parameters.put(JRHtmlExporterParameter.IS_USING_IMAGES_TO_ALIGN, Boolean.FALSE);
 
         Properties mappings = getContentDispositionMappings(format);
         report.setContentDispositionMappings(mappings);
@@ -319,7 +319,8 @@ public class ReportController extends AbstractController {
         }
         parameters.put(JRExporterParameter.CHARACTER_ENCODING, "UTF8");
         parameters.put(JRHtmlExporterParameter.IMAGES_URI, "../report/image?image=");
-        parameters.put(JRHtmlExporterParameter.IS_USING_IMAGES_TO_ALIGN, Boolean.FALSE);
+        // aligning with images is not supported anymore: https://community.jaspersoft.com/questions/1009991/how-set-isusingimagestoalign-htmlexporter-java
+//        parameters.put(JRHtmlExporterParameter.IS_USING_IMAGES_TO_ALIGN, Boolean.FALSE);
 
         Properties mappings = getContentDispositionMappings(downloadFileName, format);
         report.setContentDispositionMappings(mappings);

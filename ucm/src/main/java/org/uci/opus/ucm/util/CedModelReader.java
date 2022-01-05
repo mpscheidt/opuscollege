@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -66,7 +66,7 @@ public class CedModelReader implements StudentsResultsReader{
 }
 
 private static Object handleCell(XSSFCell cell) {
-	cell.setCellType(Cell.CELL_TYPE_STRING);
+	cell.setCellType(CellType.STRING);
 	Object val = new Object();
 
 		val = cell.getStringCellValue();

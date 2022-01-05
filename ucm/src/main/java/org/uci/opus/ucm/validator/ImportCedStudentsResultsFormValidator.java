@@ -4,10 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.apache.poi.POIXMLDocument;
-import org.apache.poi.poifs.filesystem.DocumentFactoryHelper;
-import org.apache.poi.poifs.filesystem.POIFSFileSystem;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.poifs.filesystem.FileMagic;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
@@ -48,20 +45,26 @@ public class ImportCedStudentsResultsFormValidator implements Validator {
     }
     
     protected boolean isValidXlsxFile(InputStream in) throws IOException{
-		 // For .xlsx
-		 boolean isValid = DocumentFactoryHelper.hasOOXMLHeader(in);
-		 
-		 if(!isValid){
-			 isValid = POIFSFileSystem.hasPOIFSHeader(in);
-		 }
-		 
-			 try{
-		 XSSFWorkbook wb = new XSSFWorkbook(in);
-		 // For .xls
-		 //POIFSFileSystem.hasPOIFSHeader(in);
-		 }catch(org.apache.poi.POIXMLException e){
-			 isValid = false;
-		 }
+
+    	// see: https://stackoverflow.com/q/54177333/606662
+    	// https://poi.apache.org/apidocs/dev/org/apache/poi/poifs/filesystem/FileMagic.html
+    	FileMagic fileMagic = FileMagic.valueOf(in);
+    	boolean isValid = fileMagic.equals(FileMagic.OOXML);
+
+    	// For .xlsx
+//		boolean isValid = DocumentFactoryHelper.hasOOXMLHeader(in);
+//
+//		if (!isValid) {
+//			isValid = POIFSFileSystem.hasPOIFSHeader(in);
+//		}
+//
+//		try {
+//			XSSFWorkbook wb = new XSSFWorkbook(in);
+//			// For .xls
+//			// POIFSFileSystem.hasPOIFSHeader(in);
+//		} catch (org.apache.poi.POIXMLException e) {
+//			isValid = false;
+//		}
 		 
 		 return isValid;
 	 }

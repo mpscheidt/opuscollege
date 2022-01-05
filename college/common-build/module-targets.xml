@@ -44,10 +44,17 @@
 		all module-specific files.
 	-->
 
+	<!-- workspace.dir may be overwritten in build.xml
+	     Setting workspace.dir here is useful when calling a target for a single project,
+	     e.g. "resolve" Ivy deps for the college module -->
+	<property name="workspace.dir" location="${basedir}/.."></property>
+	<!--<echo message="workspace.dir: ${workspace.dir}"></echo>-->
+
 	<import file="compile-targets.xml"/>
 	<import file="clean-targets.xml"/>
 	<import file="test-targets.xml"/>
 	<import file="copy-targets.xml"/>
+	<import file="ivy-targets.xml"/>
 
 	<target name="all-but-clean" depends="compile,copy"/>
 

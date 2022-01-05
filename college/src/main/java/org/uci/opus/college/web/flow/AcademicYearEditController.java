@@ -47,8 +47,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
@@ -73,7 +73,7 @@ import org.uci.opus.util.ServletUtil;
 public class AcademicYearEditController {
     
     private final String formView = "admin/academicyear";
-    private static Logger log = LogManager.getLogger(AcademicYearEditController.class);
+    private static Logger log = LoggerFactory.getLogger(AcademicYearEditController.class);
     
     @Autowired private AcademicYearManagerInterface academicYearManager;
     @Autowired private AcademicYearValidator academicYearValidator;

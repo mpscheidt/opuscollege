@@ -96,6 +96,15 @@
 		<copy todir="${targetproject.dir}/src/main/webapp">
 			<fileset dir="${basedir}/src/main/webapp">
 				<include name="**/*" />
+				<exclude name="**/*-javadoc.jar"/>
+				<exclude name="**/*-sources.jar"/>
+			</fileset>
+		</copy>
+		<copy todir="${targetproject.dir}/src/main/webapp/WEB-INF/lib" failonerror="false">
+			<fileset dir="${ivy.lib.dir}/compile">
+				<exclude name="**/*-javadoc.jar"/>
+				<exclude name="**/*-sources.jar"/>
+				<exclude name="**/*-source.jar"/>
 			</fileset>
 		</copy>
 	</target>

@@ -1,0 +1,11 @@
+<ivy-module version="2.0">
+    <info organisation="opuscollege" module="report"/>
+    <configurations>
+        <conf name="compile" description="This is this configuration that describes modules need to build our project"/>
+        <conf name="test" extends="compile" description="This is this configuration that describes modules need to run test on our project"/>
+    </configurations>
+    <dependencies>
+<!--    	<dependency org="opuscollege" name="college" rev="latest.integration"/> -->
+<!--         <dependency org="commons-lang" name="commons-lang" rev="2.6"/> -->
+    </dependencies>
+</ivy-module>

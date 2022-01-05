@@ -156,10 +156,10 @@ public SortedMap<String, String> readResultsFromStreamCedMachine(InputStream inp
 	private static Object handleCell(XSSFCell cell) {
 		//cell.setCellType(CellType.STRING);
 		//cell.setCellType(CellType.STRING);
-		if(cell.getCellTypeEnum()==CellType.STRING){
+		if(cell.getCellType()==CellType.STRING){
 			return cell.getStringCellValue();
 		}
-		else if(cell.getCellTypeEnum()==CellType.NUMERIC){
+		else if(cell.getCellType()==CellType.NUMERIC){
 			return cell.getNumericCellValue();
 			 
 		}	
@@ -180,14 +180,14 @@ public SortedMap<String, String> readResultsFromStreamCedMachine(InputStream inp
 		//starts with 7 and no longer then 9 digits
 		if(!studentCode.matches("^7[0-9]{8}$")){
 			isValid = false;
-			invalidEntries.put((invalidEntries.size() + 1) + "", "Código inválido na linha  " + rowNumber + ":" +  studentCode);
+			invalidEntries.put((invalidEntries.size() + 1) + "", "Codigo invalido na linha  " + rowNumber + ":" +  studentCode);
 		}
 
 		
 		//check if is a valid number
 		if(!studentMark.matches("[0-9]+([,.][0-9]{1,2})?")){
 			isValid = false;
-			invalidEntries.put(rowNumber+"", "Resultado inválido: " + studentMark);
+			invalidEntries.put(rowNumber+"", "Resultado invalido: " + studentMark);
 			
 		} 	
 		
